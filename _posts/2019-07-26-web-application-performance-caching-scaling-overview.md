@@ -54,7 +54,7 @@ The Stitch Fix post describes the concept of a `Denormalizer` object. The Denorm
 
 #### Database Replicas and Sharding
 
-Consider relocating particular tables to separate databases to reduce contention. If the maximum number of connections are being exceeded, a replica could with its own connection pool could help. Some gems that might help would be [db-charmer](https://github.com/kovyrin/db-charmer) or [ar-octopus](https://github.com/thiagopradi/octopus).
+Consider relocating particular tables to separate databases to reduce contention. If the maximum number of connections are being exceeded, a replica with its own connection pool could help. Some gems that might help would be [db-charmer](https://github.com/kovyrin/db-charmer) or [ar-octopus](https://github.com/thiagopradi/octopus).
 
 With replication, all write queries could be sent to one database, and read queries from another.
 
