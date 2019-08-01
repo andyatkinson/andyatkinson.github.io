@@ -33,4 +33,10 @@ Andy was part of a 10 person team for the [Overnight Website Challenge](http://o
 
 Part of a 4-person team competing in a 24-hour programming competition, building an app using Node.JS. [Node Knockout blog post with more detail](/blog/2010/09/01/node-knockout).
 
+#### MinneSpark
+
+May 2010 — [MinneSpark Cash & Services Winner](https://tech.mn/news/2010/05/22/minnespark-ignites-three-winners-with-cash-services/). More Details:
+
+Train Brain is a simple app serving a real need: more convenient Metro Transit train schedule access on iPhone. While Train Brain has been on the market for a while now, developer Andy Atkinson's focus will be on "delivering a completed Bus Brain iPhone app as the next step."
+
  [^1]: Photo credits and coverage at [Technically Baltimore](https://technical.ly/baltimore/2013/03/05/rails-girls-baltimore-first-event-betamore/)
