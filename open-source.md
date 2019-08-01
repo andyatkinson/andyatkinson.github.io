@@ -20,6 +20,7 @@ title: Open Source
 
 #### For Fun 😆
 
+ * [vanity gem small PR](https://github.com/assaf/vanity/pull/38) - A great A/B Test Framework made with Ruby/Redis
  * [gender_detector gem small PRs](https://github.com/bmuller/gender_detector) - [PR #11](https://github.com/bmuller/gender_detector/pull/11), [PR #12](https://github.com/bmuller/gender_detector/pull/12)
  * [robostripper gem small PRs](https://github.com/bmuller/robostripper) - [PR #1](https://github.com/bmuller/robostripper/pull/1), [PR #2](https://github.com/bmuller/robostripper/pull/2)
  * [burghers gem small PR](https://github.com/bmuller/burghers) - [PR #1](https://github.com/bmuller/burghers/pull/1)
