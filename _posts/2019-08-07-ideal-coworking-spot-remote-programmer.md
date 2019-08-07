@@ -48,11 +48,11 @@ As a solo remote-based programmer, I never ended up needing conference rooms, or
 
 #### Summary
 
-My ideal facility as described above, a quiet work area, affordable prices even for part-time members, adjustable chairs and desks, big monitors, good coffee and lunch places in walking distance, and public transit access, is a big list and frankly is a unicorn coworking space that I have yet to find.
+My ideal facility as described above, a quiet work area, affordable prices even for part-time members, adjustable chairs and desks, big monitors, good coffee and lunch places in walking distance, and public transit access, is frankly a unicorn that I have yet to find.
 
 Lately I have been working from home exclusively, being fortunate to live in a walkable neighborhood, and being able to spend even more time with my family.
 
-Despite some non-ideal conditions, coworking spaces are popular and are something I will continue to utilize. They have been a great way for me to meet new people, make some new friends and participate in my local community. And even get some work done.
+Despite some non-ideal conditions, coworking spaces are popular and are something I will continue to utilize. They have been a great way for me to meet new people, make some new friends and participate in my local community. And even get some work done 😎.
 
 What are your favorite coworking places and why?
 
