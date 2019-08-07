@@ -29,11 +29,11 @@ Phone Booth Rooms or unreserved common space areas are ideal places to take call
 
 #### Ergonomics
 
-As a software developer, having a large high-resolution monitor makes the job easier, to have space for an editor, a terminal, various GUIs, a web browser and more. Ideally the coworking space offers a large monitor I can connect an Apple laptop to (may be an extra charge). In practice I usually used my laptop monitor though.
+As a software developer, having a large high-resolution monitor makes the job easier, to have space for an editor, a terminal, various GUIs, a web browser and more. Ideally the coworking space offers a large monitor I can connect to with an Apple laptop (possibly an extra charge). In practice I usually use my laptop monitor and a stand only though.
 
 Programmers tend to be opinionated about chairs and stand-up desks. As far as ergonomics, usually I try to avoid wrist, neck, and shoulder pain. A chair where I can sit upright with a 90 degree bend of my arms helps reduce shoulder pain, which usually requires adjustable arms and dropping those down low. A lot of chairs at coworking places are not adjustable and not well suited to be in for hours at a time.
 
-Standing desks are another way to change things up. Varidesk can be added [^vari] on top of a traditional desk and may be a less expensive retrofit option. At home I use a standing desk, and have a less expensive one that is manually cranked up. Even IKEA offers a sit/stand desk now [^ikea].
+Standing desks are another way to change things up. Varidesk can be added [^vari] on top of a traditional desk and may be a less expensive retrofit option. At home I use a standing desk, a MultiTable [^multi] that can be manually cranked up. IKEA offers a sit/stand desk as well [^ikea].
 
 
 #### Neighborhood Amenities Accessible On Foot
@@ -43,7 +43,7 @@ All coworking facilities seem to be offer very fast Internet connections and hig
 
 #### Part-Time Member Option
 
-As a solo remote-based programmer, I never ended up needing conference rooms, or printing services. I understand that a coworking space needs to operate profitably, but there usually seemsto be services included that I don't need, without a way to exclude those and pay a bit less. Some places do not offer a part-time option at all.
+As a solo remote-based programmer, I never ended up needing conference rooms, or printing services. I understand that a coworking space needs to operate profitably, but there are usually services included that I am paying for with my membership, that I can't exclude. Some places do not offer a part-time option at all.
 
 
 #### Summary
@@ -60,3 +60,4 @@ What are your favorite coworking places and why?
 [^1]: [Workbar, Cambridge Mass. Central Square](https://www.workbar.com/location/cambridge/)
 [^vari]: [Varidesk](https://www.varidesk.com)
 [^ikea]: [IKEA SKARSTA sit/stand desk](https://www.ikea.com/us/en/catalog/products/S49084965/)
+[^multi]: [MultiTable sit/stand desks](https://www.multitable.com)
