@@ -7,7 +7,7 @@ This is the source for my website, blog, and portfolio at [andyatkinson.com](htt
 
  * Use `h4` for headings
  * Add tags to the post
- * In Vim `set :wrap`/`set :nowrap` to enable/disable soft wrap
+ * In Vim `:set wrap`/`:set nowrap` to enable/disable soft wrap
  * In Vim `leader-s` enables spell check mode, check spelling, add words with `zg` [Vim Spell Checking](https://thoughtbot.com/blog/vim-spell-checking) by Thoughtbot
  * Use initial caps in post titles
  * Use `<mark/>` to highlight a section
