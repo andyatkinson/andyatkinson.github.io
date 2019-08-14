@@ -18,7 +18,7 @@ Andy gave a talk on Dropwizard Bundles internally at Groupon as part of the regu
 
 #### RubyConf Argentina
 
-Andy gave a talk in Buenos Aires at RubyConf Argentina 2012, about how his team applied Lean Startup principles to their work at LivingSocial. [Blog post](/blog/2013/11/27/rubyconf-argentina-2012/).
+Andy [presented in Buenos Aires at RubyConf Argentina 2012](/blog/2013/11/27/rubyconf-argentina-2012/), about how his team applied Lean Startup principles to their work at LivingSocial.
 
 ![Andy Atkinson speaking at RubyConf Argentina 2012](/assets/images/pages/andy-rubyconf-argentina-2012-1.jpg)
 <small>Andy Atkinson speaking at RubyConf 2012. Photo by [RubyConf Argentina](https://www.flickr.com/groups/rubyconfar2012/)</small>

@@ -17,6 +17,7 @@ This is the source for my website, blog, and portfolio at [andyatkinson.com](htt
  * For section headings, use caps
  * For product and company names, mind the CamelCase
  * For dates on posts, use a date and not a time
+ * Bare markdown links are `<>`
 
 #### Theme Bugs and Issues
 

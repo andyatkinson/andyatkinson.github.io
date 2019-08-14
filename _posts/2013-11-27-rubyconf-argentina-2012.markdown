@@ -32,6 +32,8 @@ Giving a conference talk was a challenging experience. However being able to tra
 
 <iframe src="//player.vimeo.com/video/57940280" width="500" height="282" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/57940280">Ship it: Staying Lean at LivingSocial by Andy Atkinson</a> from <a href="http://vimeo.com/rubyargentina">Ruby Argentina</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
 
+<script async class="speakerdeck-embed" data-id="b951eb0086a70130f51612313d145db7" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
+
 #### Links to Conference and Talk
 
  * [RubyConf Argentina 2012](http://thewritermoustache.com/2012/10/24/rubyconf-argentina-2012/)
