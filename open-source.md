@@ -9,7 +9,7 @@ title: Open Source
  * [Delayed Job Web gem](https://github.com/ejschmitt/delayed_job_web) - Gem maintainer. Web interface to delayed job (Ruby-based background processing).
  * [Notify Me](https://github.com/andyatkinson/notify-me) - Creator. Sinatra app. "Start building a subscriber list before your product launches"
  * [Promo Slide](https://github.com/andyatkinson/promoSlide) - jQuery plugin creator. Web page marketing component. Written in Coffeescript. 👉 [Live Demo and Promotional Site](http://andyatkinson.com/projects/promoSlide)
- * [rails/globalid](https://github.com/rails/globalid) - Added unit tests
+ * [rails/globalid](https://github.com/rails/globalid/commits?author=andyatkinson) - Added unit tests
 
 #### Additional Open Source Projects
 
