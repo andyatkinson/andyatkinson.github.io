@@ -54,6 +54,11 @@
         -->
     </a>
     {% endif %}
+    {% if site.stackoverflow %}
+    <a href="https://stackoverflow.com/users/{{ site.stackoverflow }}" target="_blank">
+        {% include icons/stack-overflow.html %}
+    </a>
+    {% endif %}
     {% if site.producthunt %}
     <a href="https://www.producthunt.com/{{ site.producthunt }}" target="_blank">
         {% include icons/product-hunt.html %}
