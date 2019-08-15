@@ -23,9 +23,9 @@ Recommendations are available on [LinkedIn](http://linkedin.com/in/andyatkinson/
 
 #### Origin Story
 
-I was a computer nerd from my early days, thanks in part to early exposure to computers. My family was privileged to have a IBM PCjr in our house in the 1980s and a Prodigy Internet connection with a 14.4kbps modem by the early 1990s.
+My family was privileged to have a IBM PCjr in our house in the 1980s, a Prodigy Internet connection and 14.4kbps modem by the early 1990s.
 
-Although my computer time was mostly playing games and building gaming computers as a kid, eventually I found programming and became hooked on being able to build things and distribute them over the Internet.
+Although I mostly played games and assembled gaming computers as a teen, eventually I discovered programming in college. I became hooked on building web sites, applications, mobile apps and more, and continue to be!
 
 ![Andy Atkinson PCjr](/assets/images/origin-story-pcjr.jpg)
-<small>Andy playing a game on a IBM PCjr in the 1980s</small>
+<small>Andy playing a game on a IBM PCjr, late 1980s</small>
