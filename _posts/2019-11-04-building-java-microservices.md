@@ -43,6 +43,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but not as the 
 * [JSONassert](https://github.com/skyscreamer/JSONassert) assertions within JSON files
 * [OkHttp](https://square.github.io/okhttp/) for a [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 * Wiser for SMTP email verification testing
+* [Mockito](https://site.mockito.org/) for unit test mocking
 
 ### Deployment
 
