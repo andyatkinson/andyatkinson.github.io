@@ -32,8 +32,8 @@ Groupon started as a Ruby on Rails shop and continues to use it, but not as the 
 ### Build and Code Analysis
 
 * Maven
-	* Building the project
-	* Other tasks like [PMD Static Code Analyzer](https://pmd.github.io/)
+  * Building the project
+  * Other tasks like [PMD Static Code Analyzer](https://pmd.github.io/)
 * [JaCoCo Java Code Coverage](https://www.jacoco.org/jacoco/trunk/index.html)
 
 
@@ -42,6 +42,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but not as the 
 * [JUnit](https://junit.org/) as the primary test assertions library
 * [JSONassert](https://github.com/skyscreamer/JSONassert) assertions within JSON files
 * [OkHttp](https://square.github.io/okhttp/) for a [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
+* Wiser for SMTP email verification testing
 
 ### Deployment
 
