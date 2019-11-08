@@ -6,9 +6,9 @@ date: 2019-11-04
 comments: true
 ---
 
-The purpose of this article is to link some of the tools we use to build Java microservices at Groupon.
+The purpose of this article is to link together some of the tools we use to build and test Java microservices at Groupon.
 
-Groupon started as a Ruby on Rails shop and continues to use it, but not as the primary choice for a new microservice. Some of the tooling like Capistrano and the selection of Dropwizard as a building block framework can be linked to the usage of Ruby on Rails in the past.
+Groupon started as a Ruby on Rails shop and continues to use it, but the recommendation for new microservices is to use Java. Most of the internal library and tooling development is centered around Java.
 
 ### Language, Frameworks, Third-Party Libraries
 
@@ -22,6 +22,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but not as the 
 * [Google Guava](https://github.com/google/guava) for immutable collections (`Map`, `Set`, `List` etc.)
 * [JsonPath](https://github.com/json-path/JsonPath) for querying JSON files
 * [Simple Java Mail](http://www.simplejavamail.org) for sending emails
+* [Joda Time](https://www.joda.org/joda-time/)
 
 
 ### Editor
@@ -41,6 +42,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but not as the 
 
 * [JUnit](https://junit.org/) as the primary test assertions library
 * [JSONassert](https://github.com/skyscreamer/JSONassert) assertions within JSON files
+* [AssertJ](https://joel-costigliola.github.io/assertj/)
 * [OkHttp](https://square.github.io/okhttp/) for a [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 * Wiser for SMTP email verification testing
 * [Mockito](https://site.mockito.org/) for unit test mocking
