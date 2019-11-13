@@ -46,6 +46,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but the recomme
 * [OkHttp](https://square.github.io/okhttp/) for a [MockWebServer](https://github.com/square/okhttp/tree/master/mockwebserver)
 * Wiser for SMTP email verification testing
 * [Mockito](https://site.mockito.org/) for unit test mocking
+* [@VisibleForTesting Annotation](https://dzone.com/articles/two-generally-useful-guava)
 
 ### Deployment
 
