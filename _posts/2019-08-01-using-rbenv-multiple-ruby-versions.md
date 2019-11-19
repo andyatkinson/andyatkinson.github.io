@@ -32,7 +32,7 @@ Run `rbenv versions` to see available Ruby versions, and `rbenv version` to see 
 
 `rbenv install 2.5.5`
 
-### Use The Ruby
+#### Use The Ruby
 
 Let's make sure our Rails application is using `2.5.5` by specifying that version in the `.ruby-version` file in the application root directory of our Ruby project.
 
