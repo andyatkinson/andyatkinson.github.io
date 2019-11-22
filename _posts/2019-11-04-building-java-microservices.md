@@ -52,7 +52,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but the recomme
 
 For deployment we use both [Capistrano](https://capistranorb.com/) and a custom internal promotion-based deployment method.
 
-### Service Discovery
+### Documentation
 
 Services have generated API documentation with [Swagger](https://swagger.io/). A custom web application provides a directory of all services, where attributes of the services such as the owner or email list are driven from YAML configuration files.
 
