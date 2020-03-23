@@ -47,6 +47,7 @@ Groupon started as a Ruby on Rails shop and continues to use it, but the recomme
 * Wiser for SMTP email verification testing
 * [Mockito](https://site.mockito.org/) for unit test mocking
 * [@VisibleForTesting Annotation](https://dzone.com/articles/two-generally-useful-guava)
+* [Hamcrest matchers](http://hamcrest.org/JavaHamcrest/index) - "Matchers that can be combined to create flexible expressions of intent"
 
 ### Deployment
 
