@@ -3,7 +3,7 @@ layout: post
 title: "A Look at PostgreSQL Foreign Key Constraints"
 date: 2018-08-22
 comments: true
-tags: [Databases, SQL]
+tags: [Databases, SQL, PostgreSQL]
 ---
 
 Foreign key constraints enforce that a referenced "thing" exists.
@@ -28,7 +28,7 @@ This excellent [Hashrocket blog post on deferring constraints](https://hashrocke
 
 To briefly summarize the article, when re-ordering a list of items where each re-order generates an update statement per list item within a transaction, two list items would have the same position value. This would break because it would violate the uniqueness constraint. The solution was to defer enforcement of the unique constraint until the end of the transaction where each list item has a new position value.
 
-If a constraint is deferrable, it can have 3 classes (attributes of the constraint). The class of deferred constraint the project I'm working on used `DEFERRABLE INITIALLY DEFERRED` which prompted this investigation. I found this is not the default behavior.
+If a constraint is deferrable, it can have 3 classes (attributes of the constraint). The class of deferred constraint in the project I'm working on used `DEFERRABLE INITIALLY DEFERRED` which prompted this investigation. I found this is not the default behavior.
 
 Specifying deferrable this way would be more surprising than `INITIALLY IMMEDIATE` which is the default constraint behavior. For that reason, INITIALLY IMMEDIATE makes more sense as a default. This allows opting in to the deferrable constraint enforcement on a per transaction basis, but otherwise preserves the default behavior. This was the recommendation from the Hashrocket article as well.
 

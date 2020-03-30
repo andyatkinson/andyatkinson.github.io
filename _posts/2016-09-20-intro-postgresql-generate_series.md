@@ -3,7 +3,7 @@ layout: post
 title: "Intro to PostgreSQL 'generate_series'"
 date: 2016-09-20
 comments: true
-tags: [SQL, Tips, Databases]
+tags: [PostgreSQL, SQL, Tips, Databases]
 ---
 
 
