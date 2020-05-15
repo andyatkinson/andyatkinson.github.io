@@ -4,10 +4,6 @@ title: "Calendar Generation with Sparse Data"
 date: 2017-05-18
 comments: true
 tags: [Ruby, Rails, API, Performance]
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-devils-tower-2006.jpg
-featured_image_caption: Devils Tower National Monument. &copy; 2006 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 At work, our drivers interact with a calendar interface via the mobile app, that represents days of the week in 30 minute blocks. We generate 2 weeks of calendar days at once and personalize the data to the driver. The data is sparse, meaning not every block has data, but we need a block for every 30 minute increment.

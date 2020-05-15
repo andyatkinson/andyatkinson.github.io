@@ -4,10 +4,6 @@ title: "Open Zoom Meetings from the Command Line"
 date: 2018-03-21
 comments: true
 tags: [CLI, Tips, "Remote Work", Scripts]
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-south-dakota-badlands-2006.jpg
-featured_image_caption: Badlands National Park. &copy; 2006 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 This is a hacked together bash function, taking advantage of [icalBuddy](http://hasseg.org/icalBuddy/) and Zoom URLs in calendar invitations, making it a bit easier to join meetings.

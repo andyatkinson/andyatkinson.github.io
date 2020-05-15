@@ -4,10 +4,6 @@ title: "Encrypting and Decrypting with Ruby"
 date: 2018-01-22
 comments: true
 tags: [Programming, Ruby, Tips]
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 For a recent project I had the opportunity to research how we might encrypt a few pieces of data, with a shared key and initial value, and I put together the following notes. This is mostly re-hashing the [OpenSSL:Cipher documentation](https://ruby-doc.org/stdlib-1.9.3/libdoc/openssl/rdoc/OpenSSL/Cipher.html) if you'd rather jump straight there.
