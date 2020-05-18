@@ -2,7 +2,7 @@
 layout: post
 title: "Rails API Serialization with JSON API - Part 2"
 tags: [Ruby, Rails, API, Performance]
-date: 2020-05-15
+date: 2020-05-18
 comments: true
 featured_image_thumbnail:
 featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
