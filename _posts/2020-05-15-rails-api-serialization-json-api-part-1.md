@@ -4,10 +4,6 @@ title: "Rails API Serialization with JSON API - Part 1"
 tags: [Ruby, Rails, API, Performance]
 date: 2020-05-15
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 For a Rails 6 API app I'm working on, there is an API endpoint that provides data to clients, formatted as JSON.
@@ -59,8 +55,10 @@ Now we can confirm in the `attributes` that we're only getting the `rider_name` 
 }
 ```
 
-### Wrap-up
+#### Wrap-up
 
 That's all for Part 1 of selecting a JSON API compatible API serialization option for a Rails API app.
 
 In a future post, we'll cover more functionality that JSON API specifies, such as the client requesting data that is related to the resource.
+
+UPDATE: [Rails API Serialization with JSON API - Part 2](rails-api-serialization-json-api-part-2) is now available.
