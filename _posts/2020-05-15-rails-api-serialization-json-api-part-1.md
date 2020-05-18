@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails API Serialization with JSON API - Part 1"
+title: "Rails API Serialization with JSON:API - Part 1"
 tags: [Ruby, Rails, API, Performance]
 date: 2020-05-15
 comments: true
@@ -23,15 +23,15 @@ On the other hand, customization is limited. Here are some things that are missi
 - The client has no ability to request data that is related to the resource
 - Sorting and pagination are not available by default
 
-#### Serializers and JSON API
+#### Serializers and JSON:API
 
-We're going to introduce a new serialization approach that will address some of the downsides above. I selected the [fast_jsonapi](https://github.com/Netflix/fast_jsonapi) gem/library to build the API response in part because it implements the [JSON API specification](https://jsonapi.org/). The serialization option built in to Rails is Active Model Serialization.
+We're going to introduce a new serialization approach that will address some of the downsides above. I selected the [fast_jsonapi](https://github.com/Netflix/fast_jsonapi) gem/library to build the API response in part because it implements the [JSON:API specification](https://jsonapi.org/). The serialization option built in to Rails is Active Model Serialization.
 
 Using a specification-based implementation will help with consistency and predictability as teams and technologies grow and change.
 
 #### Sparse Fieldsets
 
-JSON API specifies an ability for the client to specify a reduced set of fields for a resource, reducing time on the server and the weight of the payload. JSON API calls this sparse fieldsets, and we can use it to generate part of the API response dynamically.
+JSON:API specifies an ability for the client to specify a reduced set of fields for a resource, reducing time on the server and the weight of the payload. JSON:API calls this sparse fieldsets, and we can use it to generate part of the API response dynamically.
 
 In this application, for a given Trip resource, currently it returns a `rider_name` and a `driver_name`. In order to limit the Trip fields to just the `rider_name`, we'd specify a query parameter as below. The format is the `fields` with the resource name pluralized as part of the key portion, and then a comma-separated list of the fields as the value.
 
@@ -57,8 +57,8 @@ Now we can confirm in the `attributes` that we're only getting the `rider_name` 
 
 #### Wrap-up
 
-That's all for Part 1 of selecting a JSON API compatible API serialization option for a Rails API app.
+That's all for Part 1 of selecting a JSON:API compatible API serialization option for a Rails API app.
 
-In a future post, we'll cover more functionality that JSON API specifies, such as the client requesting data that is related to the resource.
+In a future post, we'll cover more functionality that JSON:API specifies, such as the client requesting data that is related to the resource.
 
-UPDATE: [Rails API Serialization with JSON API - Part 2](rails-api-serialization-json-api-part-2) is now available.
+UPDATE: [Rails API Serialization with JSON:API - Part 2](rails-api-serialization-json-api-part-2) is now available.

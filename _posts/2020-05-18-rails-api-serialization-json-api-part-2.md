@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails API Serialization with JSON API - Part 2"
+title: "Rails API Serialization with JSON:API - Part 2"
 tags: [Ruby, Rails, API, Performance]
 date: 2020-05-18
 comments: true
@@ -10,7 +10,7 @@ featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atk
 featured: true
 ---
 
-In [Rails API Serialization with JSON API - Part 1](rails-api-serialization-json-api-part-1) we looked at using the Sparse Fieldsets functionality of the JSON API specification.
+In [Rails API Serialization with JSON:API - Part 1](rails-api-serialization-json-api-part-1) we looked at using the Sparse Fieldsets functionality of the JSON:API specification.
 
 In this post, we're going to pick up with the same Rails 6 API app. We're going to discuss the Compound Document feature and show how these two features can be combined.
 
@@ -18,7 +18,7 @@ Combining these two features can reduce the number of HTTP requests a client nee
 
 #### Compound Documents
 
-Using the [JSON API Compound Documents](https://jsonapi.org/format/#document-compound-documents), we're able to reduce the number of API calls a client would need to make, by adding related resources to the response.
+Using the [JSON:API Compound Documents](https://jsonapi.org/format/#document-compound-documents), we're able to reduce the number of API calls a client would need to make, by adding related resources to the response.
 
 This app serves Trip data, where a Trip is defined as something that a rider has taken, and was provided by a driver. When fetching trip details, the client may have the need to include some Driver details when presenting the Trip, so that is what we're going to add.
 
@@ -92,4 +92,4 @@ Looking at the `included` portion of the response here, we can see that the driv
 
 Using Compound Documents and Sparse Fieldsets, the client is able to specify the data it needs, reducing the number of HTTP requests and the size and time involved in generating the response.
 
-Because this functionality is specified by the JSON API, we're able to build this into our server application in a consistent way for clients, improving the API experience through consistency and performance.
+Because this functionality is specified by the JSON:API, we're able to build this into our server application in a consistent way for clients, improving the API experience through consistency and performance.
