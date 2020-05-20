@@ -15,6 +15,9 @@ Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-
   * [Job Priorities, Fast Failing Tests and Fixtures... Oh My!](https://rails-weekly.ongoodbits.com/2015/10/02/job-priorities-fast-failing-tests-and-fixtures-oh-my) (Co-written with [Greg](https://twitter.com/gregmolnar))
   * [GSoC, performance improvements and bug fixes!](https://rails-weekly.ongoodbits.com/2015/09/25/gsoc-performance-improvements-and-bug-fixes) (Co-written with [Marcel](https://twitter.com/marcelmorgan))
 
+![Editors from This Week in Rails Railsconf Phoenix 2017](/assets/images/railsconf-2017.jpg)
+<small>Editors from [This Week in Rails](https://rails-weekly.ongoodbits.com/) Railsconf Phoenix 2017</small>
+
 #### Ruby Inside
 
   * [7 Video Presentations From The WindyCityRails 2009 Conference](http://www.rubyinside.com/7-video-presentations-from-the-windycityrails-2009-conference-2592.html)
