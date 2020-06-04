@@ -4,10 +4,6 @@ title: "Rails API Serialization with JSON:API - Part 2"
 tags: [Ruby, Rails, API, Performance]
 date: 2020-05-18
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 In [Rails API Serialization with JSON:API - Part 1](rails-api-serialization-json-api-part-1) we looked at using the Sparse Fieldsets functionality of the JSON:API specification.
