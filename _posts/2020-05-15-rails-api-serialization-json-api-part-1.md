@@ -61,4 +61,4 @@ That's all for Part 1 of selecting a JSON:API compatible API serialization optio
 
 In a future post, we'll cover more functionality that JSON:API specifies, such as the client requesting data that is related to the resource.
 
-UPDATE: [Rails API Serialization with JSON:API - Part 2](rails-api-serialization-json-api-part-2) is now available.
+UPDATE: [Rails API Serialization with JSON:API - Part 2](https://andyatkinson.com/blog/2020/05/18/rails-api-serialization-json-api-part-2) is now available.
