@@ -6,9 +6,9 @@ title: About
 
 #### Bio
 
-Andy is a Senior Software Engineer with Groupon, working remotely, living in Minneapolis, MN. Primarily he does back-end web application development with services written with Ruby, Java, and JavaScript.
+Andy is a Senior Software Engineer with Flipgrid, part of Microsoft, based in Minneapolis, MN. Primarily he does back-end web application development with services written with Ruby, Java, and JavaScript.
 
-Previously he's worked for OrderUp, LivingSocial, Dell/Compellent, PTC, and various startups and smaller companies.
+Previously he's worked for Groupon, OrderUp, LivingSocial and other companies.
 
 ![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
 <small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
