@@ -7,7 +7,7 @@ show_footer: true
 
 #### Product Screenshots
 
-A non-comprehensive list of products (websites, apps, etc.) developed as an Employee, contractor, or in my spare time as an enthusiast/aspiring founder 😀.
+A partial list of products (websites, apps, etc.) developed as an Employee, contractor, or as side projects 😀.
 
 #### OrderUp (acquired by Groupon)
 
