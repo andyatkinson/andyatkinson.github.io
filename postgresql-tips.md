@@ -126,3 +126,22 @@ Once this is established, we can issue queries as if the foreign table was a loc
 select * from temp.customers limit 1;
 ```
 
+## HOT updates
+
+HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
+
+[HOT updates in PostgreSQL for better performance](https://www.cybertec-postgresql.com/en/hot-updates-in-postgresql-for-better-performance/)
+
+2 requirements:
+
+- there must be enough space in the block containing the updated row
+- there is no index defined on any column whose value is modified (big one)
+
+### The `fillfactor`
+
+[What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
+
+- A percentage between 10 and 100
+- you can adjust it to leave room for HOT updates when they're possible
+- For tables with heavy updates a smaller fillfactor is appropriate
+- Per table or per index
