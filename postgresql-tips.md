@@ -145,3 +145,15 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 - you can adjust it to leave room for HOT updates when they're possible
 - For tables with heavy updates a smaller fillfactor is appropriate
 - Per table or per index
+
+### Locks
+
+[Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
+
+Set these parameters.
+
+`log_lock_waits`
+`deadlock_timeout`
+
+> Then slow lock acquisition will appear in the database logs for later analysis.
+
