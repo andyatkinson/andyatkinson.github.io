@@ -4,7 +4,7 @@ permalink: /postgresql-tips
 title: PostgreSQL Tuning and Tips
 ---
 
-Here are some tuning parameters and PostgreSQL tips from my work experience, that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
+Here are some tuning parameters and PostgreSQL tips from my work experience that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
 
 ### Autovacuum
 
@@ -26,7 +26,7 @@ ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
 ALTER TABLE bigtable SET (autovacuum_vacuum_threshold = 1000);
 ```
 
-#### Additional AV parameters
+### Additional AV parameters
 
 `autovacuum_max_freeze_age`
 
@@ -82,7 +82,7 @@ TBD
   - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
 
 
-#### Foreign Data Wrappers
+### Foreign Data Wrappers
 
 Native Foreign data wrapper functionality in PostgreSQL allows connecting to a remote table and treating it like a local table.
 
@@ -126,7 +126,7 @@ Once this is established, we can issue queries as if the foreign table was a loc
 select * from temp.customers limit 1;
 ```
 
-## HOT updates
+### HOT updates
 
 HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
 
@@ -152,8 +152,8 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 Set these parameters.
 
-`log_lock_waits`
-`deadlock_timeout`
+- `log_lock_waits`
+- `deadlock_timeout`
 
-> Then slow lock acquisition will appear in the database logs for later analysis.
+"Then slow lock acquisition will appear in the database logs for later analysis."
 
