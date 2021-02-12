@@ -13,11 +13,13 @@ He specializes in backend development, APIs, Ruby on Rails, and PostgreSQL.
 ![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
 <small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
 
-He's also worked in full stack and mobile development. Primarily an IC, he's been a technical lead and has managed engineers at companies like Groupon, OrderUp, and LivingSocial.
+Experienced in full stack and mobile. Primarily an IC, has acted as a technical lead and manager.
 
-Some tools he's worked with recently are Elasticsearch, AWS, Azure, and Kubernetes. He brings past experience with NLP and A/B testing tools and techniques to product conversations.
+Recent experience includes Elasticsearch, AWS, Azure, and Kubernetes. Experienced with NLP and A/B testing.
 
-Recent non-coding contributions have included conducting interviews, reviewing candidate code challenge submissions, and improving onboarding documentation and processes. He values learning and growing his technical skills, and learning from and mentoring team members.
+Recent non-code contributions have been conducting interviews, reviewing candidate code challenge submissions, improving onboarding documentation and processes.
+
+Loves to build new technical skills, learn from and help team members grow.
 
 #### Education
 

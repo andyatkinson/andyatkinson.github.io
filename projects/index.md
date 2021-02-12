@@ -9,57 +9,63 @@ show_footer: true
 
 A partial, chronological list of products, projects, websites, apps, developed as an employee or as side projects 😀.
 
-#### Groupon CLO
+#### Groupon+
 
-{% include image-caption.html imageurl="/assets/images/groupon-clo.png" title="Groupon Card-Linked Offers Screenshot" caption="Groupon Card-Linked Offers" %}
+Helped build the Groupon+ platform
 
-#### OrderUp (acquired by Groupon)
+{% include image-caption.html imageurl="/assets/images/groupon-clo.png" title="Groupon+ Card Linked Offers Screenshot" caption="Groupon+ Card Linked Offers Product" %}
 
-As en Employee of OrderUp, I worked on the main Consumer Website, Back-end Admin tool, mobile Apps and the API (Consumer & Driver Partner)
+#### OrderUp
+
+Worked on the consumer food ordering experience, back-end restaurant and operations tool, mobile apps, the API, and the driver app
 
 {% include image-caption.html imageurl="/assets/images/portfolio-13.png" title="OrderUp" caption="OrderUp Consumer Website" %}
 
 #### Lengio
 
-As the first outside Software Engineer hired at Lengio, I helped build the MVP web application product, develop the go-to-market strategy, and participate in the Mass Challenge accelerator.
+Helped build the MVP web application product, develop the go-to-market strategy, and participated in the Mass Challenge accelerator
 
 {% include image-caption.html imageurl="/assets/images/lengio.png" title="Lengio Product Screenshot" caption="Lengio Product Screenshot" %}
 
 #### PetConnect
 
-PetConnect (created as side project, intended to commercialize, partnered with designer <a href="https://dribbble.com/derrrick">Derrick Schippert</a> for the MVP and logo design). Ruby on Rails SaaS web app for pet care companies &mdash; track services, invoice, collect payment. Abandoned product.
+PetConnect was created as a product to help dog walking businesses. Partnered with <a href="https://dribbble.com/derrrick">Derrick Schippert</a> for the design.
+
+Ruby on Rails SaaS web app for pet care companies to track services rendered, collect payment from customers, manage schedules.
 
 {% include image-caption.html imageurl="/assets/images/portfolio-1.png" title="PetConnect" caption="PetConnect Website" %}
 {% include image-caption.html imageurl="/assets/images/portfolio-12.png" title="PetConnect" caption="PetConnect Enrollment Form" %}
 
 #### Train Brain and Bus Brain
 
-Train Brain and Bus Brain iOS apps (side projects, partnered with designer <a href="http://www.kadlac.com/">Nate Kadlac</a> for all design services: website, app icon, mobile app and more). View departure information with a couple taps.
+Train Brain and Bus Brain were iOS apps to monitor public transit schedules in the Minneapolis, MN market.
+
+Partnered with <a href="http://www.kadlac.com/">Nate Kadlac</a> for all design services.
 
 {% include image-caption.html imageurl="/assets/images/portfolio-2.png" title="Train Brain iOS screenshot" caption="TrainBrain iOS App" %}
 {% include image-caption.html imageurl="/assets/images/portfolio-3.png" title="Bus Brain website" caption="Bus Brain Promo Website" %}
 
-#### LivingSocial (acquired by Groupon)
+#### LivingSocial
 
-LivingSocial (web site screenshots, employee). Worked on various consumer web e-commerce projects &mdash; travel deals, user acquisition, promotions.
+Worked on various e-commerce projects: travel deals, user acquisition, promotions, cart abandonment, A/B testing, card transaction bulk processing, promotional offers and more.
 
 {% include image-caption.html imageurl="/assets/images/portfolio-4.jpg" title="LivingSocial Travel deals booking calendar screenshot" caption="Escapes travel booking calendar" %}
 {% include image-caption.html imageurl="/assets/images/portfolio-11.png" title="LivingSocial deals index page" caption="LivingSocial Deals Page" %}
 
 #### Node Knockout
 
-Node Knockout (Node.js programming competition, team member). Web visitor interaction data visualized as a heatmap.
+Node Knockout was a Node.js programming competition. Participated with a team building a data visualization tool as a heatmap.
 
 {% include image-caption.html imageurl="/assets/images/portfolio-8.jpg" title="Node Knockout Jackalope screenshot" caption="Node Knockout Jackalope Screenshot" %}
 
 #### Client Work
 
-Freelance web development work for client. Mobile website development. Worked as a subcontractor with various contracting companies. Met with and provided training for clients.
+Worked as a freelance web developer for various clients.
 
 {% include image-caption.html imageurl="/assets/images/portfolio-9.jpg" title="Product Screenshot" caption="Client Website development" %}
 
-#### Socialcast (acquired by VMWare)
+#### Socialcast
 
-Socialcast (employee). Web application for internal communication. SaaS business model.
+Helped build the Socialcast product as a full-stack software engineer. SaaS application for internal company discussion.
 
 {% include image-caption.html imageurl="/assets/images/portfolio-10.jpg" title="Socialcast Product Screenshot" caption="Socialcast Product Screenshot" %}
