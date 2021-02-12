@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Throttling and Temporary Bans with Rack Attack"
-tags: [Ruby, API, Programming, DevOps, Tools, API, Open Source, Performance]
+tags: [Ruby, API, Programming, DevOps, Tools, Open Source, Performance]
 date: 2021-02-11
 comments: true
 featured_image_thumbnail:
