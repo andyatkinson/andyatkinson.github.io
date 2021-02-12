@@ -6,21 +6,21 @@ title: Speaking Opportunities
 
 #### PostgreSQL Unused Indexes (Internal lightning-style talk)
 
-January 2021
-Why unused indexes are bad and how to remove the
+January 2021<br/>
+Why unused indexes are bad and how to remove them
 
 <script async class="speakerdeck-embed" data-id="6644d7dd7380413ea19dce1955f41269" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 #### Big Backfill Recap Tech Talk (Internal)
 
-January 2019
+January 2019<br/>
 De-normalizing and backfilling a large amount of e-commerce data to improve API performance
 
 <script async class="speakerdeck-embed" data-id="fff2cbdfc2c142f4b33c08609a385e0d" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
 
 #### Dropwizard Bundles Tech Talk (Internal)
 
-March 2018
+March 2018<br/>
 Andy gave an introductory talk on Dropwizard Bundles
 
 <script async class="speakerdeck-embed" data-id="a819f7ee3b2340498147b30119d0959a" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
