@@ -14,7 +14,11 @@ Due to how quickly things change in technology, blogging about a topic helps me 
 
 ### This Week In Rails
 
-Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a weekly newsletter covering changes to the Ruby on Rails framework. From 2015 to 2017, he wrote 6 issues as part of an editor rotation, delivered to over 6000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information. Below are links to the issues.
+Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a weekly newsletter covering changes to the Ruby on Rails framework.
+
+This newsletter is incorporated into the official [Ruby on Rails weblog](https://weblog.rubyonrails.org/) as well!
+
+From 2015 to 2017, he wrote 6 issues as part of an editor rotation, delivered to over 6000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information. Below are links to the issues.
 
   * [Fresh code to fight the Winter doldrums](https://rails-weekly.ongoodbits.com/2017/02/04/fresh-code-to-fight-the-winter-doldrums)
   * [This Week in Rails: hooks, fixtures, fetch_values, database connections and more!](https://rails-weekly.ongoodbits.com/2017/04/15/hooks-fixtures-fetch_values-database-connections-and-more)
@@ -26,7 +30,11 @@ Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-
 ![Editors from This Week in Rails Railsconf Phoenix 2017](/assets/images/railsconf-2017.jpg)
 <small>Editors from [This Week in Rails](https://rails-weekly.ongoodbits.com/) Railsconf Phoenix 2017</small>
 
-Update 2020: I've resumed writing blog posts occasionally. After a period of dormancy, 3 existing writers started a 3 week editor rotation.
+Update 2020: After a period of dormancy, 3 editors jumped in and have started creating new issues. Here are some more issues I've written:
+
+  * [Hello 2021: Sole record, Same form multiple verbs, Validator with range, Rich text control](https://rails-weekly.ongoodbits.com/hello-2021-sole-record-same-form-multiple-verbs-validator-with-range-rich-text-control)
+  * [New Active Record and Action View capabilities, bug fixes and more!](https://rails-weekly.ongoodbits.com/new-active-record-and-action-view-capabilities-bug-fixes-and-more)
+  * [New API Docs site, configurable cache coder, bug fixes, and more!](https://rails-weekly.ongoodbits.com/new-api-docs-site-configurable-cache-coder-bug-fixes-and-more)
 
 ### Ruby Inside
 
