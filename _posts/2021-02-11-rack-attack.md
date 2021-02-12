@@ -30,7 +30,7 @@ While various timeouts and circuit breakers are in place for resiliency, these r
 
 ### Mitigation and recovery
 
-Enter Rack Attack! While the longer term fix was to introduce a bug fix, we were able to quickly use Rack Attack to deploy a config change and mitigate the issue.
+Enter Rack Attack! While the longer term fix was to introduce a bug fix, we were able to use Rack Attack to deploy a config change and mitigate the issue quickly.
 
 Adding a configuration block like this one, we were able to throttle `GET` requests for a specific IP address that exceeded 60 requests in a 30 second period to a particular endpoint.
 
@@ -49,9 +49,9 @@ Recently an engineer identified an endpoint that could be used in a malicious to
 
 Armed with that knowledge, brute force login attempts could be conducted.
 
-To mitigate that risk, we can configure a temporary ban based on identifying a pattern of bad behavior, using the IP addres, endpoint, request time, and setting up some parameters.
+To mitigate that risk, we can configure a temporary ban based on identifying a pattern of bad behavior, using the IP address, endpoint, request time, and setting up some parameters.
 
-In this case we configured it this way: after 50 `POST` requests in 2 minutes from a given IP address to this endpoint, ban the IP address for 15 minutes.
+In this case we configured after 50 `POST` requests in 2 minutes to this endpoint, ban the IP address for 15 minutes.
 
 ```ruby
 Rack::Attack::Allow2Ban.filter(ip, :maxretry => 50, :findtime => 2.minute, :bantime => 15.minutes) do
@@ -59,4 +59,4 @@ Rack::Attack::Allow2Ban.filter(ip, :maxretry => 50, :findtime => 2.minute, :bant
 end
 ```
 
-Now that this endpoint has some protections on it, we can sleep a little more soundly at night.
+Now that this endpoint has some protections on it, we can sleep a little easier.

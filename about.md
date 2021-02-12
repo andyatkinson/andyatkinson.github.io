@@ -8,14 +8,16 @@ title: About
 
 Andy is a Senior Software Engineer with Flipgrid, part of Microsoft, based in Minneapolis, MN.
 
-He specializes in backend development and enjoys building and working with APIs using Ruby on Rails and PostgreSQL.
+He specializes in backend development, APIs, Ruby on Rails, and PostgreSQL.
 
 ![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
 <small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
 
-Previously he's worked in full stack and mobile development. Working primarily as an IC, he's also been a technical lead and managed and mentored engineers at companies like Groupon, OrderUp, and LivingSocial.
+He's also worked in full stack and mobile development. Primarily an IC, he's been a technical lead and has managed engineers at companies like Groupon, OrderUp, and LivingSocial.
 
-Some of the tools he's worked with lately are Elasticsearch, AWS, Azure, and Kubernetes. In the past he's worked with NLP and A/B testing tools and techniques, and brings that experience into product development conversations when it may be beneficial.
+Some tools he's worked with recently are Elasticsearch, AWS, Azure, and Kubernetes. He brings past experience with NLP and A/B testing tools and techniques to product conversations.
+
+Recent non-coding contributions have included conducting interviews, reviewing candidate code challenge submissions, and improving onboarding documentation and processes. He values learning and growing his technical skills, and learning from and mentoring team members.
 
 #### Education
 
