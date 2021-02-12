@@ -4,26 +4,35 @@ permalink: /about
 title: About
 ---
 
-#### Bio
+#### Summary
 
 Andy is a Senior Software Engineer with Flipgrid, part of Microsoft, based in Minneapolis, MN.
 
-He specializes in API backend development with Ruby on Rails.
-
-He's worked as a Java backend developer, full stack developer, and iOS mobile developer in the past, for companies like Groupon, OrderUp, and LivingSocial.
+He specializes in backend development and enjoys building and working with APIs using Ruby on Rails and PostgreSQL.
 
 ![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
 <small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
 
+Previously he's worked in full stack and mobile development. Working primarily as an IC, he's also been a technical lead and managed and mentored engineers at companies like Groupon, OrderUp, and LivingSocial.
+
+Some of the tools he's worked with lately are Elasticsearch, AWS, Azure, and Kubernetes. In the past he's worked with NLP and A/B testing tools and techniques, and brings that experience into product development conversations when it may be beneficial.
+
+#### Education
+
 Andy earned Bachelors degrees from the [University of Minnesota](http://umn.edu) in Minneapolis, MN. He completed one semester abroad at the Fundación José Ortega y Gasset in beautiful and historic Toledo, Spain.
+
+#### Personal Life
 
 Outside of technology and spending time with his family and friends, he enjoys running, cycling, travel, and following the perpetually struggling Timberwolves NBA basketball team.
 
 #### Recommendations
 
-Recommendations are available on [LinkedIn](http://linkedin.com/in/andyatkinson/) and [Angel List](https://angel.co/andyatkinson-gmail-com).
+ > In short, I cannot recommend Andy highly enough for an engineering position at your company. His communication skills, candor, and thoughtfulness will bring tremendous value to any company that he joins.
+ <cite>- Director of Product Management</cite>
 
-#### Origin Story
+Recommendations are available on [LinkedIn](http://linkedin.com/in/andyatkinson/), [AngelList](https://angel.co/andyatkinson-gmail-com), and by request.
+
+#### Nerd Origin Story
 
 My family was privileged to have a IBM PCjr in our house in the 1980s, a Prodigy Internet connection and 14.4kbps modem by the early 1990s.
 
