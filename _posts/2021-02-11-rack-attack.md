@@ -10,7 +10,7 @@ featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atk
 featured: true
 ---
 
-Rack Attack is a Rack middleware developed at Kickstarter that can be used to throttle endpoints and temporarily ban bad actors.
+[Rack Attack](https://github.com/rack/rack-attack) is a Rack middleware developed at Kickstarter that can be used to throttle endpoints and temporarily ban bad actors.
 
 The reasons to do this are to ensure overall system stability by preventing bogus requests from impacting legitimate requests.
 
