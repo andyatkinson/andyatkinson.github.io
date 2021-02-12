@@ -46,6 +46,8 @@ navigation:
     url: /events-and-volunteering
   - text: PostgreSQL
     url: /postgresql-tips
+  - text: Ruby on Rails
+    url: /rails-tips
   - text: Archive
     url: /tag
   - text: Contact Me

@@ -7,7 +7,11 @@ show_footer: true
 
 #### Product Screenshots
 
-A partial list of products (websites, apps, etc.) developed as an Employee, contractor, or as side projects 😀.
+A partial, chronological list of products, projects, websites, apps, developed as an employee or as side projects 😀.
+
+#### Groupon CLO
+
+{% include image-caption.html imageurl="/assets/images/groupon-clo.png" title="Groupon Card-Linked Offers Screenshot" caption="Groupon Card-Linked Offers" %}
 
 #### OrderUp (acquired by Groupon)
 
