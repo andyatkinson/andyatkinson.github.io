@@ -4,10 +4,6 @@ title: "Rails API Authentication with JWT"
 tags: [Ruby, Rails, API]
 date: 2020-06-04
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 Authentication is a bit tricky with HTTP as it is a stateless protocol. This means that the client plays a role in identifying the user, working with the server.
