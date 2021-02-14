@@ -13,13 +13,9 @@ He specializes in backend development, APIs, Ruby on Rails, and PostgreSQL.
 ![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
 <small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
 
-Experienced in full stack and mobile. Primarily an IC, has acted as a technical lead and manager.
+He also has development experience in full stack and mobile. Primarily working as an IC, he's also acted as a technical lead and manager.
 
-Recent experience includes Elasticsearch, AWS, Azure, and Kubernetes. Experienced with NLP and A/B testing.
-
-Recent non-code contributions have been conducting interviews, reviewing candidate code challenge submissions, improving onboarding documentation and processes.
-
-Loves to build new technical skills, learn from and help team members grow.
+He loves to build new technical skills through self study, by learning from team members, and to help the team grow by teaching and mentoring.
 
 #### Education
 
