@@ -6,7 +6,7 @@ title: PostgreSQL Tuning and Tips
 
 Here are tuning params, tips and misc. information collected from work experience with PostgreSQL that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
 
-### Approximate count on any table
+### Query: Approximate count on any table
 
 A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
 
@@ -74,7 +74,6 @@ WHERE s.idx_scan = 0      -- has never been scanned
 ORDER BY pg_relation_size(s.indexrelid) DESC;
 ```
 
-
 ### Timeout Tuning
 
   - Statement timeout: TBD
@@ -88,7 +87,6 @@ TBD
 
   - PgBouncer. [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
   - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
-
 
 ### Foreign Data Wrappers
 
@@ -158,8 +156,6 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 [Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
 
-Set these parameters.
-
 - `log_lock_waits`
 - `deadlock_timeout`
 
@@ -171,3 +167,20 @@ Set these parameters.
 ##### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
 Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
 `--explain (analyze, buffers, verbosem format text)` or specify `format json`
+
+
+### Query: 10 largest tables
+
+```sql
+select schemaname as table_schema,
+    relname as table_name,
+    pg_size_pretty(pg_total_relation_size(relid)) as total_size,
+    pg_size_pretty(pg_relation_size(relid)) as data_size,
+    pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid))
+      as external_size
+from pg_catalog.pg_statio_user_tables
+order by pg_total_relation_size(relid) desc,
+         pg_relation_size(relid) desc
+limit 10;
+```
+<https://dataedo.com/kb/query/postgresql/list-10-largest-tables>
