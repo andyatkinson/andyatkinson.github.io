@@ -165,3 +165,9 @@ Set these parameters.
 
 "Then slow lock acquisition will appear in the database logs for later analysis."
 
+
+### Query planning tools
+
+##### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
+Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
+`--explain (analyze, buffers, verbosem format text)` or specify `format json`
