@@ -4,7 +4,15 @@ permalink: /postgresql-tips
 title: PostgreSQL Tuning and Tips
 ---
 
-Here are some tuning parameters and PostgreSQL tips from my work experience that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
+Here are tuning params, tips and misc. information collected from work experience with PostgreSQL that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
+
+### Approximate count on any table
+
+A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
+
+```
+SELECT relname, relpages, reltuples::numeric, relallvisible, relkind, relnatts, relhassubclass, reloptions, pg_table_size(oid) FROM pg_class WHERE relname='table';
+```
 
 ### Autovacuum
 
