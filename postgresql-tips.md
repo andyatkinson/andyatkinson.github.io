@@ -34,6 +34,14 @@ ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
 ALTER TABLE bigtable SET (autovacuum_vacuum_threshold = 1000);
 ```
 
+If after experimentation you'd like to reset, use the `RESET` option.
+
+```
+ALTER TABLE bigtable RESET (autovacuum_vacuum_threshold);
+ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
+```
+<https://www.postgresql.org/docs/current/sql-altertable.html>
+
 ### Additional AV parameters
 
 `autovacuum_max_freeze_age`
