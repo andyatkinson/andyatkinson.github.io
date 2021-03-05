@@ -82,6 +82,12 @@ WHERE s.idx_scan = 0      -- has never been scanned
 ORDER BY pg_relation_size(s.indexrelid) DESC;
 ```
 
+### Find duplicate indexes
+
+<https://wiki.postgresql.org/wiki/Index_Maintenance>
+
+Query that finds duplicate indexes, meaning using the same columns etc. Recommends that usually it is safe to delete one of the two.
+
 ### Timeout Tuning
 
   - Statement timeout: TBD
