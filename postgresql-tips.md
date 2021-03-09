@@ -210,3 +210,15 @@ order by pg_total_relation_size(relid) desc,
 limit 10;
 ```
 <https://dataedo.com/kb/query/postgresql/list-10-largest-tables>
+
+### `pgbench`
+
+- Initialize database example with scaling option of 50 times the default size:
+`pgbench -i -s 50 example`
+
+- Benchmark with 10 clients, 2 worker threads, and 10,000 transactions per client:
+`pgbench -c 10 -j 2 -t 10000 example`
+
+### `postgresqltuner`
+
+<https://github.com/jfcoz/postgresqltuner>
