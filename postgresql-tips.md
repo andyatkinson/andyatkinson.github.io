@@ -14,6 +14,17 @@ A `count(*)` query on a large table may be too slow. If an approximate count is 
 SELECT relname, relpages, reltuples::numeric, relallvisible, relkind, relnatts, relhassubclass, reloptions, pg_table_size(oid) FROM pg_class WHERE relname='table';
 ```
 
+### Cancel or kill a process ID
+
+Get a PID with `select * from pg_stat_activity;`
+
+Try to cancel the pid first, more gracefully, or terminate it:
+
+```
+select pg_cancel_backend(pid); 
+select pg_terminate_backend(pid);
+```
+
 ### Autovacuum
 
 PostgreSQL runs an autovacuum process in the background to remove dead tuples. Dead tuples are the result of a multiversion model ([MVCC](https://www.postgresql.org/docs/9.5/mvcc-intro.html)).
@@ -95,7 +106,7 @@ Query that finds duplicate indexes, meaning using the same columns etc. Recommen
 
 ### Checkpoint Tuning
 
-TBD
+Fewer checkpoints will improve performance, but increase recovery time. Default setting of 5 minutes is considered low. Values of 30 minutes or 1 hour are reasonable.
 
 ### Connections Management
 
