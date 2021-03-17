@@ -12,3 +12,7 @@ title: Rails Tips
 
 In a separate terminal window:
 `tail -f log/test.log`
+
+#### List object methods
+
+`User.methods - ActiveRecord::Base.methods`
