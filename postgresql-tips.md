@@ -27,9 +27,9 @@ select pg_terminate_backend(pid);
 
 ### Autovacuum
 
-PostgreSQL runs an autovacuum process in the background to remove dead tuples. Dead tuples are the result of a multiversion model ([MVCC](https://www.postgresql.org/docs/9.5/mvcc-intro.html)).
+PostgreSQL runs an autovacuum process in the background to remove dead tuples. Dead tuples are the result of a multiversion model ([MVCC](https://www.postgresql.org/docs/9.5/mvcc-intro.html)). Dead tuples are also called dead rows or "bloat". Bloat can also exist for indexes.
 
-There are two parameters to tune, "scale factor" and "threshold".
+There are two parameters related to triggering the AV process and workers "scale factor" and "threshold", which can be configured for all tables or per-table.
 
 In [routine vacumming](https://www.postgresql.org/docs/9.1/routine-vacuuming.html), the two options are listed:
 
@@ -38,7 +38,7 @@ In [routine vacumming](https://www.postgresql.org/docs/9.1/routine-vacuuming.htm
 
 The scale factor defaults to 20% (`0.20`). To optimize for our largest tables it has been recommended to set the scale factor very low 1% (`0.01`) or opt out of it altogether.
 
-To opt out of scale factor entirely, set the value to 0 and set the threshold to the number to trigger the condition, e.g. 1000.
+To opt out of scale factor entirely, set the value to 0 and set the threshold to a fixed number of dead tuples that would trigger the condition, e.g. 1000, 10000 etc. depending on work load.
 
 ```
 ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
@@ -53,11 +53,17 @@ ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 ```
 <https://www.postgresql.org/docs/current/sql-altertable.html>
 
-### Additional AV parameters
+Autovacuum 
 
-`autovacuum_max_freeze_age`
+#### AV execution time for a table
 
-TBD
+Set `log_autovacuum_min_duration` to `0` to log all autovacuums. A logged AV run includes a lot of information.
+
+
+#### AV parameters
+
+- `autovacuum_max_freeze_age`
+- `maintenance_work_memory`
 
 
 ### Remove unused indexes
@@ -189,7 +195,7 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 ### Query planning tools
 
-##### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
+#### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
 Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
 
 `explain (analyze, buffers, verbose, format text)` or specify `format json`
@@ -218,6 +224,8 @@ limit 10;
 
 - Benchmark with 10 clients, 2 worker threads, and 10,000 transactions per client:
 `pgbench -c 10 -j 2 -t 10000 example`
+
+I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
 
 ### `postgresqltuner`
 
