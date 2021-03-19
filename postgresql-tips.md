@@ -29,16 +29,16 @@ select pg_terminate_backend(pid);
 
 PostgreSQL runs an autovacuum process in the background to remove dead tuples. Dead tuples are the result of a multiversion model ([MVCC](https://www.postgresql.org/docs/9.5/mvcc-intro.html)). Dead tuples are also called dead rows or "bloat". Bloat can also exist for indexes.
 
-There are two parameters related to triggering the AV process and workers "scale factor" and "threshold", which can be configured for all tables or per-table.
+Two parameters may be used to trigger the AV process: "scale factor" and "threshold". These can be configured DB-wide or per-table.
 
 In [routine vacumming](https://www.postgresql.org/docs/9.1/routine-vacuuming.html), the two options are listed:
 
-- scale factor (a percentage of dead tuples) [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
-- threshold (a specific number of dead tuples) [`autovacuum_vacuum_threshold`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
+- scale factor (a percentage) [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
+- threshold (a specific number) [`autovacuum_vacuum_threshold`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
 
-The scale factor defaults to 20% (`0.20`). To optimize for our largest tables it has been recommended to set the scale factor very low 1% (`0.01`) or opt out of it altogether.
+The scale factor defaults to 20% (`0.20`). To optimize for our largest tables we set it lower at 1% (`0.01`).
 
-To opt out of scale factor entirely, set the value to 0 and set the threshold to a fixed number of dead tuples that would trigger the condition, e.g. 1000, 10000 etc. depending on work load.
+To opt out of scale factor, set the value to 0 and set the threshold, e.g. 1000, 10000 etc. depending on workload.
 
 ```
 ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
@@ -53,7 +53,6 @@ ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 ```
 <https://www.postgresql.org/docs/current/sql-altertable.html>
 
-Autovacuum 
 
 #### AV execution time for a table
 
@@ -62,6 +61,7 @@ Set `log_autovacuum_min_duration` to `0` to log all autovacuums. A logged AV run
 
 #### AV parameters
 
+- `autovacuum_max_workers`
 - `autovacuum_max_freeze_age`
 - `maintenance_work_memory`
 
@@ -217,7 +217,9 @@ limit 10;
 ```
 <https://dataedo.com/kb/query/postgresql/list-10-largest-tables>
 
-### `pgbench`
+### Tools
+
+#### `pgbench`
 
 - Initialize database example with scaling option of 50 times the default size:
 `pgbench -i -s 50 example`
@@ -227,6 +229,14 @@ limit 10;
 
 I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
 
-### `postgresqltuner`
+#### `postgresqltuner`
 
 <https://github.com/jfcoz/postgresqltuner>
+
+#### pgtune
+
+<https://pgtune.leopard.in.ua/#/>
+
+#### pghero
+
+<https://github.com/ankane/pghero>
