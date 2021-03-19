@@ -219,7 +219,7 @@ limit 10;
 
 ### Tools
 
-#### `pgbench`
+#### pgbench
 
 - Initialize database example with scaling option of 50 times the default size:
 `pgbench -i -s 50 example`
@@ -229,7 +229,7 @@ limit 10;
 
 I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
 
-#### `postgresqltuner`
+#### postgresqltuner
 
 <https://github.com/jfcoz/postgresqltuner>
 
