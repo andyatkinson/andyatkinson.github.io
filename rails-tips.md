@@ -16,3 +16,9 @@ In a separate terminal window:
 #### List object methods
 
 `User.methods - ActiveRecord::Base.methods`
+
+#### Vendor everything
+
+When vendoring/caching all gems, while developing on OS X but deploying with Alpine Linux, we need to download and cache gems for all platforms. This grabs the Linux version of the Nokogiri gem.
+
+`bundle package --all-platforms`
