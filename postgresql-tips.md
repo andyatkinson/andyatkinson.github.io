@@ -240,3 +240,9 @@ I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/p
 #### pghero
 
 <https://github.com/ankane/pghero>
+
+#### citext extension
+
+Case insensitive column type
+
+[citext](https://www.postgresql.org/docs/9.3/citext.html)
