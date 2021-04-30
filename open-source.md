@@ -6,17 +6,18 @@ title: Open Source
 
 #### Featured
 
+ * [tldr gem PR](https://github.com/tldr-pages/tldr/pull/5388)
  * [Delayed Job Web gem](https://github.com/ejschmitt/delayed_job_web) - Gem maintainer. Web interface to delayed job (Ruby-based background processing).
- * [Notify Me](https://github.com/andyatkinson/notify-me) - Creator. Sinatra app. "Start building a subscriber list before your product launches"
- * [Promo Slide](https://github.com/andyatkinson/promoSlide) - jQuery plugin creator. Web page marketing component. Written in Coffeescript. 👉 [Live Demo and Promotional Site](http://andyatkinson.com/projects/promoSlide)
  * [rails/globalid](https://github.com/rails/globalid/commits?author=andyatkinson) - Added unit tests
+ * [Ruby on Rails](http://contributors.rubyonrails.org/contributors/andy-atkinson/commits) - Committed a couple of small improvements
+ * [Notify Me](https://github.com/andyatkinson/notify-me) - Creator. Sinatra app. "Start building a subscriber list before your product launches"
 
 #### Additional Open Source Projects
 
  * [Seedster](https://github.com/groupon/seedster) - Gem author. Developed at Groupon. Easily maintain local Rails app development data using real content
  * [Dev Dump](https://github.com/andyatkinson/DevDump) - Dump and load DB table data with encryption, extracted Ruby gem
- * [Ruby on Rails](http://contributors.rubyonrails.org/contributors/andy-atkinson/commits) - Committed a couple of small improvements
  * [Core NLP gem](https://github.com/lengio/corenlp) - Gem author. Extracted at Lengio. Light Ruby interface to Stanford's Java-based CoreNLP tool.
+ * [Promo Slide](https://github.com/andyatkinson/promoSlide) - jQuery plugin creator. Web page marketing component. Written in Coffeescript. 👉 [Live Demo and Promotional Site](http://andyatkinson.com/projects/promoSlide)
 
 #### For Fun 😆
 
