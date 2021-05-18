@@ -246,3 +246,9 @@ I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/p
 Case insensitive column type
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
+
+### Bloat
+
+How does bloat (table bloat, dead tuples) actually affect performance?
+
+* Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scanes on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.

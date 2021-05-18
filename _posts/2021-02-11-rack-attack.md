@@ -4,10 +4,6 @@ title: "Throttling and Temporary Bans with Rack Attack"
 tags: [Ruby, API, Programming, DevOps, Tools, Open Source, Performance]
 date: 2021-02-11
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 [Rack Attack](https://github.com/rack/rack-attack) is a Rack middleware developed at Kickstarter that can be used to throttle endpoints and temporarily ban bad actors.
