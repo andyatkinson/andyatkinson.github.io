@@ -16,3 +16,7 @@ In a separate terminal window:
 #### List object methods
 
 `User.methods - ActiveRecord::Base.methods`
+
+#### Warnings
+
+Boot app with `$VERBOSE = true` in `config/application.rb` or somewhere that executes
