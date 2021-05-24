@@ -269,6 +269,22 @@ How does bloat (table bloat, dead tuples) actually affect performance?
 
 #### PG 11
 
+Release announcement October 2018
+
+* Improves parallel query performance and parallelism of B-tree index creation. Source: [Release announcement](https://www.postgresql.org/about/news/postgresql-11-released-1894/#:~:text=PostgreSQL%2011%20improves%20parallel%20query,are%20unable%20to%20be%20parallelized.)
+* Adds partitioning by hash key
+* Significant partitioning improvements
+* Adds "covering" indexes via `INCLUDE` to add more data to the index. Docs: [Index only scans and Covering indexes](https://www.postgresql.org/docs/11/indexes-index-only-scans.html)
+
 #### PG 12
 
-- Parallel vacuum. Run vacuum faster.
+Release announcement October 2019
+
+* Partitioning performanve improvements
+* Reindex concurrently
+
+#### PG 13
+
+Released September 2020
+
+* Parallel vacuum
