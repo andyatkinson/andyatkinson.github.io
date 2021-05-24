@@ -221,6 +221,8 @@ limit 10;
 
 #### pgbench
 
+Repeatable method of determining a transactions per second (TPS). Useful for determining impact of tuning parameters like shared_buffers.
+
 - Initialize database example with scaling option of 50 times the default size:
 `pgbench -i -s 50 example`
 
@@ -228,6 +230,7 @@ limit 10;
 `pgbench -c 10 -j 2 -t 10000 example`
 
 I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
+
 
 #### postgresqltuner
 
@@ -241,6 +244,14 @@ I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/p
 
 <https://github.com/ankane/pghero>
 
+### Extensions
+
+#### pg_stat_statements
+
+Tracks execution statistics for all statements and made available via a view. Requires restart.
+
+create extension pg_stat_statements;
+
 #### citext extension
 
 Case insensitive column type
@@ -252,3 +263,12 @@ Case insensitive column type
 How does bloat (table bloat, dead tuples) actually affect performance?
 
 * Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scanes on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.
+
+
+### Upgrades
+
+#### PG 11
+
+#### PG 12
+
+- Parallel vacuum. Run vacuum faster.
