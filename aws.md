@@ -19,4 +19,5 @@ title: AWS Tips
   - Redis and Memcached
 - S3
 - IAM (Identity and Access Management)
+  - Groups, Users, Roles, Policies etc.
 - CloudWatch
