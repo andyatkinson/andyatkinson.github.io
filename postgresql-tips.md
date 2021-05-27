@@ -6,6 +6,14 @@ title: PostgreSQL Tuning and Tips
 
 Here are tuning params, tips and misc. information collected from work experience with PostgreSQL that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
 
+## Tuning
+
+`shared_buffers`. RDS default is around 25% of system memory. Recommendations say up to 40% of system memory could be allocated, at which point there may be diminishing returns beyond that.
+
+The unit is 8kb chunks, and requires some math to change the value for. Here is a breakdown:
+
+<https://stackoverflow.com/a/42483002/126688>
+
 ### Query: Approximate count on any table
 
 A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
