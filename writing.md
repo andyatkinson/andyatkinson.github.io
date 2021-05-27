@@ -4,13 +4,11 @@ permalink: /writing
 title: Writing
 ---
 
-### Blog
+### Blogging
 
-I write on this website which serves as a blog, primarily to get a deeper understanding of a topic. I like to try and include practical examples from my work experience or side projects.
+I keep a blog here on technical topics, primarily to learn them more deeply through intentional focus, and to share my knowledge with others. I like include practical examples from my work experience or side projects.
 
-Over the years I've learned a lot from the blog posts of other technical writers, so I also view writing a blog as a way of giving back.
-
-Due to how quickly things change in technology, blogging about a topic helps me remember the details longer and recall the context quicker as well.
+Over the years I've learned a lot from the blog posts of others, so I also view blogging as a way of give back.
 
 ### This Week In Rails
 
@@ -38,12 +36,12 @@ Update 2020: After a period of dormancy, 3 editors jumped in and have started cr
 
 ### Ruby Inside
 
-I contributed an article to Peter Cooper's popular site for Ruby programmers.
+I contributed an article to Peter Cooper's popular site for Ruby programmers back in 2009.
 
   * [7 Video Presentations From The WindyCityRails 2009 Conference](http://www.rubyinside.com/7-video-presentations-from-the-windycityrails-2009-conference-2592.html)
 
-### Dev.to
+### DEV
 
-I experimented with writing posts on Dev.to to check the experience, engagement etc.
+I experimented with the DEV platform to see what the writing experience was like, and to get a sense of the engagement on posts.
 
 * [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
