@@ -274,6 +274,8 @@ How does bloat (table bloat, index bloat) affect performance?
 * Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time through defunct items. Fix is to reindex the index.
 * Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scanes on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.
 
+[Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
+
 
 ### Upgrades
 
