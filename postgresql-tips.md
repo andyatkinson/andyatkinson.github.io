@@ -260,8 +260,10 @@ Case insensitive column type
 
 ### Bloat
 
-How does bloat (table bloat, dead tuples) actually affect performance?
+How does bloat (table bloat, index bloat) affect performance?
 
+* Queries on tables with high bloat will require additional IO, navigating through more pages of data. Fix is to vacuum or vacuum full.
+* Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time through defunct items. Fix is to reindex the index.
 * Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scanes on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.
 
 
@@ -288,3 +290,12 @@ Release announcement October 2019
 Released September 2020
 
 * Parallel vacuum
+
+### RDS Parameter Groups
+
+[Working with RDS Parameter Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html)
+
+* Try out parameter changes on a test database prior to making the change. Potentially create a backup before making the change as well.
+* Parameter groups can be restored to their defaults (or they can be copied to create an experimental group). Groups can be compared with each other to determine differences.
+* Parameter values can process a formula. RDS provides some forumulas that utilize the instance class CPU or memory available to calculate a value.
+
