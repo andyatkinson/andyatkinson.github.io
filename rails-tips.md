@@ -20,3 +20,9 @@ In a separate terminal window:
 #### Warnings
 
 Boot app with `$VERBOSE = true` in `config/application.rb` or somewhere that executes
+
+#### Vendor everything
+
+When vendoring/caching all gems, while developing on OS X but deploying with Alpine Linux, we need to download and cache gems for all platforms. This grabs the Linux version of the Nokogiri gem.
+
+`bundle package --all-platforms`
