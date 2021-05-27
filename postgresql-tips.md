@@ -244,7 +244,7 @@ I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/p
 
 <https://github.com/ankane/pghero>
 
-### Extensions
+### Extensions and Modules
 
 #### pg_stat_statements
 
@@ -255,6 +255,14 @@ create extension pg_stat_statements;
 #### citext extension
 
 Case insensitive column type
+
+#### pgstattuple
+
+> The pgstattuple module provides various functions to obtain tuple-level statistics.
+
+<https://www.postgresql.org/docs/9.5/pgstattuple.html>
+
+
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
 
