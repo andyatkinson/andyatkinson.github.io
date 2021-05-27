@@ -50,6 +50,8 @@ navigation:
     url: /rails-tips
   - text: Dev Process
     url: /software-dev-process
+  - text: Dev Guidelines
+    url: /engineering-guidelines
   - text: Dev Interviewing
     url: /dev-interviewing
   - text: Archive
