@@ -41,3 +41,9 @@ Update 2020: After a period of dormancy, 3 editors jumped in and have started cr
 I contributed an article to Peter Cooper's popular site for Ruby programmers.
 
   * [7 Video Presentations From The WindyCityRails 2009 Conference](http://www.rubyinside.com/7-video-presentations-from-the-windycityrails-2009-conference-2592.html)
+
+### Dev.to
+
+I experimented with writing posts on Dev.to to check the experience, engagement etc.
+
+* [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
