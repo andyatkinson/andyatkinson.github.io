@@ -6,20 +6,21 @@ title: About
 
 #### Summary
 
-Andy is a Senior Software Engineer with Flipgrid, part of Microsoft, based in Minneapolis, MN.
+As a Senior Software Engineer on the Flipgrid team at Microsoft, I build and support back-end systems using open source tools like Ruby on Rails, PostgreSQL, Redis, Elasticsearch, and Redshift.
 
-He specializes in backend development, APIs, Ruby on Rails, and PostgreSQL.
+To deploy our systems, we use AWS services like EC2 and RDS as well as Azure services with Kubernetes, Docker and Terraform.
+
+Outside of writing and reviewing code, I conduct code screens and interviews to help grow the team. To help with the rapid evolution of our roles and responsibilities, I work to onboard and mentor new members, add documentation, write change logs and code review checklists, and propose new processes.
 
 ![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
 <small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
 
-He also has development experience in full stack and mobile. Primarily working as an IC, he's also acted as a technical lead and manager.
-
-He loves to build new technical skills through self study, by learning from team members, and to help the team grow by teaching and mentoring.
-
 #### Education
 
-Andy earned Bachelors degrees from the [University of Minnesota](http://umn.edu) in Minneapolis, MN. He completed one semester abroad at the Fundación José Ortega y Gasset in beautiful and historic Toledo, Spain.
+Andy earned Bachelors degrees from the [University of Minnesota](http://umn.edu) in Minneapolis, MN. He completed one semester abroad at the Fundación José Ortega y Gasset in Toledo, Spain.
+
+  * Bachelor of Applied Science in Information Technology Infrastructure
+  * Bachelor of Arts in Spanish Studies
 
 #### Personal Life
 

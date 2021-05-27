@@ -6,7 +6,7 @@ title: Open Source
 
 #### Featured
 
- * [tldr gem PR](https://github.com/tldr-pages/tldr/pull/5388)
+ * [tldr gem PR](https://github.com/tldr-pages/tldr/pull/5388) - Contributed new page on `pgbench`
  * [Delayed Job Web gem](https://github.com/ejschmitt/delayed_job_web) - Gem maintainer. Web interface to delayed job (Ruby-based background processing).
  * [rails/globalid](https://github.com/rails/globalid/commits?author=andyatkinson) - Added unit tests
  * [Ruby on Rails](http://contributors.rubyonrails.org/contributors/andy-atkinson/commits) - Committed a couple of small improvements
