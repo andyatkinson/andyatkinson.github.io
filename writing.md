@@ -6,15 +6,15 @@ title: Writing
 
 ### Blogging
 
-I keep a blog here on technical topics, primarily to learn them more deeply through intentional focus, and to share my knowledge with others. I like include practical examples from my work experience or side projects.
+I keep a blog here on technical topics to learn them more deeply through the deliberate focus that writing and teaching requires, and to share my knowledge with others.
 
-Over the years I've learned a lot from the blog posts of others, so I also view blogging as a way of give back.
+I like include practical examples from my work experience or side projects.
 
 ### This Week In Rails
 
-Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a weekly newsletter covering changes to the Ruby on Rails framework.
+Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a curated list of outside-facing changes in the Ruby on Rails framework.
 
-This newsletter is incorporated into the official [Ruby on Rails weblog](https://weblog.rubyonrails.org/) as well!
+This newsletter is part of the official [Ruby on Rails weblog](https://weblog.rubyonrails.org/)!
 
 From 2015 to 2017, he wrote 6 issues as part of an editor rotation, delivered to over 6000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information. Below are links to the issues.
 
@@ -34,6 +34,8 @@ Update 2020: After a period of dormancy, 3 editors jumped in and have started cr
   * [New Active Record and Action View capabilities, bug fixes and more!](https://rails-weekly.ongoodbits.com/new-active-record-and-action-view-capabilities-bug-fixes-and-more)
   * [New API Docs site, configurable cache coder, bug fixes, and more!](https://rails-weekly.ongoodbits.com/new-api-docs-site-configurable-cache-coder-bug-fixes-and-more)
 
+Update 2021: On hiatus from writing again. The subscriber count had eclipsed 10K!
+
 ### Ruby Inside
 
 I contributed an article to Peter Cooper's popular site for Ruby programmers back in 2009.
@@ -42,6 +44,6 @@ I contributed an article to Peter Cooper's popular site for Ruby programmers bac
 
 ### DEV
 
-I experimented with the DEV platform to see what the writing experience was like, and to get a sense of the engagement on posts.
+I experimented with the DEV platform to see what the writing experience and engagement was like.
 
 * [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
