@@ -48,11 +48,11 @@ navigation:
     url: /postgresql-tips
   - text: Ruby on Rails
     url: /rails-tips
-  - text: Dev Process
+  - text: Process
     url: /software-dev-process
-  - text: Dev Guidelines
+  - text: Guidelines
     url: /engineering-guidelines
-  - text: Dev Interviewing
+  - text: Interviewing
     url: /dev-interviewing
   - text: Archive
     url: /tag
