@@ -22,7 +22,8 @@ Cache the dependencies in the application.
 
 ### Benchmarking
 
-* Provide quantitative evidence supporting a change. Using a benchmarking tool as a before/after change is one way.
+Provide quantitative evidence supporting a change. Using a benchmarking tool as a before/after change is one way.
+
 * For web requests, something like [wrk2](https://github.com/giltene/wrk2)
 * For Ruby code changes, something like [benchmark](https://github.com/ruby/benchmark)
 * For database changes, something like [pgbench](https://www.postgresql.org/docs/10/pgbench.html)
