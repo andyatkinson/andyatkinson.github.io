@@ -256,9 +256,11 @@ I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/p
 
 #### pg_stat_statements
 
-Tracks execution statistics for all statements and made available via a view. Requires restart.
+Tracks execution statistics for all statements and made available via a view. Requires restart on RDS on PG 10 although pg_stat_statements is available by default `shared_preload_libraries` on PG 12.
 
-create extension pg_stat_statements;
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+
+<https://www.virtual-dba.com/blog/postgresql-performance-enabling-pg-stat-statements/>
 
 #### citext extension
 
