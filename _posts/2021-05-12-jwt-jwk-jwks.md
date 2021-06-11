@@ -10,7 +10,7 @@ featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atk
 featured: true
 ---
 
-Authentication and authorization with JSON technologies can be a confusing mess of of acronyms, so this post is an attempt to sort these out.
+Authentication and authorization with JSON technologies can be a confusing mess of of acronyms, so this post is an attempt to sort these out. This post including the title, is very similar to [Red Thunder: JWTs? JWKs? ‘kid’s? ‘x5t’s? Oh my!](https://redthunder.blog/2017/06/08/jwts-jwks-kids-x5ts-oh-my/). Check their post out as well which was helpful diagrams.
 
 NOTE TO READER: This Post is in progress and being edited for technical accuracy. If you see errors please contact me.
 
@@ -119,7 +119,8 @@ Remote service needs the sending service's public key to verify the JWT.
 
 References:
 
-* [^ruleoftech]: <https://ruleoftech.com/2020/generating-jwt-and-jwk-for-information-exchange-between-services>
+[^ruleoftech]: Rule of Tech <https://ruleoftech.com/2020/generating-jwt-and-jwk-for-information-exchange-between-services>
+
 * [Auth0 Documentation](https://auth0.com/docs/tokens/json-web-tokens/json-web-key-sets)
 * [JSON Web Key (JWK) RFC](https://tools.ietf.org/html/rfc7517)
 * [Ruby JWT gem](https://github.com/jwt/ruby-jwt)

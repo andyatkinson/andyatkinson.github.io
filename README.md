@@ -18,6 +18,7 @@ This is the source for my website, blog, and portfolio at [andyatkinson.com](htt
  * For product and company names, mind the CamelCase
  * For dates on posts, use a date and not a time
  * Bare markdown links are `<>`
+ * Using footnotes: make a `[^footnote]` usage where you want it inserted, and a `[^footnote]: Text <link>` at the bottom of the article
 
 #### Theme Bugs and Issues
 
