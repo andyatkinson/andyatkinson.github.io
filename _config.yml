@@ -52,8 +52,6 @@ navigation:
     url: /software-dev-process
   - text: Guidelines
     url: /engineering-guidelines
-  - text: Interviewing
-    url: /dev-interviewing
   - text: Archive
     url: /tag
   - text: Contact Me
