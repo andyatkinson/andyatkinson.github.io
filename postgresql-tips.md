@@ -10,9 +10,19 @@ Here are tuning params, tips and misc. information collected from work experienc
 
 `shared_buffers`. RDS default is around 25% of system memory. Recommendations say up to 40% of system memory could be allocated, at which point there may be diminishing returns beyond that.
 
-The unit is 8kb chunks, and requires some math to change the value for. Here is a breakdown:
+The unit is 8kb chunks, and requires some math to change the value for. Here is a formula:
 
 <https://stackoverflow.com/a/42483002/126688>
+
+* `wal_buffers`. Unit is also 8kb chunks.
+* `effective_cache_size`
+* `work_mem`
+* `maintenance_work_mem`
+* `checkpoint_timeout`
+* `min_wal_size`
+* `max_wal_size`
+* `wal_write_delay`
+
 
 ### Query: Approximate count on any table
 
@@ -229,7 +239,7 @@ limit 10;
 
 #### pgbench
 
-Repeatable method of determining a transactions per second (TPS). Useful for determining impact of tuning parameters like shared_buffers.
+Repeatable method of determining a transactions per second (TPS) rate. Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom workload.
 
 - Initialize database example with scaling option of 50 times the default size:
 `pgbench -i -s 50 example`
@@ -239,32 +249,39 @@ Repeatable method of determining a transactions per second (TPS). Useful for det
 
 I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
 
-
-#### postgresqltuner
-
-<https://github.com/jfcoz/postgresqltuner>
-
 #### pgtune
+
+PGTune is a website that tries to suggest values for PG parameters that can be tuned and may improve performance for a given workload.
 
 <https://pgtune.leopard.in.ua/#/>
 
 #### pghero
 
+pghero brings a bunch of operational concerns into a dashboard format. It is built as a Rails engine and provides a nice interface on top of queries related to the PG catalog tables.
+
+We are running it in production and some immediate value has been helping clarify unused and duplicate indexes we can remove.
+
+[Fix Typo PR #384](https://github.com/ankane/pghero/pull/384)
+
 <https://github.com/ankane/pghero>
+
+#### postgresqltuner
+
+Perl script to analyze a database. Do not have experience with this. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
+
+<https://github.com/jfcoz/postgresqltuner>
+
 
 ### Extensions and Modules
 
 #### pg_stat_statements
 
-Tracks execution statistics for all statements and made available via a view. Requires restart on RDS on PG 10 although pg_stat_statements is available by default `shared_preload_libraries` on PG 12.
+Tracks execution statistics for all statements and made available via a view. Requires reboot (static param) on RDS on PG 10 although `pg_stat_statements` is available by default in `shared_preload_libraries` in PG 12.
 
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+`CREATE EXTENSION IF NOT EXISTS pg_stat_statements;`
 
 <https://www.virtual-dba.com/blog/postgresql-performance-enabling-pg-stat-statements/>
 
-#### citext extension
-
-Case insensitive column type
 
 #### pgstattuple
 
@@ -273,6 +290,9 @@ Case insensitive column type
 <https://www.postgresql.org/docs/9.5/pgstattuple.html>
 
 
+#### citext extension
+
+Case insensitive column type
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
 
@@ -282,7 +302,7 @@ How does bloat (table bloat, index bloat) affect performance?
 
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data. Fix is to vacuum or vacuum full.
 * Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time through defunct items. Fix is to reindex the index.
-* Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scanes on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.
+* Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scans on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.
 
 [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 
@@ -302,8 +322,8 @@ Release announcement October 2018
 
 Release announcement October 2019
 
-* Partitioning performanve improvements
-* Reindex concurrently
+* Partitioning performance improvements
+* Re-index concurrently
 
 #### PG 13
 
@@ -317,5 +337,5 @@ Released September 2020
 
 * Try out parameter changes on a test database prior to making the change. Potentially create a backup before making the change as well.
 * Parameter groups can be restored to their defaults (or they can be copied to create an experimental group). Groups can be compared with each other to determine differences.
-* Parameter values can process a formula. RDS provides some forumulas that utilize the instance class CPU or memory available to calculate a value.
+* Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
 
