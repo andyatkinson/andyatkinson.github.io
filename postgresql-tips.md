@@ -14,14 +14,17 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 <https://stackoverflow.com/a/42483002/126688>
 
-* `wal_buffers`. Unit is also 8kb chunks.
-* `effective_cache_size`
-* `work_mem`
-* `maintenance_work_mem`
-* `checkpoint_timeout`
-* `min_wal_size`
-* `max_wal_size`
-* `wal_write_delay`
+| Parameter | Unit |
+| --- | ----------- |
+| `shared_buffers` | 8kb |
+| `wal_buffers` | 8kb |
+| `effective_cache_size` | 8kb |
+| `work_mem` |  |
+| `maintenance_work_memory` |  |
+| `checkpoint_timeout` |  |
+| `min_wal_size` |  |
+| `max_walsize` |  |
+| `wal_write_delay` |  |
 
 
 ### Query: Approximate count on any table
