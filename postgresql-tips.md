@@ -17,12 +17,12 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | Parameter | Unit |
 | --- | ----------- |
 | `shared_buffers` | 8kb |
-| `wal_buffers` | 8kb |
 | `effective_cache_size` | 8kb |
 | `work_mem` |  |
 | `maintenance_work_memory` |  |
 | `checkpoint_timeout` |  |
-| `min_wal_size` |  |
+| `wal_buffers` | 8kb |
+| `min_wal_size` | MB |
 | `max_walsize` |  |
 | `wal_write_delay` |  |
 
@@ -277,7 +277,17 @@ Perl script to analyze a database. Do not have experience with this. Has some in
 
 ### Extensions and Modules
 
-#### pg_stat_statements
+On Amazon RDS type `show rds.extensions` to view available extensions.
+
+#### `uuid-ossp`
+
+Generate universally unique identifiers (UUIDs) in PostgreSQL. [Documentation link](https://www.postgresql.org/docs/10/uuid-ossp.html)
+
+#### `postgres_fdw`
+
+Foreign data wrapper module for remote PostgreSQL servers. [Documentation link](https://www.postgresql.org/docs/9.6/postgres-fdw.html).
+
+#### `pg_stat_statements`
 
 Tracks execution statistics for all statements and made available via a view. Requires reboot (static param) on RDS on PG 10 although `pg_stat_statements` is available by default in `shared_preload_libraries` in PG 12.
 
@@ -285,19 +295,18 @@ Tracks execution statistics for all statements and made available via a view. Re
 
 <https://www.virtual-dba.com/blog/postgresql-performance-enabling-pg-stat-statements/>
 
-
-#### pgstattuple
+#### `pgstattuple`
 
 > The pgstattuple module provides various functions to obtain tuple-level statistics.
 
 <https://www.postgresql.org/docs/9.5/pgstattuple.html>
 
-
-#### citext extension
+#### `citext`
 
 Case insensitive column type
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
+
 
 ### Bloat
 
@@ -342,3 +351,9 @@ Released September 2020
 * Parameter groups can be restored to their defaults (or they can be copied to create an experimental group). Groups can be compared with each other to determine differences.
 * Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
 
+
+### Indexes
+
+* GIN
+* GiST
+* BRIN
