@@ -14,17 +14,17 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 <https://stackoverflow.com/a/42483002/126688>
 
-| Parameter | Unit |
-| --- | ----------- |
-| `shared_buffers` | 8kb |
-| `effective_cache_size` | 8kb |
-| `work_mem` |  |
-| `maintenance_work_memory` |  |
-| `checkpoint_timeout` |  |
-| `wal_buffers` | 8kb |
-| `min_wal_size` | MB |
-| `max_walsize` |  |
-| `wal_write_delay` |  |
+| Parameter | Unit | Link |
+| --- | ----------- | ---- |
+| `shared_buffers` | 8kb ||
+| `effective_cache_size` | 8kb ||
+| `work_mem` |  ||
+| `maintenance_work_memory` |  ||
+| `checkpoint_timeout` |  ||
+| `wal_buffers` | 8kb ||
+| `min_wal_size` | MB ||
+| `max_walsize` |  ||
+| `wal_write_delay` |  ||
 
 
 ### Query: Approximate count on any table
@@ -306,6 +306,12 @@ Tracks execution statistics for all statements and made available via a view. Re
 Case insensitive column type
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
+
+#### `pg_cron`
+
+Available on PG 12.5+ on RDS, pg_cron is an extension that can be useful to schedule maintenance tasks, like manual vacuum jobs.
+
+See: [Scheduling maintenance with the PostgreSQL pg_cron extension](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_pg_cron.html)
 
 
 ### Bloat
