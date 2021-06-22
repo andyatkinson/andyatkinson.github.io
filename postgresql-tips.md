@@ -200,9 +200,10 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 [What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
 
 - A percentage between 10 and 100
-- you can adjust it to leave room for HOT updates when they're possible
-- For tables with heavy updates a smaller fillfactor is appropriate
-- Per table or per index
+- you can adjust it to leave room for HOT updates when they're possible, default is 100 (fully packed), can set to 90 to leave 10% space available for HOT updates.
+- For tables with heavy updates a smaller fillfactor may yield better write performance
+- Per table or can also be set per index (b-tree is default 90 fillfactor)
+- Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
 
 ### Locks
 
