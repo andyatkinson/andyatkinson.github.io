@@ -6,11 +6,12 @@ title: Open Source
 
 #### Featured
 
- * [tldr gem PR](https://github.com/tldr-pages/tldr/pull/5388) - Contributed new page on `pgbench`
  * [Delayed Job Web gem](https://github.com/ejschmitt/delayed_job_web) - Gem maintainer. Web interface to delayed job (Ruby-based background processing).
  * [rails/globalid](https://github.com/rails/globalid/commits?author=andyatkinson) - Added unit tests
  * [Ruby on Rails](http://contributors.rubyonrails.org/contributors/andy-atkinson/commits) - Committed a couple of small improvements
  * [Notify Me](https://github.com/andyatkinson/notify-me) - Creator. Sinatra app. "Start building a subscriber list before your product launches"
+ * [tldr gem PR](https://github.com/tldr-pages/tldr/pull/5388) - Contributed new page on `pgbench`
+ * [pghero](https://github.com/ankane/pghero/pull/384) - Minor contributions, love this project!
 
 #### Additional Open Source Projects
 
