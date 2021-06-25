@@ -16,8 +16,11 @@ Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-
 
 This newsletter is part of the official [Ruby on Rails weblog](https://weblog.rubyonrails.org/)!
 
-From 2015 to 2017, he wrote 6 issues as part of an editor rotation, delivered to over 6000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information. Below are links to the issues.
+Since 2015 he's written around 10 issues sent to nearly 10,000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information. Below are links to the issues.
 
+  * [Hello 2021: Sole record, Same form multiple verbs, Validator with range, Rich text control](https://weblog.rubyonrails.org/2021/1/11/this-week-in-rails-hello-2021-sole-record-same-form-multiple-verbs-validator-with-range-rich-text-control/)
+  * [New Active Record and Action View capabilities, bug fixes and more!](https://weblog.rubyonrails.org/2020/11/30/this-week-in-rails-new-active-record-and-action-view-capabilities-bug-fixes-and-more/)
+  * [New API Docs site, configurable cache coder, bug fixes, and more!](https://weblog.rubyonrails.org/2020/10/19/this-week-in-rails-new-api-docs-site-configurable-cache-coder-bug-fixes-and-more/)
   * [Fresh code to fight the Winter doldrums](https://rails-weekly.ongoodbits.com/2017/02/04/fresh-code-to-fight-the-winter-doldrums)
   * [This Week in Rails: hooks, fixtures, fetch_values, database connections and more!](https://rails-weekly.ongoodbits.com/2017/04/15/hooks-fixtures-fetch_values-database-connections-and-more)
   * [New APIs, bug fixes, #Rio2016 🇧🇷](https://rails-weekly.ongoodbits.com/2016/08/05/new-apis-bug-fixes-rio2016)

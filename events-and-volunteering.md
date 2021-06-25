@@ -14,6 +14,8 @@ Each week to prepare, I'd review most of the lectures and complete the exercises
 
 It was a great experience overall!
 
+[Statement of Participation Certificate](/assets/files/atkinson-code-in-place-2021.pdf)
+
 
 ### Rails Girls and RailsBridge
 
