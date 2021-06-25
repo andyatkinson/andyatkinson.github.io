@@ -4,13 +4,13 @@ permalink: /software-dev-process
 title: Software Development Process
 ---
 
-## Back-end Web Development
+## Back-end Development
 
-### Questions
+### Discovery Questions
 
-Here are some questions I find helpful to think about in the process of building new back-end features or services.
+Here are some questions I find helpful to think about to discovery requirements or dependencies in the process of building new back-end features or services.
 
-These questions could be asked in the design stage, or in the code review stage.
+These questions should be asked as early as possible as to minimize re-work.
 
 - Does it require database changes?
 - Does it require backfilling data that didn't exist prior to a certain date that the feature depends on?
@@ -32,3 +32,13 @@ Here are some checkboxes to help evaluate my own changes before requesting a cod
 - I have added corresponding test code that demonstrates that my feature or fix works as intended
 - I have added required environment variables to all environments
 - I explained why this change is happening in the PR desc or associated ticket
+
+### Development Flow
+
+- Write some code on a feature branch
+- Write positive and negative test cases for the code to confirm it's working as expected
+- Plan for any backwards compatibility, add more code and tests
+- When the CI suite passes, ship the code to a pre-production environment for further integration testing
+- When integration testing is complete, ship to production. Integrate main branch changes into feature branch frequently.
+- Repeat
+
