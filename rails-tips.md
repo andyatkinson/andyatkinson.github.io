@@ -38,3 +38,7 @@ Typically what happens for Rails applications at the point a database function, 
 That works but can introduce breakages due to slighy differences in PG versions between multiple environments, which can be quite irritating.
 
 A better solution is to use the [fx](https://github.com/teoljungberg/fx) gem. With fx, native database functions can be dumped into the Ruby schema format. Yay!
+
+#### Remove unused indexes
+
+In a Rails migration, check for the existence of the index like: `index_exists?(:table_name, :column_name)` before writing it. Indexes may have different generated names in different environments.
