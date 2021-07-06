@@ -214,6 +214,10 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 "Then slow lock acquisition will appear in the database logs for later analysis."
 
+#### Lock types
+
+`AccessExclusiveLock` - Locks the table, queries are not allowed.
+
 
 ### Query planning tools
 
@@ -364,3 +368,14 @@ Released September 2020
 * GIN
 * GiST
 * BRIN
+
+### Constraints
+
+[Blog: A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
+
+* Check
+* Not-null
+* Unique
+* Primary keys
+* Foreign keys
+* Exclusion
