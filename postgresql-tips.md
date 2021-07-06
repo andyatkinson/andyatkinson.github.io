@@ -379,3 +379,25 @@ Released September 2020
 * Primary keys
 * Foreign keys
 * Exclusion
+
+### Replication
+
+#### Logical
+
+[Crunchydata Logical Replication in PostgreSQL](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/logical-replication/)
+
+* Create a `PUBLICATION` and a counterpart `SUBSCRIPTION`.
+* All operations like `INSERT` and `UPDATE` etc. are enabled by default, or fewer can be configured
+* Logical replication available since PG 10.
+* `max_replication_slots` should be set higher than number of replicas
+* A role must exist for replication
+* Replication slot is a replication object that keeps track of where the subscriber is in the WAL stream
+* Unlike normal replication, writes are still possible to the subscriber. Conflicts can occur if data is written that would conflict with logical replication.
+
+### Partitioning
+
+* Range
+* List
+* Hash
+
+[Crunchydata Native Partitioning Tutorial](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/native-partitioning/)
