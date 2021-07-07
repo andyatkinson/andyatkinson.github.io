@@ -401,3 +401,7 @@ Released September 2020
 * Hash
 
 [Crunchydata Native Partitioning Tutorial](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/native-partitioning/)
+
+### Random Bits
+
+* Use `NULL`s instead of default values when possible, cheaper to store and query. Source: [Timescale DB blog](https://blog.timescale.com/blog/13-tips-to-improve-postgresql-insert-performance/)
