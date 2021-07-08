@@ -343,7 +343,7 @@ Release announcement October 2018
 
 #### PG 12
 
-Release announcement October 2019
+[Release announcement](https://www.postgresql.org/about/news/postgresql-12-released-1976/). Released October 2019.
 
 * Partitioning performance improvements
 * Re-index concurrently
