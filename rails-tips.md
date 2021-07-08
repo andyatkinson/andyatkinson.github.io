@@ -42,3 +42,7 @@ A better solution is to use the [fx](https://github.com/teoljungberg/fx) gem. Wi
 #### Remove unused indexes
 
 In a Rails migration, check for the existence of the index like: `index_exists?(:table_name, :column_name)` before writing it. Indexes may have different generated names in different environments.
+
+#### Use Strong Migrations
+
+Follow the tips in [strong_migrations](https://github.com/ankane/strong_migrations). Create your own custom checks. Explain your rationale when using `safety_assured`.
