@@ -405,3 +405,19 @@ Released September 2020
 ### Random Bits
 
 * Use `NULL`s instead of default values when possible, cheaper to store and query. Source: [Timescale DB blog](https://blog.timescale.com/blog/13-tips-to-improve-postgresql-insert-performance/)
+
+### Resources
+
+* [The Unexpected Find That Freed 20GB of Unused Index Space](https://hakibenita.com/postgresql-unused-index-size)
+* [Some SQL Tricks of an Application DBA](https://hakibenita.com/sql-tricks-application-dba)
+
+This is an amazing article full of nuggets.
+
+* The idea of an "Application DBA"
+* Things I liked: Usage of intermediate table for de-duplication. Column structure is elegant, clearly broken out destination ID and nested duplicate IDs.
+* Working with arrays
+  * `ANY()` for an array of items to compare against
+  * `array_remove(anyarray, anyelement)` to build an array but remove an element
+  * `array_agg(expression)` to build up list of IDs and `unnest(anyarray)` to expand it
+* Avoidance of indexes for low selectivity, and value of partial indexes in those cases (activated 90% v. unactivated users 10%)
+* Tip on confirming index usage by removing index in a transaction with `BEGIN` and rolling it back with `ROLLBACK`.
