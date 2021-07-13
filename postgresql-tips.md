@@ -43,6 +43,8 @@ FROM pg_stats
 WHERE tablename = 'table';
 ```
 
+Look for columns with few values, and indexes on those few values with low selectivity. Meaning, most values in the table are the same value. In index on that column would not be very selective, and given enough memory, PG would likely not use that index, preferring a sequential scan.
+
 ### Cancel or kill a process ID
 
 Get a PID with `select * from pg_stat_activity;`
