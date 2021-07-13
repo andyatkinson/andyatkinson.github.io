@@ -14,17 +14,19 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 <https://stackoverflow.com/a/42483002/126688>
 
-| Parameter | Unit | Link |
-| --- | ----------- | ---- |
-| `shared_buffers` | 8kb ||
-| `effective_cache_size` | 8kb ||
-| `work_mem` |  ||
-| `maintenance_work_memory` |  ||
-| `checkpoint_timeout` |  ||
-| `wal_buffers` | 8kb ||
-| `min_wal_size` | MB ||
-| `max_walsize` |  ||
-| `wal_write_delay` |  ||
+| Parameter | Unit | Default | Tuned | Link |
+| --- | ----------- | ---- |||
+| `shared_buffers` | 8kb ||||
+| `autovacuum_cost_delay` | ms | 20 | 2 ||
+| `autovacuum_vaccum_cost_limit` | | 200 | 2000 ||
+| `effective_cache_size` | 8kb ||||
+| `work_mem` |  ||||
+| `maintenance_work_memory` |  ||||
+| `checkpoint_timeout` |  ||||
+| `wal_buffers` | 8kb ||||
+| `min_wal_size` | MB ||||
+| `max_walsize` |  ||||
+| `wal_write_delay` |  ||||
 
 
 ### Query: Approximate count on any table
