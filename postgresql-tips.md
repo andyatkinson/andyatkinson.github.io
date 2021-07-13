@@ -31,8 +31,16 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
 
-```
+```sql
 SELECT relname, relpages, reltuples::numeric, relallvisible, relkind, relnatts, relhassubclass, reloptions, pg_table_size(oid) FROM pg_class WHERE relname='table';
+```
+
+### Query: Get statistics for table
+
+```sql
+SELECT attname, n_distinct, most_common_vals, most_common_freqs
+FROM pg_stats
+WHERE tablename = 'table';
 ```
 
 ### Cancel or kill a process ID
