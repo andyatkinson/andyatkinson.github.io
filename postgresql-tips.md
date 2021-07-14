@@ -14,19 +14,19 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 <https://stackoverflow.com/a/42483002/126688>
 
-| Parameter | Unit | Default | Tuned | Link |
+| Parameter | Unit | Default RDS | Tuned | Link |
 | --- | ----------- | ---- |||
-| `shared_buffers` | 8kb ||||
+| `shared_buffers` | 8kb | 25% mem |||
 | `autovacuum_cost_delay` | ms | 20 | 2 ||
-| `autovacuum_vaccum_cost_limit` | | 200 | 2000 ||
+| `autovacuum_vaccum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
 | `effective_cache_size` | 8kb ||||
-| `work_mem` |  ||||
+| `work_mem` | MB | 4 | 250||
 | `maintenance_work_memory` |  ||||
 | `checkpoint_timeout` |  ||||
-| `wal_buffers` | 8kb ||||
-| `min_wal_size` | MB ||||
-| `max_walsize` |  ||||
-| `wal_write_delay` |  ||||
+| `min_wal_size` | MB | 80 | 4000 | [High write log blog](https://blog.crunchydata.com/blog/tuning-your-postgres-database-for-high-write-loads) |
+| `max_wal_size` | MB | 80 | 16000 ||
+| `max_worker_processes` | | 8 |||
+| `max_parallel_workers` | | 8 |||
 
 
 ### Query: Approximate count on any table
@@ -211,11 +211,27 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 [What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
 
-- A percentage between 10 and 100
-- you can adjust it to leave room for HOT updates when they're possible, default is 100 (fully packed), can set to 90 to leave 10% space available for HOT updates.
+- Percentage between 10 and 100, default is 100 ("fully packed")
+- Reducing it leaves room for "HOT" updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
 - For tables with heavy updates a smaller fillfactor may yield better write performance
-- Per table or can also be set per index (b-tree is default 90 fillfactor)
+- Set per table or per index (b-tree is default 90 fillfactor)
 - Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
+- No index defined any column whose value it modified
+
+Limitations: Requires a `VACUUM FULL` after modifying (or pg_repack)
+
+```sh
+ALTER TABLE foo SET ( fillfactor = 90 );
+VACUUM FULL foo;
+
+--- or
+
+pg_repack --no-order --table foo
+```
+
+[Installing pg_repack on EC2 for RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/)
+
+Note: use `-k, --no-superuser-check`
 
 ### Locks
 
