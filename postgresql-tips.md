@@ -132,7 +132,7 @@ WHERE s.idx_scan = 0      -- has never been scanned
 ORDER BY pg_relation_size(s.indexrelid) DESC;
 ```
 
-### Find duplicate indexes
+### Remove duplicate indexes
 
 <https://wiki.postgresql.org/wiki/Index_Maintenance>
 
@@ -142,6 +142,19 @@ Query that finds duplicate indexes, meaning using the same columns etc. Recommen
 
   - Statement timeout: TBD
   - Reaping frequency: TBD
+
+### Remove seldom used indexes on high write tables
+
+[New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html)
+
+> Seldom Used Indexes on Heavily Written Tables
+
+This is a great guideline.
+
+As a general rule, if you're not using an index twice as often as it's written to, you should probably drop it.
+
+In our system on our highest write table we had 10 indexes defined and 6 are classified as Low Scans, High Writes. These indexes may not be worth keeping.
+
 
 ### Checkpoint Tuning
 
