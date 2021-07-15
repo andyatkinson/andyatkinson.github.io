@@ -24,9 +24,10 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | `maintenance_work_memory` |  ||||
 | `checkpoint_timeout` |  ||||
 | `min_wal_size` | MB | 80 | 4000 | [High write log blog](https://blog.crunchydata.com/blog/tuning-your-postgres-database-for-high-write-loads) |
-| `max_wal_size` | MB | 80 | 16000 ||
-| `max_worker_processes` | | 8 |||
-| `max_parallel_workers` | | 8 |||
+| `max_wal_size` | MB | 4000 | 16000 ||
+| `max_worker_processes` | | 8 | 1x/cpu ||
+| `max_parallel_workers` | | 8 | 1x/cpu ||
+| `max_parallel_workers_per_gather` | | 2 | 4 ||
 
 
 ### Query: Approximate count on any table
