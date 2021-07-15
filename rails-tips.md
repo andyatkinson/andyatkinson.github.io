@@ -46,3 +46,11 @@ In a Rails migration, check for the existence of the index like: `index_exists?(
 #### Use Strong Migrations
 
 Follow the tips in [strong_migrations](https://github.com/ankane/strong_migrations). Create your own custom checks. Explain your rationale when using `safety_assured`.
+
+#### Bundler platforms
+
+If developing on OS X, deploying on Linux, and vendoring gems, the Darwin pre-built gem will be installed. Add the Linx platform:
+
+`bundle lock --add-platform x86_64-linux`
+
+And then `bundle package --all-platforms` and confirm the Linux version has been added to `vendor/cache`.
