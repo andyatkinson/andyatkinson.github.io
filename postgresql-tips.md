@@ -8,6 +8,8 @@ Here are tuning params, tips and misc. information collected from work experienc
 
 ## Tuning
 
+[Annotated.conf](https://github.com/jberkus/annotated.conf)
+
 `shared_buffers`. RDS default is around 25% of system memory. Recommendations say up to 40% of system memory could be allocated, at which point there may be diminishing returns beyond that.
 
 The unit is 8kb chunks, and requires some math to change the value for. Here is a formula:
@@ -227,6 +229,7 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 - Percentage between 10 and 100, default is 100 ("fully packed")
 - Reducing it leaves room for "HOT" updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
+- "good starting value for it is 70 or 80" [Deep Dive](https://dataegret.com/2017/04/deep-dive-into-postgres-stats-pg_stat_all_tables/)
 - For tables with heavy updates a smaller fillfactor may yield better write performance
 - Set per table or per index (b-tree is default 90 fillfactor)
 - Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
@@ -360,14 +363,26 @@ Available on PG 12.5+ on RDS, pg_cron is an extension that can be useful to sche
 
 See: [Scheduling maintenance with the PostgreSQL pg_cron extension](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_pg_cron.html)
 
+#### `pg_squeeze`
+
+[pg_squeeze](https://www.cybertec-postgresql.com/en/products/pg_squeeze/)
+
+Replacement for pg_repack, automated, without needing to run a CLI tool.
+
+#### `auto_explain`
+
+[PG 10 auto_explain](https://www.postgresql.org/docs/10/auto-explain.html)
+
+Adds explain plans to the query logs. Maybe start by setting it very high so it only logged for extremely slow queries, and then lessening the time if there is actionable information.
+
 
 ### Bloat
 
 How does bloat (table bloat, index bloat) affect performance?
 
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data. Fix is to vacuum or vacuum full.
-* Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time through defunct items. Fix is to reindex the index.
-* Index only scans slow down with outdated statistics. Autovacuum also updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table, improves performance of index only scans on indexes on the same table. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html). Determine if index only scans are being used with queries on the table in question.
+* Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Fix is to reindex the index.
+* Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table improves performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
 
 [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 
