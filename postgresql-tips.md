@@ -167,6 +167,7 @@ Fewer checkpoints will improve performance, but increase recovery time. Default 
 
   - PgBouncer. [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
   - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
+    - [Managing Connections with RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html)
 
 ### Foreign Data Wrappers
 
