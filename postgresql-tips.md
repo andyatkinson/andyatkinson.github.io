@@ -381,11 +381,13 @@ Adds explain plans to the query logs. Maybe start by setting it very high so it 
 
 How does bloat (table bloat, index bloat) affect performance?
 
+* "When a table is bloated, Postgres’s ANALYZE tool calculates poor/inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data. Fix is to vacuum or vacuum full.
 * Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Fix is to reindex the index.
 * Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table improves performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
 
-[Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
+* [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
+* [Dealing with significant Postgres database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
 
 
 ### Upgrades
