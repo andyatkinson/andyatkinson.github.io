@@ -54,3 +54,14 @@ If developing on OS X, deploying on Linux, and vendoring gems, the Darwin pre-bu
 `bundle lock --add-platform x86_64-linux`
 
 And then `bundle package --all-platforms` and confirm the Linux version has been added to `vendor/cache`.
+
+#### Prefer simple dependency specifications
+
+Sometimes there is a minimum version required that has a security fix, a team member recently introduced this:
+
+```
+gem 'addressable', '~> 2.8', '>= 2.8.0'
+```
+This makes `bundle update addressable` easy in the future, grabbing any new patch version of the `2.8` minor version, while still calling out that `2.8.0` should be the minimum patch version that has a security fix.
+
+In general I prefer to avoid specifying versions entirely in the `Gemfile` and rely on the versions in `Gemfile.lock`, which has specific versions for direct and indirect dependencies.
