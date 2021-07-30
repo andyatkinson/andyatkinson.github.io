@@ -503,6 +503,14 @@ Amazon RDS is hosted PostgreSQL
 
 * Use `NULL`s instead of default values when possible, cheaper to store and query. Source: [Timescale DB blog](https://blog.timescale.com/blog/13-tips-to-improve-postgresql-insert-performance/)
 
+### Stored Procedures
+
+Using plpgsql, functions can be added to the database directly.
+
+[Stored procedures](https://github.com/andyatkinson/db-stuff)
+
+To manage these functions in a Ruby app, use the [fx gem](https://github.com/teoljungberg/fx) (versioned database functions)!
+
 ### Resources
 
 * [The Unexpected Find That Freed 20GB of Unused Index Space](https://hakibenita.com/postgresql-unused-index-size)
