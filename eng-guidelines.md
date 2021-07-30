@@ -48,6 +48,18 @@ To lower the risk of a change, prefer techniques or strategies that are reversib
 
 Along these same lines, I like the advice to optimize more for [Mean time to recovery (MTTR)](https://en.wikipedia.org/wiki/Mean_time_to_recovery) as opposed to Mean time between failures (MTBF).
 
+### Prefer to test for positive conditions
+
+When writing conditional statements, prefer to test for positive conditions because they are easier to read.
+
+`if object.has_thing?; end` tests that the object has a thing (positive).
+
+The inverse might be that the object is "not missing" the thing which would be: `if !object.missing_thing?; end`
+
+Ruby also supports `unless` and a double negative can be made, which is difficult to read: `unless object.missing_thing?; end`
+
+These two could be converted to testing for a positive condition.
+
 
 ## Pull Request Guidelines
 
