@@ -4,6 +4,8 @@ permalink: /writing
 title: Writing
 ---
 
+[Contact me](/contact) about writing opportunities!
+
 ### Blogging
 
 I keep a blog here on technical topics to learn them more deeply through the deliberate focus that writing and teaching requires, and to share my knowledge with others.

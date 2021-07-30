@@ -19,7 +19,7 @@ ga_analytics: UA-8656956-2
 
 # Contact form setings
 email: andyatkinson@gmail.com
-contact_page_description: "Send me a message with questions, concerns or tips!"
+contact_page_description: "Send me a message!"
 thankyou_page_description: "Thanks for your message."
 
 # Social links
@@ -34,16 +34,12 @@ navigation:
     url: /
   - text: About
     url: /about
-  - text: Projects
-    url: /projects
   - text: Open Source
     url: /open-source
+  - text: Projects
+    url: /projects
   - text: Writing
     url: /writing
-  - text: Speaking
-    url: /speaking-opportunities
-  - text: Events
-    url: /events-and-volunteering
   - text: PostgreSQL
     url: /postgresql-tips
   - text: Ruby on Rails
@@ -52,6 +48,12 @@ navigation:
     url: /software-dev-process
   - text: Guidelines
     url: /engineering-guidelines
+  - text: Values
+    url: /values
+  - text: Speaking
+    url: /speaking-opportunities
+  - text: Events
+    url: /events-and-volunteering
   - text: Archive
     url: /tag
   - text: Contact Me

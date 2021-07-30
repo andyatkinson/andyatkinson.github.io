@@ -4,7 +4,9 @@ permalink: /postgresql-tips
 title: PostgreSQL Tuning and Tips
 ---
 
-Here are tuning params, tips and misc. information collected from work experience with PostgreSQL that didn't quite fit into a single blog post. More of an evolving source of personal documentation, references, and examples.
+Web applications that utilize a relational database and normalized data, have a high transactional online workload. Scaling up the database is common and critical to meet the workload.
+
+Here are tuning params, tips and misc. information collected from work with PostgreSQL. This page serves me as an evolving source of documentation, references, and examples across various categories.
 
 ## Tuning
 
@@ -31,6 +33,10 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | `max_parallel_workers` | | 8 | 1x/cpu ||
 | `max_parallel_workers_per_gather` | | 2 | 4 ||
 
+
+## Queries
+
+Refer to [pg_scripts](https://github.com/andyatkinson/pg_scripts) for the latest queries.
 
 ### Query: Approximate count on any table
 
@@ -61,6 +67,24 @@ select pg_cancel_backend(pid);
 select pg_terminate_backend(pid);
 ```
 
+### Query: 10 largest tables
+
+```sql
+select schemaname as table_schema,
+    relname as table_name,
+    pg_size_pretty(pg_total_relation_size(relid)) as total_size,
+    pg_size_pretty(pg_relation_size(relid)) as data_size,
+    pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid))
+      as external_size
+from pg_catalog.pg_statio_user_tables
+order by pg_total_relation_size(relid) desc,
+         pg_relation_size(relid) desc
+limit 10;
+```
+<https://dataedo.com/kb/query/postgresql/list-10-largest-tables>
+
+## Vacuum
+
 ### Autovacuum
 
 PostgreSQL runs an autovacuum process in the background to remove dead tuples. Dead tuples are the result of a multiversion model ([MVCC](https://www.postgresql.org/docs/9.5/mvcc-intro.html)). Dead tuples are also called dead rows or "bloat". Bloat can also exist for indexes.
@@ -90,17 +114,27 @@ ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 <https://www.postgresql.org/docs/current/sql-altertable.html>
 
 
-#### AV execution time for a table
+### AV execution time for a table
 
 Set `log_autovacuum_min_duration` to `0` to log all autovacuums. A logged AV run includes a lot of information.
 
 
-#### AV parameters
+### AV parameters
 
 - `autovacuum_max_workers`
 - `autovacuum_max_freeze_age`
 - `maintenance_work_memory`
 
+
+## Indexes
+
+### Less common types
+
+The most common type is a Btree index. Less common types:
+
+* GIN
+* GiST
+* BRIN
 
 ### Remove unused indexes
 
@@ -141,11 +175,6 @@ ORDER BY pg_relation_size(s.indexrelid) DESC;
 
 Query that finds duplicate indexes, meaning using the same columns etc. Recommends that usually it is safe to delete one of the two.
 
-### Timeout Tuning
-
-  - Statement timeout: TBD
-  - Reaping frequency: TBD
-
 ### Remove seldom used indexes on high write tables
 
 [New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html)
@@ -159,9 +188,22 @@ As a general rule, if you're not using an index twice as often as it's written t
 In our system on our highest write table we had 10 indexes defined and 6 are classified as Low Scans, High Writes. These indexes may not be worth keeping.
 
 
+## Timeouts and deadlocks
+
+More work needs to be done in this area. Primarily debugging deadlocks that show up in logs.
+
+### Timeout Tuning
+
+  - Statement timeout: TBD
+  - Reaping frequency: TBD
+
+
 ### Checkpoint Tuning
 
 Fewer checkpoints will improve performance, but increase recovery time. Default setting of 5 minutes is considered low. Values of 30 minutes or 1 hour are reasonable.
+
+
+## Connections
 
 ### Connections Management
 
@@ -169,7 +211,111 @@ Fewer checkpoints will improve performance, but increase recovery time. Default 
   - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
     - [Managing Connections with RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html)
 
-### Foreign Data Wrappers
+
+
+## Miscellaneous
+
+### HOT updates
+
+HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
+
+[HOT updates in PostgreSQL for better performance](https://www.cybertec-postgresql.com/en/hot-updates-in-postgresql-for-better-performance/)
+
+2 requirements:
+
+- there must be enough space in the block containing the updated row
+- there is no index defined on any column whose value is modified (big one)
+
+### `fillfactor`
+
+[What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
+
+- Percentage between 10 and 100, default is 100 ("fully packed")
+- Reducing it leaves room for "HOT" updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
+- "good starting value for it is 70 or 80" [Deep Dive](https://dataegret.com/2017/04/deep-dive-into-postgres-stats-pg_stat_all_tables/)
+- For tables with heavy updates a smaller fillfactor may yield better write performance
+- Set per table or per index (b-tree is default 90 fillfactor)
+- Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
+- No index defined any column whose value it modified
+
+Limitations: Requires a `VACUUM FULL` after modifying (or pg_repack)
+
+```sh
+ALTER TABLE foo SET ( fillfactor = 90 );
+VACUUM FULL foo;
+
+--- or
+
+pg_repack --no-order --table foo
+```
+
+[Installing pg_repack on EC2 for RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/)
+
+Note: use `-k, --no-superuser-check`
+
+
+## Locks
+
+[Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
+
+- `log_lock_waits`
+- `deadlock_timeout`
+
+"Then slow lock acquisition will appear in the database logs for later analysis."
+
+### Lock types
+
+`AccessExclusiveLock` - Locks the table, queries are not allowed.
+
+
+## Tools
+
+## Tools: Query planning
+
+### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
+Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
+
+`explain (analyze, buffers, verbose, format text)` or specify `format json`
+
+
+### pgbench
+
+Repeatable method of determining a transactions per second (TPS) rate. Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom workload.
+
+- Initialize database example with scaling option of 50 times the default size:
+`pgbench -i -s 50 example`
+
+- Benchmark with 10 clients, 2 worker threads, and 10,000 transactions per client:
+`pgbench -c 10 -j 2 -t 10000 example`
+
+I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
+
+### pgtune
+
+PGTune is a website that tries to suggest values for PG parameters that can be tuned and may improve performance for a given workload.
+
+<https://pgtune.leopard.in.ua/#/>
+
+### pghero
+
+pghero brings a bunch of operational concerns into a dashboard format. It is built as a Rails engine and provides a nice interface on top of queries related to the PG catalog tables.
+
+We are running it in production and some immediate value has been helping clarify unused and duplicate indexes we can remove.
+
+[Fix Typo PR #384](https://github.com/ankane/pghero/pull/384)
+
+<https://github.com/ankane/pghero>
+
+### postgresqltuner
+
+Perl script to analyze a database. Do not have experience with this. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
+
+<https://github.com/jfcoz/postgresqltuner>
+
+
+## Extensions and Modules
+
+### Foreign Data Wrapper (FDW)
 
 Native Foreign data wrapper functionality in PostgreSQL allows connecting to a remote table and treating it like a local table.
 
@@ -180,6 +326,7 @@ A bit benefit of this for us at work is that for a recent backfill, we were able
 We used a `temp` schema to isolate any temporary tables away from the main schema (`public`).
 
 Essentially the process is:
+
   1. Create a server
   1. Create a user mapping
   1. Create a foreign table (optionally importing the schema)
@@ -213,132 +360,14 @@ Once this is established, we can issue queries as if the foreign table was a loc
 select * from temp.customers limit 1;
 ```
 
-### HOT updates
-
-HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
-
-[HOT updates in PostgreSQL for better performance](https://www.cybertec-postgresql.com/en/hot-updates-in-postgresql-for-better-performance/)
-
-2 requirements:
-
-- there must be enough space in the block containing the updated row
-- there is no index defined on any column whose value is modified (big one)
-
-### The `fillfactor`
-
-[What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
-
-- Percentage between 10 and 100, default is 100 ("fully packed")
-- Reducing it leaves room for "HOT" updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
-- "good starting value for it is 70 or 80" [Deep Dive](https://dataegret.com/2017/04/deep-dive-into-postgres-stats-pg_stat_all_tables/)
-- For tables with heavy updates a smaller fillfactor may yield better write performance
-- Set per table or per index (b-tree is default 90 fillfactor)
-- Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
-- No index defined any column whose value it modified
-
-Limitations: Requires a `VACUUM FULL` after modifying (or pg_repack)
-
-```sh
-ALTER TABLE foo SET ( fillfactor = 90 );
-VACUUM FULL foo;
-
---- or
-
-pg_repack --no-order --table foo
-```
-
-[Installing pg_repack on EC2 for RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/)
-
-Note: use `-k, --no-superuser-check`
-
-### Locks
-
-[Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
-
-- `log_lock_waits`
-- `deadlock_timeout`
-
-"Then slow lock acquisition will appear in the database logs for later analysis."
-
-#### Lock types
-
-`AccessExclusiveLock` - Locks the table, queries are not allowed.
-
-
-### Query planning tools
-
-#### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
-Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
-
-`explain (analyze, buffers, verbose, format text)` or specify `format json`
-
-
-### Query: 10 largest tables
-
-```sql
-select schemaname as table_schema,
-    relname as table_name,
-    pg_size_pretty(pg_total_relation_size(relid)) as total_size,
-    pg_size_pretty(pg_relation_size(relid)) as data_size,
-    pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid))
-      as external_size
-from pg_catalog.pg_statio_user_tables
-order by pg_total_relation_size(relid) desc,
-         pg_relation_size(relid) desc
-limit 10;
-```
-<https://dataedo.com/kb/query/postgresql/list-10-largest-tables>
-
-### Tools
-
-#### pgbench
-
-Repeatable method of determining a transactions per second (TPS) rate. Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom workload.
-
-- Initialize database example with scaling option of 50 times the default size:
-`pgbench -i -s 50 example`
-
-- Benchmark with 10 clients, 2 worker threads, and 10,000 transactions per client:
-`pgbench -c 10 -j 2 -t 10000 example`
-
-I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
-
-#### pgtune
-
-PGTune is a website that tries to suggest values for PG parameters that can be tuned and may improve performance for a given workload.
-
-<https://pgtune.leopard.in.ua/#/>
-
-#### pghero
-
-pghero brings a bunch of operational concerns into a dashboard format. It is built as a Rails engine and provides a nice interface on top of queries related to the PG catalog tables.
-
-We are running it in production and some immediate value has been helping clarify unused and duplicate indexes we can remove.
-
-[Fix Typo PR #384](https://github.com/ankane/pghero/pull/384)
-
-<https://github.com/ankane/pghero>
-
-#### postgresqltuner
-
-Perl script to analyze a database. Do not have experience with this. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
-
-<https://github.com/jfcoz/postgresqltuner>
-
-
-### Extensions and Modules
-
 On Amazon RDS type `show rds.extensions` to view available extensions.
 
-#### `uuid-ossp`
+### `uuid-ossp`
 
 Generate universally unique identifiers (UUIDs) in PostgreSQL. [Documentation link](https://www.postgresql.org/docs/10/uuid-ossp.html)
 
-#### `postgres_fdw`
 
-Foreign data wrapper module for remote PostgreSQL servers. [Documentation link](https://www.postgresql.org/docs/9.6/postgres-fdw.html).
-
-#### `pg_stat_statements`
+### `pg_stat_statements`
 
 Tracks execution statistics for all statements and made available via a view. Requires reboot (static param) on RDS on PG 10 although `pg_stat_statements` is available by default in `shared_preload_libraries` in PG 12.
 
@@ -346,38 +375,41 @@ Tracks execution statistics for all statements and made available via a view. Re
 
 <https://www.virtual-dba.com/blog/postgresql-performance-enabling-pg-stat-statements/>
 
-#### `pgstattuple`
+### `pgstattuple`
 
 > The pgstattuple module provides various functions to obtain tuple-level statistics.
 
 <https://www.postgresql.org/docs/9.5/pgstattuple.html>
 
-#### `citext`
+### `citext`
 
 Case insensitive column type
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
 
-#### `pg_cron`
+### `pg_cron`
 
 Available on PG 12.5+ on RDS, pg_cron is an extension that can be useful to schedule maintenance tasks, like manual vacuum jobs.
 
 See: [Scheduling maintenance with the PostgreSQL pg_cron extension](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_pg_cron.html)
 
-#### `pg_squeeze`
+### `pg_squeeze`
 
 [pg_squeeze](https://www.cybertec-postgresql.com/en/products/pg_squeeze/)
 
 Replacement for pg_repack, automated, without needing to run a CLI tool.
 
-#### `auto_explain`
+
+### `auto_explain`
 
 [PG 10 auto_explain](https://www.postgresql.org/docs/10/auto-explain.html)
 
 Adds explain plans to the query logs. Maybe start by setting it very high so it only logged for extremely slow queries, and then lessening the time if there is actionable information.
 
 
-### Bloat
+## Bloat
+
+### Overview
 
 How does bloat (table bloat, index bloat) affect performance?
 
@@ -390,9 +422,13 @@ How does bloat (table bloat, index bloat) affect performance?
 * [Dealing with significant Postgres database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
 
 
-### Upgrades
+## Upgrades
 
-#### PG 11
+We are currently running PG 10, so I had a look at some upgrades in 11 and 12.
+
+This is also a really cool [Version Upgrade Comparison Tool: 10 to 12](https://why-upgrade.depesz.com/show?from=10.17&to=12.7&keywords=)
+
+### PG 11
 
 Release announcement October 2018
 
@@ -401,20 +437,25 @@ Release announcement October 2018
 * Significant partitioning improvements
 * Adds "covering" indexes via `INCLUDE` to add more data to the index. Docs: [Index only scans and Covering indexes](https://www.postgresql.org/docs/11/indexes-index-only-scans.html)
 
-#### PG 12
+### PG 12
 
 [Release announcement](https://www.postgresql.org/about/news/postgresql-12-released-1976/). Released October 2019.
 
 * Partitioning performance improvements
 * Re-index concurrently
 
-#### PG 13
+### PG 13
 
 Released September 2020
 
 * Parallel vacuum
 
-### RDS Parameter Groups
+## RDS
+
+Amazon RDS is hosted PostgreSQL
+
+
+### Parameter Groups
 
 [Working with RDS Parameter Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html)
 
@@ -423,11 +464,6 @@ Released September 2020
 * Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
 
 
-### Indexes
-
-* GIN
-* GiST
-* BRIN
 
 ### Constraints
 
@@ -439,6 +475,7 @@ Released September 2020
 * Primary keys
 * Foreign keys
 * Exclusion
+
 
 ### Replication
 
