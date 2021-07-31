@@ -315,6 +315,10 @@ Perl script to analyze a database. Do not have experience with this. Has some in
 
 <https://github.com/jfcoz/postgresqltuner>
 
+### pg_test_fsync
+
+[pg_test_fsync](https://www.postgresql.org/docs/10/pgtestfsync.html)
+
 
 ## Extensions and Modules
 
