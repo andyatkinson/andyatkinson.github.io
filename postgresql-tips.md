@@ -202,6 +202,9 @@ More work needs to be done in this area. Primarily debugging deadlocks that show
 
 Fewer checkpoints will improve performance, but increase recovery time. Default setting of 5 minutes is considered low. Values of 30 minutes or 1 hour are reasonable.
 
+A checkpoint is a point in the write-ahead log (WAL) sequence at which all data files have been updated to reflect the information in the log. All data files will be flushed to disk.
+`checkpoint` command can be issued which forces an immediate checkpoint, but is not intended for production use at it will be disruptive.
+
 
 ## Connections
 
