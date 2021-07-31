@@ -4,10 +4,6 @@ title: "JWT, JWK, and JWKS Oh My"
 tags: [API, Programming]
 date: 2021-05-12
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 Authentication and authorization with JSON technologies can be a confusing mess of of acronyms, so this post is an attempt to sort these out. This post including the title, is very similar to [Red Thunder: JWTs? JWKs? ‘kid’s? ‘x5t’s? Oh my!](https://redthunder.blog/2017/06/08/jwts-jwks-kids-x5ts-oh-my/). Check their post out as well which was helpful diagrams.
