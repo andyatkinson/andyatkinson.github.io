@@ -323,6 +323,26 @@ Perl script to analyze a database. Do not have experience with this. Has some in
 
 [pgmetrics](https://pgmetrics.io/)
 
+## Write Ahead Log (WAL)
+
+"The checkpoint requirement of flushing all dirty data pages to disk can cause a significant I/O load"
+
+`checkpoint_timeout` - seconds, checkout runs here, default 5 minutes
+`max_wal_size` - if max wal size is about to be exceeded, default 1 GB
+
+Reducing the values causes checkpoint to run more frequently.
+
+`checkpoint_warning` parameter
+`checkpoint_completion_target`
+
+On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints.
+
+Params:
+
+* `commit_delay` (0 by default)
+* `wal_sync_method`
+* `wal_debug`
+
 
 ## Extensions and Modules
 
