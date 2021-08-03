@@ -14,7 +14,7 @@ Indexes on tables are great for finding a needle (or a few needles) in a haystac
 
 Indexes can be utilized to avoid slow sequential scans (scanning all rows) in high row count tables when querying a small filtered set rows (high selectivity filter).
 
-However there can be a tendency to over-index applications and indexes are not "free" in terms of their impact to writes rate, disk usage and IO. I know I am guilty of over-indexing in my past working experience.
+However there can be a tendency to over-index applications and indexes are not "free" in terms of their impact to storage and disk IO. I know I had a tendency to over-index in my past experience.
 
 So perhaps your application has some over-indexing, and some maintenance and pruning is in order. Let's look at cleanups in these categories:
 
@@ -75,7 +75,7 @@ Due to the nature of web application workloads bloat is common. Autovacuum is in
 
 Sometimes Autovacuum doesn't remove all the bloat. Sometimes bloated rows are removed but the indexes on those tables remain bloated.
 
-The fix for bloated indexes is to `REINDEX` the index, thus removing any references to dead tuples. On newer versions of PG, `REINDEX` can be done in the background (`CONCURRENTLY`) however on PG 10 that is not supported. To reindex concurrently, we used a tool called [pg_repack](https://reorg.github.io/pg_repack/) which supports repacking tables and indexes concurrently.
+The fix for bloated indexes is to `REINDEX` the index, thus removing any references to dead tuples. On newer versions of PG, `REINDEX` can be done in the background (`CONCURRENTLY`) however on PG 10 that is not supported. To reindex concurrently, we used a tool called [pg_repack](https://reorg.github.io/pg_repack/) which supports repacking tables and indexes concurrently. This is a third-party tool that has some downsides (heavy disk IO, `ACCESS EXCLUSIVE` lock for table repack) so make sure to test usage of it on your pre-production systems.
 
 The query I use for bloated indexes is [Database Soup: New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html).
 
