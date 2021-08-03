@@ -62,7 +62,7 @@ ORDER BY pg_relation_size(s.indexrelid) DESC;
 
 Over months as time allowed and in batches, we verified each were safe to remove and gradually removed all of them, reclaiming over 300 GB of disk space in the process!
 
-In addition to this query, we adopted [Pg Hero](https://github.com/ankane/pghero) to make unused indexes more visibile to all team members. Easier to spot, easier to remove.
+In addition to this query, we adopted [PgHero](https://github.com/ankane/pghero) to make unused indexes more visibile to all team members. Easier to spot, easier to remove.
 
 
 ## Bloated indexes
