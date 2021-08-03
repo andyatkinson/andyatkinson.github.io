@@ -10,13 +10,13 @@ featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atk
 featured: true
 ---
 
-Indexes on tables when used sparingly, are great for finding a needle (or a few needles) in a haystack.
+Indexes on tables are great for finding a needle (or a few needles) in a haystack.
 
-Indexes are perfect when a sequential scan is happening (scanning all rows) in a high row count table (e.g. > 100K rows) and there are queries for a small filtered set of those rows (high selectivity). In that case, an index can be added to the column that is part of the filter conditions (`WHERE` clause) and the job is likely done. Matching the index conditions to that query will result in a very efficient lookup.
+Indexes can be utilized to avoid slow sequential scans (scanning all rows) in high row count tables when querying a small filtered set rows (high selectivity filter).
 
-However there is a tendency to over-index applications. I know I am guilty of this in my past working experience.
+However there can be a tendency to over-index applications and indexes are not "free" in terms of their impact to writes rate, disk usage and IO. I know I am guilty of over-indexing in my past working experience.
 
-We are going to look at:
+So perhaps your application has some over-indexing, and some maintenance and pruning is in order. Let's look at cleanups in these categories:
 
 * Unused indexes
 * Bloated indexes
@@ -26,22 +26,21 @@ We are going to look at:
 
 Some of the over-indexing might be:
 
-* Adding an index before it is necessary (speculative)
-* Adding an index to a foreign key column thinking it will be used (speculative)
-* Adding an index without realizing the DB server has so much memory, the query planner will prefer a sequential scan to your index (check the query plan)
-* Scaling up memory on a DB server that used an index before, and now the query planner chooses to no longer use the index
-* Indexing multiple columns when a single column will do
-* Indexing NULL values when it's unnecessary (use a partial index with a condition like `WHERE column IS NOT NULL`)
+* Adding an index before it is used as part of a query plan (speculative)
+* Adding an index to a foreign key column when it's not used by a query plan (speculative)
+* Adding an index without testing on production hardware. Production may have considerably more memory available and not use the index. (check the query plan)
+* Scaling up memory or system resources on a DB server such that previously used indexes are no longer used
+* Indexing multiple columns when a single column is adequate
+* Indexing NULL values when they are not part of query conditions (a partial index can exclude `NULL` column rows)
 
-When this happens, unused indexes can likely be removed entirely from your database, reclaiming disk space and improving operational efficiency.
-
-We're also going to talk about bloated indexes which are slightly different.
 
 ## Unused indexes
 
-When PostgreSQL executes queries that use an index, PG keeps track of those index scans. Unused indexes are indexes that simply have no scans. We can exclude special indexes like indexes that enforce a unique constraint.
+Fortunately PG tracks index scans so we can easily identify unused indexes. Unused indexes can likely be removed entirely from your database, reclaiming disk space and improving operational efficiency.
 
-Our application being developed over several years and never having attempted to remove unused indexes, started with over 120 unused indexes.
+Unused indexes are indexes that simply have no scans (it may also be beneficial to look at low scans, and high writes). We can ignore special indexes like indexes that enforce a unique constraint from our unused indexes cleanup considerations.
+
+Our application being developed over several years had quite a few unused indexes, started with over 110 of them.
 
 Finding unused indexes:
 
@@ -61,35 +60,53 @@ WHERE s.idx_scan = 0      -- has never been scanned
 ORDER BY pg_relation_size(s.indexrelid) DESC;
 ```
 
-Over many months and in batches, we removed all of them, reclaiming over 300 GB of disk space in the process!
+Over months as time allowed and in batches, we verified each were safe to remove and gradually removed all of them, reclaiming over 300 GB of disk space in the process!
+
+In addition to this query, we adopted [Pg Hero](https://github.com/ankane/pghero) to make unused indexes more visibile to all team members. Easier to spot, easier to remove.
+
 
 ## Bloated indexes
 
-When even a single column on a row is updated, due to the MVCC implementation of PG, the entire row becomes a dead row/dead tuple. Thus tables are always made up of "live" tuples and dead tuples. This is by design in PG. The dead tuples are referred to as "bloat", and a table having 20% bloat is fine, but 50% is bad.
+By design in the MVCC implementation PG, when a row is updated even for a single column, the former row becomes a dead row/dead tuple (invisible). Tables always consist of "live" and dead tuples.
 
-Due to the nature of typical web application workloads frequently updating rows, bloat is common. Autovacuum is designed to run periodically in the background and remove this bloat.
+The dead tuples are referred to as "bloat" and a table with 20% of its tuples (rows) being bloat is acceptable, but 50% is bad and can impact performance.
+
+Due to the nature of web application workloads bloat is common. Autovacuum is intended to run automatically and remove dead row bloat.
 
 Sometimes Autovacuum doesn't remove all the bloat. Sometimes bloated rows are removed but the indexes on those tables remain bloated.
 
-The fix for bloated indexes is to simply `REINDEX` the index. On newer versions of PG, this can be done in the background using the `CONCURRENTLY` option. However our system is running on PG 10 and so we are going to use a tool called pg_repack.
+The fix for bloated indexes is to `REINDEX` the index, thus removing any references to dead tuples. On newer versions of PG, `REINDEX` can be done in the background (`CONCURRENTLY`) however on PG 10 that is not supported. To reindex concurrently, we used a tool called [pg_repack](https://reorg.github.io/pg_repack/) which supports repacking tables and indexes concurrently.
 
-The query I use is for bloated indexes is [Database Soup: New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html). I sort by bloat percentage and work down the list from the most bloated, to the least.
+The query I use for bloated indexes is [Database Soup: New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html).
+
+Working down from bloat percentage (some indexes as high as 90% bloat!) we gradually repacked all high bloat indexes. Our goal now is to tune Autovacuum appropriately so that this excessive bloat does not recur.
 
 Keep track of the indexes and tables and determine whether any indexes can be removed, or AV can be made more aggressive for tables for which tables or indexes are heavily bloated.
 
 
-[pghero](https://github.com/ankane/pghero)
+## Using pg_repack
 
-## Enter pg_repack
+Pg_repack is a command line application. To use it with Amazon RDS PostgreSQL, install it and run it on an instance. Reference [Installing pg_repack on RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/) and install the appropriate version for the database.
 
-[Install pg_repack on RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/)
-
-
-
-I repacked 27 indexes on our primary database, reclaiming over 230 GB of space. In the most extreme cases with 90% bloat, the resulting repacked (new) index was around 10% the size of the former bloated index.
+I repacked 27 indexes on our primary database, reclaiming over 230 GB of space. In the most extreme cases with 90% bloat, the resulting repacked (new) index size was around 10% of the original size. This makes sense since 90% of the bloat was removed.
 
 ## Duplicate and Invalid indexes
 
-Duplicate indexes mean that an index is redundant. The redundant index could be deleted and queries will still utilize a different index.
+Duplicate indexes mean that an index is redundant, and another serves the same purpose from the query planners perspective.
 
-An invalid index was an index that likely failed to build properly. To fix this, drop and rebuild the index.
+PgHero helped us identify 13 duplicate indexes that could be dropped. THe process was to drop the index on a detached datatabase, analyze the table, compared the query plan and execution time before and after removing the index.
+
+If the query plan and execution time looked the same, the index could be dropped in production!
+
+Invalid indexes are indexes that failed to build properly. To fix this, drop and rebuild the index (concurrently).
+
+
+## Summary
+
+* Find, test and drop unused and duplicate indexes that don't impact queries
+* Fix invalid indexes
+* Re-index bloated indexes concurrently (use pg_repack if reindex concurrently is not natively supported)
+* Adjust Autovacuum settings to prevent excessive bloat from recurring
+
+
+If you have any other index maintenance tips, I'd love to hear them. Thanks for reading.
