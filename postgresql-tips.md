@@ -194,7 +194,7 @@ More work needs to be done in this area. Primarily debugging deadlocks that show
 
 ### Timeout Tuning
 
-  - Statement timeout: TBD
+  - `statement_timeout`: The maximum time a statement can execute before it is terminated
   - Reaping frequency: TBD
 
 
@@ -214,6 +214,20 @@ A checkpoint is a point in the write-ahead log (WAL) sequence at which all data 
   - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
     - [Managing Connections with RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html)
 
+Connection issues could benefit from changing:
+
+- `connect_timeout`
+- `read_timeout`
+- `checkout_timeout` (Rails, default `5s`): maximum time Rails will spend trying to check out a connection from the pool before raising an error. [checkout_timeout API documentation](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html)
+- `statement_timeout`. In Rails/Active Record, set in `config/database.yml` under a `variables` section with a value in milliseconds. This becomes a session variable which is set like this:
+
+`SET statement_timeout = 5000` (in milliseconds) and be displayed like this: `SHOW statement_timeout`
+
+```yml
+production:
+  variables:
+    statement_timeout: 5000
+```
 
 
 ## Miscellaneous
@@ -274,6 +288,10 @@ Note: use `-k, --no-superuser-check`
 ## Tools
 
 ## Tools: Query planning
+
+### EXPLAIN ANALYZE
+
+This article [5 Things I wish my grandfather told me about ActiveRecord and Postgres](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANLAYZE output written more in plain English.
 
 ### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
 Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
