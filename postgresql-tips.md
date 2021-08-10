@@ -128,6 +128,8 @@ Set `log_autovacuum_min_duration` to `0` to log all autovacuums. A logged AV run
 
 ## Indexes
 
+Check out my blog post on [Index Maintenance: Prune and Tune](blog/2021/07/30/postgresql-index-maintenance)
+
 ### Less common types
 
 The most common type is a Btree index. Less common types:
@@ -300,6 +302,8 @@ Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and
 
 
 ### pgbench
+
+Check out my [blog post on pgbench](blog/2021/08/10/using-pgbench)
 
 Repeatable method of determining a transactions per second (TPS) rate. Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom workload.
 

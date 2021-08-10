@@ -1,13 +1,9 @@
 ---
 layout: post
-title: "PostgreSQL Index Maintenance"
+title: "PostgreSQL Indexes: Prune and Tune"
 tags: [PostgreSQL, Databases, Programming]
 date: 2021-07-30
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 Indexes on tables are great for finding a needle (or a few needles) in a haystack.
@@ -79,7 +75,7 @@ The fix for bloated indexes is to `REINDEX` the index, thus removing any referen
 
 The query I use for bloated indexes is [Database Soup: New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html).
 
-Working down from bloat percentage (some indexes as high as 90% bloat!) we gradually repacked all high bloat indexes. Our goal now is to tune Autovacuum appropriately so that this excessive bloat does not recur.
+Working down from bloat percentage (some indexes as high as (estimated) 90% bloat!) we gradually repacked all high bloat indexes. Our goal now is to tune Autovacuum appropriately so that this excessive bloat does not recur.
 
 Keep track of the indexes and tables and determine whether any indexes can be removed, or AV can be made more aggressive for tables for which tables or indexes are heavily bloated.
 
