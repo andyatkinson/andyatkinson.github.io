@@ -231,6 +231,11 @@ production:
     statement_timeout: 5000
 ```
 
+When serving Rails apps with Puma and using Sidekiq, carefully manage the connection pool size and total connections for the database.
+
+[The Ruby on Rails database connection pool](https://maxencemalbois.medium.com/the-ruby-on-rails-database-connections-pool-4ce1099a9e9f). We also use a proxy in between the application and PG.
+
+This allows the application to allocate many more client connections (for example doubling during a zero downtime deploy) but not exceed the max supported connections/resource usage on the DB server.
 
 ## Miscellaneous
 
