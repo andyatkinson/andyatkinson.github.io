@@ -65,3 +65,11 @@ gem 'addressable', '~> 2.8', '>= 2.8.0'
 This makes `bundle update addressable` easy in the future, grabbing any new patch version of the `2.8` minor version, while still calling out that `2.8.0` should be the minimum patch version that has a security fix.
 
 In general I prefer to avoid specifying versions entirely in the `Gemfile` and rely on the versions in `Gemfile.lock`, which has specific versions for direct and indirect dependencies.
+
+#### Connection Pool Stats
+
+```rb
+ActiveRecord::Base.connection_pool.stat
+
+# => {:size=>32, :connections=>0, :busy=>0, :dead=>0, :idle=>0, :waiting=>0, :checkout_timeout=>4.0}
+```
