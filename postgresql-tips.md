@@ -189,6 +189,12 @@ As a general rule, if you're not using an index twice as often as it's written t
 
 In our system on our highest write table we had 10 indexes defined and 6 are classified as Low Scans, High Writes. These indexes may not be worth keeping.
 
+## Partial Indexes
+
+[How Partial Indexes Affect UPDATE Performance in Postgres](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc)
+
+Partial indexes weigh significantly less, but this article uses pgbench to show how they may benefit SELECT TPS, but negatively impact UPDATE TPS.
+
 
 ## Timeouts and deadlocks
 
