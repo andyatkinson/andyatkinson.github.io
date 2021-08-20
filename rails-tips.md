@@ -73,3 +73,13 @@ ActiveRecord::Base.connection_pool.stat
 
 # => {:size=>32, :connections=>0, :busy=>0, :dead=>0, :idle=>0, :waiting=>0, :checkout_timeout=>4.0}
 ```
+
+#### Rspec Tips
+
+* Run specific spec: use line number on end like `rspec spec/foo_spec.rb:123` to run line 123
+
+#### Source location
+
+This is more of a Ruby tip but you can get a method reference and use source location. For example with an instance of foo:
+
+`Foo.new` the `method` method can be called with a method name like `bar`, e.g. `Foo.new.method(:bar).source_location` and calling source_location will show the line number of the caller.
