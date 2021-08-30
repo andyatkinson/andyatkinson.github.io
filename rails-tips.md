@@ -83,3 +83,13 @@ ActiveRecord::Base.connection_pool.stat
 This is more of a Ruby tip but you can get a method reference and use source location. For example with an instance of foo:
 
 `Foo.new` the `method` method can be called with a method name like `bar`, e.g. `Foo.new.method(:bar).source_location` and calling source_location will show the line number of the caller.
+
+#### Statement timeout
+
+Set a `statement_timeout` in config/database.yml to set an upper bound on how long a query can run. We use 5 seconds for our app servers. [Hashrocket: Rails/PG Statement Timeout](https://til.hashrocket.com/posts/b44baf657d-railspg-statement-timeout-)
+
+For queries that are ok to run longer, or migrations, a higher value is appropriate. We use [Strong Migrations](https://github.com/ankane/strong_migrations#migration-timeouts) which raises the statement timeout.
+
+#### Checkout timeout
+
+Set a `checkout_timeout` to set how long to wait to check out a connection from the connection pool. The default is 5 seconds but we set it to 4 seconds. [Rails Conection Pool Docs](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html)
