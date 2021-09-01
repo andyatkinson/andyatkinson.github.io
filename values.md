@@ -53,3 +53,17 @@ Before making a production to code or infrastructure, it is best to rehearse the
 * Write steps out as a script and ask for a peer review
 * Estimate load and desired outcome
 * Write up rollback steps or recovery plans, trying to consider failure scenarios
+
+### Prefer code readability to code terseness
+
+* Avoid clever tricks in production code. Or add some specs/tests to the code or at least some helpful comments describing why.
+* Code is read at code review time. Please consider your code reviewer trying to grok what is happening and provide helpful feedback.
+* In high-pressure time-crunched situations, code is read for debugging reasons and needs to be understood quickly.
+* Code is read when code needs to change
+* Code is read when writing unit tests to understand what it is doing, to test positive and negative scenarios demonstrating happy path functionality and error case handling
+* Conduct your own Pull Request review before asking others to review.
+  * Remove unrelated changes.
+  * Replace magic numbers with descriptively named constants in the same file
+  * Use enumerated types where possible
+  * Use validations and constraints where possible to clarify what constitutes an error
+* Don't optimize code performance until there is concrete evidence of problems.
