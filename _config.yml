@@ -46,9 +46,9 @@ navigation:
     url: /rails-tips
   - text: Process
     url: /software-dev-process
-  - text: Guidelines
+  - text: Eng Guidelines
     url: /engineering-guidelines
-  - text: Values
+  - text: Eng Values
     url: /values
   - text: Speaking
     url: /speaking-opportunities
