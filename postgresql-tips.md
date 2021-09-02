@@ -8,6 +8,17 @@ Web applications that utilize a relational database and normalized data, have a 
 
 Here are tuning params, tips and misc. information collected from work with PostgreSQL. This page serves me as an evolving source of documentation, references, and examples across various categories.
 
+## My Blog Posts
+
+Some of my blog posts on PostgreSQL
+
+* [PostgreSQL Indexes: Prune and Tune](blog/2021/07/30/postgresql-index-maintenance)
+* [PostgreSQL pgbench Workload Simulation](/blog/2021/08/10/pgbench-workload-simulation)
+* [Views, Stored Procedures, and Check Constraints](/blog/2018/10/19/database-views-stored-procedures-check-constraints)
+* [A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
+* [Intro to PostgreSQL generate_series](/blog/2016/09/20/intro-postgresql-generate_series)
+* [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer)
+
 ## Tuning
 
 [Annotated.conf](https://github.com/jberkus/annotated.conf)
