@@ -31,6 +31,8 @@ These are some of the questions I have used in the past when interviewing Softwa
 
 * What sorts of things do you look for when reviewing Pull Requests from your team members?
 
+* What sorts of techniques have you used to build consensus with other engineers on technical approaches?
+
 * In the quality and speed trade-off, what things do you do to improve the quality of your code?
 What sorts of things do you do to improve your iteration speed?
 
