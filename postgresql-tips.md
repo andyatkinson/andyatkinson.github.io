@@ -254,6 +254,14 @@ When serving Rails apps with Puma and using Sidekiq, carefully manage the connec
 
 This allows the application to allocate many more client connections (for example doubling during a zero downtime deploy) but not exceed the max supported connections/resource usage on the DB server.
 
+#### PgBouncer
+
+* [PostgreSQL Connection Pooling With PgBouncer](https://dzone.com/articles/postgresql-connection-pooling-with-pgbouncer)
+
+Install pgbouncer on OS X with `brew install pgbouncer`. Create the .ini config file as the article mentions, point it to a database, accept connections, and track the connection count.
+
+
+
 ## Miscellaneous
 
 ### HOT updates
