@@ -482,12 +482,19 @@ See: [Scheduling maintenance with the PostgreSQL pg_cron extension](https://docs
 
 Replacement for pg_repack, automated, without needing to run a CLI tool.
 
-
 ### `auto_explain`
 
 [PG 10 auto_explain](https://www.postgresql.org/docs/10/auto-explain.html)
 
 Adds explain plans to the query logs. Maybe start by setting it very high so it only logged for extremely slow queries, and then lessening the time if there is actionable information.
+
+### Percona pg_stat_monitor
+
+[pg_stat_monitor: A cool extension for better monitoring using PMM - Percona Live Online 2020](https://www.percona.com/resources/videos/pgstatmonitor-cool-extension-better-monitoring-using-pmm-percona-live-online-2020)
+
+### pganalyze Index Advisor
+
+This is not an extension but looks like a useful tool. [A better way to index your Postgres database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
 
 
 ## Bloat
