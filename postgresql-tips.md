@@ -361,6 +361,12 @@ We are running it in production and some immediate value has been helping clarif
 
 <https://github.com/ankane/pghero>
 
+### pgmonitor
+
+<https://github.com/CrunchyData/pgmonitor>
+
+Have not yet tried this out but it looks helpful.
+
 ### postgresqltuner
 
 Perl script to analyze a database. Do not have experience with this. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
