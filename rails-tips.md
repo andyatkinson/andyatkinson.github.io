@@ -99,3 +99,11 @@ Set a `checkout_timeout` to set how long to wait to check out a connection from 
 If there is the option to control the front-end HTTP request payload, take advantage of built-in [nested attributes support](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html) to create objects via an association.
 
 Because nested models can be created or updated this way, Active Record lifecycle events like `before_save` can be triggered to create a loosely coupled series of actions.
+
+#### Sidekiq testing
+
+<https://github.com/mperham/sidekiq/wiki/Testing> We use the `inline!` method to test jobs synchronously.
+
+#### External web requests
+
+We use [webmock](https://github.com/bblimke/webmock) for 3rd party APIs to capture authentic HTTP stubbed responses.
