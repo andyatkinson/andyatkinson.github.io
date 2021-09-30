@@ -6,9 +6,11 @@ date: 2021-09-29
 comments: true
 ---
 
-By using `unlogged` tables we can insert rows at a higher rate as compared with normal tables.
+By using [unlogged](https://www.postgresql.org/docs/12/sql-createtable.html) tables we can insert rows at a higher compared with a normal table.
 
-By default tables are logged meaning their activity is written to the write-ahead log (WAL). Creating a table as `unlogged` and skipping the WAL process means rows can generally be inserted at a higher rate, but with the possibility of data loss if the database crashes or shuts down unexpectedly.
+Activity for normal tables is logged to the write-ahead log (WAL). Creating a table as `unlogged` and skipping the WAL process means rows can generally be inserted at a higher rate, but with the possibility of data loss if the database crashes or shuts down without a full shutdown.
+
+In the article [How to test unlogged tables for performance in PostgreSQL](https://www.enterprisedb.com/postgres-tutorials/how-test-unlogged-tables-performance-postgresql) they demonstrate how the database can be shutdown and truncate an unlogged table.
 
 Unlogged tables are normal tables, but with an `UNLOGGED` option supplied at creation time.
 
@@ -21,9 +23,6 @@ So combining unlogged tables, `returning *`, with the intention of inserting ite
 ### Benchmarks
 
 How about a simple benchmark?
-
-Some folks have posted about inserting at 100K updates/second.
-https://gist.github.com/valyala/ae3cbfa4104f1a022a2af9b8656b1131
 
 Let's create a links table that has a url and name but just use numbers with `generate_series` as the values.
 
@@ -42,7 +41,7 @@ Now let's do the same thing with an unlogged table. After trying this a few time
 ```
 CREATE UNLOGGED table unlogged_links (id serial, url VARCHAR(255), name VARCHAR(255));
 
-anatki@[local]:5432 anatki# INSERT INTO unlogged_links (url, name) VALUES (generate_series(1,10000000), 1);
+INSERT INTO unlogged_links (url, name) VALUES (generate_series(1,10000000), 1);
 INSERT 0 10000000
 Time: 18566.592 ms (00:18.567)
 ```
