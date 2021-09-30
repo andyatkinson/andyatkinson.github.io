@@ -6,7 +6,7 @@ date: 2021-09-29
 comments: true
 ---
 
-By using [unlogged](https://www.postgresql.org/docs/12/sql-createtable.html) tables we can insert rows at a higher compared with a normal table.
+By using [unlogged](https://www.postgresql.org/docs/12/sql-createtable.html) tables we can insert rows at a higher rate compared with a normal table. But there is a trade-off.
 
 Activity for normal tables is logged to the write-ahead log (WAL). Creating a table as `unlogged` and skipping the WAL process means rows can generally be inserted at a higher rate, but with the possibility of data loss if the database crashes or shuts down without a full shutdown.
 
