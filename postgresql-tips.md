@@ -229,6 +229,10 @@ A checkpoint is a point in the write-ahead log (WAL) sequence at which all data 
 
 ### Connections Management
 
+[A connection forks the OS process (creates a new process)](https://azure.microsoft.com/en-us/blog/performance-best-practices-for-using-azure-database-for-postgresql-connection-pooling/) and is thus expensive.
+
+Using a connection pool reduces the amount of connection establishment overhead and thus reduces the latency involved with connections, which can increase TPS at a certain scale.
+
   - PgBouncer. [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
   - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
     - [Managing Connections with RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html)
