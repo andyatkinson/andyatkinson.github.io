@@ -60,6 +60,16 @@ Ruby also supports `unless` and a double negative can be made, which is difficul
 
 These two could be converted to testing for a positive condition.
 
+### Robustness Principle
+
+The [Robustness principle](https://en.wikipedia.org/wiki/Robustness_principle) states "be conservative in what you do, be liberal in what you accept from others".
+
+Applied to a Ruby method signature, accepting an optional argument with a default value of an empty hash provides caller side consistency over time, but specific keys and values can be checked within the method implementation.
+
+In this way I feel like it satifies the definition of being liberal in what is accepted, but conservative in how what is accepted is actually handled.
+
+This also creates an opportunity to both defensively guard against the method being mis-used but also an opportunity to self-document acceptable keys and values for maintainers.
+
 
 ## Pull Request Guidelines
 
