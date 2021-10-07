@@ -9,7 +9,14 @@ show_footer: true
 
 A partial, chronological list of products, projects, websites, apps, developed as an employee or as side projects 😀.
 
-#### Groupon+
+#### Flipgrid
+
+On the Flipgrid team at Microsoft, I helped build the APIs that powered the web and mobile clients.
+
+
+{% include image-caption.html imageurl="/assets/images/flipgrid.jpg" title="Flipgrid Discovery Library screenshot" caption="Flipgrid Discovery Library" %}
+
+#### Groupon
 
 Helped build the Groupon+ platform
 
