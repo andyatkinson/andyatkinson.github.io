@@ -107,3 +107,13 @@ Because nested models can be created or updated this way, Active Record lifecycl
 #### External web requests
 
 We use [webmock](https://github.com/bblimke/webmock) for 3rd party APIs to capture authentic HTTP stubbed responses.
+
+#### Unused
+
+* Identify unused code <https://github.com/unused-code/unused>
+* `$ unused`
+
+#### Rails Best Practices
+
+* <https://github.com/flyerhzm/rails-bestpractices.com>
+* `$ rails_best_practices .`
