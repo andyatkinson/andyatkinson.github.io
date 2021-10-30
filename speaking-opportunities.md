@@ -4,6 +4,14 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+#### PGConf NYC 2021
+
+[How we made PG Fitter, Happier, More Productive](https://postgresql.us/events/pgconfnyc2021/sessions/session/916-how-we-made-pg-fitter-happier-more-productive/)
+
+Date: 2021-12-02<br/>
+Level: Intermediate<br/>
+Speaker: [Andrew Atkinson](https://postgresql.us/events/pgconfnyc2021/sessions/speaker/310-andrew-atkinson/)
+
 #### PostgreSQL Unused Indexes (Internal lightning-style talk)
 
 January 2021<br/>
