@@ -6,36 +6,42 @@ date: 2021-10-15
 comments: true
 ---
 
-In the Staff Engineer book, there is a guide covering [Work on What Matters](https://staffeng.com/guides/work-on-what-matters) which I thought had good advice for how to prioritize work.
+In the [StaffEng](https://staffeng.com/) book, there is a section called [Work on What Matters](https://staffeng.com/guides/work-on-what-matters).
 
-Like any advice there are exceptions, but I found it helpful how they described the relationship between effort and impact.
+This section has good descriptions of how to classify certain types of work a software engineer does, and how to prioritize for higher impact.
+
+What I liked especially was thinking about the work in terms of effort, impact, and visibility.
 
 
 ### Avoid Snacking
 
-"Snacking" is basically easy, low-impact work. Some things that came to mind in Ruby on Rails web development were:
+"Snacking" is work that is relatively easy and low-impact. Some things that came to mind in Ruby on Rails web development for me were:
 
 * Updating a minor or patch version of a gem dependency
 * Updating a patch version of Rails
 * Adopting a new well documented API
 
-These things have value, but they are also easy and probably lower in impact. As the guide says, snack sized work is good to fill in gaps or could be good for hand off to someone with less experience looking to make a contribution.
+These things have some value, but are also easy and probably low in business impact, and low in visibility. As the guide says, snack sized work is good to fill in gaps or could be good to hand off to someone with less experience performing these tasks in general, or at the particular organization.
 
-Just like in real life a diet should not consist solely of snacks.
+These can also be useful to build some "momentum" or inertia as a new contributor, with a new technology, or on a new team.
+
+But just like in real life though, a diet should not consist solely of snacks.
 
 
 ### Stop Preening
 
-Preening I had not heard before but is basically also low impact like snacking, but instead of low visibility it's high-visibility work.
+"Preening" is also low in impact like snacking, but instead of low visibility it's high-visibility work.
 
-This made me think of taking on a pet project for the boss. It might be highly visible work which could be useful to help build trust, but it may not benefit an individual's growth much.
+This made me think of taking on a pet project for the boss. It might be highly visible work because the boss has asked for it, but it's lower in impact to the business.
 
-The author encourages the reader to strike a balance between valued work and self growth.
+Preening projects might still be useful to help build trust ("right hand man") and reputation, but may not benefit an individual's skill growth or development.
+
+The author encourages the reader to strike a balance between work that is valued at the org, and personal growth.
 
 
-### Chasing Ghosts
+### Chasing Ghosts 👻
 
-Ghosts are low-impact but very high effort projects that aren't quite done and a new person may be brought in to try and solve.
+Ghosts are low-impact but very high effort projects that aren't quite done. A new person may be brought in to try and solve these problems!
 
 > Taking the time to understand the status quo before shifting it will always repay diligence with results.
 
@@ -51,22 +57,25 @@ Since there was no additional purchaseable headroom available, working on code a
 
 ### Work where this is room and attention
 
-The guide suggests working where there is both room to work (things to be done, not fully solved), and attention to the work.
+The guide suggests working where there is both room to work (things to be done, in other words problems that are not fully solved), and attention to the work.
 
-This makes sense to me. Bringing someone in new but with nothing really to do, is unproductive. Bringing someone in new to work on something that has been ignored for a long time, will probably result in their effort being ignored.
+This makes sense to me. Bringing someone in new but with nothing really to do is unproductive. Bringing someone in new to work on something that has been ignored for a long time, will probably result in their effort being ignored.
+
+Some questions the book suggests:
 
 * What might become priorities in the future where you can work in advance of that?
-* Areas that are ok, but could be great
-* Be mindful of working in a company area that is not well supported
+* Areas that are "ok" , but could be great(!) 📈
+* Be mindful of working in a company area that is not well supported. It may be personally interesting, but not visible or rewarded.
 
 
 ### More Ideas
 
 * Foster growth
-* Edit
-* Finish things
-* What only you can
-
-This made sense to me and I've seen this before. A lot of projects are mostly there but not fully released.
+* "Edit" - improve something
+* Finish things (be a closer)
+* What only you can do. Do you have a unique skill to bring to the team?
 
 
+### Wrap Up
+
+The [StaffEng](https://staffeng.com/) book is very energizing to me, I highly recommend it!
