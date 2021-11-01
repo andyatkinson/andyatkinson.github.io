@@ -30,9 +30,9 @@ But just like in real life though, a diet should not consist solely of snacks.
 
 ### Stop Preening
 
-"Preening" is also low in impact like snacking, but instead of low visibility it's high-visibility work.
+"Preening" is lower impact work like snacking but instead of low visibility it's high-visibility work.
 
-This made me think of taking on a pet project for the boss. It might be highly visible work because the boss has asked for it, but it's lower in impact to the business.
+This made me think of taking on a pet project for a boss. It might be highly visible work because the boss has asked for it, but it's also lower in impact to the business.
 
 Preening projects might still be useful to help build trust ("right hand man") and reputation, but may not benefit an individual's skill growth or development.
 
@@ -70,10 +70,12 @@ Some questions the book suggests:
 
 ### More Ideas
 
-* Foster growth
-* "Edit" - improve something
+These are just copied from the source material with my own quick summaries.
+
+* Foster growth. Growing the team around you is always appreciated and valuable.
+* "Edit" - improve something that was good that could be great.
 * Finish things (be a closer)
-* What only you can do. Do you have a unique skill to bring to the team?
+* "What only you can do". Leverage unique skills by brining them to the team to level everyone up.
 
 
 ### Wrap Up
