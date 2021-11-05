@@ -599,6 +599,12 @@ Amazon RDS is hosted PostgreSQL
 
 [Crunchydata Native Partitioning Tutorial](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/native-partitioning/)
 
+#### Partition pruning
+
+Default is `on` or `SET enable_partition_pruning = off;` to turn it off.
+
+<https://www.postgresql.org/docs/13/ddl-partitioning.html#DDL-PARTITION-PRUNING>
+
 ### Random Bits
 
 * Use `NULL`s instead of default values when possible, cheaper to store and query. Source: [Timescale DB blog](https://blog.timescale.com/blog/13-tips-to-improve-postgresql-insert-performance/)
