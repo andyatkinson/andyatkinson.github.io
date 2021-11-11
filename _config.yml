@@ -44,6 +44,8 @@ navigation:
     url: /postgresql-tips
   - text: Ruby on Rails
     url: /rails-tips
+  - text: Elasticsearch
+    url: /elasticsearch
   - text: Process
     url: /software-dev-process
   - text: Eng Guidelines
