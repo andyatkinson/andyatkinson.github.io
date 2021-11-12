@@ -6,14 +6,11 @@ title: About
 
 #### Summary
 
-As a Senior Software Engineer on the Flipgrid team at Microsoft, I build and support back-end systems using open source tools like Ruby on Rails, PostgreSQL, Redis, Elasticsearch, and Redshift.
+As a Staff Software Engineer at [Fountain](https://get.fountain.com/), I build and support back-end systems using open source tools like Ruby on Rails, PostgreSQL, Redis, and Elasticsearch.
 
-To deploy our systems, we use AWS services like EC2 and RDS as well as Azure services with Kubernetes, Docker and Terraform.
+Outside of [writing and reviewing code](https://github.com/andyatkinson/), I conduct code screens, interviews, and onboard and mentor team members.
 
-Outside of writing and reviewing code, I conduct code screens and interviews to help grow the team. To help with the rapid evolution of our roles and responsibilities, I work to onboard and mentor new members, add documentation, write change logs and code review checklists, and propose new processes.
-
-![Andy Atkinson Headshot](/assets/images/pages/andy-headshot-big-wide.jpg#wide)
-<small>Photo by [Amber Procaccini Photography](http://www.aprocacciniphoto.com/) 2019</small>
+To improve overall engineering I write documentation, change logs, code review checklists and help to support existing patterns and create new ones.
 
 #### Education
 
