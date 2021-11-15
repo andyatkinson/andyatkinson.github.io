@@ -18,7 +18,7 @@ We configure this write and read separation manually in Rails which has supporte
 
 ### Using pgbench
 
-pgbench allows us to set up a benchmark suite that can be run against a database server. The benchmark input is SQL statements. These statements can be customized to add some diversity into the SELECT statements so that rows are not always selected that exist in the same page. We do this by supplying a random value to the lookup column.
+pgbench allows us to set up a benchmark set of queries that can be run against a database. The benchmark input is SQL queries. These statements can be customized to add some diversity into the SELECT statements so that rows are not always selected that exist in the same page.
 
 [pgbench](https://www.postgresql.org/docs/10/pgbench.html) is built in to PostgreSQL. I run pgbench local on OS X and then make a connection to a remote PG database, which then executes the benchmark.
 
@@ -33,21 +33,22 @@ In order to create the values we can use a `random` function and give it an uppe
 
 To run a pgbench benchmark, create a shell script like `my_benchmark.sh`.
 
-Using bash we can create a script that creates 10 SELECT statements each with a random value for blog_id, that we want to query on.
+Using bash we can create a script that creates 10 SELECT statements each with a random value for `blog_id`.
 
 ```
+#!/bin/bash
+
 for run in {1..10}; do
-  echo '\set blog_id random(1, 1000000)' >> queries.bench
-  echo "select * from comments where blog_id = :blog_id;" >> queries.bench
+  echo "select * from comments where blog_id = $(jot -r 1 1 1000);" >> queries.bench
 done
 ```
 
-We can create a mix of UPDATE statements as well, and potentially INSERT statements if it's ok to create benchmark data (or clean it up later) in the target database.
+We can create a mix of UPDATE statements as well for example setting `CURRENT_TIMESTAMP` on a timestamp column.
 
 Here is an example UPDATE statement:
 
 ```
-echo "UPDATE comments SET view_count = 0 WHERE blogs.id = :blog_id" >> queries.bench
+echo "UPDATE comments SET view_count = 0 WHERE blogs.id = 1" >> queries.bench
 ```
 
 
@@ -57,25 +58,32 @@ Here are some configuration options:
 
 
 ```
-# -T time seconds
-# -j threads
-# -c clients
-# -M querymode prepared
-# -r report latencies
-pgbench -h my-super-cool-rds-database.us-east-1.rds.amazonaws.com -d db-name -U db-user -M prepared -T 60 -j 32 -c 32 -f queries.bench -r
+# `-T/--time` time seconds
+# `-j/--jobs` number of threads
+# `-c/--client` number of clients
+# `-M/--protocol` querymode = prepared
+# `-r/--report-latencies`
+#
+
+pgbench --host localhost --port 5432 --username root --protocol prepared --time 60 --jobs 8 --client 8 --file queries.bench --report-latencies my_database_name"
 ```
 
-Once we put that all into `my_benchmark.sh` and `chmod +X my_benchmark.sh` now we can run it like `./my_benchmark`. The generated queries with random values should exist in a file called `queries.bench` in the same directory.
+Once we put that all into `my_benchmark.sh` and `chmod +X my_benchmark.sh` now we can run it like `./my_benchmark`.
 
-In the example above, we run it for 60 using 32 clients where each client has 32 threads of execution. This may put considerable load on your DB, which may be the goal.
+This technique may be useful to use to help tune memory parameters like `shared_buffers` to understand how changing the parameter affects the performance.
 
-This technique may be useful to use to help tune memory parameters like `shared_buffers` to understand how changing the parameter affects the maximum number of transactions per second that can be processed.
+Another tool for PostgreSQL benchmarking is [HammerDB](https://github.com/TPC-Council/HammerDB).
+
+This form of database benchmarking is best for testing parameter changes, system resource usage and that sort of thing.
+
+A more realistic test of a web application workload might use HTTP load testing tools and API endpoints that can be hit concurrently.
 
 
 ## Summary
 
-* Simulate your workload with pgbench
-* Create a diverse set of SQL statements that are similar to your workload
+* Benchmark your database server with pgbench
+* Create a variety of SQL statements to simulate the workload
 * Experiment with number of clients and threads to put more or less load on server depending on what your goals are
-* Use a database that is separate from your production workload
-* Use a benchmark to determine the effect of tunable parameters on TPS
+* Use a database that is separate from production
+* Use a benchmark to determine the effect of tunable parameters on Transactions per second (TPS)
+* For web applications a HTTP benchmarking tool hitting API endpoints concurrently will produce a more realistic workload
