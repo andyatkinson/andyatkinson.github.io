@@ -4,7 +4,11 @@ permalink: /elasticsearch
 title: Elasticsearch Tuning and Tips
 ---
 
-* Refresh interval
+## Tuning
+
+| Parameter | Default | |
+| --- | ----------- | --- |
+| index.refresh_interval | Every 1s | [Tune for indexing speed](https://www.elastic.co/guide/en/elasticsearch/reference/current/tune-for-indexing-speed.html) |
 
 
 ## Use Cases
@@ -28,3 +32,11 @@ The operational concerns here are more about indexing rate, search speed etc. as
 
 
 ### As a search engine
+
+Elasticsearch has powerful capabilities built in for searching.
+
+### Tools
+
+#### Tracking searches
+
+* [Searchjoy](https://github.com/ankane/searchjoy)
