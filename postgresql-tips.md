@@ -19,6 +19,7 @@ Some of my blog posts on PostgreSQL
 * [Intro to PostgreSQL generate_series](/blog/2016/09/20/intro-postgresql-generate_series)
 * [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer)
 
+
 ## Tuning
 
 [Annotated.conf](https://github.com/jberkus/annotated.conf)
@@ -621,8 +622,6 @@ To manage these functions in a Ruby app, use the [fx gem](https://github.com/teo
 
 * [The Unexpected Find That Freed 20GB of Unused Index Space](https://hakibenita.com/postgresql-unused-index-size)
 * [Some SQL Tricks of an Application DBA](https://hakibenita.com/sql-tricks-application-dba)
-* [Generalists/specialists: Application DBA and Performance Analyst](https://www.dbta.com/Columns/DBA-Corner/What-Type-of-DBA-Are-You-121146.aspx)
-* [PostgreSQL Connection Pooling: Part 1 – Pros & Cons](http://highscalability.com/blog/2019/10/18/postgresql-connection-pooling-part-1-pros-cons.html)
 
 This is an amazing article full of nuggets.
 
@@ -634,3 +633,12 @@ This is an amazing article full of nuggets.
   * `array_agg(expression)` to build up list of IDs and `unnest(anyarray)` to expand it
 * Avoidance of indexes for low selectivity, and value of partial indexes in those cases (activated 90% v. unactivated users 10%)
 * Tip on confirming index usage by removing index in a transaction with `BEGIN` and rolling it back with `ROLLBACK`.
+
+* [Generalists/specialists: Application DBA and Performance Analyst](https://www.dbta.com/Columns/DBA-Corner/What-Type-of-DBA-Are-You-121146.aspx)
+* [PostgreSQL Connection Pooling: Part 1 – Pros & Cons](http://highscalability.com/blog/2019/10/18/postgresql-connection-pooling-part-1-pros-cons.html)
+
+### Presentations
+
+* [PostgreSQL Indexing : How, why, and when.](https://2018.pycon-au.org/talks/42913-postgresql-indexing-how-why-and-when)
+* [Tuning PostgreSQL for High Write Workloads](https://www.youtube.com/watch?v=xrMbzHdPLKM)
+
