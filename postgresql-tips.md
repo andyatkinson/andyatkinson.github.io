@@ -150,6 +150,14 @@ The most common type is a Btree index. Less common types:
 * GiST
 * BRIN
 
+#### More
+
+* Expression
+* Covering (index only scans)
+* Unique
+* Multi-column (a,b) for a only, a & b, but not only b
+* For sorting
+
 ### Remove unused indexes
 
 Indexes may have been created that are not used as part of a query plan. These should be removed to reduce unnecessary IO associated with maintaining the index.
