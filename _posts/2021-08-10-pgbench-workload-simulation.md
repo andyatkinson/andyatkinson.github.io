@@ -10,7 +10,7 @@ featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atk
 featured: true
 ---
 
-We operate a high scale API application that relies on a single primary PostgreSQL instance as many applications do. We have scaled up the DB instance vertically, acquiring more CPU, Memory, and disk IO over time.
+We operate a high scale API application that relies on a single primary PostgreSQL instance. We have scaled up the DB instance vertically, acquiring more CPU, Memory, and disk IO over time.
 
 For the workload on the primary, the workload is more write oriented by design (`INSERT` and `UPDATE` statements) as we use a read replica (standby) that is intended for any read only queries to execute against to take load off the primary.
 
@@ -72,7 +72,7 @@ Once we put that all into `my_benchmark.sh` and `chmod +X my_benchmark.sh` now w
 
 This technique may be useful to use to help tune memory parameters like `shared_buffers` to understand how changing the parameter affects the performance.
 
-Another tool for PostgreSQL benchmarking is [HammerDB](https://github.com/TPC-Council/HammerDB).
+Another tool for PostgreSQL benchmarking is [HammerDB](https://github.com/TPC-Council/HammerDB). HammerDB may have a more realistic workload test environment out of the box.
 
 This form of database benchmarking is best for testing parameter changes, system resource usage and that sort of thing.
 

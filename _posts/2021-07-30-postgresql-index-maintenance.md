@@ -8,7 +8,7 @@ comments: true
 
 Indexes on tables are great for finding a needle (or a few needles) in a haystack.
 
-Indexes can be utilized to avoid slow sequential scans (scanning all rows) in high row count tables when querying a small filtered set rows (high selectivity filter).
+Indexes can be utilized to avoid slow sequential scans (scanning all rows) in high row count tables when querying a small filtered set of rows.
 
 However there can be a tendency to over-index applications and indexes are not "free" in terms of their impact to storage and disk IO. I know I had a tendency to over-index in my past experience.
 
@@ -25,12 +25,13 @@ Some of the over-indexing might be:
 * Adding an index before it is used as part of a query plan (speculative)
 * Adding an index to a foreign key column when it's not used by a query plan (speculative)
 * Adding an index without testing on production hardware. Production may have considerably more memory available and not use the index. (check the query plan)
-* Scaling up memory or system resources on a DB server such that previously used indexes are no longer used
+* Scaling up memory or system resources on a DB server dramatically and PG changing the query execution plan
 * Indexing multiple columns when a single column is adequate
 * Indexing NULL values when they are not part of query conditions (a partial index can exclude `NULL` column rows)
+* PG can combine multiple single column indexes as part of query planning
 
 
-## Unused indexes
+## Unused Indexes
 
 Fortunately PG tracks index scans so we can easily identify unused indexes. Unused indexes can likely be removed entirely from your database, reclaiming disk space and improving operational efficiency.
 
@@ -65,11 +66,9 @@ In addition to this query, we adopted [PgHero](https://github.com/ankane/pghero)
 
 By design in the MVCC implementation PG, when a row is updated even for a single column, the former row becomes a dead row/dead tuple (invisible). Tables always consist of "live" and dead tuples.
 
-The dead tuples are referred to as "bloat" and a table with 20% of its tuples (rows) being bloat is acceptable, but 50% is bad and can impact performance.
+The dead tuples are referred to as "bloat" and a table with 20% of its tuples (rows) being bloat is acceptable, but 50% or more is bad and can impact performance.
 
-Due to the nature of web application workloads bloat is common. Autovacuum is intended to run automatically and remove dead row bloat.
-
-Sometimes Autovacuum doesn't remove all the bloat. Sometimes bloated rows are removed but the indexes on those tables remain bloated.
+Due to the nature of web application workloads bloat is common. Perhaps this is due to a UPDATE heavy workload.
 
 The fix for bloated indexes is to `REINDEX` the index, thus removing any references to dead tuples. On newer versions of PG, `REINDEX` can be done in the background (`CONCURRENTLY`) however on PG 10 that is not supported. To reindex concurrently, we used a tool called [pg_repack](https://reorg.github.io/pg_repack/) which supports repacking tables and indexes concurrently. This is a third-party tool that has some downsides (heavy disk IO, `ACCESS EXCLUSIVE` lock for table repack) so make sure to test usage of it on your pre-production systems.
 
@@ -86,23 +85,33 @@ Pg_repack is a command line application. To use it with Amazon RDS PostgreSQL, i
 
 I repacked 27 indexes on our primary database, reclaiming over 230 GB of space. In the most extreme cases with 90% bloat, the resulting repacked (new) index size was around 10% of the original size. This makes sense since 90% of the bloat was removed.
 
-## Duplicate and Invalid indexes
+## Duplicate, Redundant and Invalid indexes
 
-Duplicate indexes mean that an index is redundant, and another serves the same purpose from the query planners perspective.
+Duplicate indexes mean that two indexes have different names, but index the same columns.
 
-PgHero helped us identify 13 duplicate indexes that could be dropped. THe process was to drop the index on a detached datatabase, analyze the table, compared the query plan and execution time before and after removing the index.
+Redundant indexes mean another index serves the same purpose for the query execution plan.
+
+PgHero helped us identify 13 duplicate indexes that could be dropped. The process was to drop the index on a detached datatabase, analyze the table, compared the query plan and execution time before and after removing the index.
 
 If the query plan and execution time looked the same, the index could be dropped in production!
 
-Invalid indexes are indexes that failed to build properly. To fix this, drop and rebuild the index (concurrently).
+Invalid indexes are indexes that failed to build properly. To fix this, drop the index if not needed, or rebuild the index (concurrently).
 
 
 ## Summary
 
-* Find, test and drop unused and duplicate indexes that don't impact queries
-* Fix invalid indexes
-* Re-index bloated indexes concurrently (use pg_repack if reindex concurrently is not natively supported)
-* Adjust Autovacuum settings to prevent excessive bloat from recurring
+* Find and removed unused and duplicate indexes that don't impact queries
+* Remove or rebuild invalid indexes
+* Remove index bloat by re-indexing (use pg_repack or `reindex concurrently`)
+* Adjust Autovacuum settings proportional to UPDATE workload
 
 
 If you have any other index maintenance tips, I'd love to hear them. Thanks for reading.
+
+#### PostgreSQL Unused Indexes (Internal lightning-style talk)
+
+January 2021<br/>
+Why unused indexes are bad and how to remove them
+
+<script async class="speakerdeck-embed" data-id="6644d7dd7380413ea19dce1955f41269" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+

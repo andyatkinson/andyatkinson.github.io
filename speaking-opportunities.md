@@ -19,13 +19,6 @@ Why unused indexes are bad and how to remove them
 
 <script async class="speakerdeck-embed" data-id="6644d7dd7380413ea19dce1955f41269" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
-#### Big Backfill Recap Tech Talk (Internal)
-
-January 2019<br/>
-De-normalizing and backfilling a large amount of e-commerce data to improve API performance
-
-<script async class="speakerdeck-embed" data-id="fff2cbdfc2c142f4b33c08609a385e0d" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
 #### Dropwizard Bundles Tech Talk (Internal)
 
 March 2018<br/>
