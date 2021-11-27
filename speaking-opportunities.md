@@ -19,13 +19,6 @@ Why unused indexes are bad and how to remove them
 
 <script async class="speakerdeck-embed" data-id="6644d7dd7380413ea19dce1955f41269" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
-#### Dropwizard Bundles Tech Talk (Internal)
-
-March 2018<br/>
-Andy gave an introductory talk on Dropwizard Bundles
-
-<script async class="speakerdeck-embed" data-id="a819f7ee3b2340498147b30119d0959a" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
 #### RubyConf Argentina (Conference)
 
 Andy [presented in Buenos Aires at RubyConf Argentina 2012](/blog/2013/11/27/rubyconf-argentina-2012/) about how his team applied Lean Startup principles to their work at LivingSocial.
