@@ -12,6 +12,8 @@ Date: 2021-12-02<br/>
 Level: Intermediate<br/>
 Speaker: [Andrew Atkinson](https://postgresql.us/events/pgconfnyc2021/sessions/speaker/310-andrew-atkinson/)
 
+<script async class="speakerdeck-embed" data-id="030a9bf3e09e4486acb96323ffe66302" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+
 #### PostgreSQL Unused Indexes (Internal lightning-style talk)
 
 January 2021<br/>
