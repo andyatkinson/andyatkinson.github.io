@@ -10,7 +10,7 @@ My tips operating high scale PostgreSQL databases primarily with Ruby on Rails w
 
 OLAP workload. Using application databases as the data source for a data warehouse or ETL process.
 
-## My Blog Posts
+## PostgreSQL Posts
 
 Some of my blog posts on PostgreSQL
 
