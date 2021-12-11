@@ -6,11 +6,11 @@ comments: true
 tags: [MySQL, PostgreSQL, Productivity, Databases]
 ---
 
-For a new project I will be using PostgreSQL. I have more experience with MySQL at this point so I wanted to quickly learn about PostgreSQL and port over some of the skills I have.
+For a new project I will be using PostgreSQL. I have more experience with MySQL so I wanted to quickly learn about PostgreSQL and port over some of the skills I have.
 
 #### Roles
 
-Permissions are managed with "roles". To see all roles, type `\du`. A Superuser is created that is the same as my login user. To see the privileges for all tables, run `\l`. Here is a [list of privileges](http://www.postgresql.org/docs/9.0/static/sql-grant.html).
+Permissions are managed with "roles". To see all roles, type `\du`. To see the privileges for all tables, run `\l`. Here is a [list of privileges](http://www.postgresql.org/docs/9.0/static/sql-grant.html).
 
 #### Working with Rails
 
@@ -22,13 +22,13 @@ createdb -O rails app_name_development
 
 From a psql prompt, type `\list` to see all databases, and `\c database` to connect to a database by name. `\dt` will show all the tables.
 
-If the rails user did not have create database privileges, there will be an error running `rake` in a rails project when the database is dropped. To add the permission to the rails user using psql:
+If the user did not have privileges to create a database there will be an error running `rake`. To add the `createdb` permission for the `rails` use:
 
 ``` sql
 alter role rails createdb
 ```
 
-To verify this role as added run the following query. A [role full list](http://www.postgresql.org/docs/9.1/static/sql-alterrole.html) is here.
+To verify this role is added run the following query. A [role full list](http://www.postgresql.org/docs/9.1/static/sql-alterrole.html) is here.
 
 ``` sql
 select rolcreatedb from pg_roles where rolname = 'rails';
@@ -37,12 +37,13 @@ select rolcreatedb from pg_roles where rolname = 'rails';
  t
 ```
 
-#### Working with CSV data
+#### Working with CSV
 
-Like Mysql, PostgreSQL supports working with data from CSV files. The following example uses a `company_stuff` database with a `customers` table. First we need to create the database, connect to it, and create the table.
+Like MySQL PostgreSQL supports working with data from CSV files. The following example uses a `company_stuff` database with a `customers` table. First we need to create the database, connect to it and create the table.
 
 ``` sql
 create database company_stuff;
+
 \c company_stuff;
 create table customers 
     (id serial not null primary key, 
@@ -52,7 +53,9 @@ create table customers
 
 Type `\d customers` to verify the table is set up correctly.
 
-Now assuming we have the same CSV text file from the previous article when I covered how to work with CSV files using MySQL, we can load it into PostgreSQL using the `copy` command. This example specifies the column names, and note that the primary key column value is populated automatically.
+Assuming we have the same CSV file from the previous article when I covered how to work with CSV files using MySQL, we can load it into PostgreSQL using the `copy` command.
+
+This example specifies the column names. The primary key ID column is set automatically.
 
 ``` bash
 % cat customers.txt
@@ -76,7 +79,7 @@ select * from customers;
   2 | jane@example.com |  Jane Doe
 ```
 
-Now we can insert a new record, then dump all the records out again as new CSV file.
+Now we can insert a new record, then dump all the records out again as a new CSV file.
 
 ``` sql
 copy customers(email, full_name) 
@@ -93,18 +96,33 @@ jane@example.com, Jane Doe
 andy@example.com,andy
 ```
 
-#### Running one-off queries
+#### Running Queries
 
-Running a query from the command line then combining it with `grep` or other command line tools is very useful. Here is quick search in the "customers" database for columns named something like "email", using grep:
+Running a query from the command line and combining with `grep` is very useful.
+
+Here is quick search in the "customers" database for columns named like "email":
 
 ``` bash
 ~ $ psql -U andy -d company_stuff -c "\d customers" | grep email
      email     | character varying(100) |
 ```
 
-#### More Mysql to PostgreSQL articles
+That's it for now!
+
+#### More Mysql-to-PostgreSQL Links
 
  * [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
  * [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
  * [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
  * [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+
+
+## More PostgreSQL Posts
+
+Some of my blog posts on PostgreSQL
+
+* [PostgreSQL Indexes: Prune and Tune](blog/2021/07/30/postgresql-index-maintenance)
+* [PostgreSQL pgbench Workload Simulation](/blog/2021/08/10/pgbench-workload-simulation)
+* [Views, Stored Procedures, and Check Constraints](/blog/2018/10/19/database-views-stored-procedures-check-constraints)
+* [A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
+* [Intro to PostgreSQL generate_series](/blog/2016/09/20/intro-postgresql-generate_series)
