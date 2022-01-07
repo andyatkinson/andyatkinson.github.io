@@ -4,14 +4,11 @@ permalink: /rails-tips
 title: Rails Tips
 ---
 
+## App Code Tips
+
 #### Log SQL queries to console
 
 `ActiveRecord::Base.logger = Logger.new(STDOUT)`
-
-#### Tail test log file when running test
-
-In a separate terminal window:
-`tail -f log/test.log`
 
 #### List object methods
 
@@ -39,14 +36,6 @@ That works but can introduce breakages due to slighy differences in PG versions 
 
 A better solution is to use the [fx](https://github.com/teoljungberg/fx) gem. With fx, native database functions can be dumped into the Ruby schema format. Yay!
 
-#### Remove unused indexes
-
-In a Rails migration, check for the existence of the index like: `index_exists?(:table_name, :column_name)` before writing it. Indexes may have different generated names in different environments.
-
-#### Use Strong Migrations
-
-Follow the tips in [strong_migrations](https://github.com/ankane/strong_migrations). Create your own custom checks. Explain your rationale when using `safety_assured`.
-
 #### Bundler platforms
 
 If developing on OS X, deploying on Linux, and vendoring gems, the Darwin pre-built gem will be installed. Add the Linx platform:
@@ -66,23 +55,55 @@ This makes `bundle update addressable` easy in the future, grabbing any new patc
 
 In general I prefer to avoid specifying versions entirely in the `Gemfile` and rely on the versions in `Gemfile.lock`, which has specific versions for direct and indirect dependencies.
 
-#### Connection Pool Stats
+#### Caller code source location
 
-```rb
-ActiveRecord::Base.connection_pool.stat
+This is more of a Ruby tip but you can get a method reference and use source location. For example with an instance of foo:
 
-# => {:size=>32, :connections=>0, :busy=>0, :dead=>0, :idle=>0, :waiting=>0, :checkout_timeout=>4.0}
-```
+`Foo.new` the `method` method can be called with a method name like `bar`, e.g. `Foo.new.method(:bar).source_location` and calling source_location will show the line number of the caller.
+
+#### Nested Attributes
+
+If there is the option to control the front-end HTTP request payload, take advantage of built-in [nested attributes support](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html) to create objects via an association.
+
+Because nested models can be created or updated this way, Active Record lifecycle events like `before_save` can be triggered to create a loosely coupled series of actions.
+
+#### Unused
+
+* Identify unused code <https://github.com/unused-code/unused>
+* `$ unused`
+
+#### Rails Best Practices
+
+* <https://github.com/flyerhzm/rails-bestpractices.com>
+* `$ rails_best_practices .`
+
+
+## Test Code Tips
 
 #### Rspec Tips
 
 * Run specific spec: use line number on end like `rspec spec/foo_spec.rb:123` to run line 123
 
-#### Source location
+#### Compare times at course granularity
 
-This is more of a Ruby tip but you can get a method reference and use source location. For example with an instance of foo:
+`expect(thing.time).to be_within(1.second).of Time.now`
 
-`Foo.new` the `method` method can be called with a method name like `bar`, e.g. `Foo.new.method(:bar).source_location` and calling source_location will show the line number of the caller.
+#### Tail test log file when running test
+
+In a separate terminal window:
+`tail -f log/test.log`
+
+#### Sidekiq testing
+
+<https://github.com/mperham/sidekiq/wiki/Testing> We use the `inline!` method to test jobs synchronously.
+
+#### External web requests
+
+We use [webmock](https://github.com/bblimke/webmock) for 3rd party APIs to capture authentic HTTP stubbed responses.
+
+
+
+## Rails and Database Tips
 
 #### Statement timeout
 
@@ -94,26 +115,18 @@ For queries that are ok to run longer, or migrations, a higher value is appropri
 
 Set a `checkout_timeout` to set how long to wait to check out a connection from the connection pool. The default is 5 seconds but we set it to 4 seconds. [Rails Conection Pool Docs](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html)
 
-#### Nested Attributes
+#### Connection Pool Stats
 
-If there is the option to control the front-end HTTP request payload, take advantage of built-in [nested attributes support](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html) to create objects via an association.
+```rb
+ActiveRecord::Base.connection_pool.stat
 
-Because nested models can be created or updated this way, Active Record lifecycle events like `before_save` can be triggered to create a loosely coupled series of actions.
+# => {:size=>32, :connections=>0, :busy=>0, :dead=>0, :idle=>0, :waiting=>0, :checkout_timeout=>4.0}
+```
+#### Remove unused indexes
 
-#### Sidekiq testing
+In a Rails migration, check for the existence of the index like: `index_exists?(:table_name, :column_name)` before writing it. Indexes may have different generated names in different environments.
 
-<https://github.com/mperham/sidekiq/wiki/Testing> We use the `inline!` method to test jobs synchronously.
+#### Use Strong Migrations
 
-#### External web requests
+Follow the tips in [strong_migrations](https://github.com/ankane/strong_migrations). Create your own custom checks. Explain your rationale when using `safety_assured`.
 
-We use [webmock](https://github.com/bblimke/webmock) for 3rd party APIs to capture authentic HTTP stubbed responses.
-
-#### Unused
-
-* Identify unused code <https://github.com/unused-code/unused>
-* `$ unused`
-
-#### Rails Best Practices
-
-* <https://github.com/flyerhzm/rails-bestpractices.com>
-* `$ rails_best_practices .`
