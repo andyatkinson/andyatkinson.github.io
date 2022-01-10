@@ -478,6 +478,10 @@ Available on PG 12.5+ on RDS, pg_cron is an extension that can be useful to sche
 
 See: [Scheduling maintenance with the PostgreSQL pg_cron extension](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_pg_cron.html)
 
+### `pg_timetable`
+
+[pg_timetable: Advanced scheduling for PostgreSQL](https://github.com/cybertec-postgresql/pg_timetable)
+
 ### `pg_squeeze`
 
 [pg_squeeze](https://www.cybertec-postgresql.com/en/products/pg_squeeze/)
@@ -608,6 +612,10 @@ Using plpgsql, functions can be added to the database directly.
 [Stored procedures](https://github.com/andyatkinson/db-stuff)
 
 To manage these functions in a Ruby app, use the [fx gem](https://github.com/teoljungberg/fx) (versioned database functions)!
+
+### Monitoring
+
+* `pg_top` - On Mac OS: `brew install pg_top` and run it `pg_top`
 
 ### Resources
 
