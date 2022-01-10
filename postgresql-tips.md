@@ -4,11 +4,13 @@ permalink: /postgresql-tips
 title: PostgreSQL Tuning and Tips
 ---
 
-Web applications that utilize a relational database and normalized data, have a high transactional online workload. Scaling up the database is common and critical to meet the workload.
+## My typical workloads
 
-Here are tuning params, tips and misc. information collected from work with PostgreSQL. This page serves me as an evolving source of documentation, references, and examples across various categories.
+My tips operating high scale PostgreSQL databases primarily with Ruby on Rails web applications. OLTP, high quantity of short lived transactions.
 
-## My Blog Posts
+OLAP workload. Using application databases as the data source for a data warehouse or ETL process.
+
+## PostgreSQL Posts
 
 Some of my blog posts on PostgreSQL
 
@@ -18,31 +20,6 @@ Some of my blog posts on PostgreSQL
 * [A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
 * [Intro to PostgreSQL generate_series](/blog/2016/09/20/intro-postgresql-generate_series)
 * [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer)
-
-## Tuning
-
-[Annotated.conf](https://github.com/jberkus/annotated.conf)
-
-`shared_buffers`. RDS default is around 25% of system memory. Recommendations say up to 40% of system memory could be allocated, at which point there may be diminishing returns beyond that.
-
-The unit is 8kb chunks, and requires some math to change the value for. Here is a formula:
-
-<https://stackoverflow.com/a/42483002/126688>
-
-| Parameter | Unit | Default RDS | Tuned | Link |
-| --- | ----------- | ---- |||
-| `shared_buffers` | 8kb | 25% mem |||
-| `autovacuum_cost_delay` | ms | 20 | 2 ||
-| `autovacuum_vaccum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
-| `effective_cache_size` | 8kb ||||
-| `work_mem` | MB | 4 | 250||
-| `maintenance_work_memory` |  ||||
-| `checkpoint_timeout` |  ||||
-| `min_wal_size` | MB | 80 | 4000 | [High write log blog](https://blog.crunchydata.com/blog/tuning-your-postgres-database-for-high-write-loads) |
-| `max_wal_size` | MB | 4000 | 16000 ||
-| `max_worker_processes` | | 8 | 1x/cpu ||
-| `max_parallel_workers` | | 8 | 1x/cpu ||
-| `max_parallel_workers_per_gather` | | 2 | 4 ||
 
 
 ## Queries
@@ -98,11 +75,11 @@ limit 10;
 
 ### Autovacuum
 
-PostgreSQL runs an autovacuum process in the background to remove dead tuples. Dead tuples are the result of a multiversion model ([MVCC](https://www.postgresql.org/docs/9.5/mvcc-intro.html)). Dead tuples are also called dead rows or "bloat". Bloat can also exist for indexes.
+PostgreSQL runs an autovacuum process in the background. Dead tuples are also called dead rows or "bloat". Bloat can also exist for indexes.
 
 Two parameters may be used to trigger the AV process: "scale factor" and "threshold". These can be configured DB-wide or per-table.
 
-In [routine vacumming](https://www.postgresql.org/docs/9.1/routine-vacuuming.html), the two options are listed:
+In [routine vacuuming](https://www.postgresql.org/docs/9.1/routine-vacuuming.html), the two options are listed:
 
 - scale factor (a percentage) [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
 - threshold (a specific number) [`autovacuum_vacuum_threshold`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
@@ -149,6 +126,14 @@ The most common type is a Btree index. Less common types:
 * GiST
 * BRIN
 
+#### More
+
+* Expression
+* Covering (index only scans)
+* Unique
+* Multi-column (a,b) for a only, a & b, but not only b
+* For sorting
+
 ### Remove unused indexes
 
 Indexes may have been created that are not used as part of a query plan. These should be removed to reduce unnecessary IO associated with maintaining the index.
@@ -192,13 +177,11 @@ Query that finds duplicate indexes, meaning using the same columns etc. Recommen
 
 [New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html)
 
-> Seldom Used Indexes on Heavily Written Tables
-
 This is a great guideline.
 
-As a general rule, if you're not using an index twice as often as it's written to, you should probably drop it.
+> As a general rule, if you're not using an index twice as often as it's written to, you should probably drop it.
 
-In our system on our highest write table we had 10 indexes defined and 6 are classified as Low Scans, High Writes. These indexes may not be worth keeping.
+In our system on our highest write table we had 10 total indexes defined and 6 were classified as Low Scans, High Writes. These indexes may not be worth keeping.
 
 ## Partial Indexes
 
@@ -214,7 +197,6 @@ More work needs to be done in this area. Primarily debugging deadlocks that show
 ### Timeout Tuning
 
   - `statement_timeout`: The maximum time a statement can execute before it is terminated
-  - Reaping frequency: TBD
 
 
 ### Checkpoint Tuning
@@ -262,13 +244,12 @@ This allows the application to allocate many more client connections (for exampl
 
 * [PostgreSQL Connection Pooling With PgBouncer](https://dzone.com/articles/postgresql-connection-pooling-with-pgbouncer)
 
-Install pgbouncer on OS X with `brew install pgbouncer`. Create the .ini config file as the article mentions, point it to a database, accept connections, and track the connection count.
-
+Install pgbouncer on OS X with `brew install pgbouncer`. Create the `.ini` config file as the article mentions, point it to a database, accept connections, and track the connection count.
 
 
 ## Miscellaneous
 
-### HOT updates
+### H.O.T. Updates
 
 HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
 
@@ -329,7 +310,10 @@ Note: use `-k, --no-superuser-check`
 
 This article [5 Things I wish my grandfather told me about ActiveRecord and Postgres](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANLAYZE output written more in plain English.
 
-### [pgMustard](https://www.pgmustard.com/). [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI).
+### [pgMustard](https://www.pgmustard.com/)
+
+[YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI)
+
 Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
 
 `explain (analyze, buffers, verbose, format text)` or specify `format json`
@@ -337,9 +321,11 @@ Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and
 
 ### pgbench
 
-Check out my [blog post on pgbench](blog/2021/08/10/using-pgbench)
+Repeatable method of determining a transactions per second (TPS) rate.
 
-Repeatable method of determining a transactions per second (TPS) rate. Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom workload.
+Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom SQL queries.
+
+Could also be used to test the impact of ramping up connections.
 
 - Initialize database example with scaling option of 50 times the default size:
 `pgbench -i -s 50 example`
@@ -355,9 +341,9 @@ PGTune is a website that tries to suggest values for PG parameters that can be t
 
 <https://pgtune.leopard.in.ua/#/>
 
-### pghero
+### PgHero
 
-pghero brings a bunch of operational concerns into a dashboard format. It is built as a Rails engine and provides a nice interface on top of queries related to the PG catalog tables.
+PgHero brings a bunch of operational concerns into a dashboard format. It is built as a Rails engine and provides a nice interface on top of queries related to the PG catalog tables.
 
 We are running it in production and some immediate value has been helping clarify unused and duplicate indexes we can remove.
 
@@ -385,19 +371,25 @@ Perl script to analyze a database. Do not have experience with this. Has some in
 
 [pgmetrics](https://pgmetrics.io/)
 
+### pgcli
+
+`brew install pgcli`
+
+An alternative to psql with syntax highlighting, autocomplete and more.
+
 ## Write Ahead Log (WAL)
 
-"The checkpoint requirement of flushing all dirty data pages to disk can cause a significant I/O load"
+Can cause a significant I/O load
 
-`checkpoint_timeout` - seconds, checkout runs here, default 5 minutes
-`max_wal_size` - if max wal size is about to be exceeded, default 1 GB
+* `checkpoint_timeout` - in seconds, default checkpointing every 5 minutes
+* `max_wal_size` - if max wal size is about to be exceeded, default 1 GB
 
 Reducing the values causes checkpoint to run more frequently.
 
 `checkpoint_warning` parameter
 `checkpoint_completion_target`
 
-On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints.
+General Recommendation (not mine): "On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints."
 
 Params:
 
@@ -414,7 +406,7 @@ Native Foreign data wrapper functionality in PostgreSQL allows connecting to a r
 
 The table structure may be specified when establishing the foreign table or it may be imported as well.
 
-A bit benefit of this for us at work is that for a recent backfill, we were able to avoid the need for any intermediary data dump files. This is a win in terms of reducing process steps, increasing the overall speed, and decreasing the security risk by eliminating intermediary customer data files.
+A big benefit of this for us at work is that for a recent backfill. We were able to avoid the need for any intermediary data dump files.
 
 We used a `temp` schema to isolate any temporary tables away from the main schema (`public`).
 
@@ -518,9 +510,9 @@ This is not an extension but looks like a useful tool. [A better way to index yo
 How does bloat (table bloat, index bloat) affect performance?
 
 * "When a table is bloated, Postgres’s ANALYZE tool calculates poor/inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
-* Queries on tables with high bloat will require additional IO, navigating through more pages of data. Fix is to vacuum or vacuum full.
+* Queries on tables with high bloat will require additional IO, navigating through more pages of data.
 * Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Fix is to reindex the index.
-* Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Thus not related to bloat directly, but efforts to minimize table bloat for a given table improves performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
+* Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Minimize table bloat to improve performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
 
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 * [Dealing with significant Postgres database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
@@ -629,7 +621,6 @@ To manage these functions in a Ruby app, use the [fx gem](https://github.com/teo
 
 * [The Unexpected Find That Freed 20GB of Unused Index Space](https://hakibenita.com/postgresql-unused-index-size)
 * [Some SQL Tricks of an Application DBA](https://hakibenita.com/sql-tricks-application-dba)
-* [Generalists/specialists: Application DBA and Performance Analyst](https://www.dbta.com/Columns/DBA-Corner/What-Type-of-DBA-Are-You-121146.aspx)
 
 This is an amazing article full of nuggets.
 
@@ -641,3 +632,37 @@ This is an amazing article full of nuggets.
   * `array_agg(expression)` to build up list of IDs and `unnest(anyarray)` to expand it
 * Avoidance of indexes for low selectivity, and value of partial indexes in those cases (activated 90% v. unactivated users 10%)
 * Tip on confirming index usage by removing index in a transaction with `BEGIN` and rolling it back with `ROLLBACK`.
+
+* [Generalists/specialists: Application DBA and Performance Analyst](https://www.dbta.com/Columns/DBA-Corner/What-Type-of-DBA-Are-You-121146.aspx)
+* [PostgreSQL Connection Pooling: Part 1 – Pros & Cons](http://highscalability.com/blog/2019/10/18/postgresql-connection-pooling-part-1-pros-cons.html)
+
+### Presentations
+
+* [PostgreSQL Indexing : How, why, and when.](https://2018.pycon-au.org/talks/42913-postgresql-indexing-how-why-and-when)
+* [Tuning PostgreSQL for High Write Workloads](https://www.youtube.com/watch?v=xrMbzHdPLKM)
+
+
+## Tuning
+
+[Annotated.conf](https://github.com/jberkus/annotated.conf)
+
+`shared_buffers`. RDS default is around 25% of system memory. Recommendations say up to 40% of system memory could be allocated, at which point there may be diminishing returns beyond that.
+
+The unit is 8kb chunks, and requires some math to change the value for. Here is a formula:
+
+<https://stackoverflow.com/a/42483002/126688>
+
+| Parameter | Unit | Default RDS | Tuned | Link |
+| --- | ----------- | ---- |||
+| `shared_buffers` | 8kb | 25% mem |||
+| `autovacuum_cost_delay` | ms | 20 | 2 ||
+| `autovacuum_vaccum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
+| `effective_cache_size` | 8kb ||||
+| `work_mem` | MB | 4 | 250||
+| `maintenance_work_memory` |  ||||
+| `checkpoint_timeout` |  ||||
+| `min_wal_size` | MB | 80 | 4000 | [High write log blog](https://blog.crunchydata.com/blog/tuning-your-postgres-database-for-high-write-loads) |
+| `max_wal_size` | MB | 4000 | 16000 ||
+| `max_worker_processes` | | 8 | 1x/cpu ||
+| `max_parallel_workers` | | 8 | 1x/cpu ||
+| `max_parallel_workers_per_gather` | | 2 | 4 ||

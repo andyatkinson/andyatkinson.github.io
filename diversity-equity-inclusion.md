@@ -12,6 +12,10 @@ title: Diversity, Equity & Inclusion
 
 This book by Author Frederick Joseph is a strong recommendation for anyone, but especially as a white person in the U.S. to better understand privilege, build empathy for the experiences of others, and even how to use privilege to override biases/dysfunction (the mall story).
 
+#### Talks
+
+* TEDx Dr. Beverly Tatum [Is My Skin Brown Because I Drank Chocolate Milk?](https://www.youtube.com/watch?v=l_TFaS3KW6s)
+
 
 #### Events
 
