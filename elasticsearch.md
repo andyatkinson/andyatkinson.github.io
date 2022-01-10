@@ -4,6 +4,60 @@ permalink: /elasticsearch
 title: Elasticsearch Tuning and Tips
 ---
 
+Elasticsearch is a distributed database with an HTTP API. Here are some things I've learned. I've installed Elasticsearch version 7.x on Mac OS via Homebrew.
+
+## Concepts
+
+Mapping concepts from an RDMBS can be helpful. 
+
+* Index - this is like a RDBMS table
+* Document - this is like a RDBMS row
+* Mapping - this is like an RDBMS DDL structure, although it can be applied upfront or later on.
+
+### More Concepts
+
+These concepts are specific to the architecture of [Elasticsearch and scalability](https://www.elastic.co/guide/en/elasticsearch/reference/current/scalability.html).
+
+* Shard - A self-contained index
+  * Primary shard - for indexing requests. Each document is in a primary shard. Fixed at index creation.
+  * Replica shard - a copy of a primary shard. Replica shards can be added to scale search requests.
+* Node - (servers) nodes serve primary or replica shards
+* Cluster - a collection of nodes
+
+## API Concepts
+
+Elasticsearch has an HTTP API. That means HTTP verbs like `POST`, `PUT`, `GET` and `DELETE` are mapped to concepts like creating, updating, searching and deleting things.
+
+
+## Create an index
+
+```
+curl -XPUT 'http://localhost:9200/foo'
+```
+
+## Put a document in the index
+
+Create a document with id `1` in the index `foo` with a title of "My title".
+
+```
+curl -H 'Content-Type: application/json' -X POST 'localhost:9200/foo/_doc/1?pretty' -d '
+                                                  {
+                                                  "title": "My title"
+                                                  }'
+```
+
+
+## Search an index
+
+There are various ways of querying, this is using the [Query String format](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html). We can search for the document we just put into the index.
+
+Adding `pretty` onto the end will format the JSON output on multiple lines and with indentation.
+
+```
+curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
+```
+
+
 ## Tuning
 
 | Parameter | Default | |

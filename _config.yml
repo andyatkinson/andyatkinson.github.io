@@ -34,18 +34,18 @@ navigation:
     url: /
   - text: About
     url: /about
+  - text: Ruby on Rails
+    url: /rails-tips
+  - text: PostgreSQL
+    url: /postgresql-tips
+  - text: Elasticsearch
+    url: /elasticsearch
   - text: Open Source
     url: /open-source
   - text: Projects
     url: /projects
   - text: Writing
     url: /writing
-  - text: PostgreSQL
-    url: /postgresql-tips
-  - text: Ruby on Rails
-    url: /rails-tips
-  - text: Elasticsearch
-    url: /elasticsearch
   - text: Process
     url: /software-dev-process
   - text: Eng Guidelines
