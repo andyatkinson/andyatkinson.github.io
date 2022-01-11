@@ -23,6 +23,7 @@ These concepts are specific to the architecture of [Elasticsearch and scalabilit
   * Replica shard - a copy of a primary shard. Replica shards can be added to scale search requests.
 * Node - (servers) nodes serve primary or replica shards
 * Cluster - a collection of nodes
+* Deployment - this is [Elastic.co](https://www.elastic.co/) terminology that seems to be synonymous with cluster
 
 ## API Concepts
 
