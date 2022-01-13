@@ -4,7 +4,7 @@ permalink: /elasticsearch
 title: Elasticsearch Tuning and Tips
 ---
 
-Elasticsearch is a distributed database with an HTTP API. Here are some things I've learned. I've installed Elasticsearch version 7.x on Mac OS via Homebrew.
+Elasticsearch is a distributed database with an HTTP API. Here are some things I've learned. I've installed Elasticsearch version 7.x on [Mac OS via Homebrew](https://www.elastic.co/guide/en/elasticsearch/reference/current/brew.html)
 
 ## Concepts
 
@@ -64,6 +64,12 @@ curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 | Parameter | Default | |
 | --- | ----------- | --- |
 | index.refresh_interval | Every 1s | [Tune for indexing speed](https://www.elastic.co/guide/en/elasticsearch/reference/current/tune-for-indexing-speed.html) |
+
+## Logs
+
+On Mac OS ES 7 via Homebrew. Tailing the log file:
+
+`tail -f /usr/local/var/log/elasticsearch/elasticsearch_brew.log`
 
 
 ## Use Cases
