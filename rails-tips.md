@@ -14,6 +14,20 @@ title: Rails Tips
 
 `User.methods - ActiveRecord::Base.methods`
 
+#### Get a full backtrace
+
+<https://stackoverflow.com/a/376521/126688>
+
+```
+def do_division_by_zero; 5 / 0; end
+begin
+  do_division_by_zero
+rescue => exception
+  puts exception.backtrace
+  raise # always reraise
+end
+```
+
 #### Warnings
 
 Boot app with `$VERBOSE = true` in `config/application.rb` or somewhere that executes
