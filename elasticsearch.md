@@ -98,6 +98,8 @@ Elasticsearch has powerful capabilities built in for searching.
 
 ### Tools
 
-#### Tracking searches
+Some tooling in Ruby.
 
-* [Searchjoy](https://github.com/ankane/searchjoy)
+
+* Tracking searches - [Searchjoy](https://github.com/ankane/searchjoy)
+* Elasticsearch ORM for Ruby - [Chewy](https://github.com/toptal/chewy)
