@@ -1,9 +1,9 @@
 exclude: [config.ru, Gemfile, Gemfile.lock, Procfile, Rakefile, README.md, vendor, LICENSE.txt]
 
 # Site setings
-name: 'Andy Atkinson'
+name: 'Andrew Atkinson'
 description: 'Software Engineer'
-meta_description: 'Personal website of Andy Atkinson covering software development tips, tools, open source, events, and a project portfolio'
+meta_description: 'Personal site for Andrew Atkinson covering software engineering, Ruby on Rails, PostgreSQL, Elasticsearch, Kubernetes, Vim and more'
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
