@@ -14,6 +14,8 @@ Speaker: [Andrew Atkinson](https://postgresql.us/events/pgconfnyc2021/sessions/s
 
 <script async class="speakerdeck-embed" data-id="030a9bf3e09e4486acb96323ffe66302" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ijYha2bBink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 #### PostgreSQL Unused Indexes (Internal lightning-style talk)
 
 January 2021<br/>
