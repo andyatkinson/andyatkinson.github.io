@@ -4,10 +4,6 @@ title: "PostgreSQL pgbench Workload Simulation"
 tags: [PostgreSQL, Databases]
 date: 2021-08-10
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 We operate a high scale API application that relies on a single primary PostgreSQL instance. We have scaled up the DB instance vertically, acquiring more CPU, Memory, and disk IO over time.

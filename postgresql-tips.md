@@ -14,6 +14,7 @@ OLAP workload. Using application databases as the data source for a data warehou
 
 Some of my blog posts on PostgreSQL
 
+* [PGConf NYC 2021 Conference](blog/2021/12/06/pgconf-nyc-2021)
 * [PostgreSQL Indexes: Prune and Tune](blog/2021/07/30/postgresql-index-maintenance)
 * [PostgreSQL pgbench Workload Simulation](/blog/2021/08/10/pgbench-workload-simulation)
 * [Views, Stored Procedures, and Check Constraints](/blog/2018/10/19/database-views-stored-procedures-check-constraints)

@@ -6,22 +6,22 @@ title: About
 
 #### Summary
 
-As a Staff Software Engineer at [Fountain](https://get.fountain.com/), I build and support back-end systems using open source tools like Ruby on Rails, PostgreSQL, Redis, and Elasticsearch.
+Andrew is a Staff Software Engineer at [Fountain](https://get.fountain.com/) building and support back-end systems using open source tools like Ruby on Rails, PostgreSQL, and Elasticsearch.
 
 Outside of [writing and reviewing code](https://github.com/andyatkinson/), I conduct code screens, interviews, and onboard and mentor team members.
 
-To improve overall engineering I write documentation, change logs, code review checklists and help to support existing patterns and create new ones.
+To help establish good engineering practices, I write documentation, change logs, code review checklists, and help establish or amplify good patterns.
 
 #### Education
 
-Andy earned Bachelors degrees from the [University of Minnesota](http://umn.edu) in Minneapolis, MN. He completed one semester abroad at the Fundación José Ortega y Gasset in Toledo, Spain.
+Andy earned Bachelors degrees from the [University of Minnesota](http://umn.edu) in Minneapolis, MN. He studied one semester at the Fundación José Ortega y Gasset in Toledo, Spain.
 
   * Bachelor of Applied Science in Information Technology Infrastructure
   * Bachelor of Arts in Spanish Studies
 
 #### Personal Life
 
-Outside of technology and spending time with his family and friends, he enjoys running, cycling, travel, and following the perpetually struggling Timberwolves NBA basketball team.
+Outside of technology and spending time with his family and friends, he enjoys running, cycling, travel, and following the Timberwolves NBA basketball team.
 
 #### Recommendations
 
