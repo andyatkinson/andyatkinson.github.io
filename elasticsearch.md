@@ -60,7 +60,9 @@ curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 
 ### Check for indexes
 
-`GET /_cat/indices/*counter*`
+I wanted to figure out if some index name pattern existed.
+
+`GET /_cat/indices/*something-to-search*`
 
 
 ### Tuning
