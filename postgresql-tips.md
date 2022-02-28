@@ -186,7 +186,7 @@ In our system on our highest write table we had 10 total indexes defined and 6 w
 
 ## Partial Indexes
 
-[How Partial Indexes Affect UPDATE Performance in Postgres](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc)
+[How Partial Indexes Affect UPDATE Performance in PostgreSQL](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc)
 
 Partial indexes weigh significantly less, but this article uses pgbench to show how they may benefit SELECT TPS, but negatively impact UPDATE TPS.
 
@@ -309,7 +309,7 @@ Note: use `-k, --no-superuser-check`
 
 ### EXPLAIN ANALYZE
 
-This article [5 Things I wish my grandfather told me about ActiveRecord and Postgres](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANLAYZE output written more in plain English.
+This article [5 Things I wish my grandfather told me about ActiveRecord and PostgreSQL](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANLAYZE output written more in plain English.
 
 ### [pgMustard](https://www.pgmustard.com/)
 
@@ -501,7 +501,7 @@ Adds explain plans to the query logs. Maybe start by setting it very high so it 
 
 ### pganalyze Index Advisor
 
-This is not an extension but looks like a useful tool. [A better way to index your Postgres database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
+This is not an extension but looks like a useful tool. [A better way to index your PostgreSQL database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
 
 
 ## Bloat
@@ -510,13 +510,13 @@ This is not an extension but looks like a useful tool. [A better way to index yo
 
 How does bloat (table bloat, index bloat) affect performance?
 
-* "When a table is bloated, Postgres’s ANALYZE tool calculates poor/inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
+* "When a table is bloated, PostgreSQL's ANALYZE tool calculates poor/inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data.
 * Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Fix is to reindex the index.
 * Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Minimize table bloat to improve performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
 
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
-* [Dealing with significant Postgres database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
+* [Dealing with significant PostgreSQL database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
 
 
 ## Upgrades
