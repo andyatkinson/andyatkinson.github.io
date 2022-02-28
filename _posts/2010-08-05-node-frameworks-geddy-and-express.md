@@ -14,7 +14,7 @@ Geddy will be familiar to users of Ruby on Rails. Code is organized into model, 
 
 I tried out the [2-minute geddy app](http://wiki.github.com/mde/geddy/the-two-minute-geddy-app) (accessible through the wiki), which demonstrates CRUD operations on a resource. Overall it worked well. Geddy told me on startup that my Node version was too old, so I built a newer version of Node from source which worked fine. I used SQLite as the data store.
 
-After creating the database with the geddy command, the geddy server wouldn’t start. I forgot to add [node-sqlite](http://wiki.github.com/mde/geddy/install-sqlite-and-node-sqlite) which allowed the server to start. Geddy includes support for other SQL database systems like Postgres and also includes support for CouchDB.
+After creating the database with the geddy command, the geddy server wouldn’t start. I forgot to add [node-sqlite](http://wiki.github.com/mde/geddy/install-sqlite-and-node-sqlite) which allowed the server to start. Geddy includes support for other SQL database systems like PostgreSQL and also includes support for CouchDB.
 
 From there I was able to add the model fields, and create records. I did not care for the markup and templating Geddy is using. If I used this in a project I’d investigate [haml-js](http://github.com/creationix/haml-js) for markup and something like [mustache.js](http://github.com/janl/mustache.js/) for templating. 
 
