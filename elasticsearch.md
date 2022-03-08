@@ -30,13 +30,13 @@ These concepts are specific to the architecture of [Elasticsearch and scalabilit
 Elasticsearch has an HTTP API. That means HTTP verbs like `POST`, `PUT`, `GET` and `DELETE` are mapped to concepts like creating, updating, searching and deleting things.
 
 
-## Create an index
+### Create an index
 
 ```
 curl -XPUT 'http://localhost:9200/foo'
 ```
 
-## Put a document in the index
+### Put a document in the index
 
 Create a document with id `1` in the index `foo` with a title of "My title".
 
@@ -48,7 +48,7 @@ curl -H 'Content-Type: application/json' -X POST 'localhost:9200/foo/_doc/1?pret
 ```
 
 
-## Search an index
+### Search an index
 
 There are various ways of querying, this is using the [Query String format](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html). We can search for the document we just put into the index.
 
@@ -57,6 +57,12 @@ Adding `pretty` onto the end will format the JSON output on multiple lines and w
 ```
 curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 ```
+
+### More Queries
+
+* `GET /_cat/indices`
+* `GET /_cat/indices/*pattern*`
+* `GET /index/_search` # list top 10 documents
 
 
 ## Tuning
