@@ -89,4 +89,4 @@ This strategy may not actually be useful in practice, but I thought it was inter
 
 Alternative approaches might be to temporarily store data in a non-relational database like Redis and then periodically flush it to PostgreSQL.
 
-Also, if the requirements are to insert bulk data at the outset, using `\copy` and reading from a file will be even faster and is more common. Check out [Faster bulk loading in Postgres with copy](https://www.citusdata.com/blog/2017/11/08/faster-bulk-loading-in-postgresql-with-copy/).
+Also, if the requirements are to insert bulk data at the outset, using `\copy` and reading from a file will be even faster and is more common. Check out [Faster bulk loading in PostgreSQL with copy](https://www.citusdata.com/blog/2017/11/08/faster-bulk-loading-in-postgresql-with-copy/).
