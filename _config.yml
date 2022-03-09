@@ -40,6 +40,8 @@ navigation:
     url: /postgresql-tips
   - text: Elasticsearch
     url: /elasticsearch
+  - text: Infra
+    url: /infrastructure
   - text: Open Source
     url: /open-source
   - text: Projects
