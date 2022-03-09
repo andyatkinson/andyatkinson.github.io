@@ -8,7 +8,7 @@ Elasticsearch is a distributed database with an HTTP API. Here are some things I
 
 ## Concepts
 
-Mapping concepts from an RDMBS can be helpful. 
+Mapping concepts from an RDMBS can be helpful.
 
 * Index - this is like a RDBMS table
 * Document - this is like a RDBMS row
@@ -29,14 +29,16 @@ These concepts are specific to the architecture of [Elasticsearch and scalabilit
 
 Elasticsearch has an HTTP API. That means HTTP verbs like `POST`, `PUT`, `GET` and `DELETE` are mapped to concepts like creating, updating, searching and deleting things.
 
+Elasticsearch also supports a bulk API that can be used to create and delete multiple documents.
 
-### Create an index
+
+### Create Index
 
 ```
 curl -XPUT 'http://localhost:9200/foo'
 ```
 
-### Put a document in the index
+### Add Documents To Index
 
 Create a document with id `1` in the index `foo` with a title of "My title".
 
@@ -48,7 +50,7 @@ curl -H 'Content-Type: application/json' -X POST 'localhost:9200/foo/_doc/1?pret
 ```
 
 
-### Search an index
+### Search an Index
 
 There are various ways of querying, this is using the [Query String format](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html). We can search for the document we just put into the index.
 
@@ -63,6 +65,26 @@ curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 * `GET /_cat/indices`
 * `GET /_cat/indices/*pattern*`
 * `GET /index/_search` # list top 10 documents
+* `GET /index/_search -d '{"foo":"bar"}'` # some JSON search payload
+
+Example search request with a payload via `curl`:
+
+```
+curl -H "Content-Type: application/json" "http://localhost:9200/some_index_name/_search?pretty" -d '
+{
+    "from": 0,
+    "size": 50,
+    "sort": [
+    ],
+    "query": {
+        "bool": {
+            "filter": [
+            ]
+        }
+    }
+}
+'
+```
 
 
 ## Tuning
@@ -71,11 +93,18 @@ curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 | --- | ----------- | --- |
 | index.refresh_interval | Every 1s | [Tune for indexing speed](https://www.elastic.co/guide/en/elasticsearch/reference/current/tune-for-indexing-speed.html) |
 
+
 ## Logs
 
 On Mac OS ES 7 via Homebrew. Tailing the log file:
 
 `tail -f /usr/local/var/log/elasticsearch/elasticsearch_brew.log`
+
+Running via Docker (Recommended method):
+
+`docker run -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.17.0`
+
+Some activity will be logged like index creation.
 
 
 ## Use Cases
@@ -100,12 +129,11 @@ The operational concerns here are more about indexing rate, search speed etc. as
 
 ### As a search engine
 
-Elasticsearch has powerful capabilities built in for searching.
+Elasticsearch has powerful capabilities for searching.
 
 ### Tools
 
-Some tooling in Ruby.
-
+Some tooling in Ruby
 
 * Tracking searches - [Searchjoy](https://github.com/ankane/searchjoy)
 * Elasticsearch ORM for Ruby - [Chewy](https://github.com/toptal/chewy)
