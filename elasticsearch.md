@@ -12,7 +12,7 @@ Mapping concepts from an RDMBS can be helpful.
 
 * Index - this is like a RDBMS table
 * Document - this is like a RDBMS row
-* Mapping - this is like an RDBMS DDL structure, although it can be applied upfront or later on.
+* Mapping - this is like an RDBMS DDL structure, although it can be applied upfront or later on. Implicit vs. explicit.
 
 ### More Concepts
 
@@ -30,6 +30,10 @@ These concepts are specific to the architecture of [Elasticsearch and scalabilit
 Elasticsearch has an HTTP API. That means HTTP verbs like `POST`, `PUT`, `GET` and `DELETE` are mapped to concepts like creating, updating, searching and deleting things.
 
 Elasticsearch also supports a bulk API that can be used to create and delete multiple documents.
+
+### App Development Concerns
+
+If the application provides explicit mappings for an index, *do not* create the indices manually but create them via the application so that they have the correct mapping types.
 
 
 ### Create Index
@@ -85,6 +89,10 @@ curl -H "Content-Type: application/json" "http://localhost:9200/some_index_name/
 }
 '
 ```
+
+Check index mapping types:
+
+`GET /index_name/_mapping`
 
 
 ## Tuning
