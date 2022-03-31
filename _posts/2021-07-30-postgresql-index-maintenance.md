@@ -116,6 +116,5 @@ Why unused indexes are bad and how to remove them
 <script async class="speakerdeck-embed" data-id="6644d7dd7380413ea19dce1955f41269" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 
-December 2021
-
-I covered bloat and how we addressed it at a conference talk in [PGConf NYC 2021 Conference](blog/2021/12/06/pgconf-nyc-2021).
+December 2021<br/>
+I covered bloat and how we addressed it in a talk given at [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021).
