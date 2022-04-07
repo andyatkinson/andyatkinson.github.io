@@ -64,6 +64,12 @@ Adding `pretty` onto the end will format the JSON output on multiple lines and w
 curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 ```
 
+### Count documents
+
+[Count API](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-count.html)
+
+`GET /index/_count`
+
 ### More Queries
 
 * `GET /_cat/indices`
