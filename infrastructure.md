@@ -57,3 +57,7 @@ To list releases:
 
 `kubectl -it exec -n <namespace> <podname> -- bundle exec rails c`
 
+### Kubernetes Jobs
+
+[Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/)
+

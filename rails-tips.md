@@ -6,6 +6,14 @@ title: Rails Tips
 
 ## App Code Tips
 
+#### Native `pg` gem dependencies
+
+Run `which pg_config`.
+
+Copy the path as the value for `--with-pg-config` for bundler. [Reference](https://stackoverflow.com/a/35145890/126688).
+
+`bundle config build.pg --with-pg-config=/Applications/Postgres.app/Contents/Versions/latest/bin/pg_config`
+
 #### Log SQL queries to console
 
 `ActiveRecord::Base.logger = Logger.new(STDOUT)`
