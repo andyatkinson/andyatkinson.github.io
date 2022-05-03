@@ -18,6 +18,7 @@ title: PostgreSQL Puny to Powerful
 * [Lock Queue](https://joinhandshake.com/blog/our-team/postgresql-and-lock-queue/)
 * [PostgreSQL Explicit Locking](https://www.postgresql.org/docs/current/explicit-locking.html)
 * [Postgres Locking Revealed](https://engineering.nordeus.com/postgres-locking-revealed/)
+* [What Postgres SQL causes a Table Rewrite?](https://www.thatguyfromdelhi.com/2020/12/what-postgres-sql-causes-table-rewrite.html)
 
 ### Example
 
@@ -96,7 +97,10 @@ Recommendation:
 
 
 
-## High Performance SQL
+## High Performance SQL Queries
+
+* [auto_explain](https://www.postgresql.org/docs/current/auto-explain.html)
+* [pganalyze query slowness](https://pganalyze.com/docs/checks/queries/slowness)
 
 
 ### PgHero
