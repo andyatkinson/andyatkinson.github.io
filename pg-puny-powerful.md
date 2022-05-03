@@ -4,6 +4,13 @@ permalink: /pg-puny-powerful
 title: PostgreSQL Puny to Powerful
 ---
 
+# RailsConf Prep And Background
+
+* Reviewed 6 past RailsConf PostgreSQL talks: Phoenix (2017) [#1](https://www.youtube.com/watch?v=_wU2dglywAU), Pittsburgh (2018) (1) [#2](https://www.youtube.com/watch?v=8gXdLAM6B1w) and Minneapolis (2019) (4) [#3](https://www.youtube.com/watch?v=a4OBp6edNaM) [#4](https://www.youtube.com/watch?v=B-iq4iHLnJU) [#5](https://www.youtube.com/watch?v=vfiz1J8mWEs) [#6](https://www.youtube.com/watch?v=1VsSXRPEBo0)
+* PostgreSQL is a general purpose database for a variety of workloads. We care about 🕸️ `web applications`.
+* Selected 5 Use Cases Around Scaling and Performance
+
+
 ## Migrations On Busy Databases
 
 ### Locking, Blocking, Queueing
@@ -81,6 +88,13 @@ Recommendation:
 * Assessing connection usage for application servers and background processes
 * High Connections in PgHero. `show max_connections;`
 
+## Forking Processes
+
+* postmaster is first process. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026)
+* [Memory used by connections](https://aws.amazon.com/blogs/database/resources-consumed-by-idle-postgresql-connections/)
+  * PostgreSQL uses shared memory and process memory
+
+
 
 ## High Performance SQL
 
@@ -130,3 +144,15 @@ Time: 50.108 ms
 ### Partitioning Example With Range Partitioning
 
 * Concrete example with pgslice and trips table
+* [Partition Pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING)
+  * When the planner can prove a partition can be excluded, it excludes it.
+
+```
+SET enable_partition_pruning = on;                 -- the default
+```
+
+* Constraint Exclusion
+
+### Partitioning Resources
+
+* [Partitioning Large Tables](https://gpdb.docs.pivotal.io/5270/admin_guide/ddl/ddl-partition.html)
