@@ -19,6 +19,7 @@ title: PostgreSQL Puny to Powerful
 * [PostgreSQL Explicit Locking](https://www.postgresql.org/docs/current/explicit-locking.html)
 * [Postgres Locking Revealed](https://engineering.nordeus.com/postgres-locking-revealed/)
 * [What Postgres SQL causes a Table Rewrite?](https://www.thatguyfromdelhi.com/2020/12/what-postgres-sql-causes-table-rewrite.html)
+* [PostgreSQL Alter Table and Long Transactions](http://www.joshuakehn.com/2017/9/9/postgresql-alter-table-and-long-transactions.html)
 
 ### Example
 
