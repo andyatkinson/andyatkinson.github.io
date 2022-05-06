@@ -105,6 +105,10 @@ I think thats correct - I was trying to confirm whether alter table commands tha
   * PostgreSQL uses shared memory and process memory
 
 
+## Connections Resources
+
+* [Estimate database connections pool size for Rails application](https://docs.knapsackpro.com/2021/estimate-database-connections-pool-size-for-rails-application)
+
 
 ## High Performance SQL Queries
 
@@ -150,18 +154,23 @@ Time: 50.108 ms
 
 ### Multiple Databases Replication Example
 
+* [Multiple Databases](https://guides.rubyonrails.org/active_record_multiple_databases.html)
+
 * Concrete example with rideshare
 * Query trips table from replica
 
 
 ### Partitioning Example With Range Partitioning
 
-* Concrete example with pgslice and trips table
+* Example using pgslice to range partition trips table on `created_at`
 * [Partition Pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING)
   * When the planner can prove a partition can be excluded, it excludes it.
+* [Partitioning and Constraint Exclusion](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITIONING-CONSTRAINT-EXCLUSION)
 
 ```
 SET enable_partition_pruning = on;                 -- the default
+SHOW constraint_exclusion;
+SET constraint_exclusion = partition; -- the default, or "on"
 ```
 
 * Constraint Exclusion
