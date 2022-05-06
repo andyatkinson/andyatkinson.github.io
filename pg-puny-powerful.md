@@ -83,6 +83,14 @@ Recommendation:
 * If lock timeout is exceeded, likely need to try again at a less busy time
 * A long running statement may be cancelled by the statement timeout. Consider raising statement timeout just for the migration session.
 
+### Table rewrites
+
+Definition for table rewrites:
+Something like "A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure"
+
+> Via lukasfittl
+I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>
+
 
 ## Exhausting Connections
 
