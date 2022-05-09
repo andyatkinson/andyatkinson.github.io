@@ -115,6 +115,7 @@ I think thats correct - I was trying to confirm whether alter table commands tha
 
 * [auto_explain](https://www.postgresql.org/docs/current/auto-explain.html)
 * [pganalyze query slowness](https://pganalyze.com/docs/checks/queries/slowness)
+* [Tip: Use `to_sql` to see what query ActiveRecord will generate](https://boringrails.com/tips/active-record-to-sql)
 
 
 ### PgHero
