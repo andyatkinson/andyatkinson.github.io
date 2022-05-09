@@ -89,6 +89,7 @@ Definition for table rewrites:
 Something like "A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure"
 
 > Via lukasfittl
+
 I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>
 
 
@@ -139,6 +140,8 @@ I think thats correct - I was trying to confirm whether alter table commands tha
 
 * REINDEX requires ACCESS EXCLUSIVE
 * Use with CONCURRENTLY option, which requires only a SHARE UPDATE EXCLUSIVE
+* Use [pg_cron](https://www.citusdata.com/blog/2016/09/09/pgcron-run-periodic-jobs-in-postgres/)
+* [pg_cron : Probably the best way to schedule jobs within PostgreSQL database.](https://fatdba.com/2021/07/30/pg_cron-probably-the-best-way-to-schedule-jobs-within-postgresql-database/)
 
 ```
 andy@[local]:5432 rideshare_development# reindex index trips_intermediate_rating_idx;
