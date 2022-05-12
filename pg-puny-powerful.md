@@ -13,6 +13,10 @@ title: PostgreSQL Puny to Powerful
 
 ## Migrations On Busy Databases
 
+###
+
+* [PostgreSQL: How to update large tables](https://blog.codacy.com/how-to-update-large-tables-in-postgresql/)
+
 ### Locking, Blocking, Queueing
 
 * [Lock Queue](https://joinhandshake.com/blog/our-team/postgresql-and-lock-queue/)
@@ -109,6 +113,9 @@ I think thats correct - I was trying to confirm whether alter table commands tha
 ## Connections Resources
 
 * [Estimate database connections pool size for Rails application](https://docs.knapsackpro.com/2021/estimate-database-connections-pool-size-for-rails-application)
+* [Concurrency and Database Connections in Ruby with ActiveRecord](https://devcenter.heroku.com/articles/concurrency-and-database-connections)
+* [What are advantages of using transaction pooling with pgbouncer?](https://stackoverflow.com/a/12189973/126688)
+* [Be Prepared!](https://medium.com/@devinburnette/be-prepared-7768d1a111e1)
 
 
 ## High Performance SQL Queries
