@@ -163,6 +163,16 @@ prepare loc (int) as select * from locations where id = $1;
 execute loc(1);
 ```
 
+> While providing a minimal boost in performance, this functionality also makes an application less vulnerable to SQL injection attacks.
+
+> Active Record automatically turns your queries into prepared statements by default
+
+`bundle exec rails console`
+```
+>> Location.find(1)
+  Location Load (1.2ms)  SELECT "locations".* FROM "locations" WHERE "locations"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
+```
+
 ### Example: PgBouncer
 
 Default port is `6432` or 1000 higher than default PostgreSQL port `5432`
