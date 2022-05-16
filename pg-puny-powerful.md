@@ -154,6 +154,15 @@ I think thats correct - I was trying to confirm whether alter table commands tha
 * [What are advantages of using transaction pooling with pgbouncer?](https://stackoverflow.com/a/12189973/126688)
 * [Be Prepared!](https://medium.com/@devinburnette/be-prepared-7768d1a111e1)
 
+### Prepared statements SQL
+
+Simple example, select a row by primary key id.
+
+```
+prepare loc (int) as select * from locations where id = $1;
+execute loc(1);
+```
+
 ### Example: PgBouncer
 
 Default port is `6432` or 1000 higher than default PostgreSQL port `5432`
