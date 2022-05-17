@@ -173,6 +173,16 @@ execute loc(1);
   Location Load (1.2ms)  SELECT "locations".* FROM "locations" WHERE "locations"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
 ```
 
+Expore the prepared statement cache:
+
+```
+ActiveRecord::Base.connection.execute('select * from pg_prepared_statements').values
+```
+
+> By default Rails will generate up to 1,000 prepared statements per connection
+
+Uses memory.
+
 ### Example: PgBouncer
 
 Default port is `6432` or 1000 higher than default PostgreSQL port `5432`
