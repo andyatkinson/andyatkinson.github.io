@@ -4,7 +4,15 @@ permalink: /pg-puny-powerful
 title: PostgreSQL Puny to Powerful
 ---
 
-# RailsConf Prep And Background
+Presentation given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b9ac5608b0be4bb0ae01201e7fca7228" title="Puny to Powerful PostgreSQL Rails Apps" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background-color: rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; -webkit-background-clip: padding-box; -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+
+Below are some additional resources and experiments that I developed while working on the content for the talk.
+
+This page isn't organized well but roughly falls into the 5 major categories in the presentation.
+
+# RailsConf PostgreSQL Prep And Background
 
 * 6 past RailsConf PostgreSQL talks
   * Phoenix (2017) [#1](https://www.youtube.com/watch?v=_wU2dglywAU)
@@ -15,7 +23,7 @@ title: PostgreSQL Puny to Powerful
 * 5 Use Cases were selected related to Scaling and Performance
 
 
-## Migrations On Busy Databases
+## Resources for "Migrations On Busy Databases"
 
 * [PostgreSQL: How to update large tables](https://blog.codacy.com/how-to-update-large-tables-in-postgresql/)
 
@@ -56,7 +64,7 @@ alter table locations add column city_id integer default floor(random()*25);
 ```
 
 
-### Locking, Blocking, Queueing
+### Links for Locking, Blocking, Queueing
 
 * [Lock Queue](https://joinhandshake.com/blog/our-team/postgresql-and-lock-queue/)
 * [PostgreSQL Explicit Locking](https://www.postgresql.org/docs/current/explicit-locking.html)
@@ -64,7 +72,7 @@ alter table locations add column city_id integer default floor(random()*25);
 * [What Postgres SQL causes a Table Rewrite?](https://www.thatguyfromdelhi.com/2020/12/what-postgres-sql-causes-table-rewrite.html)
 * [PostgreSQL Alter Table and Long Transactions](http://www.joshuakehn.com/2017/9/9/postgresql-alter-table-and-long-transactions.html)
 
-### Example
+### Example demonstrating locks and blocking
 
 * Transaction never conflicts with itself
 * We can create a made-up example that opens a transaction and creates a lock in one session, then tries an `alter table` in a second session
@@ -105,7 +113,7 @@ show lock_timeout;
 
 If lock timeout is disabled entirely, setting it will set an upper bound on how long the alter table transaction is in a blocked state.
 
-We can see that the lock timeout is the reason that the transaction is cancelled.
+We can see that the lock timeout is the reason that the transaction is canceled.
 
 ```
 anatki@[local]:5432 rideshare_development# begin;
@@ -124,9 +132,9 @@ Recommendation:
 * Set a lock timeout
 * Set it high enough to allow some waiting, but not so long that transactions are blocked for a long time
 * If lock timeout is exceeded, likely need to try again at a less busy time
-* A long running statement may be cancelled by the statement timeout. Consider raising statement timeout just for the migration session.
+* A long running statement may be canceled by the statement timeout. Consider raising statement timeout just for the migration session.
 
-### Table rewrites
+### Definition for "Table rewrites" which are time consuming, and triggered by some DDLs
 
 Definition for table rewrites:
 Something like "A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure"
@@ -135,27 +143,27 @@ Via lukasfittl
 I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>
 
 
-## Exhausting Connections
+## Resources for Exhausting Database Connections
 
 * How many have been idle for a long time?
 * Assessing connection usage for application servers and background processes
 * High Connections in PgHero. `show max_connections;`
 
-## Forking Processes
+## Notes on Forking the main PostgreSQL process
 
-* postmaster is first process. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026)
+* Postmaster is first process. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026)
 * [Memory used by connections](https://aws.amazon.com/blogs/database/resources-consumed-by-idle-postgresql-connections/)
   * PostgreSQL uses shared memory and process memory
 
 
-## Connections Resources
+## Database Connections Resources
 
 * [Estimate database connections pool size for Rails application](https://docs.knapsackpro.com/2021/estimate-database-connections-pool-size-for-rails-application)
-* [Concurrency and Database Connections in Ruby with ActiveRecord](https://devcenter.heroku.com/articles/concurrency-and-database-connections)
+* [Concurrency and Database Connections in Ruby with Active Record](https://devcenter.heroku.com/articles/concurrency-and-database-connections)
 * [What are advantages of using transaction pooling with pgbouncer?](https://stackoverflow.com/a/12189973/126688)
 * [Be Prepared!](https://medium.com/@devinburnette/be-prepared-7768d1a111e1)
 
-### Prepared statements SQL
+### Discussion of prepared statements
 
 Simple example, select a row by primary key id.
 
@@ -174,7 +182,7 @@ execute loc(1);
   Location Load (1.2ms)  SELECT "locations".* FROM "locations" WHERE "locations"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
 ```
 
-Expore the prepared statement cache:
+Explore the prepared statement cache:
 
 ```
 ActiveRecord::Base.connection.execute('select * from pg_prepared_statements').values
@@ -184,7 +192,7 @@ ActiveRecord::Base.connection.execute('select * from pg_prepared_statements').va
 
 Uses memory.
 
-### Example: PgBouncer
+### Connection Pooling Example: PgBouncer
 
 Default port is `6432` or 1000 higher than default PostgreSQL port `5432`
 
@@ -242,7 +250,7 @@ Commands:
 - `show clients`
 - `show databases`, review the `pool_size`, `pool_mode` etc.
 
-- Pool modes (most aggressive and least compatible, to least aggresive, most compatible)
+- Pool modes (most aggressive and least compatible, to least aggressive, most compatible)
 
 > Specifies when a server connection can be reused by other clients.
 
@@ -255,14 +263,14 @@ Cannot use transaction pooling mode while also using prepared statements, which 
 Limited to session mode. Alternately, disable prepared statements and then transaction mode may be used.
 
 
-## High Performance SQL Queries
+## Discussion points on High Performance SQL Queries
 
 * [auto_explain](https://www.postgresql.org/docs/current/auto-explain.html)
 * [pganalyze query slowness](https://pganalyze.com/docs/checks/queries/slowness)
 * [Tip: Use `to_sql` to see what query ActiveRecord will generate](https://boringrails.com/tips/active-record-to-sql)
 
 
-### PgHero
+### Using PgHero: open source PostgreSQL Performance Dashboard
 
 * Statistics about database size, table size, index size
 * Work on high impact queries via statistics with `pg_stat_statements`
@@ -276,7 +284,7 @@ Limited to session mode. Alternately, disable prepared statements and then trans
 * Index Bloat Estimated Percentage (hidden index bloat page)
 * Scheduled Jobs via `pg_cron`
 
-## High Impact Maintenance
+## Discussing High Impact Database Maintenance
 
 * [Routing Reindexing](https://www.postgresql.org/docs/current/routine-reindex.html)
 * <https://www.postgresql.org/docs/current/sql-reindex.html>
@@ -297,20 +305,19 @@ REINDEX
 Time: 50.108 ms
 ```
 
-## Replication and Partitioning
+## Using PostgreSQL native Replication and Partitioning
 
-
-### Multiple Databases Replication Example
+### Using Multiple Databases with Replication for Rails Apps
 
 * [Multiple Databases](https://guides.rubyonrails.org/active_record_multiple_databases.html)
 
-* Concrete example with rideshare
+* Concrete example with [andyatkinson/rideshare](https://github.com/andyatkinson/rideshare) TBD, in development
 * Query trips table from replica
 
 
 ### Partitioning Example With Range Partitioning
 
-* Example using pgslice to range partition trips table on `created_at`
+* Example using [pgslice](https://github.com/ankane/pgslice) to range partition trips table on `created_at`
 * [Partition Pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING)
   * When the planner can prove a partition can be excluded, it excludes it.
 * [Partitioning and Constraint Exclusion](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITIONING-CONSTRAINT-EXCLUSION)
@@ -320,7 +327,6 @@ SET enable_partition_pruning = on;                 -- the default
 SHOW constraint_exclusion;
 SET constraint_exclusion = partition; -- the default, or "on"
 ```
-
 * Constraint Exclusion
 
 ### Partitioning Resources
