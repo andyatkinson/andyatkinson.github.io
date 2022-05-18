@@ -6,14 +6,16 @@ title: PostgreSQL Puny to Powerful
 
 # RailsConf Prep And Background
 
-* Reviewed 6 past RailsConf PostgreSQL talks: Phoenix (2017) [#1](https://www.youtube.com/watch?v=_wU2dglywAU), Pittsburgh (2018) (1) [#2](https://www.youtube.com/watch?v=8gXdLAM6B1w) and Minneapolis (2019) (4) [#3](https://www.youtube.com/watch?v=a4OBp6edNaM) [#4](https://www.youtube.com/watch?v=B-iq4iHLnJU) [#5](https://www.youtube.com/watch?v=vfiz1J8mWEs) [#6](https://www.youtube.com/watch?v=1VsSXRPEBo0)
-* PostgreSQL is a general purpose database for a variety of workloads. We care about 🕸️ `web applications`.
-* Selected 5 Use Cases Around Scaling and Performance
+* 6 past RailsConf PostgreSQL talks
+  * Phoenix (2017) [#1](https://www.youtube.com/watch?v=_wU2dglywAU)
+  * Pittsburgh (2018) (1) [#2](https://www.youtube.com/watch?v=8gXdLAM6B1w)
+  * Minneapolis (2019) (4) [#3](https://www.youtube.com/watch?v=a4OBp6edNaM)
+  * [#4](https://www.youtube.com/watch?v=B-iq4iHLnJU), [#5](https://www.youtube.com/watch?v=vfiz1J8mWEs), [#6](https://www.youtube.com/watch?v=1VsSXRPEBo0)
+* PostgreSQL is a general purpose database for a variety of workloads. We care about 🕸️ `web applications` workloads (online transaction processing, OLTP).
+* 5 Use Cases were selected related to Scaling and Performance
 
 
 ## Migrations On Busy Databases
-
-###
 
 * [PostgreSQL: How to update large tables](https://blog.codacy.com/how-to-update-large-tables-in-postgresql/)
 
@@ -129,8 +131,7 @@ Recommendation:
 Definition for table rewrites:
 Something like "A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure"
 
-> Via lukasfittl
-
+Via lukasfittl
 I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>
 
 
