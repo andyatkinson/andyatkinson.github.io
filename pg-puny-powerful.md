@@ -348,32 +348,32 @@ That was a fair question and in practice typically we'd backfill in a rake task 
 
 The part we didn't discuss is that the migration mechanism is helpful if there are a lot of deployment environments. For example at Fountain we have over 10 environments to deploy to across shared multi-tenant and single tenant environments, each running their own instances of the applications, databases, and background processes.
 
-Since we've already invested in migrating all environments from a single deployment mechanism, deployments are a way to ensure all deployable environment databases receive the same backfill migration.
+Since we've already invested in migrating all environments from a single deployment mechanism, deployments are a mechanism to target all deployable environment databases at once, which may be useful for a backfill.
 
 ### Question: Why is throttling via sleep set at (`0.01` seconds)?
 
 In the [Strong Migrations Backfilling](https://github.com/ankane/strong_migrations#backfilling-data) section there is an example of throttling a backfill by putting in a `0.01` sleep. Someone asked how that value was determined.
 
-I jokingly responded to ask the project creator [Andrew Kane](https://github.com/ankane). Maybe I'll send Andrew an email? I did have some more thoughts about why to throttle in the general in addition to polling the audience and collecting some feedback.
+I jokingly responded to ask the project creator [Andrew Kane](https://github.com/ankane) because the example was from Strong Migrations and I didn't know :). Maybe I'll send Andrew an email? I did have some more thoughts about why to throttle in general in addition to what we discussed when I asked the audience for help.
 
-The audience suggested letting index maintenance catch up from updates.
+The audience suggested slowing it down for letting index maintenance catch up from updates.
 
-We also suggested lock contention for the rows being updated, leaving some time after updates for locks to be released on those rows on the chance there are transactions waiting on the same locks.
+We also briefly discussed lock contention for rows being updated, leaving some time after updates for locks to be released on those rows on the chance there are transactions waiting on the same locks.
 
-Another reason to throttle would be replication. All of those updates are replicated including the index maintenance. Replication lag may be kept under 100ms but if it increases into the range of seconds, that could cause application errors reading from the replicas.
+Another reason to throttle would be replication. All of those updates are replicated including updates to the indexes. Replication lag may be kept under 100ms but if it increases into the range of seconds, that could cause application errors reading from the replicas if there are queries on the rows being backfilled.
 
 As far as why the value was set so low at `0.01`, perhaps it was set very low as a starting point and intended for the programmer to increase it to something based on their specific use cases.
 
 ### Question: Instead of dropping old partitions, why not delete old data?
 
-This was a very reasonable question and one I should have anticipated. During the Q&A we talked about one reason being with the partitions approach we can retain the data. Technically deleting it from the database, the data could still exist in backups.
+This was a very reasonable question and one I should have anticipated. During the Q&A we talked about one reason being that with the partitions approach, we can retain the row data more easily. Technically deleting it from the database, the data could still exist in backups.
 
-However when detaching a partition, the table becomes a regular table that can be dumped (e.g. [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)) and encrypted, compressed, and archived to a form of "cold storage" like an S3 bucket. Versus trying to restore specific rows from a backup, we could restore the entire table from the compressed file later.
+However when detaching a partition, the table becomes a regular table that can be dumped (e.g. [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)) and encrypted, compressed, and archived to a form of "cold storage" like an S3 bucket. Versus trying to restore specific rows from a backup, we could restore the entire table later if needed. For example for legal reasons we may wish to retain data for a year, but for manual queries and not for application queries.
 
-But I failed to mention some other great benefits!
+I failed to mention some other benefits of partitioning!
 
-When deleting rows, because of MVCC design, the rows will cause table and index bloat for the single unpartitioned table. The large unpartitioned table has a single index. A partitioned table has that same index for each of the partitions.
+When deleting rows, because of MVCC design, the rows will cause table and index bloat for the single unpartitioned table. A partitioned table repeats the index across each partition, for the rows in that partition.
 
-Table and index bloat can reduce performance over time. We can mitigate this with online index rebuilds. However with detaching a partition, no table or index bloat occurs.
+Table and index bloat can reduce performance over time. We can mitigate this with online index rebuilds. However with detaching a partition, no table or index bloat occurs to the parent table.
 
 In other cases we may wish to retain the rows but because they are grouped as a table, they could be relocated to an "archive" table but left in the database. Or the table could be relocated to an archived schema. Schemas may have their own access. The table structure provides a lot of organization and administration options when the row data is valuable to retain.
