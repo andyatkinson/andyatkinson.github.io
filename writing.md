@@ -30,8 +30,8 @@ Since 2015 he's written around 10 issues sent to nearly 10,000 subscribers. Chec
   * [Job Priorities, Fast Failing Tests and Fixtures... Oh My!](https://rails-weekly.ongoodbits.com/2015/10/02/job-priorities-fast-failing-tests-and-fixtures-oh-my) (Co-written with [Greg](https://twitter.com/gregmolnar))
   * [GSoC, performance improvements and bug fixes!](https://rails-weekly.ongoodbits.com/2015/09/25/gsoc-performance-improvements-and-bug-fixes) (Co-written with [Marcel](https://twitter.com/marcelmorgan))
 
-![Editors from This Week in Rails Railsconf Phoenix 2017](/assets/images/railsconf-2017.jpg)
-<small>Editors from [This Week in Rails](https://rails-weekly.ongoodbits.com/) Railsconf Phoenix 2017</small>
+![Editors from This Week in Rails RailsConf Phoenix 2017](/assets/images/railsconf-2017.jpg)
+<small>Editors from [This Week in Rails](https://rails-weekly.ongoodbits.com/) RailsConf Phoenix 2017</small>
 
 Update 2020: After a period of dormancy, 3 editors jumped in and have started creating new issues. Here are some more issues I've written:
 

@@ -57,7 +57,7 @@ I've written or co-written a handful of issues over the last couple of years. Ch
 
 I'll be at RailsConf 2017 in Phoenix, AZ, and hope to meet other editors (in person) that will be there. If you're interested in helping out, get in touch!
 
-Update: We arranged a meetup for the newsletter editors at Railsconf! It was great to meet some of them face-to-face. We are pictured below.
+Update: We arranged a meetup for the newsletter editors at RailsConf! It was great to meet some of them face-to-face. We are pictured below.
 
-![Editors from This Week in Rails Railsconf Phoenix 2017](/assets/images/railsconf-2017.jpg)
-<small>Editors from [This Week in Rails](https://rails-weekly.ongoodbits.com/) Railsconf Phoenix 2017</small>
+![Editors from This Week in Rails RailsConf Phoenix 2017](/assets/images/railsconf-2017.jpg)
+<small>Editors from [This Week in Rails](https://rails-weekly.ongoodbits.com/) RailsConf Phoenix 2017</small>

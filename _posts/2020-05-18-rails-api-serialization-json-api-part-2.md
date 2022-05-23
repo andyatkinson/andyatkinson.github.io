@@ -6,7 +6,7 @@ date: 2020-05-18
 comments: true
 ---
 
-In [Rails API Serialization with JSON:API - Part 1](rails-api-serialization-json-api-part-1) we looked at using the Sparse Fieldsets functionality of the JSON:API specification.
+In [Rails API Serialization with JSON:API - Part 1](/blog/2020/05/15/rails-api-serialization-json-api-part-1) we looked at using the Sparse Fieldsets functionality of the JSON:API specification.
 
 In this post, we're going to pick up with the same Rails 6 API app. We're going to discuss the Compound Document feature and show how these two features can be combined.
 
