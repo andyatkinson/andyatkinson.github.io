@@ -6,7 +6,7 @@ title: PostgreSQL Puny to Powerful
 
 Hello. This page is additional resources page for the presentation "Puny to Powerful PostgreSQL Rails Apps" given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
 
-I've now blogged [RailsConf 2022 Conference](https://andyatkinson.com/blog/2022/05/23/railsconf-2022) as well with more presenter side thoughts and reactions.
+I've now blogged [RailsConf 2022 Conference](/blog/2022/05/23/railsconf-2022) as well with more presenter side thoughts and reactions.
 
 <script async class="speakerdeck-embed" data-id="b9ac5608b0be4bb0ae01201e7fca7228" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
