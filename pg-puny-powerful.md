@@ -4,11 +4,9 @@ permalink: /pg-puny-powerful
 title: PostgreSQL Puny to Powerful
 ---
 
-Hello. Thank you for visiting.
+Hello. This page is additional resources page for the presentation "Puny to Powerful PostgreSQL Rails Apps" given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
 
-This page is an additional resources page related to a presentation given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
-
-<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/b9ac5608b0be4bb0ae01201e7fca7228" title="Puny to Powerful PostgreSQL Rails Apps" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background-color: rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; -webkit-background-clip: padding-box; -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 314px;" data-ratio="1.78343949044586"></iframe>
+<script async class="speakerdeck-embed" data-id="b9ac5608b0be4bb0ae01201e7fca7228" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 Below are some additional resources and experiments that I developed while working on the content for the talk.
 
@@ -334,3 +332,46 @@ SET constraint_exclusion = partition; -- the default, or "on"
 ### Partitioning Resources
 
 * [Partitioning Large Tables](https://gpdb.docs.pivotal.io/5270/admin_guide/ddl/ddl-partition.html)
+
+
+## Follow Up Questions
+
+We had a few minutes for Q&A after the talk and there were some good questions. After some time passed I thought of additional answers for the questions and wanted to expand on them.
+
+### Question: Why backfill in a migration?
+
+Someone pointed out that the second potentially unsafe database migration was performing a backfill, and asked why not do that in a script or separate task?
+
+That was a fair question and in practice typically we'd backfill in a rake task running via a Kubernetes job disconnected from the deployment process. I'd recommend that in a code review. However I've also seen folks backfill in a Rails migration.
+
+The part we didn't discuss is that the migration mechanism is helpful if there are a lot of deployment environments. For example at Fountain we have over 10 environments to deploy to across shared multi-tenant and single tenant environments, each running their own instances of the applications, databases, and background processes.
+
+Since we've already invested in migrating all environments from a single deployment mechanism, deployments are a way to ensure all deployable environment databases receive the same backfill migration.
+
+### Question: Why is throttling via sleep set at (`0.01` seconds)?
+
+In the [Strong Migrations Backfilling](https://github.com/ankane/strong_migrations#backfilling-data) section there is an example of throttling a backfill by putting in a `0.01` sleep. Someone asked how that value was determined.
+
+I jokingly responded to ask the project creator [Andrew Kane](https://github.com/ankane). Maybe I'll send Andrew an email? I did have some more thoughts about why to throttle in the general in addition to polling the audience and collecting some feedback.
+
+The audience suggested letting index maintenance catch up from updates.
+
+We also suggested lock contention for the rows being updated, leaving some time after updates for locks to be released on those rows on the chance there are transactions waiting on the same locks.
+
+Another reason to throttle would be replication. All of those updates are replicated including the index maintenance. Replication lag may be kept under 100ms but if it increases into the range of seconds, that could cause application errors reading from the replicas.
+
+As far as why the value was set so low at `0.01`, perhaps it was set very low as a starting point and intended for the programmer to increase it to something based on their specific use cases.
+
+### Question: Instead of dropping old partitions, why not delete old data?
+
+This was a very reasonable question and one I should have anticipated. During the Q&A we talked about one reason being with the partitions approach we can retain the data. Technically deleting it from the database, the data could still exist in backups.
+
+However when detaching a partition, the table becomes a regular table that can be dumped (e.g. [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)) and encrypted, compressed, and archived to a form of "cold storage" like an S3 bucket. Versus trying to restore specific rows from a backup, we could restore the entire table from the compressed file later.
+
+But I failed to mention some other great benefits!
+
+When deleting rows, because of MVCC design, the rows will cause table and index bloat for the single unpartitioned table. The large unpartitioned table has a single index. A partitioned table has that same index for each of the partitions.
+
+Table and index bloat can reduce performance over time. We can mitigate this with online index rebuilds. However with detaching a partition, no table or index bloat occurs.
+
+In other cases we may wish to retain the rows but because they are grouped as a table, they could be relocated to an "archive" table but left in the database. Or the table could be relocated to an archived schema. Schemas may have their own access. The table structure provides a lot of organization and administration options when the row data is valuable to retain.

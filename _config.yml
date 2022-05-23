@@ -34,6 +34,8 @@ navigation:
     url: /
   - text: About
     url: /about
+  - text: Speaking
+    url: /speaking-opportunities
   - text: Ruby on Rails
     url: /rails-tips
   - text: PostgreSQL
@@ -56,8 +58,6 @@ navigation:
     url: /values
   - text: DE & I
     url: /diversity-equity-inclusion
-  - text: Speaking
-    url: /speaking-opportunities
   - text: Events
     url: /events-and-volunteering
   - text: Archive
