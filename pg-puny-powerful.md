@@ -28,7 +28,7 @@ Roughly the following 5 major categories of the presentation are covered.
 The 5 topic areas were selected for being common, and gradually progressing from more common and with fewer trade-offs, to less common, more challenging to implement, with more significant benefits and trade-offs.
 
 
-## Resources for "Migrations On Busy Databases"
+## Resources for Migrations On Busy Databases
 
 * [PostgreSQL: How to update large tables](https://blog.codacy.com/how-to-update-large-tables-in-postgresql/)
 
