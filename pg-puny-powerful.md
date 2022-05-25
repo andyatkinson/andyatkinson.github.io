@@ -4,25 +4,28 @@ permalink: /pg-puny-powerful
 title: PostgreSQL Puny to Powerful
 ---
 
-Hello. This page is additional resources page for the presentation "Puny to Powerful PostgreSQL Rails Apps" given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
+Hello. This page contains additional resources for the presentation "Puny to Powerful PostgreSQL Rails Apps" given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
 
-I've now blogged [RailsConf 2022 Conference](/blog/2022/05/23/railsconf-2022) as well with more presenter side thoughts and reactions.
+Some of the examples below like lock contention, timing `alter table` DDLs on big tables, and the configuration of pgbouncer, are written up with the intent that the reader can try them out on their local development machines.
+
+I also wrote a blog post [RailsConf 2022 Conference](/blog/2022/05/23/railsconf-2022) with more thoughts and reactions as a presenter.
 
 <script async class="speakerdeck-embed" data-id="b9ac5608b0be4bb0ae01201e7fca7228" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
-Below are some additional resources and experiments that I developed while working on the content for the talk.
+The additional resources and experiments below were items I developed while working on the content for the talk. In some cases the content was cut where it didn't quite fit in.
 
-This page isn't organized well but roughly falls into the 5 major categories in the presentation.
+Roughly the following 5 major categories of the presentation are covered.
 
 # RailsConf PostgreSQL Prep And Background
 
-* 6 past RailsConf PostgreSQL talks
+* I reviewed 6 past RailsConf talks about PostgreSQL
   * Phoenix (2017) [#1](https://www.youtube.com/watch?v=_wU2dglywAU)
   * Pittsburgh (2018) (1) [#2](https://www.youtube.com/watch?v=8gXdLAM6B1w)
   * Minneapolis (2019) (4) [#3](https://www.youtube.com/watch?v=a4OBp6edNaM)
   * [#4](https://www.youtube.com/watch?v=B-iq4iHLnJU), [#5](https://www.youtube.com/watch?v=vfiz1J8mWEs), [#6](https://www.youtube.com/watch?v=1VsSXRPEBo0)
-* PostgreSQL is a general purpose database for a variety of workloads. We care about 🕸️ `web applications` workloads (online transaction processing, OLTP).
-* 5 Use Cases were selected related to Scaling and Performance
+* PostgreSQL is a general purpose database for a variety of workloads. This presentation is focused on `web applications` workloads ("online transaction processing" or OLTP).
+
+The 5 topic areas were selected for being common, and gradually progressing from more common and with fewer trade-offs, to less common, more challenging to implement, with more significant benefits and trade-offs.
 
 
 ## Resources for "Migrations On Busy Databases"
@@ -30,6 +33,8 @@ This page isn't organized well but roughly falls into the 5 major categories in 
 * [PostgreSQL: How to update large tables](https://blog.codacy.com/how-to-update-large-tables-in-postgresql/)
 
 ### Example: Slow DDL changes with a volatile default
+
+This is a way to simulate transactions contending for the same lock.
 
 ```sql
 create database if not exists pup_tracker_production;
@@ -66,7 +71,9 @@ alter table locations add column city_id integer default floor(random()*25);
 ```
 
 
-### Links for Locking, Blocking, Queueing
+### Links for Lalso ocking, Blocking, Queueing
+
+These are some pages I read to prepare for the talk with information about PostgreSQL pessimistic locking, MVCC, and the implications of lock contention.
 
 * [Lock Queue](https://joinhandshake.com/blog/our-team/postgresql-and-lock-queue/)
 * [PostgreSQL Explicit Locking](https://www.postgresql.org/docs/current/explicit-locking.html)
@@ -79,7 +86,7 @@ alter table locations add column city_id integer default floor(random()*25);
 * Transaction never conflicts with itself
 * We can create a made-up example that opens a transaction and creates a lock in one session, then tries an `alter table` in a second session
 
-Using the rideshare database and trips table
+Using the [rideshare application database](https://github.com/andyatkinson/rideshare) and trips table
 
 ```
 -- first psql session
@@ -113,9 +120,9 @@ show lock_timeout;
 
 ```
 
-If lock timeout is disabled entirely, setting it will set an upper bound on how long the alter table transaction is in a blocked state.
+Setting `lock_timeout` will set an upper bound on how long the alter table transaction is in a blocked state.
 
-We can see that the lock timeout is the reason that the transaction is canceled.
+We can see that the lock timeout is the reason that the transaction is canceled. PostgreSQL cancels the transaction when it reaches the lock timeout value.
 
 ```
 anatki@[local]:5432 rideshare_development# begin;
@@ -133,28 +140,28 @@ Recommendation:
 
 * Set a lock timeout
 * Set it high enough to allow some waiting, but not so long that transactions are blocked for a long time
-* If lock timeout is exceeded, likely need to try again at a less busy time
-* A long running statement may be canceled by the statement timeout. Consider raising statement timeout just for the migration session.
+* If the transaction is canceled, the transaction will need to be tried again at a less busy or contentious time
+* A long running statement may be canceled by the statement timeout. Consider raising the statement timeout just for the migration duration. Strong Migrations gem does this by default, it sets a longer session-level statement timeout for the migration.
 
-### Definition for "Table rewrites" which are time consuming, and triggered by some DDLs
+### Definition for "Table rewrites" triggered by some DDLs
 
 Definition for table rewrites:
-Something like "A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure"
 
-Via lukasfittl
-I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>
+Roughly: A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure.
+
+Discussion with [lukasfittl](https://twitter.com/LukasFittl) about that definition: "I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>".
 
 
 ## Resources for Exhausting Database Connections
 
 * How many have been idle for a long time?
 * Assessing connection usage for application servers and background processes
-* High Connections in PgHero. `show max_connections;`
+* High Connections in PgHero. View the max configured connections: `show max_connections;`
 
 ## Notes on Forking the main PostgreSQL process
 
-* Postmaster is first process. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026)
-* [Memory used by connections](https://aws.amazon.com/blogs/database/resources-consumed-by-idle-postgresql-connections/)
+* Postmaster is first process that boots. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. and others. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026) or run `ps -ef | grep postgres` on a machine running postgres to view each of the processes.
+* Resource consumption: [Memory used by connections](https://aws.amazon.com/blogs/database/resources-consumed-by-idle-postgresql-connections/)
   * PostgreSQL uses shared memory and process memory
 
 
@@ -165,14 +172,18 @@ I think thats correct - I was trying to confirm whether alter table commands tha
 * [What are advantages of using transaction pooling with pgbouncer?](https://stackoverflow.com/a/12189973/126688)
 * [Be Prepared!](https://medium.com/@devinburnette/be-prepared-7768d1a111e1)
 
-### Discussion of prepared statements
+### Discussion of Prepared Statements
 
-Simple example, select a row by primary key id.
+Prepared Statements are enabled by default in Rails, and are incompatible with transaction level pooling with pgbouncer. What are prepared statements?
+
+Simple example below, manually taking a SQL statement and making it a prepared statement. Select a row by primary key id.
 
 ```
 prepare loc (int) as select * from locations where id = $1;
 execute loc(1);
 ```
+
+What is the purpose of prepared statements?
 
 > While providing a minimal boost in performance, this functionality also makes an application less vulnerable to SQL injection attacks.
 
@@ -184,7 +195,7 @@ execute loc(1);
   Location Load (1.2ms)  SELECT "locations".* FROM "locations" WHERE "locations"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
 ```
 
-Explore the prepared statement cache:
+Exploring the prepared statement cache in Ruby on Rails:
 
 ```
 ActiveRecord::Base.connection.execute('select * from pg_prepared_statements').values
@@ -192,13 +203,13 @@ ActiveRecord::Base.connection.execute('select * from pg_prepared_statements').va
 
 > By default Rails will generate up to 1,000 prepared statements per connection
 
-Uses memory.
+The prepared statement cache uses memory.
 
 ### Connection Pooling Example: PgBouncer
 
-Default port is `6432` or 1000 higher than default PostgreSQL port `5432`
+Default port is `6432` (a port number that is exactly 1000 higher than the default PostgreSQL port `5432`) :)
 
-On Mac OS install with `brew install pgbouncer`
+On Mac OS install with: `brew install pgbouncer`
 
 PgBouncer config: [pgbouncer.ini](https://pgbouncer.github.io/config.html)
 
@@ -243,7 +254,7 @@ View some information:
 
 [PgBouncer Cheat Sheet](https://lzone.de/cheat-sheet/PgBouncer)
 
-Online restart (without disconnecting clients)
+Online restart (without disconnecting clients):
 
 `pgbouncer -R` or send a `SIGHUP` signal
 
