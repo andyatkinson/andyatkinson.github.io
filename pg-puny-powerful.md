@@ -143,7 +143,7 @@ Recommendation:
 * If the transaction is canceled, the transaction will need to be tried again at a less busy or contentious time
 * A long running statement may be canceled by the statement timeout. Consider raising the statement timeout just for the migration duration. Strong Migrations gem does this by default, it sets a longer session-level statement timeout for the migration.
 
-### Definition for "Table rewrites" triggered by some DDLs
+### Definition for Table rewrites triggered by some DDLs
 
 Definition for table rewrites:
 
@@ -318,7 +318,7 @@ REINDEX
 Time: 50.108 ms
 ```
 
-## Using PostgreSQL native Replication and Partitioning
+## Using PostgreSQL Replication and Partitioning
 
 ### Using Multiple Databases with Replication for Rails Apps
 
