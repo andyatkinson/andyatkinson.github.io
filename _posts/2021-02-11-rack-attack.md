@@ -12,8 +12,7 @@ The reasons to do this are to ensure overall system stability by preventing bogu
 
 Rack Attack uses a configurable cache to store its state information and we use Redis as the cache store.
 
-
-### Throttling use case
+#### Throttling use case
 
 Recently we had a couple of simultaneous technical issues that caused a higher error rate and degraded user experience for some users.
 
@@ -24,7 +23,7 @@ The problems started when our database replication lag crept up to the 20 second
 While various timeouts and circuit breakers are in place for resiliency, these runaway requests were causing CPU and load problems that needed to be stopped ASAP.
 
 
-### Mitigation and recovery
+#### Mitigation and recovery
 
 Enter Rack Attack! While the longer term fix was to introduce a bug fix, we were able to use Rack Attack to deploy a config change and mitigate the issue quickly.
 
@@ -36,8 +35,7 @@ Rack::Attack.throttle('manage/ip', :limit => 60, :period => 30.seconds) do |req|
 end
 ```
 
-
-### Temporary Ban use case
+#### Temporary Ban use case
 
 Another use case for Rack Attack is to mitigate risk on potential endpoints that may be abused by bad actors.
 

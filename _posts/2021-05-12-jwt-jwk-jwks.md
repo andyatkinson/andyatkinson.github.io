@@ -20,7 +20,7 @@ The last two are sort of the same thing, a set of JWK structures is a JSON Web K
 
 The JWT (JSON Web Token) is passed around in an encoded form.
 
-### What is JWT?
+#### What is JWT?
 
 JSON Web Token (RFC 7519) is an open standard, useful for Authorization and Information Exchange. JWTs represent "claims". JWTs are signed using a secret or a public/private key pair.
 
@@ -45,13 +45,13 @@ Typically the JWT encoded form is used in the `Authorization` HTTP request heade
 `Authorization: Bearer <encoded JWT>` 
 
 
-### What is JWK?
+#### What is JWK?
 
 A JSON Web Key (JWK), an IETF standard (RFC 7517), is a JSON data structure that represents a cryptographic key.
 
 > JSON Web Key (JWK) provides a mechanism to distribute the public keys that can be used to verify JWTs. [^ruleoftech]
 
-### What is JWKS?
+#### What is JWKS?
 
 JSON Web Key Set (JWKS), an IETF standard, is a set of keys containing the public keys used to verify any JSON Web Token (JWT). A JSON Web Key Set is composed of 1 or more JSON Web Keys (JWK). Each JWK represents a cryptographic public key that can be used to validate the signature of a signed JSON Web Token (JWT).
 
@@ -95,8 +95,6 @@ Archive file format.
 Keytool can be used to generate a private and public key pair.
 
 `ssh-keygen` is a tool that can be used to generate an SSH key.
-
-
 
 
 ### The JWT gem in ruby

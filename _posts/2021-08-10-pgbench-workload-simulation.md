@@ -12,13 +12,13 @@ For the workload on the primary, the workload is more write oriented by design (
 
 We configure this write and read separation manually in Rails which has supported multiple databases natively since Rails 6. Rails lets us configure different roles for writing and reading and we can switch between them from one line of code to another if needed.
 
-### Using pgbench
+#### Using pgbench
 
 pgbench allows us to set up a benchmark set of queries that can be run against a database. The benchmark input is SQL queries. These statements can be customized to add some diversity into the SELECT statements so that rows are not always selected that exist in the same page.
 
 [pgbench](https://www.postgresql.org/docs/10/pgbench.html) is built in to PostgreSQL. I run pgbench local on OS X and then make a connection to a remote PG database, which then executes the benchmark.
 
-### Workload Simulation
+#### Workload Simulation
 
 We have just recently started to attempt to simulate our workload. I did this by grabbing some of the Top SQL (from RDS Performance Insights), selecting a mix of INSERT, UPDATE and SELECT statements. These queries are parameterized, meaning placeholder values like question mark need to be replaced with real values.
 
@@ -75,7 +75,7 @@ This form of database benchmarking is best for testing parameter changes, system
 A more realistic test of a web application workload might use HTTP load testing tools and API endpoints that can be hit concurrently.
 
 
-## Summary
+#### Summary
 
 * Benchmark your database server with pgbench
 * Create a variety of SQL statements to simulate the workload
