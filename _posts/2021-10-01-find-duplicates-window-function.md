@@ -10,14 +10,14 @@ Finding duplicate rows following an application bug can be tricky to do in a per
 
 Recently I found and adapted a SQL solution to this problem which uses the `ROW_NUMBER` window function. This post is a generic version of the solution with a made-up table structure, records, and write-up to set the context for when to apply this technique.
 
-### How does this happen?
+#### How does this happen?
 
 Duplicate rows like this happen occasionally due to application bugs. 2 threads may create the same item at the same time. Without any application uniqueness enforcement, or database constraint, these rows are created.
 
 Typically after cleaning up the duplicate data, we'd add a database unique constraint to prevent the issue from happening again.
 
 
-### The Setup
+#### The Setup
 
 Lets create a links table that tracks a `url` and a `name` and give it an integer primary key. Having a primary key is important because we will use it to identify rows for deletion.
 
@@ -114,7 +114,7 @@ And we can see that the results are only rows 2, 5, 6 which is what we were look
 What is happening in this query?
 
 
-### Window Functions
+#### Window Functions
 
 [`ROW_NUMBER`](https://www.postgresqltutorial.com/postgresql-row_number/) is a window function.
 
@@ -127,7 +127,7 @@ No, in this case removing the partition will use a single partition and produce 
 Adding the partition and ordering helps make the intentions explicit, to consider the url, name combination to be the uniqueness dimension, and to order by primary key descending.
 
 
-## Deleting the duplicates
+#### Deleting the duplicates
 
 Now that we're able to isolate just the rows that are the duplicates, we can issue a single delete statement by ID.
 

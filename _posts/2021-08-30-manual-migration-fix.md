@@ -10,7 +10,7 @@ This tip is a recipe for how to recover from a Rails migration that failed to ap
 
 This is also more of a symptom of an underlying problem to fix, but nevertheless it has been a useful technique to "right the ship" and keep things moving.
 
-### Manually add the schema migration version
+#### Manually add the schema migration version
 
 Figure out the schema version. The version is the numeric part of the filename, for example in `20211121190924_create_index.rb` it would be `20211121190924`. This version will exist in the schema migrations table where it was applied earlier in pre-production as well.
 
@@ -20,7 +20,7 @@ Since we're going to manually create the migration, we will insert the version m
 INSERT INTO schema_migrations (version) VALUES (20211121190924);
 ```
 
-### If the migration was written in Ruby, translate it to SQL
+#### If the migration was written in Ruby, translate it to SQL
 
 Let's use an example of adding an index. We occasionally have issues where the index create even with `CONCURRENTLY` (in background) will be canceled due to a statement timeout. As an aside, make sure the statement timeout is raised a bit for migrations. [Strong Migrations](https://github.com/ankane/strong_migrations#migration-timeouts) raises it to 1 hour.
 
@@ -42,7 +42,7 @@ Running the query then might produce a statement like below. *Please note* I've 
 CREATE INDEX CONCURRENTLY index_comments_on_post_id ON public.comments USING btree (post_id) WHERE (post_id IS NOT NULL);
 ```
 
-### Wrap-up and Summary
+#### Wrap-up and Summary
 
 * The migration version is the numeric part of the filename, and is inserted into the `schema_migrations` table to track which migrations have run
 * The original Rails migration file will still be useful for other developers and other environments.

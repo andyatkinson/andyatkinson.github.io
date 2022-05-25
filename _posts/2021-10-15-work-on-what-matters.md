@@ -13,7 +13,7 @@ This section has good descriptions of how to classify certain types of work a so
 What I liked especially was thinking about the work in terms of effort, impact, and visibility.
 
 
-### Avoid Snacking
+#### Avoid Snacking
 
 "Snacking" is work that is relatively easy and low-impact. Some things that came to mind in Ruby on Rails web development for me were:
 
@@ -28,7 +28,7 @@ These can also be useful to build some "momentum" or inertia as a new contributo
 But just like in real life though, a diet should not consist solely of snacks.
 
 
-### Stop Preening
+#### Stop Preening
 
 "Preening" is lower impact work like snacking but instead of low visibility it's high-visibility work.
 
@@ -39,14 +39,14 @@ Preening projects might still be useful to help build trust ("right hand man") a
 The author encourages the reader to strike a balance between work that is valued at the org, and personal growth.
 
 
-### Chasing Ghosts 👻
+#### Chasing Ghosts 👻
 
 Ghosts are low-impact but very high effort projects that aren't quite done. A new person may be brought in to try and solve these problems!
 
 > Taking the time to understand the status quo before shifting it will always repay diligence with results.
 
 
-### What should you work on? Existential issues.
+#### What should you work on? Existential issues.
 
 
 Running out of money is an example listed. Another example listed was something we discussed recently, we'd scaled vertically to the largest instance class available for the DB server, and there was concern additional load would exceed capacity.
@@ -54,8 +54,7 @@ Running out of money is an example listed. Another example listed was something 
 Since there was no additional purchaseable headroom available, working on code and data solutions internally to optimize further while not a guaranteed future crisis, was a possible one, and therefore it was easier to sell the engineering effort involved in working on that.
 
 
-
-### Work where this is room and attention
+#### Work where this is room and attention
 
 The guide suggests working where there is both room to work (things to be done, in other words problems that are not fully solved), and attention to the work.
 
@@ -68,7 +67,7 @@ Some questions the book suggests:
 * Be mindful of working in a company area that is not well supported. It may be personally interesting, but not visible or rewarded.
 
 
-### More Ideas
+#### More Ideas
 
 These are just copied from the source material with my own quick summaries.
 
@@ -78,6 +77,6 @@ These are just copied from the source material with my own quick summaries.
 * "What only you can do". Leverage unique skills by brining them to the team to level everyone up.
 
 
-### Wrap Up
+#### Wrap Up
 
 The [StaffEng](https://staffeng.com/) book is very energizing to me, I highly recommend it!

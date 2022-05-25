@@ -18,7 +18,7 @@ So perhaps your application has some over-indexing, and some maintenance and pru
 * Bloated indexes
 * Duplicate and invalid indexes
 
-## Causes of unnecessary indexes
+#### Causes of unnecessary indexes
 
 Some of the over-indexing might be:
 
@@ -31,7 +31,7 @@ Some of the over-indexing might be:
 * PG can combine multiple single column indexes as part of query planning
 
 
-## Unused Indexes
+#### Unused Indexes
 
 Fortunately PG tracks index scans so we can easily identify unused indexes. Unused indexes can likely be removed entirely from your database, reclaiming disk space and improving operational efficiency.
 
@@ -62,7 +62,7 @@ Over months as time allowed and in batches, we verified each were safe to remove
 In addition to this query, we adopted [PgHero](https://github.com/ankane/pghero) to make unused indexes more visibile to all team members. Easier to spot, easier to remove.
 
 
-## Bloated indexes
+#### Bloated indexes
 
 By design in the MVCC implementation PG, when a row is updated even for a single column, the former row becomes a dead row/dead tuple (invisible). Tables always consist of "live" and dead tuples.
 
@@ -79,13 +79,13 @@ Working down from bloat percentage (some indexes as high as (estimated) 90% bloa
 Keep track of the indexes and tables and determine whether any indexes can be removed, or AV can be made more aggressive for tables for which tables or indexes are heavily bloated.
 
 
-## Using pg_repack
+#### Using pg_repack
 
 Pg_repack is a command line application. To use it with Amazon RDS PostgreSQL, install it and run it on an instance. Reference [Installing pg_repack on RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/) and install the appropriate version for the database.
 
 I repacked 27 indexes on our primary database, reclaiming over 230 GB of space. In the most extreme cases with 90% bloat, the resulting repacked (new) index size was around 10% of the original size. This makes sense since 90% of the bloat was removed.
 
-## Duplicate, Redundant and Invalid indexes
+#### Duplicate, Redundant and Invalid indexes
 
 Duplicate indexes mean that two indexes have different names, but index the same columns.
 
@@ -98,7 +98,7 @@ If the query plan and execution time looked the same, the index could be dropped
 Invalid indexes are indexes that failed to build properly. To fix this, drop the index if not needed, or rebuild the index (concurrently).
 
 
-## Summary
+#### Summary
 
 * Find and removed unused and duplicate indexes that don't impact queries
 * Remove or rebuild invalid indexes

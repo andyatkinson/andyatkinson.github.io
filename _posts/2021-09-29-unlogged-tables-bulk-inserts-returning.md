@@ -14,13 +14,13 @@ In the article [How to test unlogged tables for performance in PostgreSQL](https
 
 Unlogged tables are normal tables, but with an `UNLOGGED` option supplied at creation time.
 
-### Returning data from a query
+#### Returning data from a query
 
 The [`returning` clause](https://www.postgresql.org/docs/9.5/dml-returning.html) will return the selected rows from a query, all fields with `returning *`, whether it's an update or in this case a `DELETE` query.
 
 So combining unlogged tables, `returning *`, with the intention of inserting items in bulk, we can insert 10 million rows in a single statement as follows below.
 
-### Benchmarks
+#### Benchmarks
 
 How about a simple benchmark?
 
@@ -51,7 +51,7 @@ So we can reproduce the insert rate benefits in a simple table, at least one wit
 How about the bulk insert?
 
 
-### Inserting in bulk
+#### Inserting in bulk
 
 We know that inserting multiple rows at once is faster than inserting single rows because we are saving the overhead of a transaction per insert.
 
@@ -81,7 +81,7 @@ Time: 67158.109 ms (01:07.158)
 
 This statement ran in a little over a minute on my machine.
 
-### Summary
+#### Summary
 
 In this post we covered unlogged tables, the `returning` clause, and bulk inserts.
 
