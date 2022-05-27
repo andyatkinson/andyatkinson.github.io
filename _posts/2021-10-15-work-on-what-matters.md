@@ -21,60 +21,64 @@ What I liked especially was thinking about the work in terms of effort, impact, 
 * Updating a patch version of Rails
 * Adopting a new well documented API
 
-These things have some value, but are also easy and probably low in business impact, and low in visibility. As the guide says, snack sized work is good to fill in gaps or could be good to hand off to someone with less experience performing these tasks in general, or at the particular organization.
+These things have some value, but are also easy and probably low in business impact, and low in visibility. As the guide says, snack sized work is good to fill in gaps or could be good to hand off to someone with less experience performing these tasks in general.
 
 These can also be useful to build some "momentum" or inertia as a new contributor, with a new technology, or on a new team.
 
-But just like in real life though, a diet should not consist solely of snacks.
+But just like in life outside programming, a diet should not consist solely of snacks.
 
 
 #### Stop Preening
 
-"Preening" is lower impact work like snacking but instead of low visibility it's high-visibility work.
+"Preening" is lower impact work like snacking but instead of low visibility, it's high-visibility work.
 
-This made me think of taking on a pet project for a boss. It might be highly visible work because the boss has asked for it, but it's also lower in impact to the business.
+This made me think of taking on a pet project for a boss. It might be highly visible work because the boss has asked for it, but it's also lower in impact to the business since it's a pet project.
 
-Preening projects might still be useful to help build trust ("right hand man") and reputation, but may not benefit an individual's skill growth or development.
+Preening projects might still be useful to help build trust (the "right hand man" archetype) and reputation between colleagues, trust is important, but the project may not benefit the individual's skill growth or development either.
 
 The author encourages the reader to strike a balance between work that is valued at the org, and personal growth.
 
 
 #### Chasing Ghosts 👻
 
-Ghosts are low-impact but very high effort projects that aren't quite done. A new person may be brought in to try and solve these problems!
+Ghosts are low-impact, but very high-effort projects that aren't quite done. A new person may be brought in to try and solve these problems! Equipped with their new energy, maybe they can crack the nut.
 
 > Taking the time to understand the status quo before shifting it will always repay diligence with results.
+
+These projects might also be doomed to fail. It may involve a difficult conversation with a boss, to help clarify and align on the business value, and discuss whether the [sunk cost fallacy](https://en.wikipedia.org/wiki/Sunk_cost) is driving the continued effort.
 
 
 #### What should you work on? Existential issues.
 
 
-Running out of money is an example listed. Another example listed was something we discussed recently, we'd scaled vertically to the largest instance class available for the DB server, and there was concern additional load would exceed capacity.
+What is an existential issue? Well, at a startup, running out of money is an existential crisis. An extinction level event? Work on those things?
 
-Since there was no additional purchaseable headroom available, working on code and data solutions internally to optimize further while not a guaranteed future crisis, was a possible one, and therefore it was easier to sell the engineering effort involved in working on that.
+Another example listed reminded me of some recent experience. We'd scaled our primary database vertically to the largest instance class and there was concern our workload would even exceed that.
+
+Since there was no way to purchase more scale, working on scalability at the application code layer, went from a nice-to-have to more of a need-to-have. It became easier to "sell" spending the engineering effort on application code scalability.
 
 
 #### Work where this is room and attention
 
-The guide suggests working where there is both room to work (things to be done, in other words problems that are not fully solved), and attention to the work.
+The guide suggests working where there is both room to work (things to be done, in other words "problems that are not fully solved", or under-staffed), and "attention to the work".
 
-This makes sense to me. Bringing someone in new but with nothing really to do is unproductive. Bringing someone in new to work on something that has been ignored for a long time, will probably result in their effort being ignored.
+This makes sense to me. Adding more staff to a project where there isn't clear work to be done is unproductive. Adding resources to projects that have been ignored for a long time will probably result in their effort being ignored.
 
 Some questions the book suggests:
 
 * What might become priorities in the future where you can work in advance of that?
-* Areas that are "ok" , but could be great(!) 📈
-* Be mindful of working in a company area that is not well supported. It may be personally interesting, but not visible or rewarded.
+* Areas that are "ok" now, but could be "great" with your contributions(!) 📈
+* Be mindful of working in a company area that is not well supported. The area may be interesting personally, but invisible work is often not rewarded at all or rewarded poorly.
 
 
 #### More Ideas
 
 These are just copied from the source material with my own quick summaries.
 
-* Foster growth. Growing the team around you is always appreciated and valuable.
-* "Edit" - improve something that was good that could be great.
-* Finish things (be a closer)
-* "What only you can do". Leverage unique skills by brining them to the team to level everyone up.
+* Foster growth. Growing the team around you is appreciated and valuable.
+* "Edit" - improve something that was "good" that could be "great".
+* "Finish things" (be a closer)
+* Work on "What only you can do". Delegate tasks with no personal growth opportunities. Bring unique skills to the team for individual work, and share knowledge to level-up the team.
 
 
 #### Wrap Up
