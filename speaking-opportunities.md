@@ -30,15 +30,14 @@ Speaker: [Andrew Atkinson](https://postgresql.us/events/pgconfnyc2021/sessions/s
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ijYha2bBink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-
-#### PostgreSQL Unused Indexes (Internal lightning-style talk)
+#### PostgreSQL Unused Indexes (Internal talk)
 
 January 2021<br/>
 Why unused indexes are bad and how to remove them
 
 <script async class="speakerdeck-embed" data-id="6644d7dd7380413ea19dce1955f41269" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
-#### RubyConf Argentina (Conference)
+#### RubyConf Argentina 2021
 
 Andy [presented in Buenos Aires at RubyConf Argentina 2012](/blog/2013/11/27/rubyconf-argentina-2012/) about how his team applied Lean Startup principles to their work at LivingSocial.
 
