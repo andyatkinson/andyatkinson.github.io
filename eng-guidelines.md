@@ -6,27 +6,39 @@ title: Engineering Guidelines
 
 This is a collection of articles and topics about senior engineering.
 
-## Enginering Manger vs. Individual Contributor
+## IC, EM, High Performing teams
+
+### Enginering Manger vs. Individual Contributor
 
 I really like this post called the [Engineer/Manager Pendulum](https://charity.wtf/2017/05/11/the-engineer-manager-pendulum/).
 Everything in this post resonates with my career, including how different the roles are, moving between them is lateral or even how a senior IC first-time manager is a "junior" EM.
 And how "There’s nothing worse than reporting to someone forced into managing."
 
-## Technical Leadership, Influence not Authority
+### Technical Leadership, Influence not Authority
 
 * [Thriving on the Technical Leadership Path](https://keavy.com/work/thriving-on-the-technical-leadership-path/)
 
 This is a great article and description of laddering up in organizations on the senior engineer path. Some of the ways that the benefit of having more autonomy and influence, can be used to make more strategic and broader impact contributions.
 
-## Favorite Books
+### Favorite Books
 
 Some favorite engineering books I have read. If a newer version exists I've linked that first.
 
 * Sandi Metz on Object Design with Ruby. Newer Book (2018): [Practical Object-Oriented Design: An Agile Primer Using Ruby](https://www.amazon.com/Practical-Object-Oriented-Design-Agile-Primer-dp-0134456475/dp/0134456475/ref=dp_ob_title_bk). [POODR (2012)](https://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley/dp/0321721330/ref=sr_1_4?crid=3ACLQ7Q5L3P3F&keywords=sandi+metz+practical+object+oriented+design+in+ruby&qid=1638803814&sprefix=sandi+metz+practical%2Caps%2C268&sr=8-4).
 * [PostgreSQL 9.0 High Performance](https://www.amazon.com/PostgreSQL-High-Performance-Gregory-Smith/dp/184951030X/ref=sr_1_1?keywords=high+performance+postgres+9.0&qid=1638803942&s=books&sr=1-1)
 * [Staff Engineer: Leadership beyond the management track](https://staffeng.com/book)
+* [Accelerate: The Science of Lean Software and DevOps: Building and Scaling High Performing Technology Organizations](https://code.likeagirl.io/the-one-book-every-tech-leader-should-read-8d78dfdc5e0e)
 
-## Software Engineering Guidelines
+### DevOps Research and Assessment (DORA) Metrics
+
+<https://harness.io/blog/continuous-delivery/dora-metrics/>
+
+* Lead Time
+* Deployment Frequency
+* Mean Time To Restore (MTTR)
+* Change Failure Rate
+
+## Generic Backend Web Development Guidelines
 
 Software Engineering as it relates to backend web development.
 
