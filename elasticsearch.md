@@ -120,6 +120,16 @@ Running via Docker (Recommended method):
 
 Some activity will be logged like index creation.
 
+## Stats
+
+Check the index stats, e.g. for deleted documents:
+
+`GET /index/_stats`
+
+For a given index, the deleted documents were as much as 32% of the total number of documents in a performance sensitive index we have with over 100 GB of size, and with wildcard queries which are already more costly.
+
+According to how [Lucene handles deleted documents](https://www.elastic.co/blog/lucenes-handling-of-deleted-documents), this percentage is within the normal range though.
+
 
 ## Use Cases
 
