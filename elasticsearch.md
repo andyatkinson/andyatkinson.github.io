@@ -13,6 +13,7 @@ Mapping concepts from an RDMBS can be helpful.
 * Index - this is like a RDBMS table
 * Document - this is like a RDBMS row
 * Mapping - this is like an RDBMS DDL structure, although it can be applied upfront or later on. Implicit vs. explicit.
+* Immutable documents - documents are immutable, when updating a document, it is not modified in place but is marked for deletion and replaced by a new version with the changes. PostgreSQL works this way as well for row updates and deletes.
 
 ### More Concepts
 
@@ -23,7 +24,8 @@ These concepts are specific to the architecture of [Elasticsearch and scalabilit
   * Replica shard - a copy of a primary shard. Replica shards can be added to scale search requests.
 * Node - (servers) nodes serve primary or replica shards
 * Cluster - a collection of nodes
-* Deployment - this is [Elastic.co](https://www.elastic.co/) terminology that seems to be synonymous with cluster
+* Deployment (cluster) - this is [Elastic.co](https://www.elastic.co/) terminology that is synonymous with cluster. A deployment will contain an Elasticsearch cluster, as well as nodes for other services like Kibana.
+* Segment merging - how Elasticsearch processes deleted documents
 
 ## API Concepts
 
@@ -147,8 +149,7 @@ The operational concerns here are more about indexing rate, search speed etc. as
 ### Resources
 
 * [How to Improve your Elasticsearch Indexing Rate](https://opster.com/blogs/improve-elasticsearch-indexing-rate/)
-
-
+* [How to Improve Elasticsearch Search Performance](https://opster.com/blogs/improve-elasticsearch-search-performance/)
 
 
 ### As a search engine
@@ -156,6 +157,9 @@ The operational concerns here are more about indexing rate, search speed etc. as
 Elasticsearch has powerful capabilities for searching.
 
 ### Tools
+
+* Kibana - visualization tool, search logs, API console
+* [Rally](https://blog.searchhub.io/how-to-setup-elasticsearch-benchmarking) benchmarking
 
 Some tooling in Ruby
 
