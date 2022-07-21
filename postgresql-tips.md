@@ -8,6 +8,7 @@ title: PostgreSQL Tuning and Tips
 
 * <https://www.pgcasts.com/>
 * <https://www.youtube.com/c/ScalingPostgres>
+* <https://sqlfordevs.io>
 
 
 ## My typical workloads
