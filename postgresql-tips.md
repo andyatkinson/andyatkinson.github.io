@@ -4,6 +4,12 @@ permalink: /postgresql-tips
 title: PostgreSQL Tuning and Tips
 ---
 
+## Video Series
+
+* <https://www.pgcasts.com/>
+* <https://www.youtube.com/c/ScalingPostgres>
+
+
 ## My typical workloads
 
 My tips operating high scale PostgreSQL databases primarily with Ruby on Rails web applications. OLTP, high quantity of short lived transactions.
