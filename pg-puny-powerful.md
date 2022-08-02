@@ -1,10 +1,14 @@
 ---
 layout: page
 permalink: /pg-puny-powerful
-title: PostgreSQL Puny to Powerful
+title: Puny to Powerful PostregreSQL Rails Apps
 ---
 
-Hello. This page contains additional resources for the presentation "Puny to Powerful PostgreSQL Rails Apps" given Wed. May 18, 2022 at RailsConf 2022 in Portland, OR.
+Hello. This page contains additional resources for the presentation "Puny to Powerful PostgreSQL Rails Apps" given Wed. May 18, 2022 at [RailsConf 2022](https://railsconf.org/) conference in Portland, OR.
+
+A video recording of the presentation is below.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CIYbpYKrX8Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Some of the examples below like lock contention, timing `alter table` DDLs on big tables, and the configuration of pgbouncer, are written up with the intent that the reader can try them out on their local development machines.
 
@@ -71,7 +75,7 @@ alter table locations add column city_id integer default floor(random()*25);
 ```
 
 
-### Links for Lalso ocking, Blocking, Queueing
+### Links for Locking, Blocking, Queueing
 
 These are some pages I read to prepare for the talk with information about PostgreSQL pessimistic locking, MVCC, and the implications of lock contention.
 
@@ -83,10 +87,10 @@ These are some pages I read to prepare for the talk with information about Postg
 
 ### Example demonstrating locks and blocking
 
-* Transaction never conflicts with itself
-* We can create a made-up example that opens a transaction and creates a lock in one session, then tries an `alter table` in a second session
+* A Transaction never conflicts with itself
+* Create a explicit lock in one psql session, then run an `alter table` in a second psql session
 
-Using the [rideshare application database](https://github.com/andyatkinson/rideshare) and trips table
+Using the [rideshare application database](https://github.com/andyatkinson/rideshare) and trips table:
 
 ```
 -- first psql session
@@ -120,9 +124,9 @@ show lock_timeout;
 
 ```
 
-Setting `lock_timeout` will set an upper bound on how long the alter table transaction is in a blocked state.
+Setting `lock_timeout` will set an upper bound on how long the alter table transaction may wait blocked, trying to acquire the lock it needs.
 
-We can see that the lock timeout is the reason that the transaction is canceled. PostgreSQL cancels the transaction when it reaches the lock timeout value.
+The lock timeout is the reason the transaction is canceled. PostgreSQL cancels the transaction when it reaches the lock timeout value.
 
 ```
 anatki@[local]:5432 rideshare_development# begin;
@@ -136,11 +140,11 @@ ERROR:  canceling statement due to lock timeout
 Time: 5001.250 ms (00:05.001)
 ```
 
-Recommendation:
+Recommendations:
 
 * Set a lock timeout
-* Set it high enough to allow some waiting, but not so long that transactions are blocked for a long time
-* If the transaction is canceled, the transaction will need to be tried again at a less busy or contentious time
+* Set the lock timeout high enough to allow some waiting, but short enough that transactions are not blocked for long
+* If the transaction is canceled, the transaction will need to be tried again at a less busy time
 * A long running statement may be canceled by the statement timeout. Consider raising the statement timeout just for the migration duration. Strong Migrations gem does this by default, it sets a longer session-level statement timeout for the migration.
 
 ### Definition for Table rewrites triggered by some DDLs
@@ -149,7 +153,7 @@ Definition for table rewrites:
 
 Roughly: A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure.
 
-Discussion with [lukasfittl](https://twitter.com/LukasFittl) about that definition: "I think thats correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>".
+Discussion with [lukasfittl](https://twitter.com/LukasFittl) about that definition: "I think that's correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>".
 
 
 ## Resources for Exhausting Database Connections
@@ -160,7 +164,7 @@ Discussion with [lukasfittl](https://twitter.com/LukasFittl) about that definiti
 
 ## Notes on Forking the main PostgreSQL process
 
-* Postmaster is first process that boots. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. and others. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026) or run `ps -ef | grep postgres` on a machine running postgres to view each of the processes.
+* Postmaster is first process that boots. Additional background processes are started: BG writer, Autovacuum launcher, Check pointer etc. [See full list here](https://medium.com/nerd-for-tech/what-is-forking-in-postgresql-58e23458f026) or run `ps -ef | grep postgres` on a machine running postgres to view each of the processes.
 * Resource consumption: [Memory used by connections](https://aws.amazon.com/blogs/database/resources-consumed-by-idle-postgresql-connections/)
   * PostgreSQL uses shared memory and process memory
 
@@ -324,8 +328,7 @@ Time: 50.108 ms
 
 * [Multiple Databases](https://guides.rubyonrails.org/active_record_multiple_databases.html)
 
-* Concrete example with [andyatkinson/rideshare](https://github.com/andyatkinson/rideshare) TBD, in development
-* Query trips table from replica
+* Run any possible queries on replica, where replication lag is acceptable
 
 
 ### Partitioning Example With Range Partitioning
