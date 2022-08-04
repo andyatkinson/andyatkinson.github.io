@@ -59,5 +59,21 @@ To list releases:
 
 ### Kubernetes Jobs
 
+Check the history of deployments:
+
+`kubectl rollout history deployment/frontend`
+
+Restart specific services:
+
+`kubectl rollout restart deploy -n <namespace> sidekiq`
+`kubectl rollout restart deploy -n <namespace> <deployment-name>`
+
+Scale a deployment:
+
+`kubectl scale deployment <deployment-name> --replicas=2 -n service`
+
+
 [Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/)
 
+- Jobs may be expressed in a yaml file
+- Jobs may be invoked like: `kubectl apply -f /Users/anatki/Projects/project/some_cool_job.yaml -n <namespace>`
