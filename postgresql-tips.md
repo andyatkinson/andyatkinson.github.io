@@ -674,3 +674,9 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | `max_worker_processes` | | 8 | 1x/cpu ||
 | `max_parallel_workers` | | 8 | 1x/cpu ||
 | `max_parallel_workers_per_gather` | | 2 | 4 ||
+
+
+## Backups
+
+* <https://torsion.org/borgmatic/>
+* <https://restic.net/>
