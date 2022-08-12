@@ -77,3 +77,9 @@ Scale a deployment:
 
 - Jobs may be expressed in a yaml file
 - Jobs may be invoked like: `kubectl apply -f /Users/anatki/Projects/project/some_cool_job.yaml -n <namespace>`
+
+### Terraform
+
+`terraform login` (get set up with terraform cloud)
+`terraform init`
+`terraform plan` (create the plan)
