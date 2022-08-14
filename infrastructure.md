@@ -48,6 +48,8 @@ To list releases:
 
 `helm list`
 
+`helm history monolith -n <namespace>`
+
 
 ### Get Pods
 
