@@ -44,16 +44,19 @@ With Helm, we can roll back a release quickly.
 
 `helm rollback <release> -n <namespace>`
 
-To list releases:
 
-`helm list`
+### More Helm
 
-`helm history monolith -n <namespace>`
+- `helm list`
+- `helm history monolith -n <namespace>`
+- `helm lint` <https://helm.sh/docs/helm/helm_lint/>
 
 
 ### Get Pods
 
 `kubectl get pods -n <namepsace>`
+
+`kubectl exec -it deployment/<deployment-name> -n <namespace-name> -- bundle exec rails console`
 
 ### Rails console on pod
 
