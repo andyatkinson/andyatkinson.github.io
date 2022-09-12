@@ -78,6 +78,9 @@ curl -X GET 'localhost:9200/foo/_search?q=title:title&pretty'
 * `GET /_cat/indices/*pattern*`
 * `GET /index/_search` # list top 10 documents
 * `GET /index/_search -d '{"foo":"bar"}'` # some JSON search payload
+* `GET /index/_search -d '{"foo":"bar"}'` # some JSON search payload
+* `GET /_cat/shards`
+* `GET /_cat/shards/index-name` # shards for particular index
 
 Example search request with a payload via `curl`:
 
