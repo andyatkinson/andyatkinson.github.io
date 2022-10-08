@@ -64,16 +64,15 @@ INSERT INTO locations (latitude, longitude) SELECT
   (random() * (52.477040512464626 - 52.077090052913654)) + 52.077090052913654 AS lng
 FROM generate_series(1,10000000);
 
--- add column with default value
+-- add column with a constant default value
 -- 5ms with default, 2ms without, non-volatile value
 -- repeated runs the difference is too small to notice
-alter table locations add column city_id integer default SELECT floor(random()*25);
+alter table locations add column city_id integer default 1;
 
 -- DDL to add column but with a "volatile" value, a random integer between 0 and 25
 -- takes around 25s! This would be bad if the table is locked with `ACCESS EXCLUSIVE` in this time period
-alter table locations add column city_id integer default floor(random()*25);
+alter table locations add column city_id integer default 1 + floor(random()*25);
 ```
-
 
 ### Links for Locking, Blocking, Queueing
 
@@ -153,7 +152,11 @@ Definition for table rewrites:
 
 Roughly: A table rewrite is a behind-the-scenes copy of the table with a new structure, and all row data copied from the old structure to the new structure.
 
-Discussion with [lukasfittl](https://twitter.com/LukasFittl) about that definition: "I think that's correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source: <https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506>".
+Discussion with [lukasfittl](https://twitter.com/LukasFittl) about that definition.
+
+"I think that's correct - I was trying to confirm whether alter table commands that require a rewrite actually make a full copy (as indicated by the documentation), and it does appear so, see here in the source"
+
+[PostgreSQL source link](https://github.com/postgres/postgres/blob/master/src/backend/commands/tablecmds.c#L5506)
 
 
 ## Resources for Exhausting Database Connections
@@ -211,7 +214,7 @@ The prepared statement cache uses memory.
 
 ### Connection Pooling Example: PgBouncer
 
-Default port is `6432` (a port number that is exactly 1000 higher than the default PostgreSQL port `5432`) :)
+Default port is `6432` (a port number that is exactly 1000 higher than the default PostgreSQL port `5432`)
 
 On Mac OS install with: `brew install pgbouncer`
 
