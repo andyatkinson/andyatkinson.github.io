@@ -41,7 +41,7 @@ The 5 topic areas were selected for being common, and gradually progressing from
 This is a way to simulate transactions contending for the same lock.
 
 ```sql
-create database if not exists pup_tracker_production;
+create database pup_tracker_ddl_test;
 
 -- create pups
 create table pups (id bigserial, name varchar);
