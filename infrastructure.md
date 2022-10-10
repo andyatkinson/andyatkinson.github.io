@@ -30,6 +30,12 @@ To format the content for easier viewing:
 
 `kubectl get cm <key> -n <namespace> -o json | jq`
 
+### View the context
+
+- `kubectl config current-context`
+- `kubectl config get-contexts`
+- `kubectl config use-context <context-name>`
+
 
 ### Restart deployment
 
