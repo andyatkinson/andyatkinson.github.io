@@ -10,23 +10,25 @@ featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atk
 featured: true
 ---
 
-In this post you will be presented with 2 truths and a lie related to PostgreSQL and Ruby on Rails, as part of the first #PGSQLPhriday series.
+In this post you will be presented with 2 truths and a lie related to PostgreSQL and Ruby on Rails.
 
-Visit the [PGSQL Phriday #001 – Two truths and a lie about PostgreSQL post](https://www.softwareandbooz.com/pgsql-phriday-001-invite/) to learn more about the blog post series.
+This is my contribution to the first #PGSQLPhriday blog post series aiming to grow community blogging about PostgreSQL. Visit the [PGSQL Phriday #001 – Two truths and a lie about PostgreSQL post](https://www.softwareandbooz.com/pgsql-phriday-001-invite/) to learn more about the blog post series.
 
 Without further ado, here are 2 truths and a lie:
 
 - I can easily find the worst SQL queries from my Rails app
-- I can easily find where in the app the queries came from
-- The Active Record ORM cannot be prevented from producing N+1 queries [^1]
+- I can easily link SQL queries to app ORM [^16] code
+- Active Record always produces N+1 queries [^1]
 
-## Analyzing All App Queries
+## Analyzing App Queries
 
-Taking a macro perspective with PostgreSQL by looking at the queries that consume the most resources is possible using a couple of tools and a bit of connecting the dots.
+In taking a macro query analysis perspective with PostgreSQL, we can look at all app queries in terms of how many resources they consume.
 
-The main tool we've used is the `pg_stat_statements` module [^2]. PGSS normalizes queries removing the specific parameters, and collects statistics about unique queries.
+The highest consumption queries are worth fixing by reducing their cost. Reducing a query's cost may involve adding a new index for relevant columns, reducing what is being selected, or reducing what is being retrieved (adding a LIMIT).
 
-We can query the statistics data (thanks [Crunchy Data](https://github.com/andyatkinson/pg_scripts/blob/master/list_10_worst_queries.sql) for this query) that's been collected, or interact with the data via PgHero [^3]. PgHero presents the data in a tabular format and displays an impact percentage.
+The main tool we use is the `pg_stat_statements` module [^2]. PGSS normalizes queries, removing specific parameters and then collects statistics about the frequency and duration of those unique queries.
+
+We can then query that statistical data (thanks [Crunchy Data](https://github.com/andyatkinson/pg_scripts/blob/master/list_10_worst_queries.sql) for this query) to focus on the top 10 worst queries. Although the data can be queried via psql, we can also visualize it with PgHero [^3]. PgHero presents a percentage of impact for each query and makes the data interactive and sortable.
 
 ```sql
 -- Top 10 Worst Queries
@@ -54,38 +56,41 @@ In Rails 7, Rails gets Marginalia functionality natively [^8] via Query Logs [^9
 
 ## Active Record Always Produces N+1 Queries
 
-In Rails and the Active Record ORM, it is common to lazily load records by traversing model associations. Part of the joy of Active Record is the fluent interface [^11].
+In Rails and the Active Record ORM, it is common to lazily load associated records by traversing model associations. Part of the joy of Active Record is the fluent interface [^11].
 
-However, when lazily loading associated records, an excessive amount of database queries can be created. In those situations, associated data should be eagerly loaded to avoid introducing excessive queries.
+However, when lazily loading associated records, an excessive amount of database queries can be created, such as querying the same table multiple times in a loop. In those situations a technique called "eager loading" should be used, which loads the associated data  earlier, and thus avoids excessive queries due to lazy loading.
 
-Imagine a `Vehicle` model with many reservations (`VehicleReservation`). Accessing vehicles in a loop and loading all the reservations generates a vehicle reservations query for every loop iteration.
+Imagine a `Vehicle` model with many reservations (`VehicleReservation`). Accessing vehicles in a loop and loading all the reservations generates a query to the `vehicle_reservations` table for each loop iteration. This is costly and unnecessary, since loading all of the Vehicle Reservations eagerly would result in the same app behavior.
 
-How can we prevent the repetitive queries? Active Record provides a `strict_loading` option that can be used to prevent lazily loading associated records and introducing N+1 queries.
+How can we prevent the repetitive queries? Active Record has added a `strict_loading` option in newer versions that developers can use to make lazy loading impossible. Thus, Strict Loading can be used as a means to prevent the excessive N+1 queries that can be common. Some code examples are below.
 
-```
+```rb
 vehicles = Vehicle.strict_loading.all
 vehicles.each do |vehicle|
     vehicle.vehicle_reservations.first.starts_at
 end
 ```
 
-With `strict_loading`, lazy loading associated records raises an `ActiveRecord::StrictLoadingViolationError` exception.
+With `strict_loading`, lazily loading associated records raises an `ActiveRecord::StrictLoadingViolationError` exception. A developer encountering this in new code would now be required to perform eager loading.
 
-```
-`Vehicle` is marked for strict_loading. The VehicleReservation association named `:vehicle_reservations` cannot be lazily loaded. (ActiveRecord::StrictLoadingViolationError)
-```
-
-Combining `strict_loading` and eager loading using `includes`, you are able to avoid N+1 queries now *and* prevent them from happening in the future.
-
-```
-vehicles = Vehicle.strict_loading.includes(:vehicle_reservations).all
+```rb
+`Vehicle` is marked for strict_loading. The VehicleReservation association
+named `:vehicle_reservations` cannot be lazily loaded.
+(ActiveRecord::StrictLoadingViolationError)
 ```
 
-So this one was the lie! Active Record is not doomed to always allow N+1 queries with lazy loading. A properly informed programmer can prevent N+1s via lazy loading using built-in functionality. Fewer queries keeps your PostgreSQL database happy!
+Combining `strict_loading` and eager loading using `includes`, you can avoid N+1 queries *and* prevent them from happening in the future.
 
-Strict Loading can even be enabled globally. [^15]
-
+```rb
+vehicles = Vehicle.strict_loading.
+  includes(:vehicle_reservations).all
 ```
+
+So this one was the lie! Active Record models can be configured to prevent N+1 queries via lazy loading. Fewer queries keeps your PostgreSQL database happy!
+
+Strict Loading can be enabled on model associations and can even be enabled globally. [^15]
+
+```rb
 # config/application.rb
 
 config.active_record.strict_loading_by_default = true
@@ -94,15 +99,15 @@ config.active_record.strict_loading_by_default = true
 
 ## In Summary
 
-This was a quick look at some ways I use #PostgreSQL and Ruby on Rails.
+This was a quick look at some ways I use PostgreSQL and Ruby on Rails, in a 2 truths and a lie format.
 
-I enjoyed participating in the first [#PGSQLPhriday](https://twitter.com/hashtag/PGSQLPhriday?src=hashtag_click) and putting my spin on it by discussing both PostgreSQL and Ruby on Rails.
+I enjoyed participating in the first [#PGSQLPhriday](https://twitter.com/hashtag/PGSQLPhriday?src=hashtag_click) and putting my spin on it by adding Ruby on Rails to the mix.
 
 In summary:
 
-* Use `pg_stat_statements` to focus on high impact queries. Query the statistics data or view the data with PgHero.
-* Annotate your SQL queries with context from the application using Marginalia or Query Log Tags
-* Use Strict Loading to prevent lazily loaded associated data from generating N+1 queries
+* Enable `pg_stat_statements`. Query the top 10 worst queries and eliminate them to reduce load on your database. Query the data with psql or use PgHero.
+* Annotate your SQL queries with Marginalia or use Query Log Tags.
+* Use the Strict Loading feature on associations to prevent excessive N+1 queries
 
 Thanks for reading!
 
@@ -116,3 +121,4 @@ Thanks for reading!
 [^9]: [ActiveRecord::QueryLogs](https://api.rubyonrails.org/classes/ActiveRecord/QueryLogs.html)
 [^11]: [Fluent Interfaces in Ruby ecosystem](https://blog.arkency.com/2017/01/fluent-interfaces-in-ruby-ecosystem/)
 [^15]: [Kill N+1 Queries For Good with Strict Loading](https://mattsears.com/articles/2021/05/23/kill-n-plus-one-queries-for-good-with-strict-loading/)
+[^16]: [Active Record ORM Basics](https://guides.rubyonrails.org/active_record_basics.html)
