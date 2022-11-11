@@ -91,7 +91,7 @@ These are some pages I read to prepare for the talk with information about Postg
 
 Using the [rideshare application database](https://github.com/andyatkinson/rideshare) and trips table:
 
-```
+```sql
 -- first psql session
 anatki@[local]:5432 rideshare_development# begin;
 BEGIN
