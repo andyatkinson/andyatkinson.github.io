@@ -6,148 +6,152 @@ date: 2021-10-01
 comments: true
 ---
 
-Finding duplicate rows following an application bug can be tricky to do in a performant way. One way to improve the speed and simplicity of identifying the duplicate rows is doing both the find and delete all in SQL, as opposed to mixing usage of a separate script.
+Duplicate rows can happen when a database unique constraint is missing. Once found, finding and deleting duplicates in a fast way is necessary before adding the database constraint can be added.
 
-Recently I found and adapted a SQL solution to this problem which uses the `ROW_NUMBER` window function. This post is a generic version of the solution with a made-up table structure, records, and write-up to set the context for when to apply this technique.
+In this post, you'll find and delete the rows in a single query. The query will be complex, but you will build it up in pieces that are more simple.
 
-#### How does this happen?
-
-Duplicate rows like this happen occasionally due to application bugs. 2 threads may create the same item at the same time. Without any application uniqueness enforcement, or database constraint, these rows are created.
-
-Typically after cleaning up the duplicate data, we'd add a database unique constraint to prevent the issue from happening again.
+Recently I found a SQL solution to this problem that uses the `ROW_NUMBER` window function.
 
 
-#### The Setup
+#### How Duplicates Happen
 
-Lets create a links table that tracks a `url` and a `name` and give it an integer primary key. Having a primary key is important because we will use it to identify rows for deletion.
+Duplicate rows happen occasionally due to application bugs. 2 threads may create the same item at the same time. Without a database unique constraint these rows are created.
 
-We will insert some rows, deliberately inserting duplicate rows for the `google` entry.
+Typically after removing duplicates, we'd add the constraint to ensure it doesn't happen again.
 
-```
-CREATE table links (id serial primary key, url VARCHAR(255), name VARCHAR(255));
-```
 
-```
-INSERT INTO links (url, name) VALUES ('google.com', 'google');
-INSERT INTO links (url, name) VALUES ('google.com', 'google');
-INSERT INTO links (url, name) VALUES ('microsoft.com', 'microsoft');
-INSERT INTO links (url, name) VALUES ('facebook.com', 'facebook');
-INSERT INTO links (url, name) VALUES ('google.com', 'google');
-INSERT INTO links (url, name) VALUES ('google.com', 'google');
-```
+#### Duplicate Web Links
 
-Notice how google rows are the same and appear 4 times.
+Create a links table that tracks a `url` and a `name`. Give it an integer primary key. Having a primary key is important because it is used to identify rows for deletion.
 
-Let's group by url and name, and count the rows.
+Insert some rows, deliberately inserting duplicate rows for the `google` entry with a duplicate URL. This table was meant to have unique URLs, but the creator didn't add a unique constraint to enforce that.
 
 ```sql
-select url, name, count(*) as cnt
-from links
-group by url, name
-having count(*) > 1;
+-- create DB
+CREATE table links (id SERIAL PRIMARY KEY, url VARCHAR);
+
+-- insert rows
+INSERT INTO links (url) VALUES ('microsoft.com');
+INSERT INTO links (url) VALUES ('google.com');
+INSERT INTO links (url) VALUES ('facebook.com');
+INSERT INTO links (url) VALUES ('google.com');
+INSERT INTO links (url) VALUES ('netflix.com');
+INSERT INTO links (url) VALUES ('google.com');
 ```
 
-We can see that google appears 4 times in total. Each row has a distinct primary key ID.
-
-Our goal is to preserve 1 of those rows while removing the other 3 duplicate rows.
-
-Once we are able to select only those 3 rows, we can issue a single `DELETE` statement to delete them by ID.
-
-First let's look at the IDs for all of the rows that have a name of `google`.
-
-```
-select * from links where name = 'google';
- id |    url     |  name
-----+------------+--------
-  1 | google.com | google
-  2 | google.com | google
-  5 | google.com | google
-  6 | google.com | google
-```
-
-So our query results should match IDs `2`, `5`, and `6`. Running the query, that is exactly what we get.
-
-By running the following query, we are intending to only select those rows.
+Try and add the unique constraint on the URL column now.
 
 ```sql
-select c.id,c.url, c.name
-select c.id,c.url, c.name
-FROM links c
-JOIN
-(select a.id, a.url, a.name,
-ROW_NUMBER() OVER(ORDER BY a.url,a.name,a.id) AS row_rank
-from links a
-JOIN (
+ALTER TABLE links ADD CONSTRAINT unique_url UNIQUE (url);
 
-select url, name, count(*) as cnt
-from links
-group by url, name
-having count(*) > 1) b ON a.url = b.url AND a.name = b.name
-) dt ON dt.id = c.id
-AND dt.row_rank != 1;
-FROM links c
-JOIN
-(select a.id, a.url, a.name,
-ROW_NUMBER() OVER(PARTITION BY a.url,a.name ORDER BY a.url,a.name,a.id) AS row_rank
-from links a
-JOIN (
-
-select url, name, count(*) as cnt
-from links
-group by url, name
-having count(*) > 1) b ON a.url = b.url AND a.name = b.name
-) dt ON dt.id = c.id
-AND dt.row_rank != 1;
+ERROR:  could not create unique index "unique_url"
+DETAIL:  Key (url)=(google.com) is duplicated.
+Time: 4.145 ms
 ```
 
-And we can see that the results are only rows 2, 5, 6 which is what we were looking for.
+The duplicates will need to be removed first.
 
+The goal is to keep 1 of the google rows and delete the other 2.
+
+The technique will select the ids for only the duplicate rows, and pass those ids into a `DELETE` statement.
+
+To achieve that, you'll use the ROW_NUMBER() window function.
+
+First, have a look at the ROW_NUMBER() window function.
+
+```sql
+SELECT
+  id,
+  url,
+  ROW_NUMBER() OVER (order by id)
+FROM links;
 ```
- id |    url     |  name
-----+------------+--------
-  2 | google.com | google
-  5 | google.com | google
-  6 | google.com | google
-(3 rows)
-```
-
-What is happening in this query?
-
-
-#### Window Functions
 
 [`ROW_NUMBER`](https://www.postgresqltutorial.com/postgresql-row_number/) is a window function.
 
-The documentation describes ROW_NUMBER() as "a window function that assigns a sequential integer to each row in a result set."
+> ROW_NUMBER() is a window function that assigns a sequential integer to each row in a result set.
 
-We are also creating a partition by `url` and `name` and ordering by primary key `id`. Do we need to create the partition?
+In the example above, ROW_NUMBER() gives each row a number. Rows can be ordered within the window function, and the outer query can have an ordering as well.
 
-No, in this case removing the partition will use a single partition and produce the same query result. We can also remove the ordering and the natural ordering works the same.
+In the next example, the same GROUP BY as above is the second query, and now the query is aliased as "b".
 
-Adding the partition and ordering helps make the intentions explicit, to consider the url, name combination to be the uniqueness dimension, and to order by primary key descending.
+The first query "a" performs a non-grouped query of the links using ROW_NUMBER() to give each row a number.
 
+Then "a" is joined to "b" on the url which is in both the non-grouped and grouped queries. Now there is a list of each of the duplicate links, and they each have a number.
 
-#### Deleting the duplicates
-
-Now that we're able to isolate just the rows that are the duplicates, we can issue a single delete statement by ID.
+The first item will be number 1. Using this information, a DELETE query can delete any item with a number > 1.
 
 ```sql
-DELETE from links where id IN (
-select c.id--We only need to select the `id` field from the original query
---same query as above
+SELECT
+    a.id,
+    a.url,
+    ROW_NUMBER() OVER (
+        ORDER BY a.url, a.id
+    )
+FROM links a
+JOIN
+(
+SELECT
+    url,
+    count(*)
+FROM links
+GROUP BY url
+HAVING COUNT(*) > 1
+) b
+ON a.url = b.url;
+```
+
+#### Deleting Duplicates
+
+Now you can put it all together.
+
+Using the row number, for any numbers > 1, the primary key id values for those rows can be passed into a DELETE statement.
+
+Putting that all together looks like below. The below query modifies the query above and filters it down to select only the ids.
+
+All of that is wrapped in a DELETE statement that deletes by id.
+
+```sql
+
+DELETE FROM links WHERE id IN (
+
+-- select only the ids to delete (will return 2 items)
+SELECT
+    id
+FROM (
+SELECT
+    a.id,
+    a.url,
+    ROW_NUMBER() OVER (
+        ORDER BY a.url, a.id
+    )
+FROM links a
+JOIN
+(
+SELECT
+    url,
+    count(*)
+FROM links
+GROUP BY url
+HAVING COUNT(*) > 1
+) b
+ON a.url = b.url
+) c
+WHERE row_number > 1
+
 );
 ```
 
-Running this, we can confirm that 3 items are deleted, and all that is remaining are the unique entries for `google`.
+Query the links again and hooray, no duplicates!
 
+Adding a unique constraint to the `url` column to prevent this from happening again.
+
+```sql
+ALTER TABLE links ADD CONSTRAINT unique_url UNIQUE (url);
 ```
-DELETE 3
-Time: 5.493 ms
-# select * from links;
- id |      url      |   name
-----+---------------+-----------
-  1 | google.com    | google
-  3 | microsoft.com | microsoft
-  4 | facebook.com  | facebook
-(3 rows)
-```
+
+
+#### Version History
+
+* 2022-11-19: Overhaul, fixed problems, simplified the post
+* 2021-10-01: Original publish date
