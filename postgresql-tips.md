@@ -23,6 +23,7 @@ Some of my blog posts on PostgreSQL
 
 * [PGConf NYC 2021 Conference](blog/2021/12/06/pgconf-nyc-2021)
 * [PostgreSQL Indexes: Prune and Tune](blog/2021/07/30/postgresql-index-maintenance)
+* [Find Duplicate Records Using ROW_NUMBER Window Function](/blog/2021/10/01/find-duplicates-window-function)
 * [PostgreSQL pgbench Workload Simulation](/blog/2021/08/10/pgbench-workload-simulation)
 * [Views, Stored Procedures, and Check Constraints](/blog/2018/10/19/database-views-stored-procedures-check-constraints)
 * [A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
