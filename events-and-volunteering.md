@@ -10,7 +10,7 @@ As a Section Leader for [Code In Place 2021](https://codeinplace.stanford.edu/),
 
 We used Stanford's Karel robot with Python to learn some foundational concepts, and covered a number of fun topics like accepting user input, image manipulation and data structures. Section Leaders were supported by Stanford lecturers, teaching assistants, and other section leaders.
 
-Each week to prepare, I'd review most of the lectures and complete the exercises and assignments. This helped me facilitate a discussion and anticipate some of the learners' questions. To help manage time and build community, I prepared a slide deck, icebreaker questions, and discussion topics for breakout rooms.
+Each week to prepare, I'd review most of the lectures and complete exercises and assignments. This helped me facilitate a discussion and anticipate some of the learners' questions. To help manage time and build community, I prepared a slide deck, icebreaker questions, and discussion topics for breakout rooms.
 
 It was a great experience overall!
 
