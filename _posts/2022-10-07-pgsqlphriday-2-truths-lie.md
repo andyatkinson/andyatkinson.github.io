@@ -4,10 +4,6 @@ title: "#PGSQLPhriday 001 - Query Stats, Log Tags, and N+1s"
 tags: [Ruby on Rails, PostgreSQL, Open Source]
 date: 2022-10-07
 comments: true
-featured_image_thumbnail:
-featured_image: /assets/images/pages/andy-atkinson-California-SF-Yosemite-June-2012.jpg
-featured_image_caption: Yosemite National Park. &copy; 2012 <a href="/">Andy Atkinson</a>
-featured: true
 ---
 
 In this post you will be presented with 2 truths and a lie related to PostgreSQL and Ruby on Rails.
