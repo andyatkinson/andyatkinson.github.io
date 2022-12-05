@@ -14,6 +14,10 @@ Speaker: Andrew Atkinson
 
 This talk covers 5 challenging areas scaling Rails applications on PostgreSQL databases. From identifying symptoms to applying solutions and understanding trade-offs, this talk will equip you with practical working knowledge you can apply immediately.
 
+Blog post: [RailsConf 2022 Conference](https://andyatkinson.com/blog/2022/05/23/railsconf-2022)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CIYbpYKrX8Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 <script async class="speakerdeck-embed" data-id="b9ac5608b0be4bb0ae01201e7fca7228" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 
@@ -25,9 +29,9 @@ Date: 2021-12-02<br/>
 Level: Intermediate<br/>
 Speaker: [Andrew Atkinson](https://postgresql.us/events/pgconfnyc2021/sessions/speaker/310-andrew-atkinson/)
 
-<script async class="speakerdeck-embed" data-id="030a9bf3e09e4486acb96323ffe66302" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ijYha2bBink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<script async class="speakerdeck-embed" data-id="030a9bf3e09e4486acb96323ffe66302" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 
 #### PostgreSQL Unused Indexes (Internal talk)
