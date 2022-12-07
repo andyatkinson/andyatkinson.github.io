@@ -19,6 +19,6 @@ This event is massive. Even well formed plans may need to be adjusted due to pop
 
 Although I only made it to a couple of talks, the ones I did attend were at a high level of quality.
 
-I’m now in the Expo Hall which is enormous and planning to check out some of vendors.
+I’m now in the Expo Hall which is enormous and planning to check out some vendor booths.
 
 That’s all for Day 1!
