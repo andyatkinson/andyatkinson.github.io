@@ -1,0 +1,13 @@
+<!-- credit: https://stackoverflow.com/a/33658192 -->
+
+<section id="tag-archives">
+<a id="{{ include.tagName | downcase | replace: ' ', '-' }}"></a>
+<h2 class="tagcloud-title">{{ include.tagName }} <span class='tag-count'>({{ include.tagName | size }})</span></h2>
+<ul>
+{% for post in site.tags[include.tagName] %}
+  <li>
+    <a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a>
+  </li>
+{% endfor %}
+</ul>
+</section>
