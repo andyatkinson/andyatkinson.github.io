@@ -542,6 +542,10 @@ Released September 2020
 
 ## PG 14
 
+* More of [`query_id`](https://blog.rustprooflabs.com/2021/10/postgres-14-query-id)
+* [Multi-range types](https://www.crunchydata.com/blog/better-range-types-in-postgres-14-turning-100-lines-of-sql-into-3)
+
+
 ## PG 15
 
 ## RDS
