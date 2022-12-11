@@ -29,7 +29,7 @@ We can then query that statistical data (thanks [Crunchy Data](https://github.co
 ```sql
 -- Top 10 Worst Queries
 
-select
+SELECT
   total_exec_time,
   mean_exec_time as avg_ms,
   calls,
