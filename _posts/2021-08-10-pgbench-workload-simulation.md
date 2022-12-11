@@ -12,30 +12,38 @@ For the workload on the primary, the workload is more write oriented by design (
 
 We configure this write and read separation manually in Rails which has supported multiple databases natively since Rails 6. Rails lets us configure different roles for writing and reading and we can switch between them from one line of code to another if needed.
 
-#### Using pgbench
+### Using pgbench
 
 pgbench allows us to set up a benchmark set of queries that can be run against a database. The benchmark input is SQL queries. These statements can be customized to add some diversity into the SELECT statements so that rows are not always selected that exist in the same page.
 
 [pgbench](https://www.postgresql.org/docs/10/pgbench.html) is built in to PostgreSQL. I run pgbench local on OS X and then make a connection to a remote PG database, which then executes the benchmark.
 
-#### Workload Simulation
+### Workload Simulation
 
 We have just recently started to attempt to simulate our workload. I did this by grabbing some of the Top SQL (from RDS Performance Insights), selecting a mix of INSERT, UPDATE and SELECT statements. These queries are parameterized, meaning placeholder values like question mark need to be replaced with real values.
 
-In order to create the values we can use a `random` function and give it an upper bound that roughly matches the table row count.
+In order to create the values we can use a `RANDOM()` function and give it an upper bound that roughly matches the table row count.
 
-
-#### Shell script
+### Shell Script
 
 To run a pgbench benchmark, create a shell script like `my_benchmark.sh`.
 
 Using bash we can create a script that creates 10 SELECT statements each with a random value for `blog_id`.
 
-```
+```bash
 #!/bin/bash
 
-for run in {1..10}; do
-  echo "select * from comments where blog_id = $(jot -r 1 1 1000);" >> queries.bench
+# disable asterisk expansion
+# https://askubuntu.com/a/1301124
+set -f
+
+# for Mac OS, uses `jot`
+# Prereq: loaded 1000+ comments
+for run in {1..10};
+do
+  sql="SELECT * FROM comments "
+  sql+="WHERE blog_id = $(jot -r 1 1 1000);"
+  echo $sql >> queries.bench
 done
 ```
 
@@ -43,8 +51,10 @@ We can create a mix of UPDATE statements as well for example setting `CURRENT_TI
 
 Here is an example UPDATE statement:
 
-```
-echo "UPDATE comments SET view_count = 0 WHERE blogs.id = 1" >> queries.bench
+```bash
+sql="UPDATE comments SET view_count = 0 "
+sql+="WHERE blogs.id = 1"
+echo $sql >> queries.bench
 ```
 
 
@@ -53,7 +63,7 @@ The last line of the shell script will actually call `pgbench` and it will read 
 Here are some configuration options:
 
 
-```
+```sh
 # `-T/--time` time seconds
 # `-j/--jobs` number of threads
 # `-c/--client` number of clients
@@ -61,7 +71,9 @@ Here are some configuration options:
 # `-r/--report-latencies`
 #
 
-pgbench --host localhost --port 5432 --username root --protocol prepared --time 60 --jobs 8 --client 8 --file queries.bench --report-latencies my_database_name"
+pgbench --host localhost --port 5432 --username root \
+--protocol prepared --time 60 --jobs 8 --client 8 \
+--file queries.bench --report-latencies my_database_name"
 ```
 
 Once we put that all into `my_benchmark.sh` and `chmod +X my_benchmark.sh` now we can run it like `./my_benchmark`.
@@ -75,7 +87,7 @@ This form of database benchmarking is best for testing parameter changes, system
 A more realistic test of a web application workload might use HTTP load testing tools and API endpoints that can be hit concurrently.
 
 
-#### Summary
+### Summary
 
 * Benchmark your database server with pgbench
 * Create a variety of SQL statements to simulate the workload
