@@ -8,7 +8,7 @@ comments: true
 
 Hello. I [recently tweeted](https://twitter.com/andatki/status/1601292470205444096) asking the following question.
 
-> Hey Rails + #PostgreSQL devs, what's one #PostgreSQL thing you wish you knew more about, that's not covered deeply (or at all) in the Rails Guides? Thanks!
+> Hey Rails + #PostgreSQL devs, what's one #PostgreSQL thing you wish you knew more about, that's not covered deeply (or at all) in the [Rails Guides](https://guides.rubyonrails.org)? Thanks!
 
 This tweet was more popular than I expected and got a lot of interesting replies. I appreciated the responses! I've summarized them below.
 
