@@ -81,7 +81,7 @@ In [routine vacuuming](https://www.postgresql.org/docs/9.1/routine-vacuuming.htm
 
 The scale factor defaults to 20% (`0.20`). To optimize for our largest tables we set it lower at 1% (`0.01`).
 
-To opt out of scale factor, set the value to 0 and set the threshold, e.g. 1000, 10000 etc. depending on workload.
+To opt out of scale factor, set the value to 0 and set the threshold, e.g. 1000, 10000 etc.
 
 ```sql
 ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
@@ -100,7 +100,8 @@ ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 
 ### AV Tuning
 
-Set `log_autovacuum_min_duration` to `0` to log all autovacuums. A logged AV run includes a lot of information.
+* Set `log_autovacuum_min_duration` to `0` to log all Autovacuum. A logged AV run includes a lot of information.
+* [pganalyze: Visualizing & Tuning Postgres Autovacuum](https://pganalyze.com/blog/visualizing-and-tuning-postgres-autovacuum)
 
 
 ### AV Parameters
@@ -109,17 +110,12 @@ Set `log_autovacuum_min_duration` to `0` to log all autovacuums. A logged AV run
 - `autovacuum_max_freeze_age`
 - `maintenance_work_memory`
 
-
-## Indexes Management
-
-Check out my blog post on [Index Maintenance: Prune and Tune](blog/2021/07/30/postgresql-index-maintenance)
-
 ### Specialized Index Types
 
 The most common type is B-Tree. Specialized Index types are:
 
 * Multicolumn
-* Covering (Multicolumn stype, and newer `INCLUDES` style)
+* Covering (Multicolumn style, and newer `INCLUDES` style)
 * Partial
 * GIN
 * GiST
@@ -497,6 +493,10 @@ Adds explain plans to the query logs. Maybe start by setting it very high so it 
 
 This is not an extension but looks like a useful tool. [A better way to index your PostgreSQL database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
 
+## pgbadger
+
+`brew install pgbadger`
+
 
 ## Bloat
 
@@ -506,7 +506,7 @@ How does bloat (table bloat, index bloat) affect performance?
 
 * "When a table is bloated, PostgreSQL's ANALYZE tool calculates poor/inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data.
-* Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Fix is to reindex the index.
+* Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Rebuild the index `REINDEX ... CONCURRENTLY`
 * Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Minimize table bloat to improve performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 * [Dealing with significant PostgreSQL database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
@@ -592,7 +592,7 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 * Replication slot is a replication object that keeps track of where the subscriber is in the WAL stream
 * Unlike normal replication, writes are still possible to the subscriber. Conflicts can occur if data is written that would conflict with logical replication.
 
-## Delclarative Partitioning
+## Declarative Partitioning
 
 * Range (time-based)
 * List
