@@ -12,6 +12,7 @@ title: PostgreSQL Tips, Tricks, and Tuning
 * <https://www.pgcasts.com>
 * <https://www.youtube.com/c/ScalingPostgres>
 * <https://sqlfordevs.io>
+* The `EXPLAIN` Glossary from PgMustard <https://www.pgmustard.com/docs/explain>
 
 ## My Typical Workloads
 
