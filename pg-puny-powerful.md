@@ -120,14 +120,13 @@ query           | alter table trips add column city_id integer default 1;
 
 -- lock timeout is 0 which means it is disabled
 show lock_timeout;
-
 ```
 
 Setting `lock_timeout` will set an upper bound on how long the alter table transaction may wait blocked, trying to acquire the lock it needs.
 
 The lock timeout is the reason the transaction is canceled. PostgreSQL cancels the transaction when it reaches the lock timeout value.
 
-```
+```sql
 anatki@[local]:5432 rideshare_development# begin;
 BEGIN
 Time: 0.085 ms
@@ -185,7 +184,7 @@ Prepared Statements are enabled by default in Rails, and are incompatible with t
 
 Simple example below, manually taking a SQL statement and making it a prepared statement. Select a row by primary key id.
 
-```
+```sql
 prepare loc (int) as select * from locations where id = $1;
 execute loc(1);
 ```
@@ -197,14 +196,15 @@ What is the purpose of prepared statements?
 > Active Record automatically turns your queries into prepared statements by default
 
 `bundle exec rails console`
-```
->> Location.find(1)
+
+```rb
+Location.find(1)
   Location Load (1.2ms)  SELECT "locations".* FROM "locations" WHERE "locations"."id" = $1 LIMIT $2  [["id", 1], ["LIMIT", 1]]
 ```
 
 Exploring the prepared statement cache in Ruby on Rails:
 
-```
+```rb
 ActiveRecord::Base.connection.execute('select * from pg_prepared_statements').values
 ```
 
@@ -240,7 +240,7 @@ CREATE USER app_user WITH PASSWORD 'jw8s0F4';
 
 Set up `app_user` as an admin for simplicity
 
-```
+```ini
 [pgbouncer]
  listen_port = 6432
  listen_addr = localhost
@@ -316,7 +316,7 @@ Limited to session mode. Alternately, disable prepared statements and then trans
 * Use [pg_cron](https://www.citusdata.com/blog/2016/09/09/pgcron-run-periodic-jobs-in-postgres/)
 * [pg_cron : Probably the best way to schedule jobs within PostgreSQL database.](https://fatdba.com/2021/07/30/pg_cron-probably-the-best-way-to-schedule-jobs-within-postgresql-database/)
 
-```
+```sql
 andy@[local]:5432 rideshare_development# reindex index trips_intermediate_rating_idx;
 REINDEX
 Time: 13.556 ms
@@ -341,11 +341,12 @@ Time: 50.108 ms
   * When the planner can prove a partition can be excluded, it excludes it.
 * [Partitioning and Constraint Exclusion](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITIONING-CONSTRAINT-EXCLUSION)
 
-```
-SET enable_partition_pruning = on;                 -- the default
+```sql
+SET enable_partition_pruning = on; -- the default
 SHOW constraint_exclusion;
 SET constraint_exclusion = partition; -- the default, or "on"
 ```
+
 * Constraint Exclusion
 
 ### Partitioning Resources
