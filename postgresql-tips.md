@@ -680,3 +680,8 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 * <https://torsion.org/borgmatic/>
 * <https://restic.net/>
+
+## Sequences
+
+* `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://brianchildress.co/reset-auto-increment-in-postgres/>
+* `ALTER SEQUENCE <seq-name> RESTART WITH 1;` (e.g. `users_id_seq`)
