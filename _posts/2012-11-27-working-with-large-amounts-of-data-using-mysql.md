@@ -10,15 +10,15 @@ MySQL [LOAD DATA INFILE](http://dev.mysql.com/doc/refman/4.1/en/load-data.html) 
 
 Let's say a developer needs to load thousands of customer records from another system, and receives a CSV file representing the customer records. A couple of example records of customer data might look like this:
 
-``` bash
-% cat customers.txt 
+```sh
+$ cat customers.txt 
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 ```
     
 This example will use a database called `company_stuff` and a table called `customers`. The customers table has columns for email and full_name.
 
-``` sql
+```sql
 mysql> create database company_stuff;
 mysql> use company_stuff;
 
@@ -31,7 +31,7 @@ mysql> CREATE TABLE customers (
 
 Using LOAD DATA LOCAL INFILE it is possible to load these rows from the CSV file as records in the customers table. If the CSV file contains a header row that should be skipped at import time, add `IGNORE 1 LINES` after the `LINES TERMINATED BY` clause.
 
-``` sql
+```sql
 mysql> LOAD DATA LOCAL INFILE 'customers.txt'
 INTO TABLE customers
 FIELDS TERMINATED BY ','
@@ -42,7 +42,7 @@ LINES TERMINATED BY '\n'
 
 Verify the records were created.
 
-``` sql
+```sql
 mysql> select * from customers;
 +----+------------------+-------------+
 | id | email            | full_name   |
@@ -57,7 +57,7 @@ Instead of loading customer records, what if the developer had to export custome
 
 To export the customer database to a file in the tmp directory `/tmp/my_customers.txt`:
 
-``` sql
+```sql
 mysql> SELECT email, full_name
 INTO OUTFILE "/tmp/my_customers.txt"
 FIELDS TERMINATED BY ',' 
@@ -67,8 +67,8 @@ FROM customers;
 
 Finally, verify the contents in the new CSV file are the records from the customers table as follows:
 
-``` bash
-% cat /tmp/my_customers.txt 
+```sh
+$ cat /tmp/my_customers.txt 
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 ```

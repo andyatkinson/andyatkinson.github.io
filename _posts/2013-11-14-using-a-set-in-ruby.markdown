@@ -8,14 +8,14 @@ tags: [Ruby, Tips]
 
 A Set [^rubydoc] is a useful collection and something I under-utilize in Ruby. A Set does not allow duplicates. Converting between a Set and an Array is easy. In the article *A Guide to Ruby Collections, II: Hashes, Sets, and Ranges* [^sitepoint] the author has listed some nice examples where Sets are useful.
 
-``` ruby
+```ruby
 (Set.new([1,2]) + [2]).to_a
 => [1, 2]
 ```
 
 Equality of Sets can be determined with `#eql?` (the "identity" value, same as triple equals) and by comparing the `#hash` value. The order of the items is not part of the equality check. The second example shows another style of constructing a Set.
 
-``` ruby
+```ruby
 Set.new([1,2]).eql?(Set.new[2,1]) # => true
 Set[1,2].hash == Set[2,1].hash # => true
 ```
@@ -26,7 +26,7 @@ Sets can be used to store different types of objects like Array. Set operations 
 
 Set operations can also be performed on Arrays which Avdi Grimm describes in his article *Array Set Operations in Ruby* [^setarray].
 
-``` ruby
+```ruby
 s1 = Set.new([1,2])
 s2 = Set.new([2,3])
 

@@ -22,14 +22,14 @@ To achieve the new vertical orientation with a 4:5 aspect ratio, with a maximum 
 
 On OS X, after installing ImageMagick with Homebrew (`brew install imagemagick`), running the following command will produce a new file with a crop from the left.
 
-``` bash
+```bash
 convert houses.jpg -crop "240x300+0+0" houses-left.jpg
 ```
 <img src="https://s3.amazonaws.com/webandy-com/blog/houses-left.jpg" alt="picture of houses in old town" />
 
 Instead of the left crop, a crop from the center may be more representative of the original image. For a center crop use the gravity option with a value of `Center`.
 
-``` bash
+```bash
 convert houses.jpg -gravity Center -crop "240x300+0+0" houses-center.jpg
 ```
 
@@ -37,7 +37,7 @@ convert houses.jpg -gravity Center -crop "240x300+0+0" houses-center.jpg
 
 In the center crop output file, we can see the house on the right is not visible at all. A final center crop might move the crop area to the right to get some of the detail from the house on the right, as well as move the crop area down to get more house detail and less sky. The offset is a x and y coordinate pair, so from center, move it over 25 and down 31.
 
-``` bash
+```bash
 convert houses.jpg -gravity Center -crop "240x300+25+31" houses-center-final.jpg
 ```
 <img src="https://s3.amazonaws.com/webandy-com/blog/houses-center-final.jpg" alt="picture of houses in old town" />

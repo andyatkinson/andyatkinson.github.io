@@ -8,7 +8,7 @@ tags: [Scripts, Tips, Ruby, JavaScript, Programming]
 
 This script was for fun to play around with [Google Charts](http://code.google.com/apis/chart/). There was an internet meme going around where programmers were posting their console history on their blogs. I took the output from that script and made a Ruby hash of commands and their frequencies, then sent that data to a Google Charts URL to display them as a 3d pie chart.
 
-``` ruby
+```ruby
     #!/usr/bin/env ruby
     # (c) 2008 Andy Atkinson
 

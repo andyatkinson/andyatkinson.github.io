@@ -14,7 +14,7 @@ Instead of duplicating the benchmarking code, we can create a method that takes 
 
 Now we can call the new method with a block that contains the code to be benchmarked. `block.call` executes the block. Another way to execute the block would be to call `yield` after verifying the block is present with `block_given?`.
 
-``` ruby
+```ruby
 x = 1
 y = 2
 
@@ -30,4 +30,3 @@ with_benchmark { x + y }
 with_benchmark { x * y }
 with_benchmark { x / y }
 ```
-

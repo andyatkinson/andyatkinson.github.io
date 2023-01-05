@@ -16,7 +16,7 @@ The lock file (Gemfile.lock) will write the specific version numbers of gems whe
 
 Sort of like the `.git/config` file which has some git repository metadata, the bundler config file will store some settings here. This file should not be version controlled. Contents of a `.bundle/config` file might look like the following.
 
-``` ruby
+```ruby
 --- 
 BUNDLE_FROZEN: "1"
 BUNDLE_DISABLE_SHARED_GEMS: "1"

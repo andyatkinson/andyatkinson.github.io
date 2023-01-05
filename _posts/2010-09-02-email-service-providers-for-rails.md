@@ -104,7 +104,7 @@ The API is wrapped in the [official madmimi Ruby gem](http://github.com/madmimi/
 
 I created a test promotion called `Promo test 1` and in one of the text blocks specified a variable like this: `Hello {name}!`. Creating an email and supplying the value for `{name}` looks like this. I didn't find the curly braces documented on the Mad Mimi site. Another feature called [personalization_tags](http://help.madmimi.com/personalization-tag/) are similar but don’t work when supplying variable values as below, use the curly brace syntax.
 
-``` ruby
+```ruby
 mimi = MadMimi.new(APP_CONFIG[:mad_mimi_email], APP_CONFIG[:mad_mimi_api_key])
 options = { 'promotion_name' => 'Promo test 1', 
             'recipients' => 'email@gmail.com', 
