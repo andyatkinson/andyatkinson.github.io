@@ -14,13 +14,13 @@ The Vanity documentation is pretty good but I thought this post could help for t
 
 **Create the experiment directory and files**. A generator would be useful here. This example creates an experiment that presents multiple prices for a commerce website. In vanity each experiment requires a Ruby source file in the `experiments` directory, which is at the root of the Rails app. Run the following from the Rails root:
 
-``` bash
+```bash
 mkdir -p experiments/metrics          
 touch experiments/price_options.rb
 ```
 Add the following configuration to the `price_options.rb` file that you just created.
 
-``` ruby
+```ruby
 ab_test "Price options" do
   description "Which price is the best price?"
   alternatives 19, 29, 39
@@ -31,13 +31,13 @@ Now the experiment can be referenced by its name using the `ab_test` method (a d
 
 **Create a metric**. When a website visitor of yours is participating in an experiment, they will see one of the alternatives defined by that experiment. An experiment should have some goal associated with it, such as making a purchase. Vanity will handle showing the alternatives randomly, tracking the alternative a given participant saw, and ensuring participants continue to see the same alternative on subsequent visits. We need to instrument the application code at specific places to indicate where a goal has been completed. Create a metric file in the `experiments` directory you created earlier:
 
-``` bash
+```bash
 touch experiments/metrics/signup.rb
 ```
 
 Add the following to your metrics file. You could have a "database-backed" model by using a model class from the Rails application where Vanity is used, but this example will be a simple metric without a database model.
 
-``` ruby
+```ruby
 metric "Purchase" do
   description "Tracks the performance of various prices in terms of how many purchases their participants produce"
 end
@@ -49,7 +49,7 @@ Site visitors need to be identified in some way for Vanity to work properly. Thi
 
 When participants have viewed alternatives and you're ready to look at report output, you can generate results to a output file or use a dashboard. As of this writing, the report output does not work. You will need to have your data store running (Redis in our case) since it will use the datastore to pull participant data. Typically we just use the dashboard to view participation counts.
 
-``` sh
+```sh
 vanity report --output vanity.html
 ```
 
@@ -57,13 +57,13 @@ vanity report --output vanity.html
 
 Vanity reports are available with some controller and view code provided by the gem. The documentation has you create a vanity controller, but you can also move these controller actions and view code around in your application. If you follow the instructions, the gem has actions that make assumptions about the controller being there and being named a certain way, and a route being available to route to the vanity controller. The following syntax works in Rails 3.
 
-``` ruby
+```ruby
 match '/vanity(/:action(/:id(.:format)))', :controller=>:vanity 
 ```
 
 Create the vanity controller to report results:
 
-``` sh
+```sh
 touch app/controllers/vanity_controller.rb
 ```
 
@@ -71,13 +71,13 @@ Inside your controller (to get the actions) make sure to `include Vanity::Rails:
 
 Viewing the vanity controller dashboard won't work if the experiment object has a nil value for `created_at`. By default in development Vanity won't record participants for the experiment, so without recording turned on, the experiment doesn't set `created_at` at load time, which breaks the dashboard when you try and load it. To enable tracking in the development environment, I set:
 
-``` ruby
+```ruby
 Vanity.playground.collecting = true
 ```
 
 Now when the server starts up, it connects to Redis to set the experiment `created_at` first, this is the data in redis that backs the experiment model file. You should see something in the Redis log like the following:
 
-``` sh
+```sh
 +1297968800.845316 "setnx" "vanity:experiments:price_options:created_at" "1297968800"
 ```
 

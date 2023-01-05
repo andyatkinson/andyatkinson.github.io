@@ -18,7 +18,7 @@ Now include the rake task in the Rakefile for the gem by using `import`. For exa
 
 In the second gem, create a `Rakefile` for the project and load it using the `load` method. As an example, we can load the "downloader" rake file from the *corenlp* gem [^gem] with this snippet:
 
-``` ruby
+```ruby
 spec = Gem::Specification.find_by_name 'corenlp'
 load "#{spec.gem_dir}/lib/tasks/downloader.rake"
 ```

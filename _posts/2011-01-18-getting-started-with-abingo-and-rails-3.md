@@ -10,7 +10,7 @@ tags: [Tips, Lean Startup, Ruby, Rails]
 
 This article attempts to help people get started with A/Bingo in Rails 3. Assuming you have Rails 3 gems installed, the following commands will generate a new app, install the plugin, and add database tables the plugin uses.
 
-``` bash
+```bash
 rails create abingo_app
 cd abingo_app
 rails plugin install git://git.bingocardcreator.com/abingo.git
@@ -20,7 +20,7 @@ rake db:migrate
 
 I'm using Sqlite3 in development. A/Bingo adds "experiments" and "alternatives" tables, you can verify they are present (`rake db:migrate` will show them as well) after your migration has run:
 
-``` bash
+```bash
 sqlite3 db/development.sqlite3
 .schema
 ```
@@ -31,13 +31,13 @@ I'm creating a Subscription resource for my app with a RESTful controller that h
 
 Create a controller for the A/Bingo experiment results dashboard (with no actions):
 
-``` sh
+```sh
 rails generate controller abingo_dashboard
 ```
 
 Include the module from the plugin in `app/controllers/abingo_dashboard_controller.rb`:
 
-``` ruby
+```ruby
 include Abingo::Controller::Dashboard
 ```
 
@@ -50,13 +50,13 @@ match 'abingo(/:action(/:id))', :to => 'abingo_dashboard', :as => :abingo
 
 Now we can create a simple experiment to alter some copy on the site. I'll use a variant of the example Ryan Bates created for the A/Bingo RailsCast episode. In my case I'm putting the abingo test code into the `new.html.erb` template for the Subscription resource. The view code to measure which of the three alternatives creates the most Subscriptions would be the following. For this sample app, clicking the button (which posts to the create action) is a conversion.
 
-``` ruby
+```ruby
 <%= button_to ab_test("signup_title", ["Sign up", "Registration", "Free Sign up"], :conversion => 'subscription') %>
 ```
 
 Run `rm public/index.html` and `rails server` then navigate to `http://localhost:3000/subscriptions/new`. Verify that multiple page reloads show the same button text. In order to track the conversion, we specify the name of the conversion to the `bingo!` method in the Subscriptions controller `create` action.
 
-``` ruby
+```ruby
 bingo! 'subscription'
 ```
 

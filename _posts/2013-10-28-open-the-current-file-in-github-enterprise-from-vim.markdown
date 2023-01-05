@@ -18,7 +18,7 @@ But what if your team uses the GitHub Enterprise version of GitHub or a private 
 
 First on OS X, I had to tell git that I want web URLs to open with the `open` command. By default they were being opened with a command line browser.
 
-``` bash
+```bash
 git config --global web.browser open
 ```
 
@@ -26,7 +26,7 @@ Next, the GitHub domain can be set via a variable that the plugin reads. This wa
 
 To keep this private URL out of my public Vim configuration [^vim_config], I made a `workvimrc` file and called `source ~/.workvimrc` to "source" it into my main config. Now the value is read when new Vim instances are started.
 
-``` bash
+```bash
 let g:fugitive_github_domains = ['http://secret_github_enterprise_url']
 ```
 
