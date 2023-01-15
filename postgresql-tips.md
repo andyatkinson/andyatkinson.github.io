@@ -685,3 +685,7 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 * `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://brianchildress.co/reset-auto-increment-in-postgres/>
 * `ALTER SEQUENCE <seq-name> RESTART WITH 1;` (e.g. `users_id_seq`)
+
+## Scaling Web Applications
+
+- [My GOTO Postgres Configuration for Web Services](https://tightlycoupled.io/my-goto-postgres-configuration-for-web-services/)
