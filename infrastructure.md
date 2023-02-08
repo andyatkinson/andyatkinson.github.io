@@ -22,6 +22,8 @@ This is the stack that I have used at a couple of companies and it has some grea
 
 ### View the config map
 
+`kubectl get configmaps -n <namespace>`
+
 Environment variables may be stored in the config map
 
 `kubectl get cm <key> -n <namespace>`
