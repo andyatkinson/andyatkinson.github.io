@@ -16,7 +16,6 @@ This book by Author Frederick Joseph is a strong recommendation for anyone, but 
 
 * TEDx Dr. Beverly Tatum [Is My Skin Brown Because I Drank Chocolate Milk?](https://www.youtube.com/watch?v=l_TFaS3KW6s)
 
-
 #### Events
 
 To help create access opportunities for more folks that do not identify as white males, I've participated in various events as an educator, mentor, or volunteer.
@@ -24,3 +23,8 @@ To help create access opportunities for more folks that do not identify as white
 * [Code In Place 2021](https://codeinplace.stanford.edu/)
 * [Rails Girls](http://railsgirls.com/) in Baltimore, MD March 2013
 * Rails Bridge in Boston, MA January 2015
+* Overnight Website Challenge: Volunteer programmer for non-profit org hackathon event
+
+#### Mentoring
+
+- Actively mentor at work, set time aside to help grow earlier career programmers
