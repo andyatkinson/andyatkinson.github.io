@@ -6,7 +6,7 @@ date: 2021-10-01
 comments: true
 ---
 
-Duplicate rows can happen when a database unique constraint is missing. Once found, finding and deleting duplicates in a fast way is necessary before adding the database constraint can be added.
+Duplicate rows can happen when a database unique constraint is missing. Once found, finding and deleting duplicates in a fast way is necessary before the constraint can be added.
 
 In this post, you'll find and delete the rows in a single query. The query will be complex, but you will build it up in pieces that are more simple.
 
