@@ -29,7 +29,8 @@ I keep queries in a GitHub repository here: [pg_scripts](https://github.com/andy
 A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
 
 ```sql
-SELECT relname, relpages, reltuples::numeric, relallvisible, relkind, relnatts, relhassubclass, reloptions, pg_table_size(oid) FROM pg_class WHERE relname='table';
+SELECT reltuples::numeric AS estimate
+FROM pg_class WHERE relname = 'table_name';
 ```
 
 ### Query: Get Table Stats
@@ -52,22 +53,6 @@ Try to cancel the pid first, more gracefully, or terminate it:
 select pg_cancel_backend(pid); 
 select pg_terminate_backend(pid);
 ```
-
-### Query: 10 Largest Tables
-
-```sql
-select schemaname as table_schema,
-    relname as table_name,
-    pg_size_pretty(pg_total_relation_size(relid)) as total_size,
-    pg_size_pretty(pg_relation_size(relid)) as data_size,
-    pg_size_pretty(pg_total_relation_size(relid) - pg_relation_size(relid))
-      as external_size
-from pg_catalog.pg_statio_user_tables
-order by pg_total_relation_size(relid) desc,
-         pg_relation_size(relid) desc
-limit 10;
-```
-<https://dataedo.com/kb/query/postgresql/list-10-largest-tables>
 
 ## Tuning Autovacuum
 
@@ -127,7 +112,6 @@ The most common type is B-Tree. Specialized Index types are:
 * Indexes for sorting
 
 ### Removing Unused Indexes
-
 
 Ensure these are set to `on`
 
