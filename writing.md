@@ -4,21 +4,13 @@ permalink: /writing
 title: Writing
 ---
 
-[Contact me](/contact) about writing opportunities!
+### Newsletter: This Week In Rails
 
-### Blogging
-
-I keep a blog here on technical topics to learn them more deeply through the deliberate focus that writing and teaching requires, and to share my knowledge with others.
-
-I like include practical examples from my work experience or side projects.
-
-### This Week In Rails
-
-Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a curated list of outside-facing changes in the Ruby on Rails framework.
+Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a curated list of changes in Ruby on Rails.
 
 This newsletter is part of the official [Ruby on Rails weblog](https://weblog.rubyonrails.org/)!
 
-Since 2015 he's written around 10 issues sent to nearly 10,000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information. Below are links to the issues.
+Since 2015 he's written around 10 issues, sent to nearly 10,000 subscribers. Check out this ([blog post](/blog/2017/04/21/this-week-in-rails)) for more information.
 
   * [Hello 2021: Sole record, Same form multiple verbs, Validator with range, Rich text control](https://weblog.rubyonrails.org/2021/1/11/this-week-in-rails-hello-2021-sole-record-same-form-multiple-verbs-validator-with-range-rich-text-control/)
   * [New Active Record and Action View capabilities, bug fixes and more!](https://weblog.rubyonrails.org/2020/11/30/this-week-in-rails-new-active-record-and-action-view-capabilities-bug-fixes-and-more/)
@@ -41,14 +33,23 @@ Update 2020: After a period of dormancy, 3 editors jumped in and have started cr
 
 Update 2021: On hiatus from writing again. The subscriber count had eclipsed 10K!
 
-### Ruby Inside
+Update 2022: Now an alum (and still a reader), it was a fun experience.
 
-I contributed an article to Peter Cooper's popular site for Ruby programmers back in 2009.
+### Ruby Inside
 
   * [7 Video Presentations From The WindyCityRails 2009 Conference](http://www.rubyinside.com/7-video-presentations-from-the-windycityrails-2009-conference-2592.html)
 
 ### DEV
 
-I experimented with the DEV platform to see what the writing experience and engagement was like.
+<https://dev.to/andatki>
 
-* [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
+- [Ruby For All Podcast: My Guest Experience 🎙️](https://dev.to/andatki/ruby-for-all-podcast-my-guest-experience-2do1)
+- [How Long Does It Take To Create An Index?](https://dev.to/andatki/how-long-does-it-take-to-create-an-index-60o)
+- [Upgrading to PostgreSQL 15 on Mac OS](https://dev.to/andatki/upgrading-to-postgresql-15-on-mac-os-ibg)
+- [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
+
+### Blogging
+
+I keep a blog here on technical topics. I write posts to learn topics more deeply, and to share my knowledge.
+
+I like to include practical examples from work or from side projects.
