@@ -49,7 +49,7 @@ Get a PID with `select * from pg_stat_activity;`
 
 Try to cancel the pid first, more gracefully, or terminate it:
 
-```
+```sql
 select pg_cancel_backend(pid); 
 select pg_terminate_backend(pid);
 ```
@@ -236,11 +236,9 @@ Limitations: Requires a `VACUUM FULL` after modifying (or pg_repack)
 ```sql
 ALTER TABLE foo SET ( fillfactor = 90 );
 VACUUM FULL foo;
-
--- or
 ```
 
-Or invoke pg_repack from the command line as follows.
+Or use `pg_repack`
 
 ```sh
 pg_repack --no-order --table foo
@@ -249,7 +247,6 @@ pg_repack --no-order --table foo
 [Installing pg_repack on EC2 for RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/)
 
 Note: use `-k, --no-superuser-check`
-
 
 ## Locks Management
 
@@ -283,7 +280,7 @@ Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and
 Verbose invocation:
 
 ```sql
-explain (analyze, buffers, verbose, format text)` or specify `format json`
+EXPLAIN (analyze, buffers, verbose, format text) <sql-query>
 ```
 
 
@@ -496,7 +493,6 @@ How does bloat (table bloat, index bloat) affect performance?
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 * [Dealing with significant PostgreSQL database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
 
-
 ## Upgrades
 
 We are currently running PG 10, so I had a look at some upgrades in 11 and 12.
@@ -530,8 +526,9 @@ Released September 2020
 * More of [`query_id`](https://blog.rustprooflabs.com/2021/10/postgres-14-query-id)
 * [Multi-range types](https://www.crunchydata.com/blog/better-range-types-in-postgres-14-turning-100-lines-of-sql-into-3)
 
-
 ## PG 15
+
+- SQL `MERGE`
 
 ## RDS
 
@@ -550,18 +547,16 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 * Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
 
 
-
 ### Database Constraints
 
 [Blog: A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
 
-* Check
-* Not-null
-* Unique
-* Primary keys
-* Foreign keys
-* Exclusion
-
+* `CHECK`
+* `NOT NULL`
+* `UNIQUE`
+* `PRIMARY KEY`
+* `FOREIGN KEY`
+* `EXCLUSION`
 
 ## Native Replication
 
@@ -569,8 +564,8 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 
 [Crunchydata Logical Replication in PostgreSQL](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/logical-replication/)
 
-* Create a `PUBLICATION` and a counterpart `SUBSCRIPTION`.
-* All operations like `INSERT` and `UPDATE` etc. are enabled by default, or fewer can be configured
+* Create a `PUBLICATION`, counterpart `SUBSCRIPTION`.
+* All operations like `INSERT` and `UPDATE` are enabled by default, fewer can be configured
 * Logical replication available since PG 10.
 * `max_replication_slots` should be set higher than number of replicas
 * A role must exist for replication
@@ -579,11 +574,15 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 
 ## Declarative Partitioning
 
-* Range (time-based)
-* List
-* Hash
+* `RANGE`(time-based)
+* `LIST`
+* `HASH`
 
-[Crunchydata Native Partitioning Tutorial](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/native-partitioning/)
+- [Crunchydata Native Partitioning Tutorial](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/native-partitioning/)
+- [pgslice](https://github.com/ankane/pgslice)
+- [pg_partman](https://github.com/pgpartman/pg_partman)
+- [pg_party](https://github.com/rkrage/pg_party)
+
 
 ## Partition Pruning
 
