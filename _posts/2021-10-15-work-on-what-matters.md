@@ -10,10 +10,10 @@ In the [StaffEng](https://staffeng.com/) book, there is a section called [Work o
 
 This section has good descriptions of how to classify certain types of work a software engineer does, and how to prioritize for higher impact.
 
-What I liked especially was thinking about the work in terms of effort, impact, and visibility.
+What I liked in this section was the emphasis on thinking about work in dimensions of "effort", "impact", and "visibility."
 
 
-#### Avoid Snacking
+#### On "Avoiding Snacking"
 
 "Snacking" is work that is relatively easy and low-impact. Some things that came to mind in Ruby on Rails web development for me were:
 
@@ -25,10 +25,10 @@ These things have some value, but are also easy and probably low in business imp
 
 These can also be useful to build some "momentum" or inertia as a new contributor, with a new technology, or on a new team.
 
-But just like in life outside programming, a diet should not consist solely of snacks.
+But just like in life outside programming, a healthy diet does not consist solely of snacks.
 
 
-#### Stop Preening
+#### On "Stop Preening"
 
 "Preening" is lower impact work like snacking but instead of low visibility, it's high-visibility work.
 
@@ -39,13 +39,13 @@ Preening projects might still be useful to help build trust (the "right hand man
 The author encourages the reader to strike a balance between work that is valued at the org, and personal growth.
 
 
-#### Chasing Ghosts 👻
+#### On "Chasing Ghosts" 👻
 
-Ghosts are low-impact, but very high-effort projects that aren't quite done. A new person may be brought in to try and solve these problems! Equipped with their new energy, maybe they can crack the nut.
+*Ghosts* are low-impact, high-effort projects that aren't quite done. A new person may be brought in to try and solve these problems! Equipped with their new energy, maybe they can crack the nut.
 
 > Taking the time to understand the status quo before shifting it will always repay diligence with results.
 
-These projects might also be doomed to fail. It may involve a difficult conversation with a boss, to help clarify and align on the business value, and discuss whether the [sunk cost fallacy](https://en.wikipedia.org/wiki/Sunk_cost) is driving the continued effort.
+These projects might also be doomed to fail. It may be a difficult conversation to have with a boss, but align on the business value, and discuss whether the [sunk cost fallacy](https://en.wikipedia.org/wiki/Sunk_cost) is in effect.
 
 
 #### What should you work on? Existential issues.
@@ -55,7 +55,7 @@ What is an existential issue? Well, at a startup, running out of money is an exi
 
 Another example listed reminded me of some recent experience. We'd scaled our primary database vertically to the largest instance class and there was concern our workload would even exceed that.
 
-Since there was no way to purchase more scale, working on scalability at the application code layer, went from a nice-to-have to more of a need-to-have. It became easier to "sell" spending the engineering effort on application code scalability.
+Since there was no way to purchase more scale, working on application scalability went from nice-to-have, to need-to-have. It became easier to "sell" the engineering effort here. We performed a variety of changes, including separating the most high write rate metrics tables to their own database.
 
 
 #### Work where this is room and attention
@@ -73,12 +73,12 @@ Some questions the book suggests:
 
 #### More Ideas
 
-These are just copied from the source material with my own quick summaries.
+These are copied from the book, with my own quick summaries added.
 
-* Foster growth. Growing the team around you is appreciated and valuable.
+* *Foster growth*. Growing the team around you is appreciated and valuable.
 * "Edit" - improve something that was "good" that could be "great".
-* "Finish things" (be a closer)
-* Work on "What only you can do". Delegate tasks with no personal growth opportunities. Bring unique skills to the team for individual work, and share knowledge to level-up the team.
+* "Finish things" (be a "closer" (like in baseball))
+* Work on "What only you can do". Delegate tasks that do not represent personal growth opportunities. Bring unique skills to the team for individual work. Share knowledge to level-up the team.
 
 
 #### Wrap Up
