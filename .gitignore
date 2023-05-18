@@ -3,3 +3,6 @@ _site
 .jekyll-metadata
 .sass-cache/
 .jekyll-cache/
+
+.vale.ini
+ValeStyles/

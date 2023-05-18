@@ -5,6 +5,8 @@ This is the source for my website, blog, and portfolio at [andyatkinson.com](htt
 
 #### Writing Style Tips
 
+Use Vale!
+
  * Use `h4` for headings
  * Add tags to the post
  * In Vim `:set wrap`/`:set nowrap` to enable/disable soft wrap
