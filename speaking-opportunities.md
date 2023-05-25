@@ -4,6 +4,22 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+### Conference: PGDay Chicago 2023
+
+Title: Partitioning Billions of Rows Without Downtime<br/>
+Date: 2023-04-20<br/>
+Level: Intermediate<br/>
+Speaker: [Andrew Atkinson](https://postgresql.us/events/pgdaychicago2023/sessions/session/1205-partitioned-table-conversion-concept-to-reality/)
+
+- Promote PostgreSQL Declarative Table Partitioning
+- Grow knowledge and usage, especially for app developers
+- Discuss challenges, mistakes, and share open source code samples from a recent conversion
+
+Blog post: [PGDay Chicago 2023 Conference](/blog/2023/05/24/pgday-chicago)
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/8c1c25764d7d4158b89556c998c141f1" title="Partitioning Billions of Rows Without Downtime" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 314;" data-ratio="1.78343949044586"></iframe>
+
+
 ### Podcast: Ruby For All
 
 Title: The Database Wizard with Andrew Atkinson<br/>
