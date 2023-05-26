@@ -6,7 +6,9 @@ title: About
 
 #### Summary
 
-Andrew is a Staff Software Engineer at [Fountain](https://get.fountain.com/), specializing in Ruby on Rails, PostgreSQL, and Elasticsearch.
+Andrew (Andy) is a passionate advocate for PostgreSQL with Rails developers. He works as a Staff Software Engineer at [Fountain](https://get.fountain.com/), specializing in Ruby on Rails, PostgreSQL, and Elasticsearch.
+
+Currently Andrew is writing book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com), published by Pragmatic Programmers arriving in 2023. When not at a computer, he spends time with his wife and 2 daughters exploring the Minneapolis, MN, USA area.
 
 Andrew has [spoken at conferences](/speaking-opportunities) including PGConf NYC, RailsConf, and RubyConf Argentina. He's been a podcast guest on Ruby for All, Rubber Duck Dev Show, and Code With Jason, and has [written for the official Ruby on Rails weblog](/writing).
 
@@ -16,7 +18,10 @@ Andy earned Bachelors degrees (BASc, BA) from the [University of Minnesota](http
 
 #### Recommendations
 
- > In short, I cannot recommend Andy highly enough for an engineering position at your company. His communication skills, candor, and thoughtfulness will bring tremendous value to any company that he joins.
- <cite>- Director of Product Management</cite>
+> I cannot recommend Andy highly enough for an engineering position at your company. His communication skills, candor, and thoughtfulness will bring tremendous value to any company that he joins.
+<cite>- Director of Product Management</cite>
+
+> [Andrew] is a great person to have on a team because of his communication skills and patience to mentor and train other developers.
+<cite>CTO</cite>
 
 See more on [LinkedIn](http://linkedin.com/in/andyatkinson/)
