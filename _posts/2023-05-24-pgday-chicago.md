@@ -79,12 +79,14 @@ Let me highlight some more of the great people at the conference.
 
 - Alfredo (founder of [Wolfgres](https://wolfgres.com)) gave a great talk on High Availability, Disaster Recovery, RTOs and RPOs. Drako gave handmade gifts to the presenters from Mexico as well which was very thoughtful!
 - [Derk van Veen](https://www.linkedin.com/posts/derk-van-veen-database-specialist_pgday-chicago-adyen-activity-7057618679085031424-qw3J?utm_source=share&utm_medium=member_desktop) spoke after me on his experience using Declarative Partitioning at [Adyen](https://www.adyen.com/).
-- Henrietta, the organizer of the conference, Chicago PUG, and an author. Buy her book: [PostgreSQL Query Optimization](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient/dp/1484268849)
-- Stephen Frost and David Christensen presented on [Transparent Data Encryption](https://wiki.postgresql.org/wiki/Transparent_Data_Encryption) (TDE). It was nice to see them again from the week prior with the Crunchy Data dry run.
+- Henrietta, conference organizer, [Chicago PostgreSQL Meetup Group](https://www.meetup.com/chicago-postgresql-user-group), and author! Buy her book (Recommended!): [PostgreSQL Query Optimization](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient/dp/1484268849)
+- Stephen Frost and David Christensen presented on [Transparent Data Encryption](https://wiki.postgresql.org/wiki/Transparent_Data_Encryption) (TDE).
 - Phillip Merrick and Denis Lussier. They're cofounders of a new company called [pgEdge](https://www.pgedge.com) and PostgreSQL open source product [Spock](https://github.com/pgEdge/spock). Really interesting challenges being solved in PostgreSQL at the network edge, using multi-primary architecture, and Logical Replication.
 - Michael - HA and Patroni, Michael is also a Prince fan and interested to know that Paisley Park is a museum open to visitors here in Minnesota!
 - Jimmy gave a fun talk on ["Don't Do This"](https://postgresql.us/events/pgdaychicago2023/sessions/session/1206-dont-do-this/) in PostgreSQL.
 - I met the Community Slack legend [Robert Treat](https://www.linkedin.com/in/robtreat/)!
+
+See the [full schedule](https://postgresql.us/events/pgdaychicago2023/schedule/).
 
 ## What could have been better?
 I thought everything about the conference was excellent. My only suggestion would be to record the sessions if there is a budget to do so.
