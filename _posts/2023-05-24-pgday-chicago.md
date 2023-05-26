@@ -105,7 +105,7 @@ Use the short link <http://bit.ly/PartPG2023> [^bitly] for the slides. Download 
 * I’m going to keep telling people how awesome PostgreSQL Declarative Partitioning is, and why developers should use it more. With PostgreSQL 16 coming up later this year, I’m curious to see if there are more enhancements on the way.
 * I’m working on more proposals and hope to present or attend another conference with these same organizers, they did a great job!
 
-And while I have your attetion: I'm writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by [Pragmatic Programmers](https://pragprog.com) in 2023. Please subscribe to get more information!
+And while I have your attention: I'm writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by [Pragmatic Programmers](https://pragprog.com) in 2023. Please subscribe to get more information!
 
 Thanks!
 
