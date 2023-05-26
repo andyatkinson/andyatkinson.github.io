@@ -12,86 +12,94 @@ Outline
 
 * Call For Papers
 * Dry Run with Crunchy Data
-* Pre-conference
+* Pre-conference Activities
 - My presentation experience
-- The conference and venue
-* What could have been better
-- What’s next
+- The Conference and Venue
+- Community and Sessions
+* What could have been better?
+- Session Slides
+- What’s Next
 
 ![Presenting at Pg Day Chicago](/assets/images/pgday-chicago-andrew-atkinson-2023.jpg)
 <small>Andrew Atkinson Presenting at PGDay Chicago 2023</small>
 
 ## Call For Papers
-The Call for Papers was open way back in the Winter, and I submitted a proposal based on a project I expected to do, but hadn’t yet done! This motivated me to get the project done! I knew I’d need to know the content well enough to teach others and didn’t want the talk to be theoretical.
+Since the Call for Papers was open back in Winter, and I submitted a proposal based on an upcoming project that I expected to do but wasn't yet done! This motivated me to get the project done. I wanted the talk to be based on real world experience, with the good and the bad, so I was very motivated to get the project done.
 
-This was a risky move because there were organizational factors beyond my control that could have blocked the project. In the end it worked out although it was a down to the wire, as we only completed the project a week before the deadline!
+This was risky because there were organizational factors beyond my control that could have blocked the project. In the end it worked out but it was down to the wire, as we only completed the project a week before the deadline!
 
-I had also submitted the talk to RailsConf 2023 and unfortunately it was not accepted. This talk was originally intended more for Rails developers. The pitch was to use table partitioning more and perform a conversion using a CLI Ruby gem called pgslice [^pgslice]. The gem codebase would be friendlier than a PostgreSQL extension for Rails developers.
-
-In the end, the talk was more for PostgreSQL users, who are more familiar with pg_partman. [^pgpart] This set the stage for a comparison and investigation of the trade-offs between the tools.
+I had also submitted the talk to RailsConf 2023 and unfortunately it was not accepted. This talk was originally intended more for Rails developers. The talk makes the case for how table partitioning helps, and how to perform an online non-destructive conversion using a CLI Ruby gem called pgslice [^pgslice]. Being a Ruby gem codebase, it might be friendlier than a PostgreSQL extension for Rails developers to pick up and customize if needed.
 
 
 ## Dry Run with Crunchy Data
-Elizabeth Garrett Christensen ([@sqlliz](https://twitter.com/sqlliz)) and I were messaging and  we discussed doing a dry run, and opening it up to her team members at [Crunchy Data](https://www.crunchydata.com)!
+Elizabeth Garrett Christensen ([@sqlliz](https://twitter.com/sqlliz)) and I were messaging and we discussed doing a dry run, and opening it up to her team members at [Crunchy Data](https://www.crunchydata.com)!
 
-Elizabeth and I have supported each other with some reviews of talks we’re giving and rubber ducking on some concepts.
+Elizabeth and I have supported each other with presentation reviews and rubber ducking on PostgreSQL topics.
 
-Liz set up a Friday tech talk over lunch and there was a good turnout and helpful feedback. Liz also introduced me to Chris, Keith, and other team members. Thanks Liz!
-
-
-## Pre-conference Chicago
-I arrived the day before and caught up with some co-workers in Chicago for lunch and dinner! This was awesome. As a remote based employee, having that in-person connection time is meaningful.
-
-The speaker’s dinner was great and I appreciated the opportunity to meet the other presenters in a one on one setting.
+I gave the talk first there and received helpful feedback. Liz also introduced me to Chris, Keith, and other team members. Thanks Liz!
 
 
-## My presentation experience
-I felt prepared to give the presentation. It was a big relief to have completed the project the presentation was based on. 😅
+## Pre-conference Activities
+I arrived the day before and caught up with some co-workers in Chicago for lunch and dinner! This was great!
 
-We manage around 10 production databases, but one is 10x the size of the next biggest one. Although the table partitioning was applied to all of the databases, the benefits partitioning would bring were intended mostly for this larger database.
+The speaker’s dinner was a nice hang and I appreciated meeting other presenters in a small group setting.
 
-The large database was about 4 TB in total, with the table being converted consuming around 1.5 TB with 2 billion rows.
 
-Once partitioned by month, each child table was around 20 GB in size and had around 50 million rows, which was more manageable.
+## My Presentation Experience
+I felt prepared to give the presentation. It was a big relief to have completed the project that the presentation was based on 😅 and I was excited to share our experience.
 
-## The conference and venue
-The conference was well done. It’s a 1 day conference and my expectations were lower since I expected a small budget and staff. On the contrary, the conference was well conducted and for me competitive with larger conferences with more funding.
+We manage around 10 production databases, but one is 10x the size of the next largest. Although the table partitioning was applied to all 10, the benefits were intended mainly for the large database.
+
+The large database was about 4 TB in size with the unpartitioned table being 1.5 TB and having 2 billion rows.
+
+Once partitioned by month, each child table was around 20 GB in size with around 50 million rows. More manageable.
+
+## The Conference and Venue
+The conference was organized well. It’s a 1 day conference with 3 tracks, and jam packed full of content.
 
 Kudos to all the planning that went into it and the staff, signage, organization, timing, everything was very smooth from my perspective.
 
-The [Convene](https://convene.com/locations/chicago/) venue was very nice. I over estimated how easy it would be to walk there being unfamiliar with the area and being the first presenter at 9 AM!
+The [Convene](https://convene.com/locations/chicago/) venue was very nice.
 
-Although I woke up early to exercise and prepare, my timing was cutting it close. I walked in, set my laptop up, plugged in the HDMI, and had 30 seconds to spare before being announced as the presenter! 😅
+Although I woke up early to exercise and prepare, my `\timing` cut things close. I walked in, set up my laptop, and was announced about 30 seconds later as the next presenter! 😅
 
 
-## Community
-At the smaller conferences for me it's easier to meet people and form new professional relationships.
+## Community and Sessions
+At the smaller conferences it's easier to meet people and form new professional relationships.
 
 These relationships have paid off in my career.
 
-Having the benefit of the speaker’s dinner also helps to create something in common to connect with other speakers about.
+One attendee I met and hit it off with was Brian. When Brian said his website was [Brian Likes Postgres]([Brian Likes Postgres](https://www.brianlikespostgres.com/)) I was so excited! Not only does Brian like PostgreSQL (woo!), he’s also an educator and into PostgreSQL advocacy.
 
-One attendee I met and hit it off with was Brian. When Brian said his website was [Brian Likes Postgres]([Brian Likes Postgres](https://www.brianlikespostgres.com/)) I was so excited! Not only does Brian like PostgreSQL (woo!), he’s also an educator and advocate.
+I asked Brian to be a Technical Reviewer for my [PostgreSQL for Rails book](https://pgrailsbook.com) and he accepted!
 
-I asked Brian to be a Technical Reviewer for my [PostgreSQL for Rails book](https://pgrailsbook.com) and I was so happy to hear he was interested!
+This opportunity would not have happened without PGDay Chicago. Brian is awesome member of the community and I'm glad we met!
 
-This opportunity would not have happened without PGDay Chicago. Brian is awesome member of the community and I'm so glad we met!
+Let me highlight some more of the great people at the conference.
 
-## What could have been better
-I thought everything about the conference was excellent. My only suggestion is to record the conference talks if there is a budget to do so.
+- Alfredo (founder of [Wolfgres](https://wolfgres.com)) gave a great talk on High Availability, Disaster Recovery, RTOs and RPOs. Drako gave handmade gifts to the presenters from Mexico as well which was very thoughtful!
+- [Derk van Veen](https://www.linkedin.com/posts/derk-van-veen-database-specialist_pgday-chicago-adyen-activity-7057618679085031424-qw3J?utm_source=share&utm_medium=member_desktop) spoke after me on his experience using Declarative Partitioning at [Adyen](https://www.adyen.com/).
+- Henrietta, the organizer of the conference, Chicago PUG, and an author. Buy her book: [PostgreSQL Query Optimization](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient/dp/1484268849)
+- Stephen Frost and David Christensen presented on [Transparent Data Encryption](https://wiki.postgresql.org/wiki/Transparent_Data_Encryption) (TDE). It was nice to see them again from the week prior with the Crunchy Data dry run.
+- Phillip Merrick and Denis Lussier. They're cofounders of a new company called [pgEdge](https://www.pgedge.com) and PostgreSQL open source product [Spock](https://github.com/pgEdge/spock). Really interesting challenges being solved in PostgreSQL at the network edge, using multi-primary architecture, and Logical Replication.
+- Michael - HA and Patroni, Michael is also a Prince fan and interested to know that Paisley Park is a museum open to visitors here in Minnesota!
+- Jimmy gave a fun talk on ["Don't Do This"](https://postgresql.us/events/pgdaychicago2023/sessions/session/1206-dont-do-this/) in PostgreSQL.
+- I met the Community Slack legend [Robert Treat](https://www.linkedin.com/in/robtreat/)!
 
-As a presenter, having my talk recorded helps me grow my online presence and credibility. Since PGDay Chicago was a multi-track conference I had to miss sessions in the same slot and don't have a recording to check.
+## What could have been better?
+I thought everything about the conference was excellent. My only suggestion would be to record the sessions if there is a budget to do so.
 
-Although I don't have a recording to share, I have more resources in this post.
+As a presenter, I'd like to have the talk recorded so that I can share it online, as I'm trying to grow my presence and credibility. Since PGDay Chicago was a multi-track conference, I could only pick one session per slot, so having recordings for the sessions I missed to see later would be nice.
+
+## Slides
 
 Use the short link <http://bit.ly/PartPG2023> [^bitly] for the slides. Download the PDF for links. Search Twitter with [#PartPG2023](https://twitter.com/search?q=PartPG2023) to find tweets. The slides are also embedded below!
 
-
 ## What’s next
 * I’m going to keep telling people how awesome PostgreSQL Declarative Partitioning is, and why developers should use it more. With PostgreSQL 16 coming up later this year, I’m curious to see if there are more enhancements on the way.
-* I’m working on more proposals and hope to present or attend another conference with these same organizers.
+* I’m working on more proposals and hope to present or attend another conference with these same organizers, they did a great job!
 
-I'm writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) published by [Pragmatic Programmers](https://pragprog.com), and arriving in 2023. Please subscribe to get more information!
+And while I have your attetion: I'm writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by [Pragmatic Programmers](https://pragprog.com) in 2023. Please subscribe to get more information!
 
 Thanks!
 
