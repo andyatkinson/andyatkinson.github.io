@@ -34,7 +34,7 @@ I had also submitted the talk to RailsConf 2023 and unfortunately it was not acc
 ## Dry Run with Crunchy Data
 Elizabeth Garrett Christensen ([@sqlliz](https://twitter.com/sqlliz)) and I were messaging and I mentioned doing a dry run. Elizabeth offered to open it up to her team members at [Crunchy Data](https://www.crunchydata.com)!
 
-Elizabeth and I have supported each other with presentation reviews and rubber ducking on PostgreSQL topics, and I really recommending building a community of peer reviewers.
+Elizabeth and I have supported each other with presentation reviews and rubber ducking on PostgreSQL topics, and I really appreciate having her in my network of peer reviewers and supporters (and recommend building yours!).
 
 I gave the talk first there and received helpful feedback. Liz also introduced me to [Chris](https://www.crunchydata.com/blog/author/christopher-winslett), [Keith](https://github.com/keithf4), and more team members. Thanks Liz!
 
