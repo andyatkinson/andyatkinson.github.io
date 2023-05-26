@@ -6,11 +6,13 @@ title: About
 
 #### Summary
 
-Andrew (Andy) is a passionate advocate for PostgreSQL with Rails developers. He works as a Staff Software Engineer at [Fountain](https://get.fountain.com/), specializing in Ruby on Rails, PostgreSQL, and Elasticsearch.
+Andrew (Andy) is a passionate advocate for PostgreSQL with Rails developers. He works as a Staff Software Engineer at [Fountain](https://get.fountain.com/).
 
-Currently Andrew is writing book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com), published by Pragmatic Programmers arriving in 2023. When not at a computer, he spends time with his wife and 2 daughters exploring the Minneapolis, MN, USA area.
+Currently Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com), published by Pragmatic Programmers arriving in 2023.
 
 Andrew has [spoken at conferences](/speaking-opportunities) including PGConf NYC, RailsConf, and RubyConf Argentina. He's been a podcast guest on Ruby for All, Rubber Duck Dev Show, and Code With Jason, and has [written for the official Ruby on Rails weblog](/writing).
+
+When not at a computer, he spends time with his wife and 2 daughters exploring the Minneapolis, MN, USA area.
 
 #### Education
 
