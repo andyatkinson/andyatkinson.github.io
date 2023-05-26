@@ -77,14 +77,16 @@ This opportunity would not have happened without PGDay Chicago. Brian is an awes
 
 Speaking of great people at the conference, let me highlight some more folks.
 
-- Alfredo (founder of [Wolfgres](https://wolfgres.com)) gave a great talk on High Availability, Disaster Recovery, RTOs and RPOs. Alfredo gave handmade gifts to the presenters from Mexico as well which was very thoughtful!
+- [Alfredo Rodriguez](@AlfredoDrakoRod) (founder of [Wolfgres](https://wolfgres.com)) gave a great talk on High Availability, Disaster Recovery, RTOs and RPOs. Alfredo gave handmade gifts to the presenters from Mexico as well which was very thoughtful!
 - [Derk van Veen](https://www.linkedin.com/posts/derk-van-veen-database-specialist_pgday-chicago-adyen-activity-7057618679085031424-qw3J?utm_source=share&utm_medium=member_desktop) spoke just me also on Table Partitioning at the Dutch company [Adyen](https://www.adyen.com/).
 - Henrietta, conference organizer, [Chicago PostgreSQL Meetup Group](https://www.meetup.com/chicago-postgresql-user-group), and author! It was nice to catch up a bit with her about writing her book. (Recommended!) [PostgreSQL Query Optimization](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient/dp/1484268849)
-- Stephen Frost and David Christensen presented on [Transparent Data Encryption](https://wiki.postgresql.org/wiki/Transparent_Data_Encryption) (TDE). Missed this and need to catch up on this useful capability.
+- Stephen Frost and [David Christensen](https://postgresql.life/post/david_christensen/) presented on [Transparent Data Encryption](https://wiki.postgresql.org/wiki/Transparent_Data_Encryption) (TDE). Missed this and need to catch up on this useful capability.
 - Phillip Merrick and Denis Lussier have cofounded a new PostgreSQL company called [pgEdge](https://www.pgedge.com), including an open source product [Spock](https://github.com/pgEdge/spock). Really interesting challenges being solved in PostgreSQL at the network edge, using multi-active architecture and Logical Replication.
 - [Michael Banck](https://twitter.com/mbanck/status/1649104464698015748) gave a talk on HA and Patroni deployment patterns. Michael is also a Prince fan and was interested to know that [Paisley Park](https://www.paisleypark.com) is now a museum open to visitors here in Minnesota!
 - Jimmy gave a fun talk on ["Don't Do This"](https://postgresql.us/events/pgdaychicago2023/sessions/session/1206-dont-do-this/) in PostgreSQL.
 - I met the Community Slack legend [Robert Treat](https://www.linkedin.com/in/robtreat/)!
+- [Lætitia](https://twitter.com/l_avrot) gave a fun talk exploring advanced PostgreSQL concepts by solving Advent of Code puzzles.
+- Bruce Momjian gave an amazing introduction to [Window Functions](https://www.postgresql.org/docs/current/tutorial-window.html).
 
 See the [full schedule](https://postgresql.us/events/pgdaychicago2023/schedule/).
 
