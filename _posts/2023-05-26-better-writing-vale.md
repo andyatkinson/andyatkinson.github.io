@@ -19,7 +19,7 @@ I've used it for blog posts on this blog, my company's work blog, and for writin
 
 It’s a configurable tool and has loads of options.[^engwriting]
 
-I’ve used it on book chapters that are 25 pages in length and it's able to chew through that much text content in about 25 on my M1 MacBook Air.
+I’ve used it on book chapters that are 25 pages in length and it's able to chew through that much text content in about 25 seconds on my M1 MacBook Air.
 
 I have pushed up my Vale config for this blog.[^valeconfig]
 
