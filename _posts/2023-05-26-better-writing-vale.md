@@ -1,13 +1,12 @@
 ---
 layout: post
-title: "Better Markdown Formatted Writing With Vale"
+title: "Better Markdown Writing With Vale"
 tags: [Productivity, Tips, Open Source]
 date: 2023-05-26
 comments: true
 ---
 
-[Vale](https://vale.sh) is a command-line writing assistant tool I’ve been using to improve my writing quality.[^engwriting]
-
+[Vale](https://vale.sh) is a command-line writing assistant tool I’ve been using to improve my writing quality.
 Vale runs as a command line program, and accepts a path to a text file, where you might have Markdown formatted text to check for spelling and grammar errors.
 
 For example to check this post, I run the following command from the root directory.
@@ -18,7 +17,7 @@ vale _posts/2023-05-26-better-writing-vale.md
 
 I've used it for blog posts on this blog, my company's work blog, and for writing book content which has Markdown within XML.
 
-It’s a configurable tool and has loads of options.
+It’s a configurable tool and has loads of options.[^engwriting]
 
 I’ve used it on book chapters that are 25 pages in length and it's able to chew through that much text content in about 25 on my M1 MacBook Air.
 
@@ -48,15 +47,15 @@ Here are some of the things I’ve fixed thanks to Vale.
 * Casing errors
 * “weasel words”
 * Rewriting passive voice to active voice
-* Rewriting words or sentences that are flagged as “too wordy”
+* Rewriting words or sentences that are “too wordy”
 
 I don't take 100% of the suggestions, but most of the items classified as "errors" are legitimate, and a lot of the "warnings" serve as good suggestions to consider.
 
 The flagship feature of Vale seems to be the ability to create an externalized writing style.
 
-The website features the writing styles of many companies. So far I've just tried the write-good style but am looking forward to exploring custom writing styles.
+The website features the writing styles of many companies. So far I've just tried the [write-good](https://github.com/errata-ai/write-good) package but I am interested in trying more of them.
 
-This can even be taken to a point where your prose can be "linted" just like code.[^proselinting] In the linked article, they discuss how to perform checks automatically using the Vale GitHub Action.
+Automatic checking is called "prose linting," similar to the linting process for code.[^proselinting] In the linked article, they discuss how to perform checks automatically using the Vale GitHub Action.
 
 If you write a lot of text as Markdown, I highly recommend trying out Vale in your workflow!
 
