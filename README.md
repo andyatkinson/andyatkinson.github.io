@@ -5,7 +5,7 @@ This is the source for my website, blog, and portfolio at [andyatkinson.com](htt
 
 #### Writing Style Tips
 
-Use Vale!
+Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale)
 
  * Use `h4` for headings
  * Add tags to the post
