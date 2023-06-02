@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "#PGSQLPhriday 001 - Query Stats, Log Tags, and N+1s"
+title: "PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s"
 tags: [Ruby on Rails, PostgreSQL, Open Source]
 date: 2022-10-07
 comments: true
@@ -8,7 +8,11 @@ comments: true
 
 In this post you will be presented with 2 truths and a lie related to PostgreSQL and Ruby on Rails.
 
-This is my contribution to the first #PGSQLPhriday blog post series aiming to grow community blogging about PostgreSQL. Visit the [PGSQL Phriday #001 – Two truths and a lie about PostgreSQL post](https://www.softwareandbooz.com/pgsql-phriday-001-invite/) to learn more about the blog post series.
+This is my contribution to the first PGSQL Phriday blog post series aiming to grow community blogging about PostgreSQL.
+
+Visit the [PGSQL Phriday #001 – Two truths and a lie about PostgreSQL post](https://www.softwareandbooz.com/pgsql-phriday-001-invite/) to learn more about the blog post series.
+
+There is also an official site: <https://www.pgsqlphriday.com>.
 
 Without further ado, here are 2 truths and a lie:
 

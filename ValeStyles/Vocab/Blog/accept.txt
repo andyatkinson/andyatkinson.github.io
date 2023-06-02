@@ -26,3 +26,7 @@ CFP
 pg_partman
 pgslice
 PGDay
+Groupon
+rollout
+Jira
+nullable
