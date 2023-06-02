@@ -29,15 +29,15 @@ A little background context. I work on a team of Rails developers that are const
 
 In Rails schema changes are made by developers. There has always been a built-in mechanism to do this as a core part of the Rails framework.
 
-This is different than other frameworks that might require a 3rd party tool like [Flyway](https://flywaydb.org).
+This is different from other frameworks that need an additional tool like [Flyway](https://flywaydb.org).
 
 For PostgreSQL administrators that aren't used to developers making schema changes all the time, this can be surprising!
 
-Most of the time, schema changes like adding nullable columns are no sweat.
+Most of the time schema changes are low impact, like adding a nullable column.
 
-Do application developers sometimes make schema changes that cause errors? Yes. Although this risk is present, the benefits of improved development velocity outweigh the risks.
+Do application developers sometimes make schema changes that cause errors? Yes. Although this risk exists, the benefits of having developers move faster making schema changes outweigh the risks.
 
-We do attempt to mitigate errors in a couple of ways.
+We also attempt to mitigate the risks of application errors in a couple of ways.
 
 Here is the normal workflow.
 
@@ -73,7 +73,7 @@ The deployment process takes care of restarting application instances since they
 
 #### Do you have a dev-QA-staging or similar series of environments it must pass through first?
 
-Developers test their changes including schema modifications on their local development machines. Each Pull Request has a CI build associated to it that must pass before merge. Each Pull Request must receive at least one review.
+Developers test their changes including schema modifications on their local development machines. Each Pull Request has a CI build associated with it with a separate database and builds must pass before merge. Each Pull Request must receive at least one review.
 
 Developers may test their changes in a couple of pre-production test environments where they apply their schema modifications and deploy their code changes. This is not required but is a good practice.
 
@@ -90,35 +90,39 @@ Our team does not have a easy way to test the effect of long duration locks in p
 
 #### What’s different about modifying huge tables with many millions or billions of rows?
 
-We do modify tables with billions of rows, but ideally we have partitioned the table before it reaches that size!
+We do modify tables with billions of rows, but ideally we've partitioned the table before it reaches that point!
 
-There are various types of schema modifications that are potentially dangerous even on tables with many fewer rows.
+There are various types of schema modifications that are potentially dangerous even on tables with many fewer rows. As a SaaS B2B app, customers rely on our app to conduct their business, and pay a hefty subscription.
 
-To help identify those as early as possible, we use [Strong Migrations](https://github.com/ankane/strong_migrations) which hooks into the Rails Migration flow.
-
-This tool points out potentially dangerous modifications and suggests safer alternatives.
+To help identify potentially unsafe changes as early as possible, we use [Strong Migrations](https://github.com/ankane/strong_migrations) which hooks into the Rails Migration flow.
 
 For huge tables we look for changes that cause long locks on a table. Write locks could block concurrent modifications and cause user facing errors in the application.
 
 We’d create the SQL for the modification  and test it locally and on  a lower environment. For visibility that the change is occurring, we would write it in a Jira ticket and share it on the team so that a second reviewer can approve it. We may plan to perform the modification during a low activity period.
 
+If a change is made manually, we then backfill a Rails migration to prevent schema "drift", keeping everything in sync.
+
 #### How does Postgres make certain kinds of change easier or more difficult compared to other databases?
 
-The [Transactional DDL feature](https://wiki.postgresql.org/wiki/Transactional_DDL_in_PostgreSQL:_A_Competitive_Analysis) is a nice feature to experiment a bit with schema modifications and know that they’re rolled back. For Rails Migrations that fail to apply due to exceeding a lock timeout or another timeout, it’s nice to know they’ll be rolled back as well.
+The [Transactional DDL feature](https://wiki.postgresql.org/wiki/Transactional_DDL_in_PostgreSQL:_A_Competitive_Analysis) is a nice feature to experiment a bit with schema modifications and know that they’re rolled back. For Rails Migrations that fail to apply due to exceeding a lock timeout or for another reason, it’s nice to know the modification will be rolled back cleanly.
 
-Rarely there can be a consistency problem between Rails application and PostgreSQL. I covered this in the post [Manually Fixing a Rails Migration](/blog/2021/08/30/manual-migration-fix).
+Rarely there can be a consistency problem between the Rails application and PostgreSQL. I covered this in the post [Manually Fixing a Rails Migration](/blog/2021/08/30/manual-migration-fix).
 
 
 #### Do you believe that "rolling back" a schema change is a useful and/or meaningful concept? When and why, or why not?
 
-I don’t normally roll back a schema change. We’d do a lot of pre-release testing in local development, CI, lower environments, among multiple developers. However rolling back a transaction that contained a DDL modification is a nice safeguard.
+I don’t normally roll back a schema change. We’d do a lot of pre-release testing in local development, CI, lower environments, and among multiple developers. However rolling back a transaction that contained a DDL modification is a nice safeguard.
 
-What is a normal process in the evolution of a schema is that columns are no longer needed because they related to a feature that has been retired or relocated. This could even be entire tables or collections of tables. In those cases it’s nice to remove the columns and tables entirely. Although there may be some coordination with downstream consumers like ETL, shrinking the primary transactional database and removing any unnecessary indexes, constraints, etc. along with those columns and tables, is a win.
+What is a normal process in the evolution of a schema is that columns are no longer needed because they related to a feature that has been retired or relocated. This could even be entire tables or collections of tables.
+
+In those cases it’s nice to remove the columns and tables entirely. This can have some risk as well and there are safeguards we use.
 
 
 #### How do you validate a successful schema change? Do you have any useful processes, automated or manual, that have helped you track down problems with rollout, replication, data quality or corruption, and the like?
 
-For Rails, every database that’s managed by Rails has a `schema_version` table. The schema version is inserted into the database with the schema modification. We can confirm the schema change was applied to the database itself by inspecting it. We can view the table fields or indexes with `\d tablename` and similar commands.
+When Rails manages a database it gets a `schema_version` table. The schema version for a Migration (a number) is inserted into this table when it's applied.
+
+We can confirm the schema change was applied by querying the table. We can view the table fields or indexes with `\d tablename` and similar commands.
 
 A nice pattern is to release the schema changes in advance of their code usage. This provides an opportunity to verify schema changes where applied before new tables or columns are actively used.
 
