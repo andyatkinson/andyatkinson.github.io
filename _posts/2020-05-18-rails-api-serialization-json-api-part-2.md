@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Rails API Serialization with JSON:API - Part 2"
+title: "Rails API Serialization with JSON:API — Part 2"
 tags: [Ruby, Rails, API, Performance]
 date: 2020-05-18
 comments: true

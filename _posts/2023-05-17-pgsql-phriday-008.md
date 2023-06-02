@@ -1,12 +1,14 @@
 ---
 layout: post
-title: "#PGSQLPhriday 008 - pg_stat_statements, PgHero, Query ID"
+title: "PGSQL Phriday #008 — pg_stat_statements, PgHero, Query ID"
 tags: [PostgreSQL, Rails, Open Source]
 date: 2023-05-17
 comments: true
 ---
 
-I’m late to the party, but I wanted to sneak in a #PGSQLPhriday entry for this community blog post series because I'm a fan of this topic.
+I’m late to the party, but wanted to sneak in a PGSQL Phriday entry for this community blog post series.
+
+Check out my last post [PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s](/blog/2022/10/07/pgsqlphriday-2-truths-lie).
 
 In this post I’ll share my experience and recommendations for `pg_stat_statements`, PgHero, and the Query ID.
 
@@ -113,5 +115,9 @@ There you have it. Let’s recap.
 - From a Query ID in PGSS, find matching Query ID values for samples of queries with text and parameters from logs starting in Version 14.
 
 Thanks for reading!
+
+Update: Linked from the pgMustard Roundup!
+
+<https://www.pgmustard.com/blog/pgsql-phriday-008-roundup>
 
 [^1]: `pg_stat_statements` <https://www.postgresql.org/docs/current/pgstatstatements.html>
