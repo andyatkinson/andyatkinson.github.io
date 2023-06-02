@@ -111,6 +111,8 @@ In summary:
 
 Thanks for reading!
 
+Update: Thanks for including this post here! <https://www.softwareandbooz.com/pgsql-phriday-001-wrap-up-and-review/>
+
 [^1]: [Rails N+1 queries and eager loading](https://dev.to/junko911/rails-n-1-queries-and-eager-loading-10eh)
 [^2]: [PostgreSQL: Documentation: pg_stat_statements](https://www.postgresql.org/docs/current/pgstatstatements.html)
 [^3]: [GitHub - ankane/pghero: A performance dashboard for Postgres](https://github.com/ankane/pghero)
