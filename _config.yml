@@ -3,7 +3,7 @@ exclude: [config.ru, Gemfile, Gemfile.lock, Procfile, Rakefile, README.md, vendo
 # Site setings
 name: 'Andrew Atkinson'
 description: 'Software Engineer'
-meta_description: 'Personal site for Andrew Atkinson covering software engineering, Ruby on Rails, PostgreSQL, Elasticsearch, Kubernetes, Vim and more'
+meta_description: 'Personal blog Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim'
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
@@ -70,6 +70,7 @@ plugins:
   - jekyll-paginate
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-feed
 
 # Pagination
 paginate: 10
@@ -89,3 +90,6 @@ sass:
 # disable Rouge https://mycyberuniverse.com/disable-rouge-syntax-highlighter.html
 # https://jordanknott.com/blog/2017-04-6-better-jekyll-syntax-highlighting-with-prism/
 highlighter: none
+
+feed:
+  tags: true
