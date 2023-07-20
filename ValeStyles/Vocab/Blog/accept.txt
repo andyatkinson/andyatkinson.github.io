@@ -30,3 +30,5 @@ Groupon
 rollout
 Jira
 nullable
+allowlist
+premade
