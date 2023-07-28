@@ -32,3 +32,6 @@ Jira
 nullable
 allowlist
 premade
+Swett
+PgDay
+DBAs
