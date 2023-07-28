@@ -6,7 +6,7 @@ date: 2023-07-28
 comments: true
 ---
 
-I joined Jason Swett recently on his podcast and had a great time. The podcast topic was PostgreSQL Table Partitioning and how developers can use it. We also discussed the 2024 edition Sin City Ruby, a conference Jason organizes and is running for the second time next year.
+I joined Jason Swett recently on his podcast and had a great time. The podcast topic was PostgreSQL Table Partitioning and how developers can use it. We also discussed the 2024 edition of Sin City Ruby, a conference Jason organizes and is running for the second time next year.
 
 The conference will be held in March of 2024 in Las Vegas.
 
