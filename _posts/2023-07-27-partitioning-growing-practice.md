@@ -157,5 +157,5 @@ Thanks to Bharath Dakanna and Bobby Ryterski for help on this project and for re
 [^rdspriceguide]: CloudZero RDS Price Guide <https://www.cloudzero.com/blog/rds-pricing>
 [^awsdynamicresize]: Aurora Dynamic Resizing <https://aws.amazon.com/about-aws/whats-new/2020/10/amazon-aurora-enables-dynamic-resizing-database-storage-space/>
 [^logrep]: Partitioned tables can now be replicated <https://amitlan.com/2020/05/14/partition-logical-replication.html>
-[^part2]: PostgreSQL Table Partitioning Primary Keys — The Reckoning — Part 2 of 2 [](/posts/2023-07-28-partitioning-primary-keys-reckoning.md)
+[^part2]: [PostgreSQL Table Partitioning Primary Keys — The Reckoning — Part 2 of 2](/blog/2023/07/27/partitioning-primary-keys-reckoning)
 
