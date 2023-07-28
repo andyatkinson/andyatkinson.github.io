@@ -16,7 +16,7 @@ I attended in 2022, but this time around I'm honored to announce that I'll be sp
 
 [Sin City Ruby](https://www.sincityruby.com) was a new small single-track conference launched by Jason in 2022. I attended and had a great time. I met Jason there and a number of other Ruby programmers that I've stayed in touch with.
 
-Smaller single-track conferences with generous times between sessions are great ways to meet more industry folks and network.
+Smaller single-track conferences with a lot of time in between sessions are great for meeting people and networking. 😁
 
 I'm looking forward to the 2024 edition and meeting more people! The speaker line-up looks really good.
 
