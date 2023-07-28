@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PostgreSQL Table Partitioning &mdash; Growing the Practice &mdash; Part 1 of 2"
-tags: [PostgreSQL]
+tags: [PostgreSQL, Open Source]
 date: 2023-07-27
 comments: true
 ---
@@ -41,7 +41,7 @@ The diagram below visualizes how a partitioned table becomes a "parent" that has
 
 There is one partition being actively written to, which is shown as bolded below. PostgreSQL routes `INSERT` statements to the current month based on the partition boundaries. Partitions for future months exist in advance, shown as a dashed line, but do not yet have any data rows.
 
-<img src="/images/postgresql-partitioned-table-diagram.jpg" alt="PostgreSQL table partition diagram" style="width:75%;" />
+<img src="/assets/images/postgresql-partitioned-table-diagram.jpg" alt="PostgreSQL table partition diagram" style="width:75%;" />
 
 Now that we know a little about why, the next question was how we would perform the conversion.
 

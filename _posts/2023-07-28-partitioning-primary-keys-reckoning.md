@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PostgreSQL Table Partitioning Primary Keys &mdash; The Reckoning &mdash; Part 2 of 2"
-tags: [PostgreSQL]
+tags: [PostgreSQL, Open Source]
 date: 2023-07-28
 comments: true
 ---
@@ -122,7 +122,7 @@ The diagram below shows the steps after the table was cloned and populated.
 
 The sequence of steps are the first swap as step 1, modifications to the partitioned table as step 2, and then step 3 as a second fill and swap.
 
-<img src="/images/postgresql-modify-offline.jpg" alt="PostgreSQL online table modification" style="width:75%;" />
+<img src="/assets/images/postgresql-modify-offline.jpg" alt="PostgreSQL online table modification" style="width:75%;" />
 
 In the next section, we'll share some of the SQL used to accomplish this.
 
