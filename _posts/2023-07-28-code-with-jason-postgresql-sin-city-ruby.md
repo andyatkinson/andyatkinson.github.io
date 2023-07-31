@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Code With Jason 190 - PostgreSQL and Sin City Ruby 🎙️"
+title: "Code With Jason 190 &mdash; PostgreSQL and Sin City Ruby 🎙️"
 tags: [PostgreSQL, Rails, Podcast]
 date: 2023-07-28
 comments: true
@@ -30,10 +30,10 @@ Some of the topics we discussed are below.
 
 - What is PostgreSQL table partitioning?
 - Why and when would someone use partitioning?
-- [PgDay Chicago](https://2023.pgdaychicago.org) conference
+- [PGDay Chicago](https://2023.pgdaychicago.org) conference
 - My blog post [PGDay Chicago 2023 Conference](/blog/2023/05/24/pgday-chicago)
 - PgUS Association
-- [Presentation from PgDay Chicago on Table Partitioning](https://speakerdeck.com/andyatkinson/partitioning-billions-of-rows-without-downtime)
+- [Presentation from PGDay Chicago on Table Partitioning](https://speakerdeck.com/andyatkinson/partitioning-billions-of-rows-without-downtime)
 - Partitioning mostly done by DBAs in the past
 - Using [pgslice](https://github.com/ankane/pgslice)
 - Table locks
