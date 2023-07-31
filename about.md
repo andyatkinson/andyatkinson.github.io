@@ -6,17 +6,23 @@ title: About
 
 #### Summary
 
-Andrew (Andy) is a passionate advocate for PostgreSQL with Rails developers. He works as a Staff Software Engineer at [Fountain](https://get.fountain.com/).
+Andrew (Andy) is a Software Engineer, PostgreSQL for developers specialist, presenter, blogger, and soon-to-be-author.
 
-Currently Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com), published by Pragmatic Programmers arriving in 2023.
+Andrew works as a Staff Software Engineer at [Fountain](https://get.fountain.com/).
 
-Andrew has [spoken at conferences](/speaking-opportunities) including PGConf NYC, RailsConf, and RubyConf Argentina. He's been a podcast guest on Ruby for All, Rubber Duck Dev Show, and Code With Jason, and has [written for the official Ruby on Rails weblog](/writing).
+Currently Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) being published by Pragmatic Programmers in 2023.
 
-When not at a computer, he spends time with his wife and 2 daughters exploring the Minneapolis, MN, USA area.
+Andrew has [spoken at conferences](/speaking-opportunities) including PGDay Chicago, PGConf NYC, RailsConf, and RubyConf Argentina.
+
+He's been a podcast guest on [Slow & Steady](https://www.slowandsteadypodcast.com), [Code With Jason](https://www.codewithjason.com), [Ruby for All](https://www.rubyforall.com), and [Rubber Duck Dev Show](https://www.rubberduckdevshow.com).
+
+He's [written for the official Ruby on Rails weblog](/writing).
+
+When not at a computer, he spends time with his family and friends in Minneapolis, MN, USA.
 
 #### Education
 
-Andy earned Bachelors degrees (BASc, BA) from the [University of Minnesota](http://umn.edu) in Minneapolis, MN. He completed one semester abroad at the Fundación José Ortega y Gasset in Toledo, Spain.
+Andy earned BASc and BA Bachelors degrees from the [University of Minnesota](http://umn.edu), which included one semester abroad at the Fundación José Ortega y Gasset in Toledo, Spain.
 
 #### Recommendations
 

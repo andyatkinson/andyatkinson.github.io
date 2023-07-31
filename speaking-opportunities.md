@@ -4,6 +4,14 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+### Podcast: Slow & Steady
+
+- Database Constraints
+
+### Podcast: Code With Jason
+
+- Episode 190
+
 ### Conference: PGDay Chicago 2023
 
 Title: Partitioning Billions of Rows Without Downtime<br/>
