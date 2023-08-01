@@ -6,11 +6,11 @@ title: Speaking Opportunities
 
 ### Podcast: Slow & Steady
 
-- Database Constraints
+- [Slow & Steady — Database Constraints with Andrew Atkinson](/blog/2023/07/31/slow-steady-podcast-postgresql-constraints)
 
 ### Podcast: Code With Jason
 
-- Episode 190
+- [Code With Jason 190 — PostgreSQL and Sin City Ruby 🎙️](/blog/2023/07/28/code-with-jason-postgresql-sin-city-ruby)
 
 ### Conference: PGDay Chicago 2023
 
