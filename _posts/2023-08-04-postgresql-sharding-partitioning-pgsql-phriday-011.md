@@ -14,7 +14,7 @@ Let's dive in! 🤿
 
 PostgreSQL does not offer a native Sharding solution. Sharding is a generic term, so the definition being used here is when a single database is distributed among multiple machines, or server instances, or "nodes." This basic definition comes from the article ["What is database sharding?"](https://aws.amazon.com/what-is/database-sharding/).
 
-While distributed databases offer a horizontally scalable architecture, where nodes can be added and removed to scale out and scale in, these architectures carry more complexity for how to keep data consistent among nodes. PostgreSQL while not offering the distributed archicture, has a conceptually simpler single primary Instance design.
+While distributed databases offer a horizontally scalable architecture, where nodes can be added and removed to scale out and scale in, these architectures carry more complexity for how to keep data consistent among nodes. PostgreSQL while not offering the distributed architecture, has a conceptually simpler single primary Instance design.
 
 The main concern with single primary database architectures are that they might eventually hit a ceiling where hardware resources can no longer be scaled up vertically. At mid-sized startups, and given modern very large cloud provider PostgreSQL instance classes, this limitation has not yet caused an existential crisis like a rapid database migration.
 
@@ -32,7 +32,7 @@ A common configuration sets up replication (Physical or Logical) between a Prima
 
 Secondary instances can be added and removed, and scaled independently, providing a degree of horizontal scalability for read queries. Since Web applications tend to have a much higher proportion of read queries to write queries, possibly as much as 10 times the level of reads to writes, horizontal scalability is an important and commonly used way to support higher levels of traffic by adding more read only replicas.
 
-You've seen how to distribute read queries. Is there any way to distribute Writes (DML) in PostgreSQL? While writes cannot be distributed to multiple instances running a database, if we bend the definition a bit and consider how writes could be split up into multipel tables, in a sense this is supported using the PostgreSQL table partitioning mechanism.
+You've seen how to distribute read queries. Is there any way to distribute Writes (DML) in PostgreSQL? While writes cannot be distributed to multiple instances running a database, if we bend the definition a bit and consider how writes could be split up into multiple tables, in a sense this is supported using the PostgreSQL table partitioning mechanism.
 
 Read on to learn more about that.
 
@@ -74,7 +74,7 @@ Horizontal Sharding can be leveraged for a few business purposes. The database r
 
 A use case for Horizontal Sharding is "customer database level tenancy." A SaaS platform may offer customers a isolated database that contains only rows for the customer. The customer database likely runs on a separate instance as well that can be scaled independently. This also insulates the multi-tenant database from the "noisy neighbor" effect if the customer database instance had a particularly high write or query volume.
 
-The "Horizontal" part of Horizontal Sharding refers to the horizontal rows. They would have otherwise been in the original application database, but instead they're in a "shard" that happens to map to the the customer database.
+The "Horizontal" part of Horizontal Sharding refers to the horizontal rows. They would have otherwise been in the original application database, but instead they're in a "shard" that happens to map to the customer database.
 
 Active Record refers to these "shards" generically and indeed Horizontal Sharding could be used to create generic named or numbered shards for ranges of rows. This type of sharding could be a general way to scale out writes by creating a new instance, to isolate a high volume of writes to that instance.
 
@@ -102,6 +102,6 @@ The second post [PostgreSQL Table Partitioning Primary Keys — The Reckoning �
 
 ## Podcast
 
-In July of 2023 I joined Jason Swett on the Code With Jason podcas. We discussed PostgreSQL table partitioning among other topics. Check out the episode at [Code With Jason 190 — PostgreSQL and Sin City Ruby 🎙️](/blog/2023/07/28/code-with-jason-postgresql-sin-city-ruby).
+In July of 2023 I joined Jason Swett on the Code With Jason podcast. We discussed PostgreSQL table partitioning among other topics. Check out the episode at [Code With Jason 190 — PostgreSQL and Sin City Ruby 🎙️](/blog/2023/07/28/code-with-jason-postgresql-sin-city-ruby).
 
 Thanks for taking a look. I'd love to hear any feedback you have and what you're building with PostgreSQL! 👋
