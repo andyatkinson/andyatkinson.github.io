@@ -29,11 +29,11 @@ PostgreSQL does not offer this distributed architecture but on the other hand, h
 
 The main concern with a single primary database architecture is that vertically scaling up the instance has a ceiling. When the ceiling is reached there may be no more hardware resources available and the server won't be able to meet the demands of the workload.
 
-On modern instance sizes from large cloud providers, with huge amounts of memory and very fast disks, at the startup companies I've worked for this hasn't been a problem in practice. In fact often our instances are over provisioned quite a lot for the workload. This is often because we've done a lot of splitting up in various ways ahead anticipating the need to scale beyond a single instance.
+On modern instance sizes from large cloud providers, with huge amounts of memory and very fast disks, for many organizations they won't run into this issue. In fact often our instances where I work now are over provisioned for the workload. This is often though because the company has anticipated the single instance limitations and invested in creating isolated deployments to separate the workloads. The largest database is in the low single terabytes.
 
-One of the main design choices is to split up the database using a technique called "application level sharding." With application level sharding, a subset of database tables are split to their own database running on a separate instance.
+One of the main design techniques use to split up a database workload is "application level sharding." With application level sharding, a subset of database tables are split to their own database on a separate instance that can be scaled independently.
 
-With the database separation it can be located on a new instance that can be scaled independently. This instance can even be connected to the same application codebase, or isolated in a duplicated deployment.
+The instance can be connected to the same application codebase, or the entire codebase can be deployed in an isolated deployment with duplicated runtime dependencies for full isolation. The latter configuration is much more costly but does not require application code changes.
 
 See the post ["Herding elephants: Lessons learned from sharding Postgres at Notion"](https://www.notion.so/blog/sharding-postgres-at-notion) which explores application level sharding at Notion. GitHub wrote about "Partitioning" (confusing terminology based on definitions in this post) in [Partitioning GitHub’s relational databases to handle scale](https://github.blog/2021-09-27-partitioning-githubs-relational-databases-scale/) which describes their process of what this post calls "application level sharding."
 
