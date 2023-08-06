@@ -18,11 +18,17 @@ Distributed databases offer a horizontally scalable architecture where nodes are
 
 These architectures carry more complexity internally in how they keep data consistent among nodes. PostgreSQL does not offer this distributed architecture but on the other hand, has a conceptually less complex design. By default a single primary instance receives all writes and reads.
 
-The main concern with a single primary database architecture is that while it can be scale up, or vertically scaled, there will eventually be a hardware resources or financial ceiling where vertical scaling is no longer possible.
+The main concern with a single primary database architecture is that it won't be able to be scaled vertically to meet the demands of the workload. A ceiling may be reached where all available hardware resources are purchased, or the max resources for a budget are purchased, but it's not enough to handle the workload demand.
 
-On modern instance sizes from large cloud providers, with huge amounts of memory relative to the size of databases, and very fast disks, this limitation has not yet been a severe limitation that couldn't be worked around.
+On modern instance sizes from large cloud providers, with huge amounts of memory relative to the size of databases, and very fast disks, the possibility of not being able to scale vertically continues to get less likely. Modern instances offer more than 1TB of Ram and for medium sized organizations with databases in the hundreds of gigabytes or lower terabytes, these instances are very capable.
 
-Clever application developers and infrastructure engineers work around the limitations of a the single instance design in various ways. One of the main workarounds can be to perform "application level sharding." This means that a set of tables that are rarely or not joined to and provide a "function" as part of a service, can be split out into their own database. The post ["Herding elephants: Lessons learned from sharding Postgres at Notion"](https://www.notion.so/blog/sharding-postgres-at-notion) explores application level sharding at Notion.
+Besides the capabilities of instances, there are other ways to work around this limitatino.
+
+One of the main workarounds is simplity to split up the database using a technique called "application level sharding," where a second (or more) subset of the database becomes a new database, running on a separate instance.
+
+The separate instance can be scaled independently. This solution can involve significant code changes, and demands great database skills within the application development team. Team capabilities like a high degree of test suite coverage and continuous deployment will help this split operation go more smoothly.
+
+Tables that are rarely or never joined to and can be grouped as part of a service are good candidates. The post ["Herding elephants: Lessons learned from sharding Postgres at Notion"](https://www.notion.so/blog/sharding-postgres-at-notion) explores application level sharding at Notion. GitHub wrote about "Partitioning" (confusing terminology based on definitions in this post) their database in the post [Partitioning GitHub’s relational databases to handle scale](https://github.blog/2021-09-27-partitioning-githubs-relational-databases-scale/). Although GitHub operates MySQL, there are loads of insights in this post showing how they achieved this division. This post also shows how these terms can have conflicting or overlapping definitions in the industry, based on the team or technology.
 
 ## What is Vertical Sharding?
 
