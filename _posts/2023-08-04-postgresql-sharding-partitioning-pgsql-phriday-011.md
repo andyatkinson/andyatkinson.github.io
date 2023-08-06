@@ -6,7 +6,7 @@ date: 2023-07-31
 comments: true
 ---
 
-This month's [PGSQL Phriday topic](https://engineering.adjust.com/post/pgsql_phriday_011_-_partitioning_vs_sharding_in_postgresql/) prompts bloggers to write about Sharding and Partitioning, covering what they mean and how they are similar and different concepts.
+This month's [PGSQL Phriday topic](https://engineering.adjust.com/post/pgsql_phriday_011_-_partitioning_vs_sharding_in_postgresql/) prompts bloggers to write about Sharding and Partitioning. Posts should help clarify what these terms mean, and how these capabilities can be put to use.
 
 Let's dive in! 🤿
 
