@@ -12,79 +12,88 @@ Let's dive in! 🤿
 
 ## Is Sharding Offered Natively?
 
-PostgreSQL does not offer a native Sharding solution. Sharding is a generic term, so the definition being used here is when a single database is distributed among multiple machines, or server instances, or "nodes." This basic definition comes from the article ["What is database sharding?"](https://aws.amazon.com/what-is/database-sharding/).
+PostgreSQL does not offer a native Sharding solution or "Sharded writes." Since Sharding is a generic term, the definition used in this post is borrowed from ["What is database sharding?"](https://aws.amazon.com/what-is/database-sharding/). In that definition of sharded databases, a single database is split over multiple server instances. The instances could be called "nodes". These instances handle both reads and writes.
 
-While distributed databases offer a horizontally scalable architecture, where nodes can be added and removed to scale out and scale in, these architectures carry more complexity for how to keep data consistent among nodes. PostgreSQL while not offering the distributed architecture, has a conceptually simpler single primary Instance design.
+Distributed databases offer a horizontally scalable architecture where nodes are added to scale out, or removed to scale in.
 
-The main concern with single primary database architectures are that they might eventually hit a ceiling where hardware resources can no longer be scaled up vertically. At mid-sized startups, and given modern very large cloud provider PostgreSQL instance classes, this limitation has not yet caused an existential crisis like a rapid database migration.
+These architectures carry more complexity internally in how they keep data consistent among nodes. PostgreSQL does not offer this distributed architecture but on the other hand, has a conceptually less complex design. By default a single primary instance receives all writes and reads.
 
-In fact, clever application developers work around this limitation in various ways. One of the main workarounds is to "shard" at the application level, by splitting out a group of tables into their own database, and running the database on a separately scalable instance.
+The main concern with a single primary database architecture is that while it can be scale up, or vertically scaled, there will eventually be a hardware resources or financial ceiling where vertical scaling is no longer possible.
+
+On modern instance sizes from large cloud providers, with huge amounts of memory relative to the size of databases, and very fast disks, this limitation has not yet been a severe limitation that couldn't be worked around.
+
+Clever application developers and infrastructure engineers work around the limitations of a the single instance design in various ways. One of the main workarounds can be to perform "application level sharding." This means that a set of tables that are rarely or not joined to and provide a "function" as part of a service, can be split out into their own database. The post ["Herding elephants: Lessons learned from sharding Postgres at Notion"](https://www.notion.so/blog/sharding-postgres-at-notion) explores application level sharding at Notion.
 
 ## What is Vertical Sharding?
 
-Considering a database table with columns that are arranged vertically, what is table-level Vertical Sharding? Splitting portions of columns from a table and putting them into another table, in a database on another instance, can be called Vertical Sharding.  There isn't built in support for this in PostgreSQL either, although again it could be supported from a client application level.
+This section will briefly cover "Vertical Sharding" to differentiate it from "Horizontal Sharding" covered later. What is Vertical Sharding?
+
+Thinking of columns as "vertical" and rows as "horizontal" in a database table, vertical sharding can be thought of as separating some of the columns from a table into a new table, again locating it in a separate database and instance. The end result ends up being the same as application level sharding, where the client application is configured to work with multiple databases and the routing logic lives in the application.
 
 ## Replication and Instances
 
-While PostgreSQL has the limitation a single Primary instance architecture, certainly in larger scale PostgreSQL installations, many instances are running to meet the demands of the workload.
+While PostgreSQL has a single primary instance design, commonly many instances are used to meet demand.
 
-A common configuration sets up replication (Physical or Logical) between a Primary instance and one or more secondary Instances that are receiving replicated content and running in a read only mode.
+Physical or Logical replication is very common to figure replication between a Primary and secondary Instance. The secondary instance runs in a read only mode.
 
-Secondary instances can be added and removed, and scaled independently, providing a degree of horizontal scalability for read queries. Since Web applications tend to have a much higher proportion of read queries to write queries, possibly as much as 10 times the level of reads to writes, horizontal scalability is an important and commonly used way to support higher levels of traffic by adding more read only replicas.
+Secondary instances can be added and removed, and scaled independently, providing a degree of horizontal scalability when the read queries for a database are running on the read replicas.
 
-You've seen how to distribute read queries. Is there any way to distribute Writes (DML) in PostgreSQL? While writes cannot be distributed to multiple instances running a database, if we bend the definition a bit and consider how writes could be split up into multiple tables, in a sense this is supported using the PostgreSQL table partitioning mechanism.
+Since Web applications tend to have a much higher proportion of reads to writes, possibly as much as 10:1, web application engineers are often focused on scaling out read queries on replicas, and sizing the primary instance more for the writes workload.
 
+Can writes be distributed in PostgreSQL? Writes cannot be distributed at the database instance level. However, writes can be distributed at the table level.
 Read on to learn more about that.
 
 ## Table Partitioning
 
-PostgreSQL gained a native table partitioning mechanism in version 10 called [Declarative Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html). Using declarative partitioning, writes can be distributed to multiple partitions of a partitioned table.
+PostgreSQL added a native table partitioning mechanism in version 10 called [Declarative Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html). With declarative partitioning, writes can be distributed to multiple partitions that are connected to a partitioned table.
 
-Since these tables are all running on the same instance, this isn't really "Sharded writes" though, it's just splitting up the writes into multiple tables on the same instance.
+Since these tables are all running on the same instance, the writes will all consume resources on the same instance. However with a partitioned table it's possible to parallelize writes, reads, and background maintenance operations.
 
-Why might you do this? In PostgreSQL smaller tables are easier to work with. Creating indexes, constraints, and being able to parallelize vacuum operations across partitions are some of the benefits of splitting up a large unpartitioned table, into a partitioned table with many smaller partitions distributing the rows.
+Why might you do this? In PostgreSQL smaller tables are easier to work with. Partitioned tables can be faster to add Indexes to, constraints, maintenance can be parallelized, and queries can be faster when they specify the partition.
 
-In a sense, table partitioning offers "table level sharded writes". The partitioning type that matches this most closely might be the least common type, the Hash type (added in PostgreSQL 11). With Hash partitioning, a static set of partitions are added to a parent. Running a modulo operation on the primary key value and by using the remainder, one of the hash partitions receives the writes. The writes are "distributed". Again though the partitions are all in the same database, running on the same instance. There is not a hardware resource scaling advantage with table partitioning.
+In a sense, table partitioning offers "table level sharded writes".
 
 ## Declarative Partitioning Intro
 
-A Partitioned table is a special kind of table that acts as a parent table, where smaller child tables are attached to it.
+A Partitioned table is a special kind of table that acts as a parent table. Once created, child tables are attached to it. Partitions can always be attached and detached when they have a matching schema definition.
 
 The parent defines the partition type and column. The partition column acts as like a routing key, telling PostgreSQL which partition a row belongs to.
 
-Three partition types are supported. Partitioning by time range (Range) or by some kind of identifier column (List) are the more popular types, although a third type called Hash partition exists. Each partition declares non-overlapping boundaries so that rows can be routed to only one partition.
+Three partition types are supported, Range, List, and Hash, and they are all useful for different scenarios. Each child partition declares non-overlapping boundaries (a constraint) that must be matched for a row to placed into the partition.
 
-The data within a partitioned table can be thought of as being "horizontally distributed" since rows are placed into separate tables. These rows would have otherwise been in the same (unpartitioned) table.
+The data within a partitioned table can be thought of as being "horizontally distributed" since rows are placed into separate tables. These rows would have otherwise been in the same table if it wasn't partitioned.
 
-The child partitions all have the same schema since child tables must match the parent partitioned table, and match each other.
+Distributing rows horizontally into different tables is beginning to sound a lot like a capability from Active Record in Ruby on Rails.
 
-Distributing rows horizontally into different tables is beginning to sound a lot like what Active Record in Ruby on Rails calls "Horizontal Sharding".
+Since I also work with Ruby on Rails on a daily basis, the rest of this post will shift away from PostgreSQL a bit into what's possible with Active Record.
 
-What's Horizontal Sharding all about?
+Active Record has a capability in newer versions called "Horizontal Sharding". What's that all about?
 
 ## Active Record Horizontal Sharding
 
-In Active Record, the ORM for Ruby on Rails, version 6.1 gained a feature called [Horizontal Sharding](https://edgeguides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding).
+If you're not familiar with it, Active Record is the ORM for Ruby on Rails. In version 6.1 a feature called [Horizontal Sharding](https://edgeguides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding) was added to the existing native support in the framework for working with Multiple Databases.
 
-Ruby on Rails can natively work with Multiple Databases at the same time, routing queries, and evolving their databases incrementally using Migrations.
+Horizontal Sharding meant that a second database could be added to the application with the same schema. The Rails application had an identifier for it to route writes and reads to it.
 
-Horizontal Sharding means a second database with the same table and same schema, can be configured to work with the Rails application.
+Horizontal Sharding opened up the possibility of working with multiple databases to solve a few use cases.
 
-Horizontal Sharding can be leveraged for a few business purposes. The database routing is all handled at the application layer, but by being built in to the Rails framework, there is much less boilerplate and configuration management that developers need to worry about.
+A use case for Horizontal Sharding is "customer database level tenancy." A SaaS platform may offer customers an isolated database that contains an exact copy of the schema, but contains only rows that were created and modified for that customer.
 
-A use case for Horizontal Sharding is "customer database level tenancy." A SaaS platform may offer customers a isolated database that contains only rows for the customer. The customer database likely runs on a separate instance as well that can be scaled independently. This also insulates the multi-tenant database from the "noisy neighbor" effect if the customer database instance had a particularly high write or query volume.
+Besides data isolation, this also helps with scalability because it means that particularly heavy traffic on one side or the other does not affect it's "neighbor". Either the main application database instance or the customer database instance can be scaled vertically, independently from the other.
 
-The "Horizontal" part of Horizontal Sharding refers to the horizontal rows. They would have otherwise been in the original application database, but instead they're in a "shard" that happens to map to the customer database.
+The "Horizontal" part of Horizontal Sharding refers to rows. Rows that would have otherwise been in the original application database are instead part of a "shard" that represents the customer database.
 
-Active Record refers to these "shards" generically and indeed Horizontal Sharding could be used to create generic named or numbered shards for ranges of rows. This type of sharding could be a general way to scale out writes by creating a new instance, to isolate a high volume of writes to that instance.
+Since "shards" are used generically the concept can be used differently and refer to any particular range of rows. The end goal is still to move the shard onto a separate instance where it can be scaled independently.
 
-All of these capabilities can be combined. Active Record helps developers build scalable applications that can be configured with Multiple Databases with Primary and replica instances for Read and Write splitting, and partitioned tables to help manage high growth rate tables.
+Combining Application Level Sharding and Horizontal Sharding with Active Record, with PostgreSQL table partitioning, creates a very scalable combination of technologies.
 
-I happen to be passionate about this topic area that I've even written a book about it.
+This combination of technologies helps developers build powerful applications.
+
+I happen to be passionate about advocating for this combination of technologies, and have even written a book about it! Read on to learn more.
 
 ## High Performance PostgreSQL for Rails
 
-If you'd like to read more about these topics, please subscribe to <https://pgrailsbook.com> where you can receive occasional updates about "High Performance PostgreSQL for Rails," being published this month by [Pragmatic Programmers](https://pragprog.com).
+The powerful combination of technologies are covered in much greater depth in the book "High Performance PostgreSQL for Rails," being published this month by [Pragmatic Programmers](https://pragprog.com). If you're interested, please subscribe at <https://pgrailsbook.com> for updates about when it's published, and some exclusive sneak peek content being sent to subscribers.
 
 
 ## Table Partitioning Presentation
