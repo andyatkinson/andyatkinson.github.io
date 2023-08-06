@@ -28,7 +28,9 @@ One of the main workarounds is simplity to split up the database using a techniq
 
 The separate instance can be scaled independently. This solution can involve significant code changes, and demands great database skills within the application development team. Team capabilities like a high degree of test suite coverage and continuous deployment will help this split operation go more smoothly.
 
-Tables that are rarely or never joined to and can be grouped as part of a service are good candidates. The post ["Herding elephants: Lessons learned from sharding Postgres at Notion"](https://www.notion.so/blog/sharding-postgres-at-notion) explores application level sharding at Notion. GitHub wrote about "Partitioning" (confusing terminology based on definitions in this post) their database in the post [Partitioning GitHub’s relational databases to handle scale](https://github.blog/2021-09-27-partitioning-githubs-relational-databases-scale/). Although GitHub operates MySQL, there are loads of insights in this post showing how they achieved this division. This post also shows how these terms can have conflicting or overlapping definitions in the industry, based on the team or technology.
+See the post ["Herding elephants: Lessons learned from sharding Postgres at Notion"](https://www.notion.so/blog/sharding-postgres-at-notion) which explores application level sharding at Notion. GitHub wrote about "Partitioning" (confusing terminology based on definitions in this post) in [Partitioning GitHub’s relational databases to handle scale](https://github.blog/2021-09-27-partitioning-githubs-relational-databases-scale/) which describes their process of what this post calls "application level sharding."
+
+Although GitHub operates MySQL, there are loads of insights in this post showing how they achieved their results. This post also demonstrates how the terms Sharding and Partitioning can have conflicting and overlapping definitions.
 
 ## What is Vertical Sharding?
 
