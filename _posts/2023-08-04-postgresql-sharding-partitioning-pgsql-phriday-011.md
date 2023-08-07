@@ -6,7 +6,9 @@ date: 2023-07-31
 comments: true
 ---
 
-This month's [PGSQL Phriday topic](https://engineering.adjust.com/post/pgsql_phriday_011_-_partitioning_vs_sharding_in_postgresql/) prompts bloggers to write about Sharding and Partitioning. Posts should help clarify what these terms mean, and how these capabilities can be put to use.
+This month's [PGSQL Phriday #011](https://engineering.adjust.com/post/pgsql_phriday_011_-_partitioning_vs_sharding_in_postgresql/) prompts bloggers to write about Sharding and Partitioning in PostgreSQL.
+
+Posts should help clarify what these terms mean, why these capabilities are useful, and how to use them.
 
 Let's dive in! 🤿
 
@@ -27,11 +29,15 @@ PostgreSQL does not offer a native Sharding solution or "Sharded writes." Shardi
 
 PostgreSQL does not offer this distributed architecture but on the other hand, has a conceptually less complex design. By default a single primary instance receives all writes and reads.
 
-The main concern with a single primary database architecture is that vertically scaling up the instance has a ceiling. When the ceiling is reached there may be no more hardware resources available and the server won't be able to meet the demands of the workload.
+The main concern with a single primary database architecture is that vertically scaling the instance will reach a hardware ceiling and the server won't be able to meet the demands of the workload.
 
-On modern instance sizes from large cloud providers, with huge amounts of memory and very fast disks, for many organizations they won't run into this issue. In fact often our instances where I work now are over provisioned for the workload. This is often though because the company has anticipated the single instance limitations and invested in creating isolated deployments to separate the workloads. The largest database is in the low single terabytes.
+On modern instances from cloud providers, with huge amounts of memory and fast disks, many organizations will never run into this issue. In fact often our instances where I work now are over provisioned for the workload. This is often though because the company has anticipated the single instance limitations and invested in creating isolated deployments to separate the workloads. For context, the largest database we operate is in the low single terabytes and our workload is fairly predictable being a B2B SaaS.
 
-One of the main design techniques use to split up a database workload is "application level sharding." With application level sharding, a subset of database tables are split to their own database on a separate instance that can be scaled independently.
+When there is a need to scale beyond an instance, how can that be handled?
+
+## Application Level Sharding
+
+One of the main design techniques used to split up a database workload is "application level sharding." With application level sharding, a subset of database tables are split to their own database on a separate instance that can be scaled independently.
 
 The instance can be connected to the same application codebase, or the entire codebase can be deployed in an isolated deployment with duplicated runtime dependencies for full isolation. The latter configuration is much more costly but does not require application code changes.
 
