@@ -10,6 +10,7 @@ title: High Performance PostgreSQL for Rails Book
 - (scheduled) The Ruby on Rails Podcast w/ Brittany Martin
 - 2023-08-10 (scheduled) Code and the Coding Coders Podcast w/ Drew Bragg
 - (recorded, not yet published) SaaS For Developers Podcast w/ Gwen Shapira
+- (scheduled) Publisher interview
 - 2023-08-09 (recorded, not yet published) San Francisco Bay Area PostgreSQL User Group (SFPUG) Meetup - Partitioning with Andrew Atkinson
 
 -------------------
