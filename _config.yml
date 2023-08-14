@@ -7,7 +7,7 @@ meta_description: 'Personal blog Andrew Atkinson. PostgreSQL. Ruby on Rails, Ela
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
-  image: 'authorimage.jpg'
+  image: 'authorimagenew.jpg'
   greetings: 'Hi! My name is Andy and this is my website, blog and portfolio. Please take a look around and thanks for stopping by!'
 favicon: 'assets/images/favicon.ico'
 baseurl:
