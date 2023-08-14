@@ -6,7 +6,7 @@ title: About
 
 #### Summary
 
-Andrew (Andy) is a Software Engineer who specializes in using the PostgreSQL database to build high performance Rails applications.
+Andrew (Andy) is a Software Engineer who specializes in building high performance web applications using PostgreSQL and Ruby on Rails.
 
 Andrew works as a Staff Software Engineer at [Fountain](https://get.fountain.com/), a B2B SaaS HR platform.
 
