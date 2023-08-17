@@ -1,24 +1,24 @@
 ---
 layout: post
-title: "SFPUG Presentation: Table Partitioning Billions of Rows"
+title: "SFPUG Presentation: Partitioning Billions of Rows"
 tags: [Rails, Open Source]
 date: 2023-08-17
 comments: true
 ---
 
 
-On August 8, 2023 I had the chance to present to the San Francisco Bay Area PostgreSQL User Group (SFPUG) on our case study with table partitioning with PostgreSQL.
+On August 8, 2023 I had the chance to present to the San Francisco Bay Area PostgreSQL User Group (SFPUG) on our case study for a recent table partitioning migration with PostgreSQL.
 
-This was the presentation "Partitioning Billions of Rows Without Downtime" I gave earlier this year at PGDay Chicago which wasn't recorded at the time.
+If you're unfamiliar with partitioning, check out [PGSQL Phriday #011 — Sharding and Partitioning](/blog/2023/08/04/postgresql-sharding-partitioning-pgsql-phriday-011) which provides a short overview of Sharding and Partitioning and how they are useful.
 
-Check out the embedded presentation below or hop over to YouTube to see it there.
+The presentation is titled "Partitioning Billions of Rows Without Downtime" and was given earlier this year at PGDay Chicago.
+
+Check out the embedded presentation below or hop over to YouTube.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/W8d3roay29w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-I'd love to hear about any reactions you have or follow-up questions on the content.
+For the slides version, check out my post [PGDay Chicago 2023 Conference](/blog/2023/05/24/pgday-chicago) which also describes my conference experience at PGDay Chicago.
 
-Check out the earlier post [PGDay Chicago 2023 Conference](/blog/2023/05/24/pgday-chicago) to read about the conference experience and find a link to the slides.
+I'd love to hear any feedback you have on the presentation, slides, or learn about your table partitioning experiences. Get in touch with me through my contact form or on Social Media.
 
-Thanks!
-
-
+Thanks for taking a look! 👋
