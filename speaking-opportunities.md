@@ -6,6 +6,15 @@ title: Speaking Opportunities
 
 ### Podcast: Slow & Steady
 
+Title: SFPUG: Partitioning Billions of Rows Without Downtime<br/>
+Date: 2023-08-17<br/>
+
+This was an updated version of the talk given at PGDay Chicago earlier in the year. The talk was given virtually to the San Francisco Bay Area PostgreSQL User Group (SFPUG) and included some live Q&A.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/W8d3roay29w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+### Podcast: Slow & Steady
+
 - [Slow & Steady — Database Constraints with Andrew Atkinson](/blog/2023/07/31/slow-steady-podcast-postgresql-constraints)
 
 ### Podcast: Code With Jason
