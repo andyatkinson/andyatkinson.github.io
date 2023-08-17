@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "SFPUG Presentation: Partitioning Billions of Rows"
+title: "Presenting 'Partitioning Billions of Rows' at SFPUG August 2023"
 tags: [Rails, Open Source]
 date: 2023-08-17
 comments: true
 ---
 
 
-On August 8, 2023 I had the chance to present to the San Francisco Bay Area PostgreSQL User Group (SFPUG) on our case study for a recent table partitioning migration with PostgreSQL.
+On August 8, 2023 I had the chance to present to the San Francisco Bay Area PostgreSQL User Group (SFPUG) on our case study for a recent online table partitioning migration. The main tools we used were PostgreSQL 13 and the pgslice gem.
 
 If you're unfamiliar with partitioning, check out [PGSQL Phriday #011 — Sharding and Partitioning](/blog/2023/08/04/postgresql-sharding-partitioning-pgsql-phriday-011) which provides a short overview of Sharding and Partitioning and how they are useful.
 
