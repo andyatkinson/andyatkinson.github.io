@@ -22,3 +22,21 @@ title: High Performance PostgreSQL for Rails Book
 - 2022-09-21 Rubber Duck Dev Show - Scaling all the things! with Andrew Atkinson
 - 2022-04-01 RailsConf 2022 Portland, OR - Presenter
 - 2021-11-01 PGConf NYC 2021 - Presenter
+
+
+## Engineering blog posts
+
+Big companies use PostgreSQL and Ruby on Rails.
+
+Sharding and Scaling
+
+- [The growing pains of database architecture](https://www.figma.com/blog/how-figma-scaled-to-multiple-databases/)
+- [Herding elephants: Lessons learned from sharding Postgres at Notion](https://www.notion.so/blog/sharding-postgres-at-notion)
+- [The Great Re-shard: adding Postgres capacity (again) with zero downtime](https://www.notion.so/blog/the-great-re-shard)
+- [Partitioning GitHub’s relational databases to handle scale](https://github.blog/2021-09-27-partitioning-githubs-relational-databases-scale/)
+- [How GitHub Partitioned Its Relational Database to Improve Reliability at Scale](https://www.infoq.com/news/2021/09/GitHub-database-partition/)
+- [Scaling at Instacart: Distributing Data Across Multiple Postgres Databases with Rails](https://tech.instacart.com/scaling-at-instacart-distributing-data-across-multiple-postgres-databases-with-rails-13b1e4eba202)
+
+Operational Excellence
+
+- [Zero-Downtime PostgreSQL Cutovers](https://www.instacart.com/company/how-its-made/zero-downtime-postgresql-cutovers/)
