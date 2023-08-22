@@ -41,3 +41,7 @@ Sharded
 sharding
 sharded
 Postgres
+Autovacuum
+PGConf
+pg_repack
+Multicolumn
