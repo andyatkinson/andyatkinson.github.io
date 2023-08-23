@@ -45,3 +45,8 @@ Autovacuum
 PGConf
 pg_repack
 Multicolumn
+unlogged
+psql
+tbl
+UNLOGGED
+Unlogged
