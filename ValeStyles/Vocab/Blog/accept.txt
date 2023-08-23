@@ -50,3 +50,7 @@ psql
 tbl
 UNLOGGED
 Unlogged
+Percona
+gcc
+reindex
+repo
