@@ -4,9 +4,13 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
-### Podcast: Slow & Steady
+### Podcast: Code and the Coding Coders who Code it! Episode 27 Andrew Atkinson 🎙️
+Date: 2023-08-22<br/>
 
-Title: SFPUG: Partitioning Billions of Rows Without Downtime<br/>
+- [Code and the Coding Coders who Code it! Episode 27 Andrew Atkinson 🎙️](/blog/2023/08/22/code-coding-coders-podcast-drew-bragg)
+
+
+### Title: SFPUG: Partitioning Billions of Rows Without Downtime<br/>
 Date: 2023-08-17<br/>
 
 This was an updated version of the talk given at PGDay Chicago earlier in the year. The talk was given virtually to the San Francisco Bay Area PostgreSQL User Group (SFPUG) and included some live Q&A.
