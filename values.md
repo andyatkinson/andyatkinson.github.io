@@ -22,7 +22,7 @@ Values help clarify cultural norms on teams. In the face of challenges, these va
 
 The best way to learn programming is to practice programming. Programming as a career requires continual learning and investment into oneself.
 
-Learning and investment may include breadth and depth. Learning new tecnologies and specialization into preferred, in-demand, or as-needed on the job technologies.
+Learning and investment may include breadth and depth. Learning new technologies and specialization into preferred, in-demand, or as-needed on the job technologies.
 
 My favorite techniques are to try and create a sample project for a real need I have. Or if I'm learning a particular programming language, use a well-understood domain so that I can focus on the language details.
 
