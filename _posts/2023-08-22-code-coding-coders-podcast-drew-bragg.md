@@ -47,21 +47,27 @@ Writing code and writing books have some shared design goals.
 
 High cohesion in software code means the class or object has a narrow scope. Things in the class go together. In prose a "chapter" should also have clear and single subject matter and all the sections that relate to the chapter.
 
-"Low coupling" when describing objects and classes, refers to how they should have dependencies to other classes or objects.
+"Low coupling" when describing objects and classes, refers to minimizing dependencies to other classes or objects. Objects with low coupling can be isolated, tested more easily, or moved in a refactoring stage.
 
-Similarly for prose and Chapters, there shouldn't be a lot of back and forward references that couple the chapter to other chapters. This is something I learned in the process thanks to the editor Don!
+Similarly for prose and Chapters, there shouldn't be a lot of back and forward references to other chapters in the book. I am thinking of this as a form of "coupling".
 
-Chapters should stand on their own but also contribute to the overall purpose of the book.
+When I started writing we talked about how I added a lot of references all over the book but it turned out that's worse for the reader. Removing the references was something I learned from the editor Don I've been working with who has been great.
+
+Generally speaking, chapters should stand on their own but also contribute to the overall purpose of the book.
 
 ## Book Writing
 
 Regarding writing the book, we didn't discuss this as much in the podcast, but there are a number of other similarities to software development.
 
-* With Pragmatic Programmers, book is managed like source code written in Markdown and XML, and checked in to the Subversion version control system
+* With Pragmatic Programmers, the book is managed like source code and written in Markdown and XML. Changes are checked in to Subversion version control.
 * Command line programs are provided and used to “build” PDF versions of the book, and there is a continuous integration server
 * In my personal workflow, I use the [Vale command line program](/blog/2023/05/26/better-writing-vale) for spell checking and grammar checking
 
-The flow of these writing tools can feel similar to writing code.
+The flow of writing and editing with these writing tools ends up feeling similar to writing code or creating database examples.
+
+For PostgreSQL, I might pop into psql and create a table and insert some rows, to show how to create an index or how a query uses an Index.
+
+The book uses the same Rails app and PostgreSQL database throughout for examples and exercises.
 
 ## Balancing Book, Job, Family
 
@@ -69,17 +75,26 @@ Around the 25 minute mark, we dove more into how the book writing has impacted m
 
 Drew asked about how I managed the book responsibilities, a full-time job, family responsibilities, and my own personal mental and physical health.
 
-The truth is that over the last year at times it has been a struggle to keep these responsibilities in balance.
+The truth is that over the last year of writing and editing &mash; at times it has been a struggle to keep these responsibilities in balance.
 
-I’ve also let my personal health slide a bit and as the book writing and editing load has lessened, I'm looking to get reinvest more into my personal health and relationships.
+I’ve also let my personal health slide a bit. As the book writing and editing load has lessened, I'm reinvesting more in my personal health and relationships.
+
+I shared some of techniques I use to help mitigate getting overwhelmed or burned out. I write a lot of lists and have a very "scheduled" personal life with family commitments.
+
+I shared a trick I learned from Ryan Bates about getting back into the context of writing or coding as well, where something "easy" is left intentionally unfinished.
+
+The idea is to more quickly pick up the original state by finishing the easy thing, and getting some momentum going.
+
 
 ## Technical Topics
 
-In the last section about something I think is cool, we decided to mention a couple of things in the book I learned about that are broadly applicable to Rails developers.
+In the last interview question about "something cool", I decided to mention a couple of things from the book I learned that are broadly applicable to Rails developers.
 
-* [Prosopite](https://github.com/charkost/prosopite) - This is a Ruby gem for N+1 detection. Prosopite can be configured to detect the N+1 query pattern.
-* [Strict Loading](https://rubyonrails.org/2020/2/21/this-week-in-rails-strict-loading-in-active-record-and-more) mode in Active Record. Strict Loading can be used to prevent Lazy Loading and require Eager Loading data. This makes the N+1 query pattern impossible.
+* [Prosopite](https://github.com/charkost/prosopite) - This is a Ruby gem for N+1 detection. Prosopite can be configured to detect the N+1 query pattern. Consider adding this to your Rails app!
+* [Strict Loading](https://rubyonrails.org/2020/2/21/this-week-in-rails-strict-loading-in-active-record-and-more) mode in Active Record. Strict Loading can be used to prevent Lazy Loading and require Eager Loading data. This makes the N+1 query pattern impossible. With use of Strict Loading, you may not even need prosopite or have excessive N+1 style queries.
 
 See: [PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s](/blog/2022/10/07/pgsqlphriday-2-truths-lie) for more details on Strict Loading.
 
-Thanks!
+## Wrap Up
+
+The episode was a lot of fun and I wanted to thank Drew for the opportunity!
