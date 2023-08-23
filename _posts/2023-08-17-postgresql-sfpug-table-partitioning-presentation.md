@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Presenting 'Partitioning Billions of Rows' at SFPUG August 2023"
-tags: [PostgreSQL, Rails, Open Source]
+tags: [PostgreSQL, Rails, Open Source, Books]
 date: 2023-08-17
 comments: true
 ---
