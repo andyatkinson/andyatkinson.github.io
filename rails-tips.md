@@ -46,21 +46,9 @@ When vendoring/caching all gems, while developing on OS X but deploying with Alp
 
 `bundle package --all-platforms`
 
-#### Use the Ruby database schema format
-
-Rails configures [dumping the Active Record database schema](https://guides.rubyonrails.org/active_record_migrations.html) in the development, test and CI environments, out of the box using a Ruby format.
-
-The nice thing about that layer of indirection is that it is more resilient to small differences in different database versions.
-
-Typically what happens for Rails applications at the point a database function, trigger, or some other native item is introduced to the app, is that the `.sql` format is adopted.
-
-That works but can introduce breakages due to slighy differences in PG versions between multiple environments, which can be quite irritating.
-
-A better solution is to use the [fx](https://github.com/teoljungberg/fx) gem. With fx, native database functions can be dumped into the Ruby schema format. Yay!
-
 #### Bundler platforms
 
-If developing on OS X, deploying on Linux, and vendoring gems, the Darwin pre-built gem will be installed. Add the Linx platform:
+If developing on Mac OS, deploying on Linux, and vendoring gems, the Darwin pre-built gem will be installed. Add the Linux platform:
 
 `bundle lock --add-platform x86_64-linux`
 
@@ -135,7 +123,7 @@ For queries that are ok to run longer, or migrations, a higher value is appropri
 
 #### Checkout timeout
 
-Set a `checkout_timeout` to set how long to wait to check out a connection from the connection pool. The default is 5 seconds but we set it to 4 seconds. [Rails Conection Pool Docs](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html)
+Set a `checkout_timeout` to set how long to wait to check out a connection from the connection pool. The default is 5 seconds but we set it to 4 seconds. [Rails Connection Pool Docs](https://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/ConnectionPool.html)
 
 #### Connection Pool Stats
 
