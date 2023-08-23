@@ -54,3 +54,8 @@ Percona
 gcc
 reindex
 repo
+Logentries
+cron
+Cron
+ad hoc
+Hashrocket
