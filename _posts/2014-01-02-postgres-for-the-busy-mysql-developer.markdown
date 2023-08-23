@@ -6,56 +6,42 @@ comments: true
 tags: [MySQL, PostgreSQL, Productivity, Databases]
 ---
 
-For a new project I will be using PostgreSQL. I have more experience with MySQL so I wanted to quickly learn about PostgreSQL and port over some of the skills I have.
+For a new project I'll be using PostgreSQL. I have more experience with MySQL so I wanted to quickly learn PostgreSQL and port over some of my skills.
 
-### Roles
+In this post I'll be sharing what I learned! Statements should be run using the psql command line client.
 
-Permissions are managed with "roles". To see all roles, type `\du`. To see the privileges for all tables, run `\l`. Here is a [list of privileges](http://www.postgresql.org/docs/9.0/static/sql-grant.html).
+## Roles
 
-### Working With Rails
+Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` in psql. These are meta commands.
 
-For a Rails application, create a `rails` role and make it the owner:
+Roles have Privileges in order to perform various operations.
 
-```sh
-createdb -O rails app_name_development
-```
+Type `\list` to see all databases and `\c database` to connect to a database named "database". `\dt` will "describe" all "tables".
 
-From a psql prompt, type `\list` to see all databases, and `\c database` to connect to a database by name. `\dt` will show all the tables.
+## Working with CSV
 
-If the user did not have privileges to create a database there will be an error running `rake`. To add the `createdb` permission for the `rails` use:
+Like MySQL, PostgreSQL supports working with data from CSV files.
 
-```sql
-ALTER ROLE rails createdb;
-```
-
-To verify this role is added run the following query. A [role full list](http://www.postgresql.org/docs/9.1/static/sql-alterrole.html) is here.
+Create a `company_stuff` database and connect to it. Once connected, create a `customers` table. Run the following commands from psql.
 
 ```sql
-SELECT rolcreatedb FROM pg_roles WHERE rolname = 'rails';
- rolcreatedb
--------------
- t
+CREATE DATABASE company_stuff;
+
+\c company_stuff
+
+CREATE TABLE customers (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    email TEXT,
+    full_name TEXT);
 ```
 
-### Working with CSV
+Type `\d customers` to "describe" the table you just created.
 
-Like MySQL PostgreSQL supports working with data from CSV files. The following example uses a `company_stuff` database with a `customers` table. First we need to create the database, connect to it and create the table.
+Using the same CSV file from an earlier article (or create a couple sample rows like below), load it into PostgreSQL using the COPY command.
 
-```sql
-create database company_stuff;
+The file should look like this. Create it in your editor (`vim /tmp/customers.txt`) using an absolute path, if you don't already have the file in this location.
 
-\c company_stuff;
-create table customers 
-    (id serial not null primary key, 
-    email varchar(100), 
-    full_name varchar(100)); 
-```
-
-Type `\d customers` to verify the table is set up correctly.
-
-Assuming we have the same CSV file from the previous article when I covered how to work with CSV files using MySQL, we can load it into PostgreSQL using the `copy` command.
-
-This example specifies the column names. The primary key ID column is set automatically.
+It only needs a couple of rows for demonstration purposes.
 
 ```bash
 % cat customers.txt
@@ -63,55 +49,65 @@ bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 ```
 
+With the file in place, load it using the Copy command into the table you've just created.
+
 ```sql
-copy customers(email, full_name) 
-from '/tmp/customers.txt' 
-delimiter ',' CSV;
+COPY customers(email, full_name)
+FROM '/tmp/customers.txt'
+DELIMITER ',' CSV;
 ```
 
-Verify the contents of the customers table.
+If it was successful, you'll see `COPY 2` as output.
+
+
+View the rows in the customers table.
 
 ```sql
-select * from customers;
+SELECT * FROM customers;
  id |      email       |  full_name
 ----+------------------+--------------
   1 | bob@example.com  |  Bob Johnson
   2 | jane@example.com |  Jane Doe
 ```
 
-Now we can insert a new record, then dump all the records out again as a new CSV file.
+Insert another record and then dump all the records out again as a new CSV file.
 
 ```sql
-copy customers(email, full_name) 
-to '/tmp/more_customers.csv' 
-with delimiter ',';
+INSERT INTO customers (email, full_name) VALUES ('andy@example.com', 'Andrew Atkinson');
+
+COPY customers(email, full_name)
+TO '/tmp/more_customers.csv'
+WITH DELIMITER ',';
 ```
 
-Verify the output of the CSV file:
+Verify the output of the CSV file.
 
 ```bash
 ~ $ cat /tmp/more_customers.csv
-bob@example.com, Bob Johnson
-jane@example.com, Jane Doe
-andy@example.com,andy
+bob@example.com,Bob Johnson
+jane@example.com,Jane Doe
+andy@example.com,Andrew Atkinson
 ```
 
-### Running Queries
+The Copy command can be used for loading and dumping data.
 
-Running a query from the command line and combining with `grep` is very useful.
+## Running Queries
+
+Running a query from the command line and combining the output with `grep` is powerful.
 
 Here is quick search in the "customers" database for columns named like "email":
 
 ``` bash
-~ $ psql -U andy -d company_stuff -c "\d customers" | grep email
-     email     | character varying(100) |
+psql -U andy -d company_stuff -c "\d customers" | grep email
 ```
+
+This can be used to quickly check a particular database, whether a table has a particular column.
 
 That's it for now!
 
-### More Mysql-to-PostgreSQL Links
+## Mysql to PostgreSQL Resources
 
- * [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
- * [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
- * [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
- * [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+* [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
+* [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
+* [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
+* [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
