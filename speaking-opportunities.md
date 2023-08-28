@@ -4,6 +4,14 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+### Podcast SaaS for Developers with Gwen Shapira - Postgres, Performance and Rails with Andrew Atkinson 🎙️
+Date: 2023-08-28<br/>
+
+- [Podcast SaaS for Developers with Gwen Shapira - Postgres, Performance and Rails with Andrew Atkinson 🎙️](/blog/2023/08/22/code-coding-coders-podcast-drew-bragg)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0wtOKD7iJT8?si=TG2ubliJpaxRV24R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
 ### Podcast: Code and the Coding Coders who Code it! Episode 27 Andrew Atkinson 🎙️
 Date: 2023-08-22<br/>
 
