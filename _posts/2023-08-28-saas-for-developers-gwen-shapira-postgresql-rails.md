@@ -10,17 +10,16 @@ A few months ago I joined the [SaaS Developer Community](http://launchpass.com/a
 
 The community has a podcast series with guests discussing technical topics related to SaaS.
 
-I recently had the opportunity to join Gwen as a guest where we discussed PostgreSQL and Ruby on Rails.
+I'm thrilled to share that I recently joined the host Gwen as a guest for an episode, where we discussed PostgreSQL, Ruby on Rails, and performance.
 
 In this post I'll recap some of the discussion points and provide extra context.
-
-Since Gwen knew I was writing a book on PostgreSQL and Ruby on Rails, we started off with questions about what inspired the book.
 
 ## Outline
 
 * SaaS Developer Community
 * Why did I choose to write about PostgreSQL and Rails?
 * Advocating for PostgreSQL and Rails
+* Database Skills for Developers
 * ORMs and SQL
 * N+1 Query Pattern Problem
 * Read and Write Splitting
@@ -40,11 +39,11 @@ Check it out!
 
 ## Why did I choose to write about PostgreSQL and Rails?
 
-I've worked with this stack for many years and more recently with an infrastructural and administrator level focus on PostgreSQL. I felt qualified to write about this combination of technologies from having used them in production at a variety of companies.
+I've worked with this stack for many years and more recently with a focus on PostgreSQL.
 
-I also felt a pull to advocate for PostgreSQL and Ruby on Rails as they offer a great balance of productivity, open source licensing friendliness, reliability, and practicality.
+I also felt a desire to advocate for PostgreSQL and Ruby on Rails as they offer a great balance of productivity, open source licensing friendliness, reliability, and practicality.
 
-Part of the goal with the podcast was to promote my book [High Performance PostgreSQL for Rails](https://pgrailsbook.com).
+This stack gave me the opportunity to share my knowledge, and I think there's an opportunity in the market including enough interest in a book that combines these topics. We'll see!
 
 ## Advocating for PostgreSQL and Rails
 
@@ -52,17 +51,28 @@ A confluence of factors happened in 2020 for me that sparked my interest in thes
 
 The first was a curiosity to learn PostgreSQL in greater depth than what I'd done so far as an application developer.
 
-The second factor was a challenge our team faced with high bloat and other common operational problems. I was able to take on these challenges and quickly iterate on solutions, putting them into practice immediately. I learned a lot from others as well in a short period of time.
+The second was the opportunity to solve common PostgreSQL operational problems like high bloat, falling behind Autovacuum, on behalf of my team. I had the interest to dove into learning about these topics. I could put things I'd learned into practice right away.
 
-It was critical to not only learn but apply findings, experimenting and iterating.
+It was critical to not only learn but to have the opportunity to apply what was learned. I was grateful for the opportunity.
 
-Our team did not have a Database Administrator so a lot of common operational problems from growth like high bloat existed that might have otherwise been something a DBA fixed.
+Our team did not have a Database Administrator so some operational problems may have been solved earlier if we'd had one.
 
-Small teams running without DBAs I think is quite common. In addition, Infrastructure engineers may also lack the product context or database knowledge needed to work on optimizations.
+Small teams running without DBAs is quite common, as the skills can be specialized.
 
-The projects I took on were turned into a presentation, that I pitched to a PostgreSQL conference and had accepted.
 
-Check out [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021) to see that presentation. Following the presentation, I was approached by a book publisher and the rest is history.
+## Database Skills for Developers
+
+What if the skills are more accessible for Rails developers? That's part of what motivated me to write [High Performance PostgreSQL for Rails](https://pgrailsbook.com).
+
+From that team, I turned the completed projects into a presentation given internally.
+
+After removing company specific information, I took a chance and pitched it to PGConf NYC 2021 as my first ever PostgreSQL conference and speaking opportunity.
+
+I was very excited to find out it was accepted. Then I was very nervous to make sure I had the details dialed in.
+
+Check out [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021) to see that presentation.
+
+Following the presentation, I was approached by a book publisher and the rest is history!
 
 ## ORMs and Writing SQL
 
