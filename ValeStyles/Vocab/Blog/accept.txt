@@ -103,3 +103,7 @@ Rideshare
 rideshare
 Prosopite
 prosopite
+vCPUs
+ORMs
+buzzy
+Shapira
