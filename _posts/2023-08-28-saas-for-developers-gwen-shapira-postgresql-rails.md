@@ -10,9 +10,9 @@ A few months ago I joined the [SaaS Developer Community](http://launchpass.com/a
 
 The community has a podcast series with guests discussing technical topics related to SaaS.
 
-I'm thrilled to share that I recently joined the host Gwen as a guest for an episode, where we discussed PostgreSQL, Ruby on Rails, and performance.
+I recently had the chance to join the host Gwen on the podcast series in an episode discussing PostgreSQL, Ruby on Rails, and high performance for web applications.
 
-In this post I'll recap some of the discussion points and provide extra context.
+In this post I'll recap and expand on some points from our discussion.
 
 ## Outline
 
@@ -39,11 +39,9 @@ Check it out!
 
 ## Why did I choose to write about PostgreSQL and Rails?
 
-I've worked with this stack for many years and more recently with a focus on PostgreSQL.
+I've worked with this stack for many years and more recently with a focus on PostgreSQL. This is a mature and reliable open source stack of tools, that's also productivity centric. I like working with Ruby and I also like SQL!
 
-I also felt a desire to advocate for PostgreSQL and Ruby on Rails as they offer a great balance of productivity, open source licensing friendliness, reliability, and practicality.
-
-This stack gave me the opportunity to share my knowledge, and I think there's an opportunity in the market including enough interest in a book that combines these topics. We'll see!
+I also think there's an opportunity in the market to help teach PostgreSQL skills to developers. At the same time, Active Record keeps gaining features that help big companies scale their Rails applications.
 
 ## Advocating for PostgreSQL and Rails
 
@@ -51,28 +49,24 @@ A confluence of factors happened in 2020 for me that sparked my interest in thes
 
 The first was a curiosity to learn PostgreSQL in greater depth than what I'd done so far as an application developer.
 
-The second was the opportunity to solve common PostgreSQL operational problems like high bloat, falling behind Autovacuum, on behalf of my team. I had the interest to dove into learning about these topics. I could put things I'd learned into practice right away.
+The second was the opportunity to put what I learned into practice right away at a business operating a high scale Rails application.
 
-It was critical to not only learn but to have the opportunity to apply what was learned. I was grateful for the opportunity.
+The application was suffering from common PostgreSQL operational problems like high bloat from Autovacuum falling behind, so that's where we started.
 
-Our team did not have a Database Administrator so some operational problems may have been solved earlier if we'd had one.
+The team did not have a dedicated DBA that might have otherwise already solved the problem. Our team needed to develop some specialized database operational skills but we were all application developers, so there was an opportunity there to expand outside the comfort zone.
 
-Small teams running without DBAs is quite common, as the skills can be specialized.
+I've since learned that small teams and startups running without dedicated DBAs is quite common. In fact, I've also found that skills for database operational excellence seem to be less prevalent compared with the latest buzzy technology, despite being more critical to the business and practical for software engineers.
 
 
 ## Database Skills for Developers
 
-What if the skills are more accessible for Rails developers? That's part of what motivated me to write [High Performance PostgreSQL for Rails](https://pgrailsbook.com).
+What if database skills could be made more accessible to web application developers? That became my mission.
 
-From that team, I turned the completed projects into a presentation given internally.
+Eventually that turned into [High Performance PostgreSQL for Rails](https://pgrailsbook.com) as a proposal to publishers, but before that there were blog posts, newsletters, and presentations as part of my journey into technical writing and developer education.
 
-After removing company specific information, I took a chance and pitched it to PGConf NYC 2021 as my first ever PostgreSQL conference and speaking opportunity.
-
-I was very excited to find out it was accepted. Then I was very nervous to make sure I had the details dialed in.
+After removing company specific information, I took a chance and boiled down our optimization projects into a case study conference CFP pitch to PGConf NYC 2021. This became my first ever PostgreSQL conference and speaking opportunity at a database conference.
 
 Check out [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021) to see that presentation.
-
-Following the presentation, I was approached by a book publisher and the rest is history!
 
 ## ORMs and Writing SQL
 
@@ -80,65 +74,63 @@ Are ORMs needed at all? Object Relational Mappers (ORMs) like Active Record in R
 
 What about writing SQL directly? Active Record supports writing SQL directly as well.
 
-The book attempts to meet readers where they are by acknowledging that most Ruby on Rails teams write Active Record for their application query layer, and there are many optimizations within Active Record and for SQL queries.
+The book attempts to meet readers where they are by acknowledging that most Ruby on Rails teams write Active Record for their application query layer, and there are many optimizations within Active Record. A chapter is dedicated to Active Record optimizations, then a later chapter focuses on SQL query optimization.
 
 ## N+1 Query Problem
 
-The problem in a nutshell is "excessive" queries that are repeated queries to the same table with a varying id value, from inside a loop in code.
+Gwen wasn't familiar with this so we briefly recapped it.
 
-The pattern is considered an excessive amount of queries because the multiple queries can be replaced with a single query to the table earlier.
+The problem in a nutshell is considered "excessive" queries when queries to the same table are repeated that could be consolidated into a single query.
 
-Historically Active Record has allowed developers to lazily evaluate parts before generating a final SQL query and this is a nice feature.
+Active Record allows developers to write code that is lazily evaluated before a SQL query is generated. This is a nice feature but it opens up this N+1 query pattern possibility.
 
-Lazy evaluation is a double edged sword though, because the lazy evaluation can hide these excessive queries.
+Gwen and I discussed a newer feature in Active Record called "Strict Mode." Strict Mode prevents lazy loading either for an entire model or in particular call sites.
 
-Gwen and I discussed something called "Strict Mode" that disables lazy loading either for an entire model or at particular call sites.
-
-One mistake I said in the podcast was that I said "to prevent eager loading" and meant to say that Strict Loading (See: [PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s](/blog/2022/10/07/pgsqlphriday-2-truths-lie)) prevents "lazy loading" (not eager loading).
+One mistake from the podcast was I said "to prevent eager loading" but meant to say that Strict Loading (See: [PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s](/blog/2022/10/07/pgsqlphriday-2-truths-lie)) prevents "lazy loading," thus requiring eager loading to fetch data needed.
 
 
 ## Read and Write Splitting
 
 Ruby on Rails supports Multiple Databases since [version 6 released in 2019](https://guides.rubyonrails.org/6_0_release_notes.html).
 
-One of the use cases this unlocks is splitting out read only queries to run them on a read replica instance. This works natively within Rails without the need for a third part Ruby gems.
+One of the use cases this unlocks is Read/Write splitting, which means read only queries can be run on a read replica instead of the primary instance. This works natively with Rails without requiring a third party Ruby gem.
 
-Normally you might configure each writer and reader instance via "Roles" in Ruby on Rails. Then switch read only queries to the Reader role.
+Writers and readers are configured as "Roles" in Ruby on Rails. Developers might switch some query code then to use the Reader role.
 
-Active Record supports automatic switching as well. Automatic switching is called "Automatic Role Switching" in Active Record.
+Manually switching code to the reader role works well, but Active Record can even automatically do this.
+
+The feature is called [Automatic Role Switching](https://guides.rubyonrails.org/active_record_multiple_databases.html#activating-automatic-role-switching) in Active Record.
 
 
 ## High Request Volume
 
-Folks on Twitter and YouTube wondered more about the numbers for the single instance performance figures that were claimed.
+We used the "Requests Per Minute" (RPM) metric from the New Relic APM to quickly gauge traffic volume.
 
-We used the Requests Per Minute (RPM) as the main metric to assess total requests in New Relic.
+This metric covers total HTTP requests and most of them involved a database query, although requests that can be served from another database like Redis, or from Rails cache, might never touch PostgreSQL.
 
-This metric is for total HTTP requests, and most of them involve a database query, but it's worth noting that not all requests involve the relational database.
+We also referred to this scalability as "single instance" PostgreSQL, but technically there were at least 2 instances because read queries were run on a second read replica instance receiving physical replication.
 
-Also worth noting that we talk about this as single instance PostgreSQL, but in reality there are at least 2 instances in a replication pair. A read only instance receiving replication can and should be used to run read only queries on whenever possible.
+Here are some of the figures we observed:
 
-Additional read replicas can be added to distribute the workload associated with read only queries in a horizontal fashion.
+* More than 450K (7500 requests/second) RPM for the main Ruby on Rails monolith at peak
+* 550K RPM (9200 requests/second) for the main Rails monolith plus other smaller Rails services which had their own database instances
+* RDS Proxy used to scale client connections into the thousands
+* Huge fleet (many dozens) of EC2 instances running the multi-threaded Puma web application server
+* PostgreSQL 10 on RDS with minimal database parameter tuning
 
-* At least 450K RPM was observed on the main Ruby on Rails monolith (7500 requests/second)
-* 550K RPM observed across all services (9200 requests/second) including the Rails monolith and other Rails services with their own databases
-* RDS Proxy was put into production to scale client connections well beyond what RDS PostgreSQL would have allowed
-* Huge fleet of application server processes (and multiple threads per process) on bare EC2 orchestrated with Elastic Beanstalk running the Puma web application server
-* PostgreSQL 10 on RDS with minimal database parameter tuning outside of Autovacuum settings
+## PostgreSQL Instance Resource
 
-## PostgreSQL Resources
-
-We used an instance class family available in 2020 on AWS RDS that met the following criteria:
+We used an instance class family available in 2020 on AWS RDS with the following specs:
 
 * 96 vCPUs
 * 768GB memory
-* Provisioned IOPS beyond what was available for the instance
+* Provisioned IOPS
 
-We set up Physical (streaming) replication from the primary instance to several read only replicas. The read replicas were configured with the Rails application for SELECT queries.
+Physical (streaming) replication from the primary instance to multiple replicas.
 
 ## Community Links
 
-- Youtube: <https://youtu.be/0wtOKD7iJT8>
+- YouTube: <https://youtu.be/0wtOKD7iJT8>
 - Podcast: <https://podcasters.spotify.com/pod/show/saas-for-developers/episodes/Postgres--Performance-and-Rails-e28dks8>
 - SaaS Developer Slack, where Andrew may share secret discounts: <http://launchpass.com/all-about-saas>
 - Andrew's YouTube playlist with all his content: <https://youtube.com/watch?v=W8d3roay29w&list=PL9-zCXZQFyvqhkrefUXAfC4FYntQX9SC9>
@@ -149,7 +141,6 @@ We set up Physical (streaming) replication from the primary instance to several 
 To see the full interview check out the YouTube embed below or jump over to YouTube. Leave a comment if you found it helpful or interesting.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0wtOKD7iJT8?si=TG2ubliJpaxRV24R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-
 
 
 Thanks!
