@@ -15,7 +15,7 @@ Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale
  * Use `<mark/>` to highlight a section
  * Use footnotes when appropriate
  * For blockquotes, add a `<cite/>`
- * On OS X, preview with MacDown [MacDown](https://macdown.uranusjr.com/) The open source Markdown editor for macOS.
+ * On macOS, preview with MacDown [MacDown](https://macdown.uranusjr.com/) The open source Markdown editor for macOS.
  * For section headings, use caps
  * For product and company names, mind the CamelCase
  * For dates on posts, use a date and not a time

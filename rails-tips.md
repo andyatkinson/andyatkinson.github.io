@@ -42,7 +42,7 @@ Boot app with `$VERBOSE = true` in `config/application.rb` or somewhere that exe
 
 #### Vendor everything
 
-When vendoring/caching all gems, while developing on OS X but deploying with Alpine Linux, we need to download and cache gems for all platforms. This grabs the Linux version of the Nokogiri gem.
+When vendoring/caching all gems, while developing on macOS but deploying with Alpine Linux, we need to download and cache gems for all platforms. This grabs the Linux version of the Nokogiri gem.
 
 `bundle package --all-platforms`
 

@@ -24,7 +24,7 @@ OLAP workload. Using application databases as the data source for a data warehou
 
 I keep queries in a GitHub repository here: [pg_scripts](https://github.com/andyatkinson/pg_scripts).
 
-### Query: Approximate Count
+## Query: Approximate Count
 
 A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
 
@@ -33,7 +33,7 @@ SELECT reltuples::numeric AS estimate
 FROM pg_class WHERE relname = 'table_name';
 ```
 
-### Query: Get Table Stats
+## Query: Get Table Stats
 
 ```sql
 SELECT attname, n_distinct, most_common_vals, most_common_freqs
@@ -43,7 +43,7 @@ WHERE tablename = 'table';
 
 Look for columns with few values, and indexes on those few values with low selectivity. Meaning, most values in the table are the same value. In index on that column would not be very selective, and given enough memory, PG would likely not use that index, preferring a sequential scan.
 
-### Cancel or Kill by Process ID
+## Cancel or Kill by Process ID
 
 Get a PID with `select * from pg_stat_activity;`
 
@@ -84,19 +84,19 @@ ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 <https://www.postgresql.org/docs/current/sql-altertable.html>
 
 
-### AV Tuning
+## AV Tuning
 
 * Set `log_autovacuum_min_duration` to `0` to log all Autovacuum. A logged AV run includes a lot of information.
 * [pganalyze: Visualizing & Tuning Postgres Autovacuum](https://pganalyze.com/blog/visualizing-and-tuning-postgres-autovacuum)
 
 
-### AV Parameters
+## AV Parameters
 
 - `autovacuum_max_workers`
 - `autovacuum_max_freeze_age`
 - `maintenance_work_memory`
 
-### Specialized Index Types
+## Specialized Index Types
 
 The most common type is B-Tree. Specialized Index types are:
 
@@ -111,7 +111,7 @@ The most common type is B-Tree. Specialized Index types are:
 * Multicolumn (a,b) for a only, a & b, but not for b
 * Indexes for sorting
 
-### Removing Unused Indexes
+## Removing Unused Indexes
 
 Ensure these are set to `on`
 
@@ -150,7 +150,7 @@ ORDER BY pg_relation_size(s.indexrelid) DESC;
 
 Query that finds duplicate indexes, meaning using the same columns etc. Recommends that usually it is safe to delete one of the two.
 
-### Remove Seldom Used Indexes on High Write Tables
+## Remove Seldom Used Indexes on High Write Tables
 
 [New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html)
 
@@ -205,7 +205,7 @@ This allows the application to allocate many more client connections (for exampl
 
 * [PostgreSQL Connection Pooling With PgBouncer](https://dzone.com/articles/postgresql-connection-pooling-with-pgbouncer)
 
-Install pgbouncer on OS X with `brew install pgbouncer`. Create the `.ini` config file as the article mentions, point it to a database, accept connections, and track the connection count.
+Install PgBouncer on macOS with `brew install pgbouncer`. Create the `.ini` config file as the article mentions, point it to a database, accept connections, and track the connection count.
 
 
 ## H.O.T. Updates
@@ -437,7 +437,7 @@ CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 
 > The pgstattuple module provides various functions to obtain tuple-level statistics.
 
-<https://www.postgresql.org/docs/9.5/pgstattuple.html>
+<https://www.postgresql.org/docs/current/pgstattuple.html>
 
 ## `citext`
 
@@ -538,7 +538,7 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 
 
 
-### AWS RDS Parameter Groups
+## AWS RDS Parameter Groups
 
 [Working with RDS Parameter Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html)
 
@@ -547,7 +547,7 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 * Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
 
 
-### Database Constraints
+## Database Constraints
 
 [Blog: A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
 
