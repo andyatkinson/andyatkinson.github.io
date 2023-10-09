@@ -8,7 +8,7 @@ comments: true
 
 This is quick command line tip to view upcoming calendar events in a compact form on the command line, with a single command.
 
-I set up [icalBuddy](https://hasseg.org/icalBuddy/) with my personal and work Google calendars (On OS X with Homebrew, run `brew install ical-buddy`), along with an alias `today`.
+I set up [icalBuddy](https://hasseg.org/icalBuddy/) with my personal and work Google calendars (On macOS with Homebrew, run `brew install ical-buddy`), along with an alias `today`.
 
 I've customized the output of icalBuddy with data and formatting using this alias:
 

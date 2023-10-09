@@ -8,7 +8,7 @@ This is a collection of articles and topics about senior engineering.
 
 ## IC, EM, High Performing teams
 
-### Enginering Manger vs. Individual Contributor
+### Engineering Manger (EM) vs. Individual Contributor (IC)
 
 I really like this post called the [Engineer/Manager Pendulum](https://charity.wtf/2017/05/11/the-engineer-manager-pendulum/).
 Everything in this post resonates with my career, including how different the roles are, moving between them is lateral or even how a senior IC first-time manager is a "junior" EM.
@@ -100,7 +100,7 @@ The [Robustness principle](https://en.wikipedia.org/wiki/Robustness_principle) s
 
 Applied to a Ruby method signature, accepting an optional argument with a default value of an empty hash provides caller side consistency over time, but specific keys and values can be checked within the method implementation.
 
-In this way I feel like it satifies the definition of being liberal in what is accepted, but conservative in how what is accepted is actually handled.
+In this way I feel like it satisfies the definition of being liberal in what is accepted, but conservative in how what is accepted is actually handled.
 
 This also creates an opportunity to both defensively guard against the method being mis-used but also an opportunity to self-document acceptable keys and values for maintainers.
 

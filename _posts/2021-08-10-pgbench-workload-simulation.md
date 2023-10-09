@@ -16,7 +16,7 @@ We configure this write and read separation manually in Rails which has supporte
 
 pgbench allows us to set up a benchmark set of queries that can be run against a database. The benchmark input is SQL queries. These statements can be customized to add some diversity into the SELECT statements so that rows are not always selected that exist in the same page.
 
-[pgbench](https://www.postgresql.org/docs/10/pgbench.html) is built in to PostgreSQL. I run pgbench local on OS X and then make a connection to a remote PG database, which then executes the benchmark.
+[pgbench](https://www.postgresql.org/docs/10/pgbench.html) is built in to PostgreSQL. I run pgbench local on macOS and then make a connection to a remote PG database, which then executes the benchmark.
 
 ## Workload Simulation
 
