@@ -4,6 +4,8 @@ permalink: /events-and-volunteering
 title: Events & Volunteering
 ---
 
+{% include tag-pages-loop.html tagName='Events' %}
+
 ### Code In Place 2021
 
 As a Section Leader for [Code In Place 2021](https://codeinplace.stanford.edu/), I met weekly with up to 10 learners over 5 weeks learning Computer Science for the first time. We spent an hour together reviewing lecture concepts, lecture exercises and assignment problems.
