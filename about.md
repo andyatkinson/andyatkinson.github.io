@@ -8,8 +8,6 @@ title: About
 
 Andrew (Andy) is a Software Engineer who specializes in building high performance web applications using PostgreSQL and Ruby on Rails.
 
-Andrew works as a Staff Software Engineer at [Fountain](https://get.fountain.com/), a B2B SaaS HR platform.
-
 Currently Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by Pragmatic Programmers in 2023.
 
 Andrew has [spoken at conferences](/speaking-opportunities) including PGDay Chicago, PGConf NYC, RailsConf, and RubyConf Argentina.
