@@ -4,9 +4,19 @@ permalink: /postgresql-tips
 title: PostgreSQL Tips, Tricks, and Tuning
 ---
 
+Hello! This page is a semi-organized (mostly a mess) of notes while learning PostgreSQL.
+
+This chaotic learning and cycle of applying what I learned, turned into me writing a book!
+
+{% if site.mailchimp_url %}
+{% include newsletter-box.html %}
+{% endif %}
+
+Below are my PostgreSQL-tagged blog posts:
+
 {% include tag-pages-loop.html tagName='PostgreSQL' %}
 
-## Learning Resources
+## Recommended Learning Resources
 
 * <https://postgres.fm>
 * <https://www.pgcasts.com>
@@ -14,19 +24,13 @@ title: PostgreSQL Tips, Tricks, and Tuning
 * <https://sqlfordevs.io>
 * The `EXPLAIN` Glossary from PgMustard <https://www.pgmustard.com/docs/explain>
 
-## My Typical Workloads
-
-My tips operating high scale PostgreSQL databases primarily with Ruby on Rails web applications. OLTP, high quantity of short lived transactions.
-
-OLAP workload. Using application databases as the data source for a data warehouse or ETL process.
-
 ## Queries
 
-I keep queries in a GitHub repository here: [pg_scripts](https://github.com/andyatkinson/pg_scripts).
+I keep queries in a GitHub repository: [pg_scripts](https://github.com/andyatkinson/pg_scripts)
 
 ## Query: Approximate Count
 
-A `count(*)` query on a large table may be too slow. If an approximate count is acceptable use this:
+Since a `COUNT(*)` query can be slow, try an approximate count:
 
 ```sql
 SELECT reltuples::numeric AS estimate
@@ -45,71 +49,63 @@ Look for columns with few values, and indexes on those few values with low selec
 
 ## Cancel or Kill by Process ID
 
-Get a PID with `select * from pg_stat_activity;`
+Get a PID with `SELECT * FROM pg_stat_activity;`
 
-Try to cancel the pid first, more gracefully, or terminate it:
+Try to cancel the query first, otherwise terminate the backend:
 
 ```sql
-select pg_cancel_backend(pid); 
-select pg_terminate_backend(pid);
+SELECT pg_cancel_backend(pid); 
+SELECT pg_terminate_backend(pid);
 ```
 
 ## Tuning Autovacuum
 
-PostgreSQL runs an autovacuum process in the background. Dead tuples are also called dead rows or "bloat". Bloat can also exist for indexes.
+PostgreSQL runs an Autovacuum process in the background.
 
-Two parameters may be used to trigger the AV process: "scale factor" and "threshold". These can be configured DB-wide or per-table.
+Two parameters may be used as thresholds to trigger AV: "scale factor" and "threshold". These can be configured DB-wide or per-table.
 
-In [routine vacuuming](https://www.postgresql.org/docs/9.1/routine-vacuuming.html), the two options are listed:
+In [Routine Vacuuming](https://www.postgresql.org/docs/current/routine-vacuuming.html), the two options are listed:
 
-- scale factor (a percentage) [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
-- threshold (a specific number) [`autovacuum_vacuum_threshold`](https://www.postgresql.org/docs/9.1/runtime-config-autovacuum.html#GUC-AUTOVACUUM-VACUUM-SCALE-FACTOR)
+- Scale factor (a percentage) [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/current/runtime-config-autovacuum.html)
+- Threshold (a specific number) `autovacuum_vacuum_threshold`
 
-The scale factor defaults to 20% (`0.20`). To optimize for our largest tables we set it lower at 1% (`0.01`).
+The scale factor defaults to 20% (`0.20`). To optimize for our largest tables, we lowered it to 1% (`0.01`).
 
-To opt out of scale factor, set the value to 0 and set the threshold, e.g. 1000, 10000 etc.
+Set the value for a table:
 
 ```sql
 ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
 ALTER TABLE bigtable SET (autovacuum_vacuum_threshold = 1000);
 ```
 
-If after experimentation you'd like to reset, use the `RESET` option.
+Can be reset:
 
 ```sql
 ALTER TABLE bigtable RESET (autovacuum_vacuum_threshold);
 ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 ```
 
-<https://www.postgresql.org/docs/current/sql-altertable.html>
-
-
-## AV Tuning
+## Autovacuum Tuning
 
 * Set `log_autovacuum_min_duration` to `0` to log all Autovacuum. A logged AV run includes a lot of information.
 * [pganalyze: Visualizing & Tuning Postgres Autovacuum](https://pganalyze.com/blog/visualizing-and-tuning-postgres-autovacuum)
-
-
-## AV Parameters
-
 - `autovacuum_max_workers`
 - `autovacuum_max_freeze_age`
 - `maintenance_work_memory`
 
 ## Specialized Index Types
 
-The most common type is B-Tree. Specialized Index types are:
+The most common type is B-Tree. Specialized index types are:
 
 * Multicolumn
-* Covering (Multicolumn style, and newer `INCLUDES` style)
+* Covering (Multicolumn or newer `INCLUDES` style)
 * Partial
 * GIN
 * GiST
 * BRIN
 * Expression
 * Unique
-* Multicolumn (a,b) for a only, a & b, but not for b
-* Indexes for sorting
+* Hash
 
 ## Removing Unused Indexes
 
@@ -122,33 +118,13 @@ SHOW track_counts;
 
 <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/6644d7dd7380413ea19dce1955f41269" title="PostgreSQL Unused Indexes" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background-color: rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; -webkit-background-clip: padding-box; -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
-Now we can take advantage of tracking on whether indexes have been used or not. We can look for zero scans, and also very infrequent scans.
-
 Cybertec blog post with SQL query to discover unused indexes: [Get Rid of Your Unused Indexes!](https://www.cybertec-postgresql.com/en/get-rid-of-your-unused-indexes/)
 
-On our very large production database where this process had never been done, we had dozens of indexes that could be eliminated, taking of 100s of gigabytes of space.
-
-```sql
-SELECT s.schemaname,
-       s.relname AS tablename,
-       s.indexrelname AS indexname,
-       pg_relation_size(s.indexrelid) AS index_size
-FROM pg_catalog.pg_stat_user_indexes s
-   JOIN pg_catalog.pg_index i ON s.indexrelid = i.indexrelid
-WHERE s.idx_scan = 0      -- has never been scanned
-  AND 0 <>ALL (i.indkey)  -- no index column is an expression
-  AND NOT i.indisunique   -- is not a UNIQUE index
-  AND NOT EXISTS          -- does not enforce a constraint
-         (SELECT 1 FROM pg_catalog.pg_constraint c
-          WHERE c.conindid = s.indexrelid)
-ORDER BY pg_relation_size(s.indexrelid) DESC;
-```
 
 ## Remove Duplicate and Overlapping Indexes
 
 <https://wiki.postgresql.org/wiki/Index_Maintenance>
 
-Query that finds duplicate indexes, meaning using the same columns etc. Recommends that usually it is safe to delete one of the two.
 
 ## Remove Seldom Used Indexes on High Write Tables
 
@@ -169,12 +145,13 @@ Partial indexes weigh significantly less, but this article uses pgbench to show 
 ## Timeout Tuning
 
 - `statement_timeout`: The maximum time a statement can execute before it is terminated
+- `lock_timeout`
 
 ## Connections Management
 
 [A connection forks the OS process (creates a new process)](https://azure.microsoft.com/en-us/blog/performance-best-practices-for-using-azure-database-for-postgresql-connection-pooling/) and is thus expensive.
 
-Using a connection pool reduces the amount of connection establishment overhead and thus reduces the latency involved with connections, which can increase TPS at a certain scale.
+Use a connection pooler to reduce the overhead with establishing connections
 
 - PgBouncer. [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
 - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
@@ -208,7 +185,7 @@ This allows the application to allocate many more client connections (for exampl
 Install PgBouncer on macOS with `brew install pgbouncer`. Create the `.ini` config file as the article mentions, point it to a database, accept connections, and track the connection count.
 
 
-## H.O.T. Updates
+## Heap Only Tuple (HOT) Updates
 
 HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
 
@@ -530,13 +507,17 @@ Released September 2020
 
 - SQL `MERGE`
 
+## PG 16
+
+- Replication on followers
+
 ## RDS
 
 Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL, and AWS has a variation called Aurora with a different storage model.
 
-## Aurora PG
+## Aurora PostgreSQL
 
-
+- Separates storage and compute
 
 ## AWS RDS Parameter Groups
 
@@ -545,7 +526,6 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 * Try out parameter changes on a test database prior to making the change. Potentially create a backup before making the change as well.
 * Parameter groups can be restored to their defaults (or they can be copied to create an experimental group). Groups can be compared with each other to determine differences.
 * Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
-
 
 ## Database Constraints
 
@@ -559,6 +539,9 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 * `EXCLUSION`
 
 ## Native Replication
+
+- Physical Replication
+- Logical Replication
 
 ## PostgreSQL Logical Replication
 
@@ -583,7 +566,6 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 - [pg_partman](https://github.com/pgpartman/pg_partman)
 - [pg_party](https://github.com/rkrage/pg_party)
 
-
 ## Partition Pruning
 
 Default is `on` or `SET enable_partition_pruning = off;` to turn it off.
@@ -598,7 +580,7 @@ Default is `on` or `SET enable_partition_pruning = off;` to turn it off.
 
 Stored Procedures are User Defined Functions (UDF).
 
-Using PL/pgSQL, functions can be added to the database directly. Procedures and functions can be written in other languages as well.
+Using PL/pgSQL, functions can be added to the database directly. Procedures and functions can be written in other languages.
 
 [Stored procedures](https://github.com/andyatkinson/db-stuff)
 
@@ -606,7 +588,8 @@ To manage these functions in a Ruby app, use the [fx gem](https://github.com/teo
 
 ## PostgreSQL Monitoring
 
-* `pg_top` On Mac OS: `brew install pg_top` and run it `pg_top`
+* `pg_top` On Mac OS
+* `brew install pg_top` and run it `pg_top`
 
 ## Uncategorized Resources
 
@@ -668,6 +651,11 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 * `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://brianchildress.co/reset-auto-increment-in-postgres/>
 * `ALTER SEQUENCE <seq-name> RESTART WITH 1;` (e.g. `users_id_seq`)
+* Serial and BigSerial are special types that use Sequences
+
+## Identity Columns
+
+* Identity columns are recommended for primary keys, over using Sequences (with Serial or BigSerial)
 
 ## Scaling Web Applications
 
