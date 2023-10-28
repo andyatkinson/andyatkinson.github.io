@@ -40,12 +40,16 @@ FROM pg_class WHERE relname = 'table_name';
 ## Query: Get Table Stats
 
 ```sql
-SELECT attname, n_distinct, most_common_vals, most_common_freqs
+SELECT
+    attname,
+    n_distinct,
+    most_common_vals,
+    most_common_freqs
 FROM pg_stats
 WHERE tablename = 'table';
 ```
 
-Look for columns with few values, and indexes on those few values with low selectivity. Meaning, most values in the table are the same value. In index on that column would not be very selective, and given enough memory, PG would likely not use that index, preferring a sequential scan.
+Consider cardinality for columns, and selectivity for indexes and queries, when designing indexes.
 
 ## Cancel or Kill by Process ID
 
@@ -62,12 +66,12 @@ SELECT pg_terminate_backend(pid);
 
 PostgreSQL runs an Autovacuum process in the background.
 
-Two parameters may be used as thresholds to trigger AV: "scale factor" and "threshold". These can be configured DB-wide or per-table.
+Parameters can be tuned for individual tables.
 
 In [Routine Vacuuming](https://www.postgresql.org/docs/current/routine-vacuuming.html), the two options are listed:
 
-- Scale factor (a percentage) [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/current/runtime-config-autovacuum.html)
-- Threshold (a specific number) `autovacuum_vacuum_threshold`
+- [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/current/runtime-config-autovacuum.html)
+- `autovacuum_vacuum_threshold`
 
 The scale factor defaults to 20% (`0.20`). To optimize for our largest tables, we lowered it to 1% (`0.01`).
 
@@ -140,20 +144,18 @@ In our system on our highest write table we had 10 total indexes defined and 6 w
 
 [How Partial Indexes Affect UPDATE Performance in PostgreSQL](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc)
 
-Partial indexes weigh significantly less, but this article uses pgbench to show how they may benefit SELECT TPS, but negatively impact UPDATE TPS.
-
 ## Timeout Tuning
 
-- `statement_timeout`: The maximum time a statement can execute before it is terminated
+- `statement_timeout`: The maximum time a statement is allowed to run before being canceled
 - `lock_timeout`
 
 ## Connections Management
 
 [A connection forks the OS process (creates a new process)](https://azure.microsoft.com/en-us/blog/performance-best-practices-for-using-azure-database-for-postgresql-connection-pooling/) and is thus expensive.
 
-Use a connection pooler to reduce the overhead with establishing connections
+Use a connection pooler to reduce overhead from connection establishment
 
-- PgBouncer. [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
+- PgBouncer (see below). [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
 - RDS Proxy. [AWS RDS Proxy](https://aws.amazon.com/rds/proxy/)
 - [Managing Connections with RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html)
 
@@ -172,11 +174,9 @@ production:
     statement_timeout: 5000
 ```
 
-When serving Rails apps with Puma and using Sidekiq, carefully manage the connection pool size and total connections for the database.
+For Rails with Puma and Sidekiq, carefully manage the connection pool size and total connections.
 
 [The Ruby on Rails database connection pool](https://maxencemalbois.medium.com/the-ruby-on-rails-database-connections-pool-4ce1099a9e9f). We also use a proxy in between the application and PG.
-
-This allows the application to allocate many more client connections (for example doubling during a zero downtime deploy) but not exceed the max supported connections/resource usage on the DB server.
 
 ## PgBouncer
 
@@ -204,9 +204,9 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 - Reducing it leaves room for "HOT" updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
 - "good starting value for it is 70 or 80" [Deep Dive](https://dataegret.com/2017/04/deep-dive-into-postgres-stats-pg_stat_all_tables/)
 - For tables with heavy updates a smaller fillfactor may yield better write performance
-- Set per table or per index (b-tree is default 90 fillfactor)
+- Set per table or per index (B-Tree defaults to 90 fillfactor)
 - Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
-- No index defined any column whose value it modified
+- No index defined on any column whose value is modified
 
 Limitations: Requires a `VACUUM FULL` after modifying (or pg_repack)
 
@@ -236,9 +236,11 @@ Note: use `-k, --no-superuser-check`
 
 ## Lock Types
 
-Exclusive locks, and shared locks. Prefer shared locks.
+Exclusive locks, and shared locks.
 
 `AccessExclusiveLock` - Locks the table, queries are not allowed.
+
+Table locks and row locks.
 
 ## Tools
 
@@ -252,12 +254,10 @@ This article [5 Things I wish my grandfather told me about ActiveRecord and Post
 
 [YouTube demonstration video](https://www.youtube.com/watch?v=v7ef4Fpn2WI)
 
-Nice tool and I learned a couple of tips. Format `EXPLAIN` output with JSON, and specify some additional options. Handy SQL comment to have hanging around on top of the query to study:
-
-Verbose invocation:
+Format `EXPLAIN` output with JSON, and specify additional options.
 
 ```sql
-EXPLAIN (analyze, buffers, verbose, format text) <sql-query>
+EXPLAIN (ANALYZE, BUFFERS, VERBOSE, FORMAT text) --<sql-query>
 ```
 
 
@@ -265,9 +265,9 @@ EXPLAIN (analyze, buffers, verbose, format text) <sql-query>
 
 Repeatable method of determining a transactions per second (TPS) rate.
 
-Useful for determining impact of tuning parameters like `shared_buffers` with a before/after benchmark. Configurable with a custom SQL queries.
+Useful for determining impact of parameter tuning. Configurable with custom SQL queries.
 
-Could also be used to test the impact of ramping up connections.
+Could be used to test the impact of increasing concurrent connections.
 
 - Initialize database example with scaling option of 50 times the default size:
 
@@ -285,15 +285,15 @@ I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/p
 
 ## pgtune
 
-PGTune is a website that tries to suggest values for PG parameters that can be tuned and may improve performance for a given workload.
+PGTune is a website that tries to suggest values for PG parameters.
 
 <https://pgtune.leopard.in.ua/#/>
 
 ## PgHero
 
-PgHero brings a bunch of operational concerns into a dashboard format. It is built as a Rails engine and provides a nice interface on top of queries related to the PG catalog tables.
+PgHero brings operational concerns into a web dashboard. Build as a Rails engine.
 
-We are running it in production and some immediate value has been helping clarify unused and duplicate indexes we can remove.
+We are running it in production and saw immediate value in identifying unused and duplicate indexes to remove.
 
 [Fix Typo PR #384](https://github.com/ankane/pghero/pull/384)
 
@@ -303,11 +303,9 @@ We are running it in production and some immediate value has been helping clarif
 
 <https://github.com/CrunchyData/pgmonitor>
 
-Have not yet tried this out but it looks helpful.
-
 ## postgresqltuner
 
-Perl script to analyze a database. Do not have experience with this. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
+Perl script to analyze a database. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
 
 <https://github.com/jfcoz/postgresqltuner>
 
@@ -337,7 +335,9 @@ Reducing the values causes checkpoint to run more frequently.
 `checkpoint_warning` parameter
 `checkpoint_completion_target`
 
-General Recommendation (not mine): "On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints."
+General Recommendation (not mine)
+
+> "On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints."
 
 Parameters
 
@@ -345,20 +345,19 @@ Parameters
 * `wal_sync_method`
 * `wal_debug`
 
-
 ## Extensions and Modules
 
 ## Foreign Data Wrapper (FDW)
 
-Native Foreign data wrapper functionality in PostgreSQL allows connecting to a remote table and treating it like a local table.
+Native Foreign Data Wrapper (FDW) functionality in PostgreSQL allows connecting to remote sources
 
-The table structure may be specified when establishing the foreign table or it may be imported as well.
+The table structure may be specified when establishing the foreign table
 
-A big benefit of this for us at work is that for a recent backfill. We were able to avoid the need for any intermediary data dump files.
+We were able to avoid the need for any intermediary data dump files.
 
-We used a `temp` schema to isolate any temporary tables away from the main schema (`public`).
+We used a `temp` schema to isolate temporary tables away from the main schema (`public`).
 
-Essentially the process is:
+The process is:
 
   1. Create a server
   1. Create a user mapping
@@ -366,9 +365,7 @@ Essentially the process is:
 
 Let's say we had 2 services, one for managing inventory items for sale, and one for managing authentication.
 
-We wanted to connect to the authentication database from the inventory database.
-
-In the case below, the inventory database is connected to with the `root` user so there is privileges to create temporary tables, foreign tables etc.
+Connect as a superuser
 
 ```sql
 create EXTENSION postgres_fdw;
@@ -379,30 +376,24 @@ CREATE SERVER temp_authentication;
 FOREIGN DATA WRAPPER postgres_fdw
 OPTIONS (host 'authentication-db-host', dbname 'authentication-db-name', port '5432'); -- set the host, name and port
 
-CREATE USER MAPPING FOR root
+CREATE USER MAPPING FOR postgres
 SERVER temp_authentication
-OPTIONS (user 'authentication-db-user', password 'authentication-db-password'); -- map the local root user to a user on the remote DB
+OPTIONS (user 'authentication-db-user', password 'authentication-db-password'); -- map the local postgres user to a user on the remote DB
 
 IMPORT FOREIGN SCHEMA public LIMIT TO (customers)
     FROM SERVER temp_authentication INTO temp; -- this will make a table called temp.customers
 ```
 
-Once this is established, we can issue queries as if the foreign table was a local table:
-
-```sql
-select * from temp.customers limit 1;
-```
-
-On Amazon RDS type `show rds.extensions` to view available extensions.
-
 ## `uuid-ossp`
 
-Generate universally unique identifiers (UUIDs) in PostgreSQL. [Documentation link](https://www.postgresql.org/docs/10/uuid-ossp.html)
+Generate universally unique identifiers (UUIDs) in PostgreSQL.
+
+[Documentation link](https://www.postgresql.org/docs/current/uuid-ossp.html)
 
 
 ## `pg_stat_statements`
 
-Tracks execution statistics for all statements and made available via a view. Requires reboot (static param) on RDS on PG 10 although `pg_stat_statements` is available by default in `shared_preload_libraries` in PG 12.
+Tracks execution stats for all statements. Stats made available from view. Requires reboot (static param) on RDS on PG 10 although `pg_stat_statements` is available by default in `shared_preload_libraries` in PG 12.
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
@@ -442,7 +433,7 @@ Replacement for pg_repack, automated, without needing to run a CLI tool.
 
 [PG 10 auto_explain](https://www.postgresql.org/docs/10/auto-explain.html)
 
-Adds explain plans to the query logs. Maybe start by setting it very high so it only logged for extremely slow queries, and then lessening the time if there is actionable information.
+Adds explain plans to the PostgreSQL log.
 
 ## Percona pg_stat_monitor
 
@@ -450,7 +441,7 @@ Adds explain plans to the query logs. Maybe start by setting it very high so it 
 
 ## pganalyze Index Advisor
 
-This is not an extension but looks like a useful tool. [A better way to index your PostgreSQL database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
+[A better way to index your PostgreSQL database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
 
 ## pgbadger
 
@@ -463,22 +454,20 @@ This is not an extension but looks like a useful tool. [A better way to index yo
 
 How does bloat (table bloat, index bloat) affect performance?
 
-* "When a table is bloated, PostgreSQL's ANALYZE tool calculates poor/inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
+* "When a table is bloated, PostgreSQL's `ANALYZE` tool calculates poor or inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data.
-* Bloated indexes, such as indexes that reference tuples that have been vacuumed, requires unnecessary seek time. Rebuild the index `REINDEX ... CONCURRENTLY`
-* Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Minimize table bloat to improve performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/9.5/routine-vacuuming.html).
+* Bloated indexes, such as indexes that reference tuples that have been vacuumed, add IO. Rebuild the index `REINDEX ... CONCURRENTLY`
+* Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Minimize table bloat to improve performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/current/routine-vacuuming.html).
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 * [Dealing with significant PostgreSQL database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
 
 ## Upgrades
 
-We are currently running PG 10, so I had a look at some upgrades in 11 and 12.
-
 This is also a really cool [Version Upgrade Comparison Tool: 10 to 12](https://why-upgrade.depesz.com/show?from=10.17&to=12.7&keywords=)
 
 ## PG 11
 
-Release announcement October 2018
+October 2018
 
 * Improves parallel query performance and parallelism of B-tree index creation. Source: [Release announcement](https://www.postgresql.org/about/news/postgresql-11-released-1894/#:~:text=PostgreSQL%2011%20improves%20parallel%20query,are%20unable%20to%20be%20parallelized.)
 * Adds partitioning by hash key
@@ -509,11 +498,13 @@ Released September 2020
 
 ## PG 16
 
+Released September 2023
+
 - Replication on followers
 
 ## RDS
 
-Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL, and AWS has a variation called Aurora with a different storage model.
+Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL.
 
 ## Aurora PostgreSQL
 
@@ -523,9 +514,9 @@ Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL
 
 [Working with RDS Parameter Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html)
 
-* Try out parameter changes on a test database prior to making the change. Potentially create a backup before making the change as well.
+* Try out parameter changes on a test database prior to making the change. Create a snapshot before making the change.
 * Parameter groups can be restored to their defaults (or they can be copied to create an experimental group). Groups can be compared with each other to determine differences.
-* Parameter values can process a formula. RDS provides some formulas that utilize the instance class CPU or memory available to calculate a value.
+* Parameter values can process a formula. RDS provides some formulas that use the instance class CPU or memory available to calculate a value.
 
 ## Database Constraints
 
