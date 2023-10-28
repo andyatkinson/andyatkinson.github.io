@@ -9,7 +9,7 @@ We are using [delayed_job](https://github.com/collectiveidea/delayed_job) for ba
 
 With some code from [here](http://stackoverflow.com/a/6170366/126688) and [here](http://kreusch.com.br/blog/2012/01/13/notifying-delayed-job-failures-by-default/), we put together the initializer below and created a email template in `app/views/exception_notifier/_delayed_job.text.erb` per the instructions.
 
-We have this running in production now. Each of our Delayed Jobs are set up as classes, and utilize the [failure](https://github.com/collectiveidea/delayed_job#hooks) hook. We are now receiving email notifications of job failures and it helps us resolve them quickly!
+We have this running in production now. Each of our Delayed Jobs are set up as classes and use the [failure](https://github.com/collectiveidea/delayed_job#hooks) hook. We are now receiving email notifications of job failures and it helps us resolve them quickly!
 
 ```ruby
 # Chain delayed job's handle_failed_job method to do exception notification

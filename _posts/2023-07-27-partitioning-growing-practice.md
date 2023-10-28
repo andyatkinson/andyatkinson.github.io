@@ -36,8 +36,7 @@ By moving away from a single large table, each smaller table becomes easier to w
 
 From version 10 of PostgreSQL, splitting tables is possible with [Declarative Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html). One of the benefits of Declarative Partitioning is that it is easier to introduce compared with how table partitioning was done in the past. In earlier versions of PostgreSQL it was possible to build partitioned table relationships, but it might have involved using table inheritance, trigger functions, and check constraints which is a lot to create and maintain.
 
-Declaractive Partitioning makes table partitioning accessible to more users.
-
+Declarative Partitioning makes table partitioning accessible to more users.
 
 ## When should I partition?
 
@@ -47,7 +46,7 @@ Since our database server had 384GB of memory and since the table size was nearl
 
 The diagram below visualizes how a partitioned table becomes a "parent" that has children tables. In our case, there is a child table per month of data since we used `RANGE` partitioning, with 1 month of time as boundaries.
 
-There is one partition being actively written to, which is shown as bolded below. For this example, the bold active partition would be the current month.
+There's one partition being actively written to, which is shown in bold below. For this example, the bold active partition would be the current month.
 
 PostgreSQL routes `INSERT` statements to the current month based on the partition boundaries. Partitions for future months are created in advance and are shown below as a dashed line.
 
@@ -150,7 +149,7 @@ SELECT indexdef FROM pg_indexes WHERE indexname = 'index_name';
 
 PostgreSQL Declarative Partitioning can help you solve operational challenges for a high growth table. A migration to a partitioned table is not trivial, but can be tested well in advance and can be performed online using pgslice.
 
-Thanks to Bharath Dakanna and Bobby Ryterski for help on this project and for reviewing earlier versions of this post.
+Thanks to Bharath and Bobby for help on this project and for reviewing earlier versions of this post.
 
 
 

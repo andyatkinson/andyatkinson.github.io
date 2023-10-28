@@ -52,7 +52,7 @@ My ideal facility as described above, a quiet work area, affordable prices even 
 
 Lately I have been working from home exclusively, being fortunate to live in a walkable neighborhood, and being able to spend even more time with my family.
 
-Despite some non-ideal conditions, coworking spaces are popular and are something I will continue to utilize. They have been a great way for me to meet new people, make some new friends and participate in my local community. And even get some work done 😎.
+Despite some non-ideal conditions, coworking spaces are popular and are something I will continue to use. They have been a great way for me to meet new people, make some new friends and participate in my local community. And even get some work done 😎.
 
 What are your favorite coworking places and why?
 

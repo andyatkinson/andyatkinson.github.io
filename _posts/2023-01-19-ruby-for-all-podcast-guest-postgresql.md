@@ -68,7 +68,7 @@ This list is from [SQL For Devs](https://sqlfordevs.com) written by [Tobias Petr
 - Fast wildcard searches, aka `LIKE` and `ILIKE`, GIN index, `gin_trgm_ops` operator class
 - `FETCH FIRST ... WITH TIES`
 
-PostgreSQL has a broad feature set, and is often underutilized at companies. Specialized databases are run for workloads that PostgreSQL could handle. Some people even advocate to choose [PostgreSQL For Everything](https://www.amazingcto.com/postgres-for-everything)!
+PostgreSQL has a broad feature set, and is often underused at companies. Specialized databases are run for workloads that PostgreSQL could handle. Some people even advocate to choose [PostgreSQL For Everything](https://www.amazingcto.com/postgres-for-everything)!
 
 These types of use cases like Full Text Search (`FTS`) that PostgreSQL is capable of, still have complex concepts and domains. Although that complexity is inherent to the full text search domain. The complexity from operating several databases (arguably "unnecessary complexity") is avoided.
 

@@ -33,7 +33,7 @@ In this post I'll recap and expand on some points from our discussion.
 
 First I wanted to highlight the SaaS Developer Community.
 
-The community is run by Gwen Shapira, co-founder and CPO of Nile, and has a couple of thousand members. There is also a [video podcast series on YouTube](https://www.youtube.com/@saas-dev).
+The community is run by Gwen Shapira, co-founder and CPO of Nile, and has a couple of thousand members. Check out the [video podcast series on YouTube](https://www.youtube.com/@saas-dev).
 
 Check it out!
 

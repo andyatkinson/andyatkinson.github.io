@@ -6,7 +6,7 @@ comments: true
 tags: [Ruby, Tips]
 ---
 
-A Set [^rubydoc] is a useful collection and something I under-utilize in Ruby. A Set does not allow duplicates. Converting between a Set and an Array is easy. In the article *A Guide to Ruby Collections, II: Hashes, Sets, and Ranges* [^sitepoint] the author has listed some nice examples where Sets are useful.
+A Set [^rubydoc] is a useful collection in Ruby. A Set does not allow duplicates. Converting between a Set and an Array is easy. In the article *A Guide to Ruby Collections, II: Hashes, Sets, and Ranges* [^sitepoint] the author has listed some nice examples where Sets are useful.
 
 ```ruby
 (Set.new([1,2]) + [2]).to_a
