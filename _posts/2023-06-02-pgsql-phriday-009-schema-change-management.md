@@ -92,7 +92,7 @@ Our team does not have a easy way to test the effect of long duration locks in p
 
 We do modify tables with billions of rows, but ideally we've partitioned the table before it reaches that point!
 
-There are various types of schema modifications that are potentially dangerous even on tables with many fewer rows. As a SaaS B2B app, customers rely on our app to conduct their business, and pay a hefty subscription.
+Schema changes can be more difficult on tables that size. As a SaaS B2B app, customers rely on our app to help run their businesses.
 
 To help identify potentially unsafe changes as early as possible, we use [Strong Migrations](https://github.com/ankane/strong_migrations) which hooks into the Rails Migration flow.
 
