@@ -162,11 +162,11 @@ Hans-Jürgen Schönig from Cybertec provides some context and an explanation. No
 
 ## Let's dive in
 
-To get hands on with pg_stat_statements, let's reset the stats and then generate some activity to review.
+To explore the `pg_stat_io` data locally, let's reset the stats and then generate some client activity.
 
-I'll use the Rideshare Rails app, and the "app activity simulation" script to generate some client activity.
+To do that, I'll use the [Rideshare Rails app](https://github.com/andyatkinson/rideshare) which I've got set up locally, connected to a PostgreSQL 16 database. I'll start the Rails Server, then run the [`simulate_app_activity.rake`](https://github.com/andyatkinson/rideshare/blob/master/lib/tasks/simulate_app_activity.rake) Rake task.
 
-Connect to postgres 16 or newer as a superuser:
+Connect to PostgreSQL 16 (or newer) as a superuser:
 
 ```sh
 psql -U postgres -d rideshare_development
@@ -180,13 +180,13 @@ SELECT pg_stat_reset_shared('io');
 
 The `stats_reset` column will reflect the recent reset timestamp.
 
-Setting up Rideshare is beyond the scope of this post, but if you'd like to try it out: the repository is here. You'll need to:
+Setting up Rideshare is beyond the scope of this post, but if you'd like to follow along, here's a brief peak at the steps:
 
-* Clone the repository, install all the dependencies, and set up the `rideshare_development` database
-* Start the Rails Server
-* Run `bin/rails simulate:app_activity`
+* Clone the repository linked above, install Ruby and all system dependencies. Set up the `rideshare_development` database on PostgreSQL 16.
+* Start the Rails Server (`bin/rails server`)
+* Run the Rake task: `bin/rails simulate:app_activity`
 
-Once that's run, let's review the `client backend` type rows in `pg_stat_io`:
+Once the simulation task has completed, let's go back to `psql` and review the `client backend` rows in `pg_stat_io`:
 
 ```sql
 SELECT * FROM pg_stat_io
@@ -195,12 +195,12 @@ WHERE backend_type = 'client backend';
 
 This is a small 2GB development database with around 20k rows in the largest table.
 
-Let's bring together what we learned in this post, noting a few details from the result rows:
+Although the results aren't posted here, below I'll analyze the results I'm seeing, and note some details in the view, that have been discussed in this post:
 
 - `bulkread` and `bulkwrite` are zero, which makes sense
 - `context` value of `normal` shows 993 read operations, and no write operations, which makes sense. The simulation script is running queries.
-- I'm seeing a `hits` value of `11616` which is great, this means the data being queried is served from shared buffers. Evictions, reuses, and fsyncs are all zero.
-- The only other activity I'm seeing is `backend type` = `checkpointer` performed 45 operations
+- I'm seeing a `hits` value of `11616` which is great, this means the data being queried is served from shared buffers. Evictions, reuses, and fsyncs all start out at zero.
+- The `backend type` = `checkpointer` has performed 45 operations. Later on we see it performs `fsync` operations.
 
 In a real running system with more activity, there will be much more interesting data! In this section we looked at the bare bones data in a otherwise idle system, for a small database with data that fits in memory, and no other client activity besides client activity we explicitly generated.
 
