@@ -195,7 +195,7 @@ WHERE backend_type = 'client backend';
 
 This is a small 2GB development database with around 20k rows in the largest table.
 
-Although the results aren't posted here, below I'll analyze the results I'm seeing, and note some details in the view, that have been discussed in this post:
+Although the results aren't posted here, I'll analyze some view results that were discussed in this post:
 
 - `bulkread` and `bulkwrite` are zero, which makes sense
 - `context` value of `normal` shows 993 read operations, and no write operations, which makes sense. The simulation script is running queries.
