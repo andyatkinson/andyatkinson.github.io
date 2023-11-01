@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PostgreSQL IO Visibility: #wehack PostgreSQL Internals and pg_stat_io"
-tags: []
+tags: [Open Source, PostgreSQL]
 date: 2023-11-01
 comments: true
 ---
