@@ -186,3 +186,4 @@ Fittl
 writebacks
 postgres
 Checkpointer
+PgAnalyze
