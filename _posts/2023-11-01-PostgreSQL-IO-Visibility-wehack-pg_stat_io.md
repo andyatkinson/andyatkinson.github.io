@@ -6,17 +6,19 @@ date: 2023-11-01
 comments: true
 ---
 
-This week I’m participating in a virtual social learning experiment run by [Phil Eaton](https://eatonphil.com) / <https://twitter.com/eatonphil>, called "#wehack PostgreSQL Internals".
+This week I’m participating in a virtual social learning experiment run by [Phil Eaton](https://eatonphil.com) / <https://twitter.com/eatonphil>, called "**`#wehack` PostgreSQL Internals**".
 
 The purpose is to get more people hacking on the internals of PostgreSQL or exploring PostgreSQL topics.
 
-Check out the Announcement blog post here: #wehack Postgres Internals <https://eatonphil.com/2023-10-wehack-postgres.html>
+Check out the Announcement blog post: <https://eatonphil.com/2023-10-wehack-postgres.html>
 
-Since I always have a running list of topics to learn in PostgreSQL, and since I have some available time, I jumped at the chance to pick up some topics to learn. To start, I wanted to dive into the new `pg_stat_io`[^pgstatio] system view in PostgreSQL 16. My goal was to understand the information it provides, and how I could use it for performance analysis.
+Since I always have a running list of topics to learn in PostgreSQL, I picked one off my list! I wanted to dive into the new `pg_stat_io`[^pgstatio] system view in PostgreSQL 16 to understand the information it presents and how I could use that information for performance analysis.
 
-Terminology note: The terms *blocks* and *pages* are often used interchangeably[^phystor] when discussing physical storage in PostgreSQL. The PostgreSQL Glossary[^glossary] uses *data pages* or *pages* when talking about storage, so this post will use *pages*. The use of *pages* in the scope of this post, can be thought of as equivalent to *blocks*. Please contact me for clarifications or corrections. For general context, we're talking about the `8kb` files (by default) in the data directory on disk, where data is stored. For the purposes of analyzing IO latency, since PostgreSQL accesses the *whole page* for even one row, we want to know how many pages we're working with to understand the IO in kilobytes or megabytes being accessed.
+**Terminology note**: The terms *blocks* and *pages* are often used interchangeably[^phystor] when discussing physical storage in PostgreSQL. The PostgreSQL Glossary[^glossary] uses *data pages* or *pages* when talking about storage, so this post will use the term *pages*. The use of *pages* in this post though can be thought of as being equivalent to *blocks*.
 
-Let's get started. First up, what is `pg_stat_io`?
+What are pages? We're talking about the fixed size `8kb` (by default) files in the data directory where row data is stored. For the purposes of analyzing IO latency, it's worth noting that PostgreSQL loads the *whole page* even when just one row is requested. We can use the page size then to multiple the number of buffers accessed when analyzing query execution plans (using `EXPLAIN (ANALYZE, BUFFERS)`) to multiply the number of "buffers read", which are pages loaded from disk, to put the IO into kilobytes or megabytes. For example 100 "buffers read" means `100 * 8092` or 8 megabytes.
+
+Let's get started with `pg_stat_io`. What is it?
 
 ## What is it?
 
@@ -32,7 +34,7 @@ To understand what the view offers, I watched Melanie's Citus Con presentation "
 
 While there are many more contributors to `pg_stat_io`, I wanted to highlight one more person in particular.
 
-Lukas Fittl of PgAnalyze helped review and contributed to earlier work on this capability before PostgreSQL was released. Lukas and team wrote the post "Waiting for Postgres 16: Cumulative I/O statistics with pg_stat_io".[^waiting] In the post, Lukas explains how IO is split into writes to the WAL stream, or writes to the data directory. Writes don't happen into a storage device right away, as they can be buffered in PostgreSQL or the Operating System.
+Lukas Fittl and the PgAnalyze team helped review and contributed to the capability before PostgreSQL 16 was released, mentioned in the post "Waiting for Postgres 16: Cumulative I/O statistics with pg_stat_io".[^waiting] Lukas explains how IO is split into writes to the WAL stream, or writes to the data directory. Writes don't happen into a storage device right away, as they can be buffered in PostgreSQL or the Operating System.
 
 Wait a minute, what are writes from the perspective of PostgreSQL?
 
@@ -209,10 +211,6 @@ Thanks for reading!
 
 
 ## Links
-
-
-
-
 
 
 - PG_STAT_IO AND POSTGRESQL 16 PERFORMANCE <https://www.cybertec-postgresql.com/en/pg_stat_io-postgresql-16-performance/>
