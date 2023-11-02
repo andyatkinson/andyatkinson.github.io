@@ -16,7 +16,11 @@ Since I always have a running list of topics to learn in PostgreSQL, I picked on
 
 **Terminology note**: The terms *blocks* and *pages* are often used interchangeably[^phystor] when discussing physical storage in PostgreSQL. The PostgreSQL Glossary[^glossary] uses *data pages* or *pages* when talking about storage, so this post will use the term *pages*. The use of *pages* in this post though can be thought of as being equivalent to *blocks*.
 
-What are pages? We're talking about the fixed size `8kb` (by default) files in the data directory where row data is stored. For the purposes of analyzing IO latency, it's worth noting that PostgreSQL loads the *whole page* even when just one row is requested. We can use the page size then to multiple the number of buffers accessed when analyzing query execution plans (using `EXPLAIN (ANALYZE, BUFFERS)`) to multiply the number of "buffers read", which are pages loaded from disk, to put the IO into kilobytes or megabytes. For example 100 "buffers read" means `100 * 8092` or 8 megabytes.
+What are pages? These are fixed size `8kb` (by default) [data pages](https://www.postgresql.org/docs/current/glossary.html#GLOSSARY-DATA-PAGE) structures for storage, inside files in the [data directory](https://www.postgresql.org/docs/current/glossary.html#GLOSSARY-DATA-DIRECTORY).
+
+For the purposes of analyzing IO latency, it's worth noting that PostgreSQL loads the *whole page* even when just one row is requested. We can use the page size multiplied by the number of buffers accessed to put the data retrieval into kilobytes or megabytes.
+
+In query execution plans (using `EXPLAIN (ANALYZE, BUFFERS)`) "buffers read" are pages loaded from storage.  100 "buffers read" for example means `100 * 8kb` or `800kb`.
 
 Let's get started with `pg_stat_io`. What is it?
 
