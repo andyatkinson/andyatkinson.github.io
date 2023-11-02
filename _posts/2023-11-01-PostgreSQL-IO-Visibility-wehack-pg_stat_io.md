@@ -16,7 +16,7 @@ Since I always have a running list of topics to learn in PostgreSQL, I picked on
 
 **Terminology note**: The terms *blocks* and *pages* are often used interchangeably[^phystor] when discussing physical storage in PostgreSQL. The PostgreSQL Glossary[^glossary] uses *data pages* or *pages* when talking about storage, so this post will use the term *pages*. The use of *pages* in this post though can be thought of as being equivalent to *blocks*.
 
-What are pages? These are fixed size `8kb` (by default) [data pages](https://www.postgresql.org/docs/current/glossary.html#GLOSSARY-DATA-PAGE) structures for storage, inside files in the [data directory](https://www.postgresql.org/docs/current/glossary.html#GLOSSARY-DATA-DIRECTORY).
+What are pages? These are fixed size `8kb` (by default) [data page](https://www.postgresql.org/docs/current/glossary.html#GLOSSARY-DATA-PAGE) structures for storage, inside files in the [data directory](https://www.postgresql.org/docs/current/glossary.html#GLOSSARY-DATA-DIRECTORY).
 
 For the purposes of analyzing IO latency, it's worth noting that PostgreSQL loads the *whole page* even when just one row is requested. We can use the page size multiplied by the number of buffers accessed to put the data retrieval into kilobytes or megabytes.
 
