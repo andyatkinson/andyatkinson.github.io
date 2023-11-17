@@ -189,3 +189,4 @@ Checkpointer
 PgAnalyze
 Reindex
 Omereshone
+Subquery

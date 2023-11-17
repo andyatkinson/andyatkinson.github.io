@@ -14,86 +14,92 @@ This was a fun opportunity to contribute to Kelvin's catalog of more than 50 rec
 
 Besides TKYT, Kelvin is a prolific blogger, producer, writer, and an upcoming author! Kelvin is an experienced **Sails framework** programmer, and announced the recent honor of becoming the [*lead maintainer for the framework*](https://twitter.com/Dominus_Kelvin/status/1669063700144070662).
 
-Kelvin and decided to talk about *High Performance PostgreSQL with Rails*. We recorded a session together, and it was a lot of fun! When listening to the recording, I realized my fancy microphone wasn't being used. With apologies on the audio, please have a look at our session together.
+Kelvin and decided to talk about *High Performance PostgreSQL for Rails*. 
 
-The session is called *High Performance PostgreSQL for Rails applications with Andrew Atkinson* and is on YouTube. The session has been embedded below. Although we barely scratched the surface of the topic ideas Kelvin had, I've written up his questions and my answers, below the video.
+The session is called *High Performance PostgreSQL for Rails applications with Andrew Atkinson* and is on YouTube. The recorded session is embedded below. Although we barely scratched the surface of the topic ideas Kelvin had, I've written up his questions as a bonus Q&A below the video. **Note for the video**: unfortunately my fancy microphone wasn't used (by mistake). Apologies on the audio.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/90pWCR9O10Q?si=O_1n4P8qBQC0-rEt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Q&A
 
-With a one hour session, we only made it through some basics with the Active Record ORM, SQL, query plans, and indexes.
+With a one hour session, we only made it through some basics with the Active Record ORM, SQL queries, query planning, and efficient indexes. While those are some of **the key ingredients** to good performance, there's much more.
 
-To achieve high performance database web applications, you'll need to learn to use all of those things well, and much more! The following questions explore more topics related to high performance database web apps.
+The following questions explore more performance related topics beyond what we covered in the session.
 
 #### How do you optimize PostgreSQL for high performance in a Rails application?
 
-Achieving and sustaining high performance with web applications requires **removing latency** from wherever possible from the request and response cycle. For the database portion, you'll want to understand your SQL queries well, make sure they're narrowly scoped, and that indexes are optimized to support the queries. The physical server instances need appropriate sizes of CPU, memory, and disk as well.
+Achieving and sustaining high performance with web applications requires **removing latency** wherever possible in the request and response cycle. For the database portion, you'll want to understand your SQL queries well, make sure they're narrowly scoped, and that indexes are optimized to support them. Besides that, the physical server instances need appropriate sizes of CPU, memory, and disk.
 
-While there are dozens of things to check, if I had to choose one, I'd recommend *developers focus on writing efficient queries*. To do that, developers need to learn SQL, the query planner, and how to use indexes well. They'll need to understand their *data model* and the *distribution* of the data. This is a lot to learn, but it can be learned over time.
+While there are dozens of aspects to good performance, if I had to choose one for developers, I'd recommend focusing on **writing efficient queries**.
 
-To get an overview of 5 major areas to focus on when you're scaling up a small Rails application on PostgreSQL, to a large one, please check out my presentation: [RailsConf 2022 - Puny to Powerful PostgreSQL Rails Apps by Andrew Atkinson](/blog/2022/05/23/railsconf-2022).
+To write efficient queries, developers should spend time learning SQL, the query planner, and good indexing. They'll need to understand their *data model* and the *distribution* of the data. While this is a lot to learn, these technologies are proven, and have longevity in the industry, so it's a good investment of time to learn them well.
+
+To get an overview of 5 major areas with **Ruby on Rails** and **PostgreSQL** to look at, check out my presentation: [RailsConf 2022 - Puny to Powerful PostgreSQL Rails Apps by Andrew Atkinson](/blog/2022/05/23/railsconf-2022).
 
 
 #### Can you share specific strategies for indexing tables to improve query performance?
-Indexes help remove latency when data is accessed. You'll want to study your queries, learn how the query planner works, and make sure the indexes help the queries retrieve the needed data efficiently.
+Indexes help remove latency when data is accessed. You'll want to study your queries, learn how the query planner works, and use the query planner to confirm that indexes accesses are used efficiently.
 
 
 #### What database design considerations are crucial for achieving optimal performance with PostgreSQL in a Rails environment?
 
-Try to "Keep it simple." Prefer "simple data types" over complex ones, like integers over UUIDs when possible. Have a sensible number of columns. Only add indexes when they're needed by queries.
+Try to "Keep it simple." Prefer "simple data types" over complex ones when possible, like integers over UUIDs. Have a sensible number of columns. Only add indexes when they're needed by queries. Learn how to confirm which indexes are used and *not* used.
 
-When querying data, think about ways to reduce the data being accessed by the query. Try and use data types that are easily *sortable*, like numerical types.
+Try and use data types that are easily *sortable*, like numerical types.
 
 
 #### Are there common pitfalls developers face when working with PostgreSQL in a high-performance Rails application?
 
-Yes. Pitfalls in Rails might be remaining ignorant of the SQL queries that are generated by Active Record. When developers start asking questions about what the queries look like, what data they're accessing, whether those queries are using indexes or not, they will be on their way to writing efficient queries.
+Yes. Pitfalls in Rails might be remaining ignorant of the SQL queries that are generated by Active Record. When developers start asking questions about what *high performance queries look like*, and *whether their specific queries are optimal*, they'll need to dive into their observability tooling. Once they know where to look, they can begin improving their slow queries, on their way towards better reliability, scalability, and cost efficiency.
 
 
 #### How do you handle large datasets efficiently, and what tools or techniques do you recommend for database maintenance in such scenarios?
-When working with large tables in PostgreSQL, for example 100GB or greater, consider using table partitioning to migrate your table data into a partitioning structure. Partitioned tables are child tables under a parent, that are smaller tables and easier to work with.
+When working with large tables in PostgreSQL, for example 100GB or greater, consider using table partitioning. To use partitioned tables, you'll need to migrate your table data into a new structure. Partitioned tables are child tables under a parent table, and the child tables are smaller and easier to work with. While this is a lot of work, the benefits for high growth, large tables, can be enormous.
 
-For maintenance on very large PostgreSQL databases, learn how Autovacuum works, the effects of bloat in tables and indexes, and how Autovacuum keeps tables optimized. From there, you'll be in a position to tune Vacuum, run Analyze, and run Reindex on bloated indexes when needed.
+For maintenance operations when working with large PostgreSQL databases, learn how Autovacuum works, the effects of bloat in tables and indexes, and how Autovacuum keeps tables optimized. From there, you'll be in a position to tune Autovacuum so that Vacuum runs better, and you'll know when to run commands like Analyze and Reindex as needed.
 
 
 #### Could you discuss the impact of caching mechanisms on PostgreSQL performance, particularly in the context of a Rails application?
-PostgreSQL uses caches that are worth configuring for high performance. Ruby on Rails also has client application level caches, and you'll want to use those to eliminate queries where possible. <https://guides.rubyonrails.org/caching_with_rails.html>
+PostgreSQL has internal cache stores, but let's discuss Ruby on Rails. Ruby on Rails has a variety of client cache layers. By using them, you can eliminate repetitive or unnecessary SQL queries entirely. The best way to learn about these caches is the Rails Guides documentation: <https://guides.rubyonrails.org/caching_with_rails.html>
 
 
 #### What are some advanced features or settings in PostgreSQL that developers may not be fully leveraging for performance gains in a Rails project?
-Developers may not be leveraging [PostgreSQL Full Text Search (FTS)](https://www.postgresql.org/docs/current/textsearch.html), which is quite capable. If PostgreSQL can handle your search needs, you can spare the development team from having to run an entirely separate database for search.
+Developers may not be leveraging [PostgreSQL Full Text Search (FTS)](https://www.postgresql.org/docs/current/textsearch.html), which is quite capable. With PostgreSQL handling search, you can spare your development team from having to run a second dedicated database. Or you may run a separate PostgreSQL instance for search, but you'll be able to bring your operator skills and knowledge to support it.
 
-PostgreSQL can be used for full-text *fuzzy searching*. PostgreSQL also supports vector similarity search with [extensions like `pgvector`](https://github.com/pgvector/pgvector), using stored "embeddings" from Large Language Model API services. Once document text has stored embeddings, user input text is "embedded", and can be compared to find similar text based on it's meaning.
+PostgreSQL supports *fuzzy searching* to help you search text with various keywords, including misspellings. PostgreSQL also supports semantic (the "meaning") search, with [extensions like `pgvector`](https://github.com/pgvector/pgvector) that fetch "embeddings" from Large Language Model API services. When users of your application submit searches, their text is embedded, and compared against stored embeddings, to find similar search based on it's *meaning*. This is powerful!
 
-Another advanced feature is PostgreSQL native table partitioning, which helps split up very large tables, helping to smooth out operations, facilitate a data archival process, and possibly improve performance (depends on queries).
+Another advanced feature is PostgreSQL is native table partitioning. Partitioning helps when working with very large tables that are bogging down your operations. Partitioning helps enable an easy and efficient data archival process as well, and may even improve your query performance.
 
 
 #### How do you approach query optimization? Are there specific query patterns that developers should be mindful of for better performance?
-When looking to lessen overall utilization on a server instance, take a wide view looking across all queries using a query statistics observability tools (`pg_stat_statements`) and application APM tools. Check out my presentation From there, dive into specific full query text samples. Given a specific query to optimize, try and minimize the data it is accessing. Then make sure the indexes support the query efficiently. Squeeze everything out from the instance, to the query, to the indexes.
+When working on reducing load on a server instance, take a *wide* view by studying the data from query observability tools like `pg_stat_statements`, and from application code using an APM.
+
+Once you've got a specific query to optimize, try and add portions that reduce the data it's accessing. Do that with additional filters, limits, or by reducing the fields. Once that's taken care of, make sure the tables and indexes are free of excessive bloat. Make sure the indexes support the query efficiently. Squeeze everything you can from the instance. Sometimes you'll need to flip things around and rewrite the query, or break pieces out using Subquery Expressions and Common Table Expressions (CTE).
 
 Check out: [PGSQL Phriday #008 — pg_stat_statements, PgHero, Query ID](/blog/2023/05/17/pgsql-phriday-008).
 
 
 #### Can you share experiences or examples where database sharding or partitioning has significantly improved performance in a Rails application using PostgreSQL?
-Yes. At my previous job, we isolated customer data into their own database, and their own instance. This meant the database activity from other customers didn't affect theirs at all. The trade-off there was greater cost, and greater operational complexity.
+Yes. At my previous job, we isolated customer data into a dedicated database and instance. While this provided the greatest degree of isolation for both data and compute, it came with the trade-off of greater cost and complexity.
 
-At the same job, we also used table partitioning to break up a very large table, to help with maintenance operations, adding indexes and constraints, and to make replication more reliable. I turned our experience with table partitioning into a case study presentation called: [Presenting 'Partitioning Billions of Rows' at SFPUG August 2023](/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation).
+At the same job, we also used table partitioning to break up a very large table, to make it easier afterwards, when adding indexes or constraints, or working with row data replication. I turned our experience into a case study presentation called: [Presenting 'Partitioning Billions of Rows' at SFPUG August 2023](/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation).
 
 
 #### Given the evolving landscape of PostgreSQL and Rails, are there any recent advancements or features that developers should be aware of to enhance performance?
-Both Ruby on Rails and PostgreSQL are mature technologies, that benefit from the contributions of thousands of programmers over decades. While there are fewer "earth shattering" features these days, you can be sure that when picking up either of them, you'll be able to build your applications from scratch up to a massive scale.
+Both Ruby on Rails and PostgreSQL are mature technologies, that benefit from the contributions of thousands of programmers over decades. While there are fewer "earth shattering" features as a result, with this combination you can feel confident that you can start from scratch, and build to a massive scale.
 
-PostgreSQL continues to release new features with an impressive *annual* release cadence. As core system software, PostgreSQL must focus on it's long track record of reliability, durability, and resilience, when considering any new features, as well as backwards compatibility.
+PostgreSQL continues to release new features on an impressive *annual* release cadence. As core software, PostgreSQL must focus on reliability, durability, and resilience, when considering any new feature. PostgreSQL also focuses on excellent documentation and backwards compatibility.
 
-In recent releases, Ruby on Rails expanded it's support for running Multiple Databases. By expanding beyond a single PostgreSQL instance, Rails applications can natively support use cases like *read and write splitting* and *horizontal sharding*. Check out [Multiple Databases with Active Record](https://guides.rubyonrails.org/active_record_multiple_databases.html) to learn more.
+In recent releases, Ruby on Rails expanded it's support for working with *Multiple Databases*. When an application expands beyond a single PostgreSQL instance, Rails applications can take advantage of things like *read and write splitting* and *horizontal sharding* by using many instances, all connected and configure to their Rails app. Check out [Multiple Databases with Active Record](https://guides.rubyonrails.org/active_record_multiple_databases.html) to learn more.
 
-Active Record continues to fill out it's native support for advanced database capabilities. Let's look at a couple more that aren't performance related. Common Table Expressions (CTE) and Composite Primary Keys (CPK) were recently added. While not new database features, they're useful at large organizations or when maintaining complex SQL, and now there's native support for them in Active Record.
+Active Record continues to fill out it's native support for advanced database capabilities. Common Table Expressions (CTE) and Composite Primary Keys (CPK) were recently added. While they're not new or performance related, support in the framework reflects the importance of these capabilities that are used by large organizations with complex databases and queries. With native support, those organizations can now leverage native Active Record framework support.
 
 
 ## Wrap Up
 
-Thank you Kelvin for the opportunity and for the great questions!
+Thanks again Kelvin, for the opportunity to share!
+
+Check out some links below based on the session or Q&A.
 
 
 ## Links
