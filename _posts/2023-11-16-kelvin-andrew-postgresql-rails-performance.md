@@ -6,23 +6,25 @@ date: 2023-11-16
 comments: true
 ---
 
-I was honored to join Kelvin Omereshone, based in Nigeria, to talk about High Performance PostgreSQL and Ruby on Rails. Kelvin's show is called *Teach Kelvin Your Thing* (TKYT). What is it?
+I was honored to join [Kelvin Omereshone](https://dominuskelvin.dev), based in Nigeria, on his show *Teach Kelvin Your Thing* (TKYT). What's that?
 
 > **Teach Kelvin Your Thing** was created out of a need for me to learn not just new technologies but how folks who know these technologies use them.
 
-Kelvin's got more than 50 sessions online, which focus on JavaScript and web development. Kelvin let me know that our session was the first TKYT session that wasn't using JavaScript. Maybe we'll inspire some more people to try Ruby! Kelvin is a prolific blogger, YouTuber, video producer, writer, and the author of an upcoming book! As an experienced **Sails framework** programmer, Kelvin also was honored to became the [*lead maintainer of the project*](https://twitter.com/Dominus_Kelvin/status/1669063700144070662). 🥳
+Kelvin has more than 50 sessions recorded, and they all focus on JavaScript and web development, until this one! Kelvin let me know this was the first TKYT session that wasn't based on JavaScript technologies. Maybe we'll inspire some more people to try Ruby!
 
-Kelvin and I dove straight in to a Rails app ([Rideshare app](https://github.com/andyatkinson/rideshare)) connected to PostgreSQL, switching between the editor, `psql`, and `bin/rails console`. We recorded a session, and my only regret is that my fancy dedicated microphone wasn't used in the recording due to a technical error. Kelvin assured me the content is still good despite that though! 😅
+Besides being a podcaster, Kelvin is a prolific blogger, YouTuber, producer, writer, and an upcoming author! As an experienced **Sails framework** programmer, Kelvin also was honored recently by becoming the [*lead maintainer of the project*](https://twitter.com/Dominus_Kelvin/status/1669063700144070662). 🥳
 
-Check out *High Performance PostgreSQL for Rails applications with Andrew Atkinson* on YouTube below, and let us know what you think. We barely scratched the surface of all of the topic suggestions Kelvin had, which you can see more of below.
+Kelvin and decided to talk about *High Performance PostgreSQL with Rails*. We recorded a session together, and my only regret is that my fancy microphone wasn't used for the recording. With my apologies for the audio on my side, I hope some people still find the content useful! 😅
+
+Check out *High Performance PostgreSQL for Rails applications with Andrew Atkinson* on YouTube below. We barely scratched the surface of the topic suggestions Kelvin had. Learn more about those below.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/90pWCR9O10Q?si=O_1n4P8qBQC0-rEt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
 ## Q&A
 
-Prior to the session, Kelvin sent a bunch of questions as possible topics to cover. With a one hour session, we only were able to cover a small portion of the ideas. We ended up focusing mainly on the Active Record ORM, a bit on the PostgreSQL query execution planner, and how indexes are used in query execution. We talked about why indexes are valuable, and how to make sure they're being used by reading the execution plan.
+Prior to the session, Kelvin and I discussed a lot of possible questions to cover. With a one hour session, we only made it through a few.
 
-Here are some of the questions and answers we looked at prior to the session. We may cover these as a video session in the future!
+I decided to write out some answers to Kelvin's questions. We may cover these in a future session!
 
 #### How do you optimize PostgreSQL for high performance in a Rails application?
 
