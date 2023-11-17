@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Teach Kelvin Your Thing (TKTY) — High Performance PostgreSQL for Rails 🖥️"
-tags: [Open Source]
+tags: [Open Source, PostgreSQL, Ruby on Rails]
 date: 2023-11-16
 comments: true
 ---
@@ -92,7 +92,7 @@ PostgreSQL continues to release new features on an impressive *annual* release c
 
 In recent releases, Ruby on Rails expanded it's support for working with *Multiple Databases*. When an application expands beyond a single PostgreSQL instance, Rails applications can take advantage of things like *read and write splitting* and *horizontal sharding* by using many instances, all connected and configure to their Rails app. Check out [Multiple Databases with Active Record](https://guides.rubyonrails.org/active_record_multiple_databases.html) to learn more.
 
-Active Record continues to fill out it's native support for advanced database capabilities. Common Table Expressions (CTE) and Composite Primary Keys (CPK) were recently added. While they're not new or performance related, support in the framework reflects the importance of these capabilities that are used by large organizations with complex databases and queries. With native support, those organizations can now leverage native Active Record framework support.
+Active Record continues to fill out it's native support for advanced database capabilities. Common Table Expressions (CTE) and Composite Primary Keys (CPK) were recently added. While they're not new or performance related, support in the framework reflects the importance of these capabilities at large organizations, or apps with complex databases or queries.
 
 
 ## Wrap Up
