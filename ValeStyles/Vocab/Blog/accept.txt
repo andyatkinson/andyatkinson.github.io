@@ -190,3 +190,5 @@ PgAnalyze
 Reindex
 Omereshone
 Subquery
+npm
+rbenv
