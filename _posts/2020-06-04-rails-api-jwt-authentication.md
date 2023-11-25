@@ -20,9 +20,9 @@ This article is going to look at implementing this approach using the JSON Web T
 
 #### bcrypt gem
 
-Since the scope of JWT does not include usernamd and password authentication, we're going to bring in the [bcrypt gem](https://github.com/codahale/bcrypt-ruby) and use Rails' `has_secure_password` functionality, to store a hashed password for our users. In the example [rideshare application](https://github.com/andyatkinson/rideshare/pull/18), we set up an authentication endpoint where a username and password can be submitted.
+Since the scope of JWT does not include username and password authentication, we're going to bring in the [bcrypt gem](https://github.com/codahale/bcrypt-ruby) and use Rails' `has_secure_password` functionality, to store a hashed password for our users. In the example [rideshare application](https://github.com/andyatkinson/rideshare/pull/18), we set up an authentication endpoint where a username and password can be submitted.
 
-Once the user supplies their usernamd and password, they receive a JWT formatted JSON response to use in future requests.
+Once the user supplies their username and password, they receive a JWT formatted JSON response to use in future requests.
 
 
 #### jwt gem

@@ -192,3 +192,14 @@ Omereshone
 Subquery
 npm
 rbenv
+JWTs
+JWKs
+Akamai
+JWKS
+Keytool
+keytool
+jwt
+JWT
+pem
+OAuth
+bcrypt

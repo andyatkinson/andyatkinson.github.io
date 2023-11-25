@@ -6,7 +6,7 @@ date: 2021-05-12
 comments: true
 ---
 
-Authentication and authorization with JSON technologies can be a confusing mess of of acronyms, so this post is an attempt to sort these out. This post including the title, is very similar to [Red Thunder: JWTs? JWKs? ‘kid’s? ‘x5t’s? Oh my!](https://redthunder.blog/2017/06/08/jwts-jwks-kids-x5ts-oh-my/). Check their post out as well which was helpful diagrams.
+Authentication and authorization with JSON technologies can be a confusing mess of acronyms, so this post is an attempt to sort these out. This post including the title, is very similar to [Red Thunder: JWTs? JWKs? ‘kid’s? ‘x5t’s? Oh my!](https://redthunder.blog/2017/06/08/jwts-jwks-kids-x5ts-oh-my/). Check their post out as well which was helpful diagrams.
 
 NOTE TO READER: This Post is in progress and being edited for technical accuracy. If you see errors please contact me.
 
@@ -64,7 +64,7 @@ The JSON file has the following keys:
 - `kty` (RSA)
 - `kid` (key identifier, "alias" for the key)
 - `n`: the modulus for a pem file
-- `e`: the exponone for a pem file
+- `e`: the exponent for a pem file
 
 
 #### What are they used for?
