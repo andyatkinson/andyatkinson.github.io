@@ -250,3 +250,9 @@ Rebased
 rebase
 Dev
 dev
+namespace
+HTTP
+http
+Pomo
+Nunemaker
+deadweight
