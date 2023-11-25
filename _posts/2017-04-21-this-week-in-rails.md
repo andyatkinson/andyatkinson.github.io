@@ -30,7 +30,7 @@ Godfrey has a jovial writing style, and manages the newsletter and team in a sim
 
 Since we're writing about code, for programmers, as programmers, the content can be a little dry. The writing style tries to be fun, and not take things too seriously. An issue having a theme can be helpful. I've taken inspiration from holidays and world events.
 
-The real nuts and bolts of the issues though involve reading through most of the commits for the week (dozens generally), looking for interesting Pull Requests with with comments and context, or bug fixes and features with a broad impact. We also like to highlight the number of contributors, and call out first-time contributors, to help get these individuals some recognition for their hard work.
+The real nuts and bolts of the issues though involve reading through most of the commits for the week (dozens generally), looking for interesting Pull Requests with comments and context, or bug fixes and features with a broad impact. We also like to highlight the number of contributors, and call out first-time contributors, to help get these individuals some recognition for their hard work.
 
 ### Personal Motivation
 
