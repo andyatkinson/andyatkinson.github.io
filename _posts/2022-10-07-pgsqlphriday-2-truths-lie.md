@@ -45,7 +45,7 @@ LIMIT 10;
 
 ## Linking SQL Queries to Application Code
 
-In our Ruby on Rails application, we've configured the Marginalia gem [^7] (pre Rails 7) to add annotations as comments to all SQL queries.
+In our Ruby on Rails application, we've configured the Marginalia gem [^7] (pre-Rails 7) to add annotations as comments to all SQL queries.
 
 Whether the query is coming from a Controller action (an MVC [^5] controller) or a background job like Sidekiq [^6], we can see where the query came from.
 
