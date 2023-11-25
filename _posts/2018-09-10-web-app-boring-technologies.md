@@ -29,7 +29,7 @@ Some of the things we do as scheduled jobs:
 
 ## PostgreSQL
 
-We have some extensions and functions that are specific to PostgreSQL, but the features I work on are mostly database agnostic. We use Active Record migrations to manage schema changes like adding tables, changing column defaults, adding indexes, constraints etc. We have read-only replicas that are used for ad hoc querying and generating data dumps. Some features written originally with Active Record tend to get re-written as big blobs of SQL.
+We have some extensions and functions that are specific to PostgreSQL, but the features I work on are mostly database agnostic. We use Active Record migrations to manage schema changes like adding tables, changing column defaults, adding indexes, constraints etc. We have read-only replicas that are used for ad-hoc querying and generating data dumps. Some features written originally with Active Record tend to get re-written as big blobs of SQL.
 
 ## Logging
 

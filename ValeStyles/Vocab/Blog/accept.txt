@@ -230,3 +230,17 @@ Hamcrest
 Mockito
 Matchers
 matchers
+duplicative
+coworking
+Varidesk
+Workbar
+participate
+Gemfile
+queryable
+icalBuddy
+Vaidehi
+Joshi
+sanitization
+employee_id
+deserialization
+URL

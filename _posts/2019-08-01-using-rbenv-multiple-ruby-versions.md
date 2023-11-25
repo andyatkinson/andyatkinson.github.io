@@ -16,7 +16,7 @@ Upgrade or install [ruby-build](https://github.com/sstephenson/ruby-build):
 brew upgrade ruby-build # or `install` if ruby-build is not already installed
 ```
 
-#### Add Ons
+#### Add-Ons
 
 The plugin [rbenv-bundler](https://github.com/carsomyr/rbenv-bundler) makes it possible to not have to type `bundle exec` in front of every command. This can be installed with `brew install rbenv-bundler`.
 

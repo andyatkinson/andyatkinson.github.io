@@ -38,7 +38,7 @@ Now we have an encoded and encrypted representation to store.
 
 #### Decrypt
 
-This part sets up the decryption, passing in the key and initial value we used above to encrypt thed data.
+This part sets up the decryption, passing in the key and initial value we used above to encrypt the data.
 
 ```ruby
 decipher = OpenSSL::Cipher::AES.new(256, :CBC)
