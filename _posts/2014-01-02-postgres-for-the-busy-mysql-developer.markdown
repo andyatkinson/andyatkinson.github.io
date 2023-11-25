@@ -12,11 +12,13 @@ In this post I'll be sharing what I learned! Statements should be run using the 
 
 ## Roles
 
-Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` in psql. These are meta commands.
+Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` (described users) in psql. These are "meta-commands."
 
-Roles have Privileges in order to perform various operations.
+Roles have Privileges, which give them the ability to perform various operations.
 
-Type `\list` to see all databases and `\c database` to connect to a database named "database". `\dt` will "describe" all "tables".
+Type `\list` (or `\l`) to see all databases and `\c <database-name>` to connect to a database (replacing <database-name> with your database name).
+
+The `\dt` meta-command describes all tables, and `\d` with a table name argument, describes a specific table.
 
 ## Working with CSV
 
