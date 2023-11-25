@@ -75,7 +75,7 @@ Download these `.dmg` files. Some may be available through the OS X App Store.
 
 #### Misc
 
- * Generate SSH keys and add public key to github, bitbucket
+ * Generate SSH keys and add public key to GitHub, BitBucket
  * `brew install tmux`
  * `brew install python`
  * Install Java JRE or JDK

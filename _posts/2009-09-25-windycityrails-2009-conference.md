@@ -15,7 +15,7 @@ I attended WindyCityRails in Chicago this year. [Videos of the sessions are avai
  - substitute the value for the function call for the same inputs
  - object should have well-defined states and state transitions
  - compose domain models from simple classes
- - fold/reduce: convert to smaller representation. smaller representation of intergers would be adding them together.
+ - fold/reduce: convert to smaller representation. smaller representation of integers would be adding them together.
 
 #### Super-easy PDF Generation with Prawn and Prawnto by John McCaffrey
 
@@ -77,7 +77,7 @@ Noel moved through various parts of the Rails stack and described techniques for
  
 #### Optimizing Perceived Performance by David Eisinger
 
-David advocated for UI snappiness to improve user experience. He used jQuery to load and display content and submit forms. His sample app is funny, [the code for dbdb is on github](http://github.com/dce/dbdb).
+David advocated for UI snappiness to improve user experience. He used jQuery to load and display content and submit forms. His sample app is funny, [the code for dbdb is on GitHub](http://github.com/dce/dbdb).
 
 
 #### Rails 3 Update by Yehuda Katz

@@ -21,10 +21,10 @@ In my opinion, password breaches will continue to happen, potentially at a highe
  * Adobe: changed password
  * Dropbox: changed password
  * Gawker: Gawker is dead
- * GeekedIn: changed github password
+ * GeekedIn: changed GitHub password
  * Last.fm: changed password and deactivated account
- * tumblr: found that no account was associated to email anymore
- * livingsocial: delete cards, changed password
+ * Tumblr: found that no account was associated to email anymore
+ * LivingSocial: delete cards, changed password
  * Yahoo!: I had 2 accounts, I changed the password on each use their account termination feature
  * LinkedIn: changed password
  * Target: changed password

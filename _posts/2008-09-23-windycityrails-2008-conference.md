@@ -6,7 +6,7 @@ comments: true
 tags: [Ruby, Rails, Conferences, Events]
 ---
 
-My notes from the [WindyCityRails 2008 1-day conference](http://windycityrails.org) held Saturday September September 20th, 2008 in Chicago. This conference was for the Ruby on Rails framework. I traveled from Minneapolis for the conference.
+My notes from the [WindyCityRails 2008 1-day conference](http://windycityrails.org) held Saturday September 20th, 2008 in Chicago. This conference was for the Ruby on Rails framework. I traveled from Minneapolis for the conference.
 
 #### DHH Q&A
 

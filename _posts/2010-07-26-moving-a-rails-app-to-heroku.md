@@ -22,7 +22,7 @@ The following gems were not installed so the app did not immediately boot. [Hero
 
     haml, acts_as_markup, friendly_id, thoughtbot-paperclip, mislav-will_paginate, gravtastic  
 
-Paperclip and will_paginate needed to be updated to the versions found on [Rubygems.org](http://rubygems.org). Rehash was looking for the versions of the gems that were hosted on github, which no longer hosts gems.
+Paperclip and will_paginate needed to be updated to the versions found on [Rubygems.org](http://rubygems.org). Rehash was looking for the versions of the gems that were hosted on GitHub, which no longer hosts gems.
 
 First successful boot console output:
 
