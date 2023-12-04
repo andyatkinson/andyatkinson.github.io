@@ -75,7 +75,7 @@ PostgreSQL companies have lots of events you could attend. Here are a few:
 
 ## PostgreSQL conferences on my radar
 - PgDay Chicago 
-- [SCALE 20x](https://www.socallinuxexpo.org/scale/20x) LA, CA
+- [SCALE 21x](https://www.socallinuxexpo.org/scale/21x) LA, CA
 - [PgDay Paris](https://2023.pgday.paris)
 - [PostgreSQL Conference Europe](https://2023.pgconf.eu)
 - [PGCon 2024](https://www.pgcon.org/2024/)
@@ -99,4 +99,12 @@ As a Ruby on Rails and backend web applications engineer, there are always a var
 * [Rails World](https://rubyonrails.org/world) (recently in Amsterdam, 2024 will be in Toronto)
 * [Sin City Ruby 2024](https://www.sincityruby.com) - I’ll be speaking!
 
-Thanks!
+## Post-Event Reflection
+
+One specific section asked whether folks had post-event reflections or specific rituals. I have a couple!
+
+- I take notes during the event, which aren’t organized and are more of a stream. Afterwards, I re-read them and try to organize them, possibly into a blog post. Reorganizing them and writing them out helps me gather links and context.
+- I try to connect with attendees I met in person on social media and LinkedIn, reminding them in my initial request message that we met in person, and sending that message relatively quickly. Sometimes I'll ask to take a picture of their badge so that I can remember their name. I might research the company a bit that they work for.
+- I keep a list of topics I want to learn more about and do a deep dive into. I might take this kind of topic, [`pg_stat_io` is a recent PostgreSQL topic](/blog/2023/11/01/PostgreSQL-IO-Visibility-wehack-pg_stat_io) that caught my interest. I’ll research it a bit and write a blog post about it. This helps me form a perspective on it and to learn about it enough to see whether it would be useful to help me in the future, or something I could recommend to others.
+
+Thanks! 
