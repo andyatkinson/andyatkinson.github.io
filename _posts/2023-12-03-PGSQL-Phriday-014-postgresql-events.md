@@ -6,7 +6,7 @@ date: 2023-12-03
 comments: true
 ---
 
-This post is my contribution to the PGSQL Phriday #014 blog post series. Here's the invitation:
+This post is my contribution to the [PGSQL Phriday #014 blog post series](https://www.pgsqlphriday.com/2023/11/pgsql-phriday-014/). Here's the invitation:
 
 > I invite you to share your PostgreSQL Events experiences in your dedicated blog post. Whether you’re a seasoned attendee, a speaker, a trainer, a sponsor, an organizer, or a first-timer, your unique perspective contributes to the canvas of the PostgreSQL community.
 
