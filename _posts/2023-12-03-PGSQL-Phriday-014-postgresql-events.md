@@ -16,7 +16,7 @@ Since I didn't have a lot of time for this one, I decided to make a list of the 
 
 I’ve attended three official PostgreSQL events, as well as PostgreSQL sessions at AWS re:Invent 2022 and PostgreSQL User Groups (virtually).
 
-Here are links to those events, and blog posts I wrote about them:
+Here are links blog posts I wrote about those experiences:
 
 * PGConf NYC 2021 (See: [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021))
 * AWS re:Invent 2022 (See: [AWS re:Invent Day 1](/blog/2022/11/28/aws-reinvent-day1))
