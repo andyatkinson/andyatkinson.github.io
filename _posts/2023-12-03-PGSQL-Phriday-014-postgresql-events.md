@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "PGSQL Phriday #014 — PostgreSQL Events"
-tags: []
-date: 2023-12-02
+tags: [Conferences, Events]
+date: 2023-12-03
 comments: true
 ---
 
