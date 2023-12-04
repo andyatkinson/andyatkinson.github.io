@@ -6,17 +6,17 @@ date: 2023-12-03
 comments: true
 ---
 
-This post is my contribution to the PGSQL Phriday #014 blog post series. Here's the invitation for #014:
+This post is my contribution to the PGSQL Phriday #014 blog post series. Here's the invitation:
 
 > I invite you to share your PostgreSQL Events experiences in your dedicated blog post. Whether you’re a seasoned attendee, a speaker, a trainer, a sponsor, an organizer, or a first-timer, your unique perspective contributes to the canvas of the PostgreSQL community.
 
-For my post, since I didn't have a lot of time for this one, I decided to make a bullet point list of events with minimal commentary. While lacking in details, I hoped others might find the list useful to look through.
+Since I didn't have a lot of time for this one, I decided to make a list of events I've attended or have on my radar in the community, and hoped that others would find the list useful or interesting.
 
 ## Overview of PostgreSQL Events
 
-I’ve had the privilege of presenting and attending three official PostgreSQL events in the last couple of years, as well as PostgreSQL sessions at AWS re:Invent 2022, and PostgreSQL User Group meetups.
+I’ve attended three official PostgreSQL events in the last couple of years. Besides those, I've attended PostgreSQL sessions at AWS re:Invent 2022 and PostgreSQL User Groups.
 
-Here are some of the bigger scale events:
+Here are links to events with posts:
 
 * PGConf NYC 2021 (See: [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021))
 * AWS re:Invent 2022 (See: [AWS re:Invent Day 1](/blog/2022/11/28/aws-reinvent-day1))
@@ -29,38 +29,37 @@ See: [Upcoming Events](https://www.postgresql.org/about/events/)
 ## Attendees and their jobs and roles
 What are common job roles and responsibilities for attendees of these events?
 
-This is my anecdotal experience from conversations and observations:
-
-Attendees tend to work as:
+From my experience in conversations and observations, attendees tend to work as:
 * DBAs
 * Database engineers
 * Developer relations, developer advocates, community advocates
-* Work for database vendors, maybe as experts, solution engineers, or on teams that build database products
+* Engineers on database projects
+* Backend engineers for product or services companies
 
 
 ## Types of companies
-What are some of the companies at these events?
+Which companies are represented at these events?
 
-* Big companies and cloud providers (AWS, Microsoft, Fujitsu, Google, Crunchy Data
+* Big companies and cloud providers (AWS, Microsoft, Fujitsu, Google, Crunchy Data)
 * Timescale, YugabyteDB
-* Startup companies making commercial extensions like database offerings like Tembo, Neon
-* Database services: DBTune, OtterTune
-* Consultancies: EDB, PgExperts
+* Startup companies with databases or commercial extensions and offerings: Tembo, Neon, Hydra
+* Database services: DBTune, OtterTune, Redgate Software
+* Consultancies: EDB, PGX, Inc.
 
 ## Why go?
-If you're considering any of these events, you might be wondering whether it's worth going or why?
+Here are some reasons to attend:
 
-* Learn how to better use PostgreSQL for your job
-* Expand your knowledge of companies and products in the PostgreSQL ecosystem, that may offer solutions for you, or may offer job or partnership opportunities
+* Learn how to use PostgreSQL better for your day job
+* Expand your knowledge of companies and products in the PostgreSQL ecosystem
 * Network with industry professionals
 
 ## In-person and virtual
 
-* Can't beat in-person for networking
-* Nice virtual events too like [Citus Con](https://www.citusdata.com/cituscon/2023/)
+* Can't beat in-person events for networking
+* There are nice virtual events for learning too like [Citus Con](https://www.citusdata.com/cituscon/2023/)
 
 ## Vendor events
-PostgreSQL companies have lots of events you could attend.
+PostgreSQL companies have lots of events you could attend. Here are a few:
 
 - [Neon developer days](https://devdays.neon.tech)
 - [Planet Scale events](https://planetscale.com/events): Sharding/MySQL Vitess Webinar
@@ -86,9 +85,9 @@ PostgreSQL companies have lots of events you could attend.
 ## PostgreSQL User Groups
 - [SF Pug](https://wiki.postgresql.org/wiki/SFPUG)
 - [pgCMH](https://www.meetup.com/postgrescmh/), Columbus Ohio PUG
-- [Seattle Postgres](https://www.meetup.com/seattle-postgres/) (Jeremy S. organizer)
-- [Kansas City Postgres User Group](https://www.meetup.com/kansas-city-postgres-user-group/) (Elizabeth C. organizer)
-- [Chicago PostgreSQL Meetup Group](https://www.meetup.com/chicago-postgresql-user-group/) (Henrietta organizer) 
+- [Seattle Postgres](https://www.meetup.com/seattle-postgres/) (Organizing team: Jeremy S.)
+- [Kansas City Postgres User Group](https://www.meetup.com/kansas-city-postgres-user-group/) (Organizing team: Elizabeth C.)
+- [Chicago PostgreSQL Meetup Group](https://www.meetup.com/chicago-postgresql-user-group/) (Organizing team: Henrietta D.)
 
 
 ## Non-PostgreSQL conferences on my radar
@@ -99,3 +98,5 @@ As a Ruby on Rails and backend web applications engineer, there are always a var
 * [RubyConf](https://rubyconf.org) US (recently happened in San Diego)
 * [Rails World](https://rubyonrails.org/world) (recently in Amsterdam, 2024 will be in Toronto)
 * [Sin City Ruby 2024](https://www.sincityruby.com) - I’ll be speaking!
+
+Thanks!
