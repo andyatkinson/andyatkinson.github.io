@@ -1,4 +1,4 @@
----
+i---
 layout: page
 permalink: /postgresql-tips
 title: PostgreSQL Tips, Tricks, and Tuning
@@ -23,6 +23,7 @@ Below are my PostgreSQL-tagged blog posts:
 * <https://www.youtube.com/c/ScalingPostgres>
 * <https://sqlfordevs.io>
 * The `EXPLAIN` Glossary from PgMustard <https://www.pgmustard.com/docs/explain>
+* [Optimizing Postgres for write heavy workloads](https://www.youtube.com/watch?v=t8rAOgDdH1U)
 
 ## Queries
 
@@ -64,29 +65,29 @@ SELECT pg_terminate_backend(pid);
 
 ## Tuning Autovacuum
 
-PostgreSQL runs an Autovacuum process in the background.
+PostgreSQL runs a scheduler Autovacuum process when PostgreSQL starts up. This process looks at configurable thresholds for all tables and determines whether a `VACUUM` worker should run, per table.
 
-Parameters can be tuned for individual tables.
+Thresholds can be configured per table. A good starting place for tables that have a large amount of UPDATE and DELETE queries, is to perform that per-table tuning.
+
+The goal is to make VACUUM run more regularly and for a longer period of time, to stay on top of the accumulation of bloat from dead tuples, so that operations are reliable and predictable.
 
 In [Routine Vacuuming](https://www.postgresql.org/docs/current/routine-vacuuming.html), the two options are listed:
 
 - [`autovacuum_vacuum_scale_factor`](https://www.postgresql.org/docs/current/runtime-config-autovacuum.html)
 - `autovacuum_vacuum_threshold`
 
-The scale factor defaults to 20% (`0.20`). To optimize for our largest tables, we lowered it to 1% (`0.01`).
+The scale factor defaults to 20% (`0.20`). For large tables with a high amount of updates and deletes, we lowered the value to 1% (`0.01`). With the lowered threshold, vacuum will run more frequently in proportion to how much it’s needed.
 
 Set the value for a table:
 
 ```sql
-ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0);
-ALTER TABLE bigtable SET (autovacuum_vacuum_threshold = 1000);
+ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0.1);
 ```
 
 Can be reset:
 
 ```sql
 ALTER TABLE bigtable RESET (autovacuum_vacuum_threshold);
-ALTER TABLE bigtable RESET (autovacuum_vacuum_scale_factor);
 ```
 
 ## Autovacuum Tuning
@@ -291,9 +292,9 @@ PGTune is a website that tries to suggest values for PG parameters.
 
 ## PgHero
 
-PgHero brings operational concerns into a web dashboard. Build as a Rails engine.
+PgHero brings operational concerns into a web dashboard. Built as a Rails engine.
 
-We are running it in production and saw immediate value in identifying unused and duplicate indexes to remove.
+We’re running it in production and saw immediate value in identifying unused and duplicate indexes to remove.
 
 [Fix Typo PR #384](https://github.com/ankane/pghero/pull/384)
 
@@ -330,7 +331,7 @@ Can cause a significant I/O load
 * `checkpoint_timeout` - in seconds, default checkpointing every 5 minutes
 * `max_wal_size` - if max wal size is about to be exceeded, default 1 GB
 
-Reducing the values causes checkpoint to run more frequently.
+Reducing the value causes more frequent checkpoint operations.
 
 `checkpoint_warning` parameter
 `checkpoint_completion_target`
@@ -469,7 +470,7 @@ This is also a really cool [Version Upgrade Comparison Tool: 10 to 12](https://w
 
 October 2018
 
-* Improves parallel query performance and parallelism of B-tree index creation. Source: [Release announcement](https://www.postgresql.org/about/news/postgresql-11-released-1894/#:~:text=PostgreSQL%2011%20improves%20parallel%20query,are%20unable%20to%20be%20parallelized.)
+* Improves parallel query performance and parallelism of B-tree index creation.
 * Adds partitioning by hash key
 * Significant partitioning improvements
 * Adds "covering" indexes via `INCLUDE` to add more data to the index. Docs: [Index only scans and Covering indexes](https://www.postgresql.org/docs/11/indexes-index-only-scans.html)
@@ -500,11 +501,12 @@ Released September 2020
 
 Released September 2023
 
-- Replication on followers
+- pg_stat_io
+- Replication based  followers
 
 ## RDS
 
-Amazon RDS is hosted PostgreSQL. RDS is regular single-writer primary PostgreSQL.
+Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-writer primary instance model for PostgreSQL.
 
 ## Aurora PostgreSQL
 
@@ -590,7 +592,7 @@ To manage these functions in a Ruby app, use the [fx gem](https://github.com/teo
 This is an amazing article full of nuggets.
 
 * The idea of an "Application DBA"
-* Things I liked: Usage of intermediate table for de-duplication. Column structure is elegant, clearly broken out destination ID and nested duplicate IDs.
+* Things I liked: Using an intermediate table for de-duplication. Column structure is elegant, clearly broken out destination ID and nested duplicate IDs.
 * Working with arrays
   * `ANY()` for an array of items to compare against
   * `array_remove(anyarray, anyelement)` to build an array but remove an element
