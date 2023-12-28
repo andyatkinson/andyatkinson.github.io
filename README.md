@@ -1,6 +1,6 @@
 ## Hello!
 
-This is the source for my website, blog, and portfolio at [andyatkinson.com](https://andyatkinson.com) built with Jekyll and hosted on GitHub Pages.
+This is the source code for my website, blog, and portfolio at [andyatkinson.com](https://andyatkinson.com) built with Jekyll and hosted on GitHub Pages.
 
 
 #### Writing Style Tips
