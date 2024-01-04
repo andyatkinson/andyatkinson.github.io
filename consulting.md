@@ -8,20 +8,16 @@ title: PostgreSQL and Rails Consulting
 <small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hello 👋 
-I’m Andrew (or Andy), and I offer software development and database consulting.
+I’m **Andrew** (or **Andy**), and I offer software development and database consulting.
 
-I specialize in backend development with Ruby on Rails and database operations with PostgreSQL 🐘. I love fixing database performance problems to increase the scalability, reliability, and cost efficiency of web applications.
+I specialize in **backend development** with **Ruby on Rails** and database operations with **PostgreSQL** 🐘. I love fixing database performance problems to increase the scalability, reliability, and cost efficiency of web applications.
 
 ## Why hire me?
-You may be facing a need to scale your instances, and wonder whether investing in improved query efficiency would be better.
+- To get better performance, you’re considering scaling your instances, but wondering if your existing queries could be improved instead.
+- You might have a lot of data-related bugs or incidents, and want to reduce those to allow your team to focus more.
+- You may be experiencing or expecting big data growth, and wondering whether your current schema design and instances are equipped to handle it.
+- Without a dedicated DBA or DB-focused senior engineer on your team, you may be wondering how to grow a broad base of database skills on your team, without locking up your valuable full-time team members. 🧠
 
-You might have a lot of data-related bugs or incidents, and want to reduce those.
-
-Your team may lack a dedicated DBA or be less experienced with high scale PostgreSQL operations, and be looking to upskill the full-time team members. 🧠
-
-## What’s the size of your operation?
-Your application has achieved success, you’ve got paying customers, and growing data and query volumes.
-Your DB might be dozens or hundreds of gigabytes in size, and be performing hundreds or thousands of queries per second.
 
 ## Testimonials 🤝
 > Andrew helped us test and apply PostgreSQL parameter changes to reduce errors on large tables. Andrew is now contributing to our implementation of Rails’ multiple databases to improve our platform resiliency.
@@ -97,8 +93,7 @@ By hiring me, your team could shave off months or years of time spent learning, 
 </p>
 
   <ul>
-<li>More than 12 years of professional Ruby on Rails experience as a full-time employee (FTE) individual contributor (IC) engineer, most recently at a Staff level (<a href="https://www.linkedin.com/in/andyatkinson/">LinkedIn profile</a>)</li>
-<li>FTE IC at Microsoft, Groupon, LivingSocial, and Fountain. Successfully delivered dozens of high impact Rails and PostgreSQL projects.</li>
+<li>More than 12 years of professional Ruby on Rails experience as a full-time employee (FTE) individual contributor (IC) engineer, most recently at a Staff level (<a href="https://www.linkedin.com/in/andyatkinson/">LinkedIn profile</a>), at Microsoft, Groupon, LivingSocial, and Fountain.</li>
 <li><a href="/speaking-opportunities">I've presented at multiple PostgreSQL events</a> including PGConf NYC and PGDay Chicago. I’ve presented at RailsConf 2022 related to performance, scalability, and maintainability with PostgreSQL and Rails.</li>
 <li>I’ve written a bestselling book 📚 <a href="https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/">High Performance PostgreSQL for Rails</a>, published by Pragmatic Programmers in 2024, with more than 1000 copies sold while in Beta.</li>
 </ul>
@@ -106,10 +101,8 @@ By hiring me, your team could shave off months or years of time spent learning, 
 
 <details>
 <summary>Technical leadership of database operations</summary>
-<p>I’ve <a href="/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation">performed zero downtime online migrations of multi-terabyte PostgreSQL databases</a>, managing more than ten instances. The largest had tables with billions of rows. I’ve relocated tables using zero-downtime cutover techniques like dual writes, leveraging application-level sharding for distribution of load.</p>
+<p>I’ve <a href="/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation">performed zero downtime online migrations of multi-terabyte PostgreSQL databases</a>, managing more than ten instances, and tables with billions of rows. I’ve used zero-downtime cutover techniques like dual writes, to perform application-level sharding for load distribution.</p>
 
 <p>I’ve worked on a Rails app serving 7500 requests/second (450K RPM) at an average response rate of 35ms. I’ve <a href="/blog/2023/08/28/saas-for-developers-gwen-shapira-postgresql-rails">spoken about this experience</a> and presented on it at <a href="/blog/2021/12/06/pgconf-nyc-2021">PGConf NYC 2021</a>.</p>
 </details>
-
-
 
