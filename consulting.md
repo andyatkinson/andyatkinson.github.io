@@ -8,36 +8,37 @@ title: PostgreSQL and Rails Consulting
 <small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hello 👋 
-I’m **Andrew** (or **Andy**), and I offer software development and database consulting.
+I’m **Andrew** (or **Andy**). I offer software development and database consulting to teams.
 
-I specialize in **backend development** with **Ruby on Rails** and database operations with **PostgreSQL** 🐘. I love fixing database performance problems to increase the scalability, reliability, and cost efficiency of web applications.
+I specialize in **backend development** with **Ruby on Rails** and database operations with **PostgreSQL** 🐘. I am most enthusiastic about fixing database performance problems for teams to help them improve the scalability, reliability, and cost efficiency of their web applications.
 
 ## Why hire me?
-- To get better performance, you’re considering scaling your instances, but wondering if your existing queries could be improved instead.
-- You might have a lot of data-related bugs or incidents, and want to reduce those to allow your team to focus more.
-- You may be experiencing or expecting big data growth, and wondering whether your current schema design and instances are equipped to handle it.
-- Without a dedicated DBA or DB-focused senior engineer on your team, you may be wondering how to grow a broad base of database skills on your team, without locking up your valuable full-time team members. 🧠
+- Hire me to help improve the performance of your existing queries, in order to avoid needing to scale your instances.
+- Hire me to reduce the number of data-related bugs and incidents your team is facing, so they can stay more focused on building the product.
+- Hire me to evaluate your current schema design and instances based on your current data size and query volume, and future growth plans. We can discuss changes and I can perform any necessary data migrations.
+- Hire me as a partial application-focused DBA for your team, who can provide recommendations and insights for PostgreSQL, as well as code changes in Ruby within the flow of your team development practices.
+- Hire me to provide training on database topics to your full-time Rails team members. 🧠
+- Something else not mentioned here? Let’s chat (see below).
 
 
 ## Testimonials 🤝
-> Andrew helped us test and apply PostgreSQL parameter changes to reduce errors on large tables. Andrew is now contributing to our implementation of Rails’ multiple databases to improve our platform resiliency.
+> Andrew helped us test and apply PostgreSQL parameters that reduced errors. Andrew is now contributing to our multiple databases strategy with Rails to improve our platform resiliency.
 <cite>- VP of Engineering</cite>
 
 
-> Andrew provided training to our team on query plans and index design. Without making schema changes, Andrew rewrote the query and added indexes to greatly improve the performance.
+> Andrew provided training to our team on reading query plans and designing indexes. Andrew rewrote a complex query and added indexes to greatly improve performance.
 <cite>- Director of Engineering</cite>
 
 
 ## Rates
-As a U.S.-based Staff-level Rails engineer, I’m offering my services at a competitive rate within the market. Since you’re hiring me on a partial basis, you’ll pay a fraction of what you’d pay to hire an engineer with comparable skills on a full-time basis.
+As a U.S.-based Staff-level Rails engineer, I’m offering my services at a competitive market rate. Since you’re hiring me on a partial basis, you’ll pay a fraction of what you’d pay to hire a full-time engineer with comparable skills.
 
-We’ll agree on a scope of work with deliverables. You’ll have a rough idea of how long the work will take. I’ll track my hours and send you invoices based on the plan.
+Instead of straight hourly pricing, let’s consider the scope of work you need, and a rough timeline and deliverables. We’ll make a plan together, add a price, and I’ll track my hours. Besides daily communication when work is happening, you’ll get detailed invoices.
 
 ## How does it work?
-1. We’ll have a **30 minute no-cost, no-obligation call** over Zoom or Hangouts. I recommend a couple of people on your side, including someone authorized to hire contractors, and someone who works hands-on in the codebase.
-1. We’ll discuss the challenges you’re facing and your goals. I’ll take notes and begin preparing a plan.
-1. With the rough plan shared, we’ll determine the goals, deliverables, and a fee. We’ll get it all in writing along with legal documents.
-1. With all the documents signed, we’ll get to work.
+1. We’ll have a **30 minute no-cost, no-obligation call** over Zoom or Hangouts. I recommend having someone attend that’s authorized to hire contractors, and someone that’s hands-on in the codebase and databases.
+1. We’ll discuss the challenges you’re facing and what your goals are. I’ll take notes and start preparing a plan.
+1. Once we’ve reviewed the plan, we’ll discuss goals, deliverables, and an overall fee. We’ll get it all in writing, sign the legal documents, and get to work.
 
 
 
