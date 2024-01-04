@@ -8,7 +8,7 @@ title: About
 
 Andrew (Andy) is a Software Engineer who specializes in building high performance web applications using PostgreSQL and Ruby on Rails.
 
-Currently Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by Pragmatic Programmers in 2023.
+Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by the Pragmatic Programmers in 2024.
 
 Andrew has [spoken at conferences](/speaking-opportunities) including PGDay Chicago, PGConf NYC, RailsConf, and RubyConf Argentina.
 
@@ -28,6 +28,6 @@ Andy earned BASc and BA Bachelors degrees from the [University of Minnesota](htt
 <cite>- Director of Product Management</cite>
 
 > [Andrew] is a great person to have on a team because of his communication skills and patience to mentor and train other developers.
-<cite>CTO</cite>
+<cite>- CTO</cite>
 
 See more on [LinkedIn](http://linkedin.com/in/andyatkinson/)

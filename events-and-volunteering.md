@@ -25,9 +25,9 @@ Andy volunteered as a photographer for [Rails Girls](http://railsgirls.com/) in 
 
 He volunteered at a similar event called Rails Bridge in Boston, MA January 2015, as a photographer and mentor, held at the General Assembly space. These organizations help increase diversity in tech.
 
- > "RailsBridge workshops are a free and fun way to get started or level up with Rails, Ruby, and other web technologies." <cite>― RailsBridge ―</cite>
+ > "RailsBridge workshops are a free and fun way to get started or level up with Rails, Ruby, and other web technologies." <cite>― RailsBridge<cite>
 
- > "Our events focus on increasing diversity in tech, so that people of all backgrounds can feel welcome and comfortable in our industry." <cite>― RailsBridge ―</cite>
+ > "Our events focus on increasing diversity in tech, so that people of all backgrounds can feel welcome and comfortable in our industry." <cite>― RailsBridge<cite>
 
 ![RailsBridge Boston 2015 Marketing Material](/assets/images/pages/railsbridge-boston-2015-1.jpg)
 <small>RailsBridge Boston / General Assembly, 2015. Photo by [Andy Atkinson](http://andyatkinson.com)</small>
@@ -40,7 +40,7 @@ He volunteered at a similar event called Rails Bridge in Boston, MA January 2015
 
 ### Overnight Website Challenge
 
- > "Pairing volunteer technologists with nonprofits during a 24-hour hackathon." <cite>― Overnight Website Challenge ―</cite>
+ > "Pairing volunteer technologists with nonprofits during a 24-hour hackathon." <cite>― Overnight Website Challenge</cite>
 
 Andy was part of a 10 person team for the [Overnight Website Challenge](http://overnightwebsitechallenge.com/) event, helping the non-profit organization Resource Center of the Americas (closed 2017) build a brand new website. A content-management system was introduced (Radiant CMS) along with custom design and template. [Blog post with more details](/blog/2009/03/01/f1-webchallenge-team-rubymn-recap).
 

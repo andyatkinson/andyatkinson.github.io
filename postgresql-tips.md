@@ -1,18 +1,12 @@
-i---
+---
 layout: page
 permalink: /postgresql-tips
 title: PostgreSQL Tips, Tricks, and Tuning
 ---
 
-Hello! This page is a semi-organized (mostly a mess) of notes while learning PostgreSQL.
+Hello! This page is a semi-organized mess of notes while learning PostgreSQL.
 
-This chaotic learning and cycle of applying what I learned, turned into me writing a book!
-
-{% if site.mailchimp_url %}
-{% include newsletter-box.html %}
-{% endif %}
-
-Below are my PostgreSQL-tagged blog posts:
+Below are PostgreSQL-tagged blog posts:
 
 {% include tag-pages-loop.html tagName='PostgreSQL' %}
 
