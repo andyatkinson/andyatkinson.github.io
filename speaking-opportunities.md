@@ -56,11 +56,13 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sRxN3i-Q8l4?si=6KkMTu4dvwJ1AwnP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-### Code With Jason
+
+## Code With Jason
 - <cite>2023-07-28</cite>
+- Podcast (audio)
 - [190 — PostgreSQL and Sin City Ruby 🎙️](/blog/2023/07/28/code-with-jason-postgresql-sin-city-ruby)
 
-### PGDay Chicago 2023
+## PGDay Chicago 2023
 - <cite>2023-04-20</cite>
 - Conference
 - Title: Partitioning Billions of Rows Without Downtime<br/>
@@ -73,9 +75,9 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 ## Ruby For All
 - <cite>2023-01-19<br/>
 - Podcast (audio)
-- Title: The Database Wizard with Andrew Atkinson<br/>
-- <https://www.rubyforall.com/episodes/the-database-wizard-with-andrew-atkinson>
-- <https://dev.to/andatki/ruby-for-all-podcast-my-guest-experience-2do1>
+- Title: The Database Wizard with Andrew Atkinson
+- [Ruby For All Podcast: My Guest Experience 🎙️](/blog/2023/01/19/ruby-for-all-podcast-guest-postgresql)
+
 
 ## Rubber Duck Dev Show
 - <cite>2022-09-22</cite>
@@ -108,7 +110,7 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 <script async class="speakerdeck-embed" data-id="030a9bf3e09e4486acb96323ffe66302" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
 
 
-### RubyConf Argentina 2021
+## RubyConf Argentina 2012
 Andy [presented in Buenos Aires at RubyConf Argentina 2012](/blog/2013/11/27/rubyconf-argentina-2012/) about how his team applied Lean Startup principles to their work at LivingSocial.
 
 ![Andy Atkinson speaking at RubyConf Argentina 2012](/assets/images/pages/andy-rubyconf-argentina-2012-1.jpg)
