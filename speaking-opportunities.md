@@ -29,7 +29,7 @@ title: Speaking Opportunities
 ## SaaS for Developers
 - <cite>2023-08-28</cite>
 - Podcast (audio, video)
-- [Postgres, Performance and Rails with Andrew Atkinson 🎙️](//blog/2023/08/28/saas-for-developers-gwen-shapira-postgresql-rails)
+- [Postgres, Performance and Rails with Andrew Atkinson 🎙️](/blog/2023/08/28/saas-for-developers-gwen-shapira-postgresql-rails)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0wtOKD7iJT8?si=TG2ubliJpaxRV24R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -66,7 +66,6 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 - <cite>2023-04-20</cite>
 - Conference
 - Title: Partitioning Billions of Rows Without Downtime<br/>
-- Level: Intermediate
 - [PGDay Chicago 2023 Conference](/blog/2023/05/24/pgday-chicago)
 
 <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/8c1c25764d7d4158b89556c998c141f1" title="Partitioning Billions of Rows Without Downtime" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 314;" data-ratio="1.78343949044586"></iframe>
@@ -75,7 +74,6 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 ## Ruby For All
 - <cite>2023-01-19<br/>
 - Podcast (audio)
-- Title: The Database Wizard with Andrew Atkinson
 - [Ruby For All Podcast: My Guest Experience 🎙️](/blog/2023/01/19/ruby-for-all-podcast-guest-postgresql)
 
 
@@ -104,6 +102,7 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 ## PGConf NYC 2021
 - <cite>2021-12-02</cite>
 - Title: How we made PG Fitter, Happier, More Productive
+- [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ijYha2bBink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
