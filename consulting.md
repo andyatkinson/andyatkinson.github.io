@@ -8,46 +8,40 @@ title: PostgreSQL and Rails Consulting
 <small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hello 👋 
-I’m **Andrew** (or **Andy**). I offer software development and database consulting to teams.
+I’m **Andrew**, and I offer software development and database administration services as an independent consultant.
 
-I specialize in **backend development** with **Ruby on Rails** and database operations with **PostgreSQL** 🐘. I am most enthusiastic about fixing database performance problems for teams to help them improve the scalability, reliability, and cost efficiency of their web applications.
+I specialize in **backend development** with **Ruby on Rails** and database operations with **PostgreSQL**. 🐘
 
 ## Why hire me?
-- Hire me to help improve the performance of your existing queries, in order to avoid needing to scale your instances.
-- Hire me to reduce the number of data-related bugs and incidents your team is facing, so they can stay more focused on building the product.
-- Hire me to evaluate your current schema design and instances based on your current data size and query volume, and future growth plans. We can discuss changes and I can perform any necessary data migrations.
-- Hire me as a partial application-focused DBA for your team, who can provide recommendations and insights for PostgreSQL, as well as code changes in Ruby within the flow of your team development practices.
-- Hire me to provide training on database topics to your full-time Rails team members. 🧠
-- Something else not mentioned here? Let’s chat (see below).
+- Hire me to improve the performance of your existing queries, helping you avoid the need to vertically scale your instances.
+- Hire me to reduce the number of data-related bugs and incidents your team is facing, so they can stay focused on building the product.
+- Hire me to evaluate your current schema, queries, indexes, and instances relative to your future growth plans. For any changes, I can perform the data migrations without downtime, to arrive at a more optimal design.
+- Hire me as an application-focused DBA for your team, who can provide and apply recommendations and insights for both PostgreSQL and Ruby application code.
+- Hire me to provide training for your Rails team on PostgreSQL database topics. 🧠
+- Something not mentioned here? Let’s talk (see below).
 
 
 ## Testimonials 🤝
-> Andrew helped us test and apply PostgreSQL parameters that reduced errors. Andrew is now contributing to our multiple databases strategy with Rails to improve our platform resiliency.
+> Andrew helped us reduce application errors by setting new PostgreSQL parameters. Andrew is now contributing Rails code to help improve our platform resiliency.
 <cite>- VP of Engineering</cite>
 
 
-> Andrew provided training to our team on reading query plans and designing indexes. Andrew rewrote a complex query and added indexes to greatly improve performance.
+> Andrew provided training to our team on query plans and index design. Andrew greatly improved the performance of a query by rewriting it and adding new indexes.
 <cite>- Director of Engineering</cite>
 
 
-## Rates
-As a U.S.-based Staff-level Rails engineer, I’m offering my services at a competitive market rate. Since you’re hiring me on a partial basis, you’ll pay a fraction of what you’d pay to hire a full-time engineer with comparable skills.
-
-Instead of straight hourly pricing, let’s consider the scope of work you need, and a rough timeline and deliverables. We’ll make a plan together, add a price, and I’ll track my hours. Besides daily communication when work is happening, you’ll get detailed invoices.
-
 ## How does it work?
-1. We’ll have a **30 minute no-cost, no-obligation call** over Zoom or Hangouts. I recommend having someone attend that’s authorized to hire contractors, and someone that’s hands-on in the codebase and databases.
-1. We’ll discuss the challenges you’re facing and what your goals are. I’ll take notes and start preparing a plan.
-1. Once we’ve reviewed the plan, we’ll discuss goals, deliverables, and an overall fee. We’ll get it all in writing, sign the legal documents, and get to work.
+1. We’ll have a 30-minute call on Zoom or Hangouts to discuss the challenges you’re facing and your goals. I’ll take notes and begin preparing a plan.
+1. We’ll agree on a scope of work, deliverables, and pricing.
+1. We’ll sign some agreements and get to work!
 
 
 
 ## Let's talk
 
-I’m looking forward to working with you! Please [contact me](/contact) and put "Consulting" in the subject line.
+[Contact Me](/contact) to book a discovery call.
 
-Thank you for your consideration!
-
+Thanks!
 
 ---------------------
 
@@ -55,11 +49,16 @@ Thank you for your consideration!
 ## F.A.Q.
 
 <details>
+<summary>How do I charge?</summary>
+<p>I offer a flexible structure based on competitive rates.</p>
+</details>
+
+<details>
 <summary>What can you expect?</summary>
 <ol>
-<li>With your challenges and goals outlined, you can expect a high-level plan with some deliverables. We’ll add more detail as I learn your application and databases.</li>
-<li>I’ll collect lots of data points from your database operations and application metrics, to make informed recommendations.</li>
-<li>We’ll discuss some key functions of your platform. We’ll discuss your preferences for where and how to track work.</li>
+<li>After learning about your challenges and goals, you can expect a plan proposal with deliverables.</li>
+<li>I’ll collect lots of data points from your database operations and application metrics to make recommendations.</li>
+<li>We’ll discuss key functions of your platform.</li>
 <li>As I make progress on deliverables, I’ll provide status updates and track time spent.</li>
 </ol>
 </details>
@@ -68,8 +67,8 @@ Thank you for your consideration!
 <details>
   <summary>Tools and systems you'll provide</summary>
   <ul>
-<li>You’ll provide me access to a non-production PostgreSQL instance that closely mirrors your production instance. This could be a separate instance from a snapshot, a read-replica, or the primary instance in a pre-production environment (depending on what your goals are).</li>
-<li>For database-only projects, I’ll need to gather some metrics from your production database, from log files or observability tools you can provide.</li>
+<li>I’ll need access to one of your databases. This can be a non-production PostgreSQL instance to start. This could be from a snapshot, a read-replica, or the primary instance in your staging environment (depending on your goals).</li>
+<li>For database-only projects, I’ll need to gather metrics from your production database, log files, and observability tools you have.</li>
 <li>For code contributions, I’ll need access to your repositories and observability tools (APM, exception tracking, deployments)</li>
   </ul>
 </details>
@@ -78,21 +77,16 @@ Thank you for your consideration!
 <details>
 <summary>Tools, docs, and systems I use</summary>
   <ul>
-<li>I’ll provide you with an Independent consulting agreement we can customize</li>
-<li>We can use Google Hangouts, Zoom, Tuple, or similar for calls</li>
-<li>Slack, email, and Google Docs for async work and reporting</li>
-<li>I’ll track time and provide invoices, payable online</li>
-<li>You can expect code contributions as Pull Requests per your team processes 💻</li>
+<li>I’ll provide you with an Independent Consulting Agreement</li>
+<li>We can use Google Hangouts, Zoom, Tuple, or similar programs for calls</li>
+<li>We can use Slack, email, and Google Docs for async work planning and status reports</li>
+<li>I’ll track time and provide you invoices</li>
   </ul>
 </details>
 
 
 <details>
 <summary>My Qualifications</summary>
-<p>
-By hiring me, your team could shave off months or years of time spent learning, by leveraging my experience with PostgreSQL and Rails.
-</p>
-
   <ul>
 <li>More than 12 years of professional Ruby on Rails experience as a full-time employee (FTE) individual contributor (IC) engineer, most recently at a Staff level (<a href="https://www.linkedin.com/in/andyatkinson/">LinkedIn profile</a>), at Microsoft, Groupon, LivingSocial, and Fountain.</li>
 <li><a href="/speaking-opportunities">I've presented at multiple PostgreSQL events</a> including PGConf NYC and PGDay Chicago. I’ve presented at RailsConf 2022 related to performance, scalability, and maintainability with PostgreSQL and Rails.</li>

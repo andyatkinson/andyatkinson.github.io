@@ -7,20 +7,21 @@ This is the source code for my website, blog, and portfolio at [andyatkinson.com
 
 Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale)
 
- * Use `h4` for headings
- * Add tags to the post
- * In Vim `:set wrap`/`:set nowrap` to enable/disable soft wrap
- * In Vim `leader-s` enables spell check mode, check spelling, add words with `zg` [Vim Spell Checking](https://thoughtbot.com/blog/vim-spell-checking) by Thoughtbot
- * Use initial caps in post titles
- * Use `<mark/>` to highlight a section
- * Use footnotes when appropriate
- * For blockquotes, add a `<cite/>`
- * On macOS, preview with MacDown [MacDown](https://macdown.uranusjr.com/) The open source Markdown editor for macOS.
- * For section headings, use caps
- * For product and company names, mind the CamelCase
- * For dates on posts, use a date and not a time
- * Bare markdown links are `<>`
- * Using footnotes: make a `[^footnote]` usage where you want it inserted, and a `[^footnote]: Text <link>` at the bottom of the article
+- `%s/”/"/g`
+- Use `h4` for headings
+- Add tags to the post
+- In Vim `:set wrap`/`:set nowrap` to enable/disable soft wrap
+- In Vim `leader-s` enables spell check mode, check spelling, add words with `zg` [Vim Spell Checking](https://thoughtbot.com/blog/vim-spell-checking) by Thoughtbot
+- Use initial caps in post titles
+- Use `<mark/>` to highlight a section
+- Use footnotes when appropriate
+- For blockquotes, add a `<cite/>`
+- On macOS, preview with MacDown [MacDown](https://macdown.uranusjr.com/) The open source Markdown editor for macOS.
+- For section headings, use caps
+- For product and company names, mind the CamelCase
+- For dates on posts, use a date and not a time
+- Bare markdown links are `<>`
+- Using footnotes: make a `[^footnote]` usage where you want it inserted, and a `[^footnote]: Text <link>` at the bottom of the article
 
 #### Theme Bugs and Issues
 
