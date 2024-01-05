@@ -10,38 +10,39 @@ title: PostgreSQL and Rails Consulting
 ## Hello 👋 
 I’m **Andrew**, and I offer software development and database administration services as an independent consultant.
 
-I specialize in **backend development** with **Ruby on Rails** and database operations with **PostgreSQL**. 🐘
+I specialize in **backend development**, writing Ruby 💎 code with **Ruby on Rails** and **Active Record**, and SQL, shell scripts, and more with **PostgreSQL** 🐘 databases.
 
 ## Why hire me?
-- Hire me to improve the performance of your existing queries, helping you avoid the need to vertically scale your instances.
-- Hire me to reduce the number of data-related bugs and incidents your team is facing, so they can stay focused on building the product.
-- Hire me to evaluate your current schema, queries, indexes, and instances relative to your future growth plans. For any changes, I can perform the data migrations without downtime, to arrive at a more optimal design.
-- Hire me as an application-focused DBA for your team, who can provide and apply recommendations and insights for both PostgreSQL and Ruby application code.
-- Hire me to provide training for your Rails team on PostgreSQL database topics. 🧠
-- Something not mentioned here? Let’s talk (see below).
+- Hire me to improve the performance of your queries, and avoid the need to scale vertically
+- Hire me to reduce the data-related bugs and incidents your team is facing, so they can focus on building your core products
+- Hire me to evaluate your current schema designs, queries, indexes, and instances, to improve reliability, cost efficiency, or prepare for growth.
+- You may be facing a significant data migration, and that's something I can help you with.
+- You may need the services of an application-focused DBA, who can provide and apply recommendations for both PostgreSQL and Rails. I can do that.
+- Would your team benefit from more PostgreSQL and database topic training? I can provide customized training on PostgreSQL topics for your team. 🧠
+
+Something else? Let’s talk (see below).
 
 
 ## Testimonials 🤝
-> Andrew helped us reduce application errors by setting new PostgreSQL parameters. Andrew is now contributing Rails code to help improve our platform resiliency.
+> Andrew helped us reduce errors by setting PostgreSQL parameters, and began contributing code to our multi-database project.
 <cite>- VP of Engineering</cite>
 
 
-> Andrew provided training to our team on query plans and index design. Andrew greatly improved the performance of a query by rewriting it and adding new indexes.
+> Andrew provided training on query plans and indexes, and greatly improved the performance of a significant query by rewriting it and adding new indexes.
 <cite>- Director of Engineering</cite>
 
 
-## How does it work?
-1. We’ll have a 30-minute call on Zoom or Hangouts to discuss the challenges you’re facing and your goals. I’ll take notes and begin preparing a plan.
-1. We’ll agree on a scope of work, deliverables, and pricing.
-1. We’ll sign some agreements and get to work!
+## Let's Talk
 
+Pick a time below to book a 30-minute discovery call, or [contact me](/contact) by email.
 
+I'm looking forward to working together!
 
-## Let's talk
+<!-- Calendly inline widget begin -->
+<div class="calendly-inline-widget" data-url="https://calendly.com/pgrailsbook/30min" style="min-width:320px;height:700px;"></div>
+<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<!-- Calendly inline widget end -->
 
-[Contact Me](/contact) to book a discovery call.
-
-Thanks!
 
 ---------------------
 
