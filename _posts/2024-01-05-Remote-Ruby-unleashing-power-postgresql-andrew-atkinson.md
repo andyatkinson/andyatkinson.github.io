@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Remote Ruby — Unleashing the Power of Postgres with Andrew Atkinson 🎙️"
-tags: [Podcast, Ruby on Rails, Open Source]
+tags: [Podcast, Ruby on Rails, Open Source, PostgreSQL]
 date: 2024-01-05
 comments: true
 ---
