@@ -18,7 +18,7 @@ The episode is: “014: PostgreSQL for Rails Developers with Andrew Atkinson”
 
 Listen to it here: <https://www.railschangelog.com/14>
 
-What sorts of things did we talk about? Prior to the episode, we discussed covering a bunch of Ruby on Rails features, and connecting them to how they’re covered in my new book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+What sorts of things did we talk about? Prior to the episode, we devised a plan to cover Ruby on Rails features that are database related, and then connect them to how they’re covered in my new book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
 ## Topics
 
@@ -32,18 +32,20 @@ In the episode, you’ll find conversations about these topics:
 
 ## Notes
 
-- Emmanuel was glad to see that most features that are covered in the book have a corresponding code example in the Rideshare application. This is the application readers use to learn the concepts with hands-on practice.
-- The book is oriented around practical hands-on learning, which fit the ethos of Pragmatic Programmer books
+- Emmanuel was glad to see that most features that are covered in the book have a corresponding code example in the Rideshare application. This is the application readers use to learn the concepts, and it’s available on GitHub.
+- I talked about how I wanted the book to be practical based on my career experience, and use hands-on exercises for readers to learn. This fit the ethos of Pragmatic Programmers books, which made me excited to work with them.
 
 
 ## Contest
 
-We even did a contest ([contest on twitter](https://twitter.com/railschangelog/status/1723012816825680201)), giving away a copy of the book. Emmanuel handled the promotion. Thank you! A winner was selected and they let us know they were happy to receive the copy.
+We even did a contest ([contest on twitter](https://twitter.com/railschangelog/status/1723012816825680201)), giving away a copy of the book. Emmanuel handled the promotion on social media and did a bang-up job. Thank you! The winner let us know they were really happy to get the copy.
 
-If you missed this contest, stay tuned to [my newsletter](https://pgrailsbook.com/) or social media, where I’ll announce future contests with the book publisher.
+If you missed this contest, stay tuned to [my newsletter](https://pgrailsbook.com/) or social media, where I’ll announce similar future contests with the publisher.
 
 
 ## Sharing the episode
+
+We shared the episode in a few places:
 
 - Sharing on [/r/rails Reddit](https://www.reddit.com/r/rails/comments/17mhz7p/14_talking_postgresql_with_andrew_atkinson/)
 - [Rails Changelog account tweet](https://twitter.com/railschangelog/status/1720234615900656006)
@@ -52,5 +54,9 @@ If you missed this contest, stay tuned to [my newsletter](https://pgrailsbook.co
 
 ## Wrap Up
 
-Emmanuel was a great host, and I had a lot of fun talking about Rails and PostgreSQL features as a guest. I hope the episode is useful for listeners learning how to use these features in their applications. Hopefully Emmanuel and I are able to meet up in person at a future Rails World or Ruby on Rails related event.
+Emmanuel was a great host, and I had a lot of fun talking about Rails and PostgreSQL features, and how developers can use them to level up their applications.
+
+I hope the episode is useful for listeners learning how to use these features, and to expand their knowledge of what’s possible in PostgreSQL.
+
+Emmanuel and I hope to meet up someday in-person, at a future Rails World or Ruby on Rails related event. Maybe we’ll see you there too!
 
