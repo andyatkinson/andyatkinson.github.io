@@ -9,6 +9,13 @@ title: Speaking Opportunities
 - Podcast (audio)
 - [Unleashing the Power of Postgres with Andrew Atkinson 🎙️](/blog/2024/01/05/Remote-Ruby-unleashing-power-postgresql-andrew-atkinson)
 
+## Teach Kelvin Your Thing (TKYT)
+- <cite>2023-11-16</cite>
+- Podcast (audio, video)
+- [High Performance PostgreSQL for Rails 🖥️](blog/2023/11/16/kelvin-andrew-postgresql-rails-performance)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/90pWCR9O10Q?si=ISk1mw23XZiFLdTR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ## The Rails Changelog
 - <cite>2023-10-01</cite>
 - Podcast (audio)

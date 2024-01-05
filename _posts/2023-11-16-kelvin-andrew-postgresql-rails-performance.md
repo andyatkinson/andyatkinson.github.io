@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Teach Kelvin Your Thing (TKYT) — High Performance PostgreSQL for Rails 🖥️"
-tags: [Open Source, PostgreSQL, Ruby on Rails]
+tags: [Podcast, Open Source, PostgreSQL, Ruby on Rails]
 date: 2023-11-16
 comments: true
 ---
