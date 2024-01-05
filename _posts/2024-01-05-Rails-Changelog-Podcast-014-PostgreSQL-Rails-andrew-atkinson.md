@@ -1,0 +1,56 @@
+---
+layout: post
+title: "The Rails Changelog — #014: PostgreSQL for Rails Developers with Andrew Atkinson 🎙️"
+tags: [Podcast, Ruby on Rails, Open Source]
+date: 2024-01-05
+comments: true
+---
+
+Back in September, the week before [Emmanuel Hayford](https://www.railschangelog.com/people/emmanuel-hayford) traveled to Rails World, and I traveled to [PGConf NYC](/blog/2023/10/10/pgconf-nyc-2023), we connected for the [14th episode of the Rails Changelog podcast](https://www.railschangelog.com/14).
+
+Emmanuel has been landing top-notch guests from Ruby on Rails! Check out this look back at the [Rails Changelog podcast guests from 2023](https://twitter.com/siaw23/status/1740632809062924448).
+
+Fun fact: Emmanuel and I have both been editors for [This Week in Rails](https://hayford.dev/about/), a newsletter about changes landing in Rails. While I’m no longer active, I enjoyed my time with the project and the opportunity to [meet up with co-editors at RailsConf 2017](/blog/2017/06/06/railsconf-2017).
+
+## The episode
+
+The episode is: “014: PostgreSQL for Rails Developers with Andrew Atkinson” 
+
+Listen to it here: <https://www.railschangelog.com/14>
+
+What sorts of things did we talk about? Prior to the episode, we discussed covering a bunch of Ruby on Rails features, and connecting them to how they’re covered in my new book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+
+## Topics
+
+In the episode, you’ll find conversations about these topics:
+
+- What is Strict Loading, and how is it related to N+1 queries?
+- Generated columns, virtual and stored distinction, how they’re used in Active Record and for databases like PostgreSQL and MySQL
+- Common table expressions (CTE), subqueries, when you’d want to use them
+- What is sharding? Horizontal Sharding and application level sharding with Active Record in Ruby on Rails
+- Query Logs, what are they? When would I use them instead of my APM?
+
+## Notes
+
+- Emmanuel was glad to see that most features that are covered in the book have a corresponding code example in the Rideshare application. This is the application readers use to learn the concepts with hands-on practice.
+- The book is oriented around practical hands-on learning, which fit the ethos of Pragmatic Programmer books
+
+
+## Contest
+
+We even did a contest ([contest on twitter](https://twitter.com/railschangelog/status/1723012816825680201)), giving away a copy of the book. Emmanuel handled the promotion. Thank you! A winner was selected and they let us know they were happy to receive the copy.
+
+If you missed this contest, stay tuned to [my newsletter](https://pgrailsbook.com/) or social media, where I’ll announce future contests with the book publisher.
+
+
+## Sharing the episode
+
+- Sharing on [/r/rails Reddit](https://www.reddit.com/r/rails/comments/17mhz7p/14_talking_postgresql_with_andrew_atkinson/)
+- [Rails Changelog account tweet](https://twitter.com/railschangelog/status/1720234615900656006)
+- [My tweet announcing the episode](https://twitter.com/andatki/status/1720437672592752648)
+
+
+## Wrap Up
+
+Emmanuel was a great host, and I had a lot of fun talking about Rails and PostgreSQL features as a guest. I hope the episode is useful for listeners learning how to use these features in their applications. Hopefully Emmanuel and I are able to meet up in person at a future Rails World or Ruby on Rails related event.
+
