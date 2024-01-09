@@ -268,3 +268,5 @@ PgAnalyze
 DBTune
 Vitess
 Redgate
+deliverables
+cutover
