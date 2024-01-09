@@ -13,30 +13,32 @@ I’m **Andrew**, and I offer software development and database administration s
 I specialize in **backend development**, writing Ruby 💎 code with **Ruby on Rails** and **Active Record**, and SQL, shell scripts, and more with **PostgreSQL** 🐘 databases.
 
 ## Why hire me?
-- Hire me to improve the performance of your queries, and avoid the need to scale vertically
-- Hire me to reduce the data-related bugs and incidents your team is facing, so they can focus on building your core products
-- Hire me to evaluate your current schema designs, queries, indexes, and instances, to improve reliability, cost efficiency, or prepare for growth.
-- You may be facing a significant data migration, and that's something I can help you with.
-- You may need the services of an application-focused DBA, who can provide and apply recommendations for both PostgreSQL and Rails. I can do that.
-- Would your team benefit from more PostgreSQL and database topic training? I can provide customized training on PostgreSQL topics for your team. 🧠
+I'm comfortable working with multi-terabyte databases and thousands of queries per second, particularly with [AWS RDS](https://aws.amazon.com/pm/rds). I [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+
+- Hire me to improve the performance of your queries, to avoid needing to scale instances vertically
+- Hire me to reduce your data-related bugs and incidents, so your full-time team can focus on your core products
+- Hire me to evaluate your schema design, queries, indexes, and instances, to improve their reliability, cost efficiency, and growth management
+- If you're facing a significant data migration, perhaps due to a schema change (primary key conversion, table partitioning), I can help.
+- I can provide you Application DBA insights and recommendations for both PostgreSQL and Rails, and apply changes for parameters and code
+- Would your team benefit from PostgreSQL training on index design or query planning? I would be happy to do that. 🧠
 
 Something else? Let’s talk (see below).
 
 
 ## Testimonials 🤝
 > Andrew helped us reduce errors by setting PostgreSQL parameters, and began contributing code to our multi-database project.
-<cite>- VP of Engineering</cite>
+<cite>- Brendan, VP of Engineering</cite>
 
 
 > Andrew provided training on query plans and indexes, and greatly improved the performance of a significant query by rewriting it and adding new indexes.
-<cite>- Director of Engineering</cite>
+<cite>- John, Director of Engineering</cite>
 
 
 ## Let's Talk
 
-Pick a time below to book a 30-minute call, or [contact me](/contact) if those don't work.
+Pick a time below for a 30-minute call or [contact me](/contact) to arrange a different time.
 
-I'm looking forward to meeting and learning how I can help.
+I'm looking forward to meeting you and seeing how I can help.
 
 <!-- Calendly inline widget begin -->
 <div class="calendly-inline-widget" data-url="https://calendly.com/pgrailsbook/30min?hide_gdpr_banner=1" style="min-width:350px;height:700px;"></div>
@@ -68,9 +70,9 @@ I'm looking forward to meeting and learning how I can help.
 <details>
   <summary>Tools and systems you'll provide</summary>
   <ul>
-<li>I’ll need access to one of your databases. This can be a non-production PostgreSQL instance to start. This could be from a snapshot, a read-replica, or the primary instance in your staging environment (depending on your goals).</li>
-<li>For database-only projects, I’ll need to gather metrics from your production database, log files, and observability tools you have.</li>
-<li>For code contributions, I’ll need access to your repositories and observability tools (APM, exception tracking, deployments)</li>
+<li>I’ll need access to your databases. This could be a non-production instance, a snapshot-based instance, or a read-replica depending on what your goals are.</li>
+<li>For database projects, I’ll gather metrics from your production database, log files, and observability tools.</li>
+<li>For code contributions, I’ll need access to your repositories and observability tools (APM, exception tracking, deployment mechanism, PgHero, PgAnalyze etc.)</li>
   </ul>
 </details>
 
@@ -90,15 +92,13 @@ I'm looking forward to meeting and learning how I can help.
 <summary>My Qualifications</summary>
   <ul>
 <li>More than 12 years of professional Ruby on Rails experience as a full-time employee (FTE) individual contributor (IC) engineer, most recently at a Staff level (<a href="https://www.linkedin.com/in/andyatkinson/">LinkedIn profile</a>), at Microsoft, Groupon, LivingSocial, and Fountain.</li>
-<li><a href="/speaking-opportunities">I've presented at multiple PostgreSQL events</a> including PGConf NYC and PGDay Chicago. I’ve presented at RailsConf 2022 related to performance, scalability, and maintainability with PostgreSQL and Rails.</li>
 <li>I’ve written a bestselling book 📚 <a href="https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/">High Performance PostgreSQL for Rails</a>, published by Pragmatic Programmers in 2024, with more than 1000 copies sold while in Beta.</li>
+<li><a href="/speaking-opportunities">I've presented at multiple PostgreSQL events</a> including PGConf NYC and PGDay Chicago. I’ve presented at RailsConf 2022 related to performance, scalability, and maintainability with PostgreSQL and Rails.</li>
 </ul>
 </details>
 
 <details>
 <summary>Technical leadership of database operations</summary>
 <p>I’ve <a href="/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation">performed zero downtime online migrations of multi-terabyte PostgreSQL databases</a>, managing more than ten instances, and tables with billions of rows. I’ve used zero-downtime cutover techniques like dual writes, to perform application-level sharding for load distribution.</p>
-
-<p>I’ve worked on a Rails app serving 7500 requests/second (450K RPM) at an average response rate of 35ms. I’ve <a href="/blog/2023/08/28/saas-for-developers-gwen-shapira-postgresql-rails">spoken about this experience</a> and presented on it at <a href="/blog/2021/12/06/pgconf-nyc-2021">PGConf NYC 2021</a>.</p>
+<p>I’ve worked on a Rails app serving 7500 requests/second (450K RPM) at an average response rate of 35ms, on AWS RDS. I’ve <a href="/blog/2023/08/28/saas-for-developers-gwen-shapira-postgresql-rails">spoken about this experience</a> and presented on it at <a href="/blog/2021/12/06/pgconf-nyc-2021">PGConf NYC 2021</a>.</p>
 </details>
-
