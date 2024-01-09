@@ -29,7 +29,7 @@ Not seeing something here you wondered about? Book a time below or [contact me](
 <cite>- Brendan, VP of Engineering</cite>
 
 
-> Andrew provided training on query plans and indexes while rewriting an important application query, and improving the performance with new indexes.
+> Andrew provided training on query plans and indexes while rewriting an important application query, supported with new indexes, to greatly improve its performance.
 <cite>- John, Director of Engineering</cite>
 
 
