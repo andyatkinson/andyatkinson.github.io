@@ -13,10 +13,10 @@ I’m **Andrew**, and I offer software development and database administration s
 I specialize in **backend development**, writing Ruby 💎 code with **Ruby on Rails** and **Active Record**, and SQL, shell scripts, and more with **PostgreSQL** 🐘 databases.
 
 ## Why hire me?
-I'm comfortable working with multi-terabyte databases and thousands of queries per second, particularly with [AWS RDS](https://aws.amazon.com/pm/rds). I [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+I've worked on multi-terabyte databases that are performing thousands of queries per second. I even [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
 - Hire me to improve the performance of your queries, to avoid needing to scale instances vertically
-- Hire me to reduce your data-related bugs and incidents, so your full-time team can focus on your core products
+- Hire me to reduce your data-related bugs and incidents, so your team can focus on your core products
 - Hire me to evaluate your schema design, queries, indexes, and instances, to improve their reliability, cost efficiency, and growth management
 - If you're facing a significant data migration, perhaps due to a schema change (primary key conversion, table partitioning), I can help.
 - I can provide you Application DBA insights and recommendations for both PostgreSQL and Rails, and apply changes for parameters and code
