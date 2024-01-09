@@ -8,37 +8,36 @@ title: PostgreSQL and Rails Consulting
 <small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hello 👋 
-I’m **Andrew**, and I offer software development and database administration services as an independent consultant.
+I’m **Andrew**, and I offer software development and database services as an independent consultant.
 
-I specialize in **backend development**, writing Ruby 💎 code with **Ruby on Rails** and **Active Record**, and SQL, shell scripts, and more with **PostgreSQL** 🐘 databases.
+I specialize in **backend development**, writing Ruby 💎 code with **Ruby on Rails** and **Active Record**, and SQL, shell scripts, and technical operations for **PostgreSQL** 🐘 databases.
 
 ## Why hire me?
-I've worked on multi-terabyte databases that are performing thousands of queries per second. I even [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+I've worked on multi-terabyte PostgreSQL databases, used by Rails apps running thousands of queries per second. I even [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
-- Hire me to improve the performance of your queries, to avoid needing to scale instances vertically
-- Hire me to reduce your data-related bugs and incidents, so your team can focus on your core products
-- Hire me to evaluate your schema design, queries, indexes, and instances, to improve their reliability, cost efficiency, and growth management
-- If you're facing a significant data migration, perhaps due to a schema change (primary key conversion, table partitioning), I can help.
-- I can provide you Application DBA insights and recommendations for both PostgreSQL and Rails, and apply changes for parameters and code
+- Hire me to improve the performance of your queries, which could help you avoid costs from scaling instances vertically
+- Hire me to reduce data-related bugs and incidents, providing more time for your team to focus on core product development
+- Hire me to evaluate your schema design, queries, and indexes, to improve their reliability, cost efficiency, and better manage growth
+- If you're facing a significant data migration, perhaps a primary key conversion or partitioned table migration, I can help.
 - Would your team benefit from PostgreSQL training on index design or query planning? I would be happy to do that. 🧠
 
-Something else? Let’s talk (see below).
+Not seeing something here you wondered about? Book a time below or [contact me](/contact).
 
 
 ## Testimonials 🤝
-> Andrew helped us reduce errors by setting PostgreSQL parameters, and began contributing code to our multi-database project.
+> Andrew helped us tune PostgreSQL parameters and contributed code to our multi-database project.
 <cite>- Brendan, VP of Engineering</cite>
 
 
-> Andrew provided training on query plans and indexes, and greatly improved the performance of a significant query by rewriting it and adding new indexes.
+> Andrew provided training on query plans and indexes while rewriting an important application query, and improving the performance with new indexes.
 <cite>- John, Director of Engineering</cite>
 
 
 ## Let's Talk
 
-Pick a time below for a 30-minute call or [contact me](/contact) to arrange a different time.
+Schedule a 30-minute meeting below or [contact me](/contact) to arrange a different time.
 
-I'm looking forward to meeting you and seeing how I can help.
+I'm looking forward to meeting you and learning how I can help!
 
 <!-- Calendly inline widget begin -->
 <div class="calendly-inline-widget" data-url="https://calendly.com/pgrailsbook/30min?hide_gdpr_banner=1" style="min-width:350px;height:700px;"></div>
