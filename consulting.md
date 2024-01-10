@@ -10,7 +10,7 @@ title: PostgreSQL and Rails Consulting
 ## Hello 👋 
 I’m **Andrew**, and I offer software development and database services as an independent consultant.
 
-I specialize in **backend development**, writing Ruby 💎 code with **Ruby on Rails** and **Active Record**, and SQL, shell scripts, and technical operations for **PostgreSQL** 🐘 databases.
+I specialize in **backend development** in Ruby 💎 with **Ruby on Rails**, SQL, shell scripts, and optimized **PostgreSQL** 🐘 databases.
 
 ## Why hire me?
 I've worked on multi-terabyte PostgreSQL databases, used by Rails apps running thousands of queries per second. I even [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
