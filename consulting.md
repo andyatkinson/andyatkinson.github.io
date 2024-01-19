@@ -15,13 +15,15 @@ I specialize in **backend development** in Ruby 💎 with **Ruby on Rails**, SQL
 ## Why hire me?
 I've worked on multi-terabyte PostgreSQL databases, used by Rails apps running thousands of queries per second. I even [wrote a book about it](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
-- Hire me to improve the performance of your queries, which could help you avoid costs from scaling instances vertically
-- Hire me to reduce data-related bugs and incidents, providing more time for your team to focus on core product development
-- Hire me to evaluate your schema design, queries, and indexes, to improve their reliability, cost efficiency, and better manage growth
-- If you're facing a significant data migration, perhaps a primary key conversion or partitioned table migration, I can help.
-- Would your team benefit from PostgreSQL training on index design or query planning? I would be happy to do that. 🧠
+I want to help your engineering team solve their database and application problems, using practical solutions we'll implement together.
 
-Not seeing something here you wondered about? Book a time below or [contact me](/contact).
+📊 We can improve the performance of your queries, avoiding the costs of more expensive server instances<br/>
+🐛 We can reduce data-related bugs in your application, adding more time back for your team to focus on product development<br/>
+💾 We can evaluate your schema, queries, and indexes, and design a plan that improves their reliability, cost efficiency, and growth management<br/>
+🐘 If you're facing a challenging data migration due to a *primary key conversion* or *partitioned table migration*, I can help.<br/>
+👨 If your team would benefit from training on database and PostgreSQL topics, I'd be happy to design some educational talks that fit in your team's needs and schedule.<br/>
+
+If you're not seeing something here you'd hoped to see, [contact me](/contact) and let's chat.
 
 
 ## Testimonials 🤝
@@ -35,7 +37,7 @@ Not seeing something here you wondered about? Book a time below or [contact me](
 
 ## Let's Talk
 
-Schedule a 30-minute meeting below or [contact me](/contact) to arrange a different time.
+Schedule a 30-minute meeting below or [contact me](/contact) if you'd like to find a different time, or have additional questions.
 
 I'm looking forward to meeting you and learning how I can help!
 

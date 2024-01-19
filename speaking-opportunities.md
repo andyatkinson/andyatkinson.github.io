@@ -4,6 +4,13 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## Ruby Rogues
+- <cite>2024-01-18</cite>
+- Podcast (audio, video)
+- [Powering Rails Applications with Postgres - RUBY 621🎙️](https://topenddevs.com/podcasts/ruby-rogues/episodes/powering-rails-applications-with-postgres-ruby-621)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2kpT6wNzkbY?si=hwZhWbsOb63ScHh6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ## Remote Ruby
 - <cite>2023-12-01</cite>
 - Podcast (audio)

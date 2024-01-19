@@ -34,6 +34,8 @@ navigation:
     url: /
   - text: About
     url: /about
+  - text: Consulting
+    url: /consulting
   - text: Speaking
     url: /speaking-opportunities
   - text: Ruby on Rails

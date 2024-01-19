@@ -4,30 +4,29 @@ permalink: /about
 title: About
 ---
 
-#### Summary
+### Summary
 
 Andrew (Andy) is a Software Engineer who specializes in building high performance web applications using PostgreSQL and Ruby on Rails.
 
-Andrew is writing a book called [High Performance PostgreSQL for Rails](https://pgrailsbook.com) to be published by the Pragmatic Programmers in 2024.
+Andrew wrote a book [High Performance PostgreSQL for Rails](https://pgrailsbook.com), published by Pragmatic Programmers in 2024.
 
-Andrew has [spoken at conferences](/speaking-opportunities) including PGDay Chicago, PGConf NYC, RailsConf, and RubyConf Argentina.
+Andrew has [spoken at conferences and on podcasts](/speaking-opportunities). The conferences include PGDay Chicago, PGConf NYC, RailsConf, and RubyConf Argentina.
 
-He's been a podcast guest on [Slow & Steady](https://www.slowandsteadypodcast.com), [Code With Jason](https://www.codewithjason.com), [Ruby for All](https://www.rubyforall.com), and [Rubber Duck Dev Show](https://www.rubberduckdevshow.com).
+The podcasts include been a guest on Ruby Rogues, Remote Ruby, The Ruby on Rails podcast, Rails Changelog, [Slow & Steady](https://www.slowandsteadypodcast.com), [Code With Jason](https://www.codewithjason.com), [Ruby for All](https://www.rubyforall.com), [Rubber Duck Dev Show](https://www.rubberduckdevshow.com), and more!
 
-He's [written for the official Ruby on Rails weblog](/writing).
+When not at a computer, Andrew spends time with his family and friends in the Minneapolis, MN, USA area, or watching the Timberwolves (NBA)! 🏀
 
-When not at a computer, he spends time with his family and friends in Minneapolis, MN, USA.
+### Education
 
-#### Education
+Andrew earned two Bachelors (B.A.Sc. and B.A.) degrees from the [University of Minnesota](http://umn.edu), which included one semester in Toledo, Spain at the Fundación José Ortega y Gasset.
 
-Andy earned BASc and BA Bachelors degrees from the [University of Minnesota](http://umn.edu), which included one semester abroad at the Fundación José Ortega y Gasset in Toledo, Spain.
 
-#### Recommendations
+### Recommendations
 
 > I cannot recommend Andy highly enough for an engineering position at your company. His communication skills, candor, and thoughtfulness will bring tremendous value to any company that he joins.
 <cite>- Director of Product Management</cite>
 
-> [Andrew] is a great person to have on a team because of his communication skills and patience to mentor and train other developers.
+> Andrew is a great person to have on a team because of his communication skills and patience to mentor and train other developers.
 <cite>- CTO</cite>
 
 See more on [LinkedIn](http://linkedin.com/in/andyatkinson/)
