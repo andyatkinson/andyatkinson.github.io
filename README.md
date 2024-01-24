@@ -7,7 +7,9 @@ This is the source code for my website, blog, and portfolio at [andyatkinson.com
 
 Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale)
 
+- Code screenshots: <https://www.marclittlemore.com/create-pretty-code-screenshots/>
 - `%s/”/"/g`
+- `%s/“/"/g`
 - Use `h4` for headings
 - Add tags to the post
 - In Vim `:set wrap`/`:set nowrap` to enable/disable soft wrap
