@@ -1,23 +1,23 @@
 ---
 layout: page
 permalink: /consulting
-title: PostgreSQL and Rails Consulting
+title: PostgreSQL and Rails Independent Consulting
 ---
 
 ![Andrew Atkinson presenting at PgDay Chicago 2023](/assets/images/pages/andy-pgday-chicago-2023.jpeg)
 <small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hello 👋
-Hi, I’m **Andrew**, and I'm ready to help you solve your **PostgreSQL** 🐘 database and **Ruby on Rails** 💎 web application challenges as an independent consultant.
+I’m **Andrew**, and I'm excited to work with you, solving your **PostgreSQL** 🐘 database and **Ruby on Rails** 💎 web application challenges.
 
 ## Why hire me?
-I've worked on multi-terabyte PostgreSQL databases with Rails apps performing thousands of queries per second. I love working on database performance challenges, and even [wrote a book about High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+I've worked on multi-terabyte PostgreSQL databases with Rails apps performing thousands of queries per second. I love working with these technologies, and even [wrote a book called **High Performance PostgreSQL for Rails**](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
 📊 Let's **improve your database query performance**, avoiding costly vertical scaling<br/>
-🐛 Let's eliminate data-related bugs, avoiding distractions<br/>
-💾 Let's evaluate your schema design, queries, and indexes, based on your reliability and performance goals<br/>
-🐘 I'll perform challenging **data migrations** as required for *primary key conversion*, a *partitioned table migration*, or low downtime cutovers.<br/>
-👨 I'll happily provide training for your team on PostgreSQL and Rails topics, with off-the-shelf **training presentations** or custom ones (See Below).<br/>
+🐛 Let's eliminate data-related bugs<br/>
+💾 Let's optimize your schema design, queries, and indexes, for your reliability and performance goals<br/>
+🐘 I'll perform **data migrations** as required for *primary key conversions*, *partitioned table migrations*, or low downtime cutovers.<br/>
+👨 I'll provide training for your team on PostgreSQL and Rails topics, using off-the-shelf **training presentations** or customized materials (See Below).<br/>
 
 
 ## Testimonials 🤝
