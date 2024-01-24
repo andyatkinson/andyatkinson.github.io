@@ -10,11 +10,11 @@ Recently I was discussing "Rows Removed by Filter" with a team during a training
 
 Sometimes the values were very sensible, and other times they weren't.
 
-For example, when selecting one row based on a unique column value, the "Rows Removed" figure was "one less" than the total row count. Very sensible. None of the other rows matched the filter condition.
+For example, when selecting one row based on a unique column value, the "Rows Removed by Filter" value was "one less" than the total row count. Very sensible. None of the other rows matched the filter condition.
 
 However, for *different* unique values, "Rows Removed" might be "slightly" less, nearly none at all, or something in between.
 
-In the example below, from 20210 total rows, matching one row, we see 20187 were evaluted and discarded. Where does 20187 come from?
+In the example below, from 20210 total rows, matching one row, we see 20187 were evaluated and discarded. Where does 20187 come from?
 
 ![Analyzing Rows Removed by Filter in psql](/assets/images/posts/query-code.jpg)
 <small>Analyzing "Rows Removed By Filter" in psql</small>
@@ -39,24 +39,29 @@ See: [EXPLAIN (ANALYZE) needs BUFFERS to improve the Postgres query optimization
 ## Additional information about "Rows removed by filter"
 Is this figure an exact value? Well, it could be.
 
-PgMustard describes it thusly: <https://www.pgmustard.com/docs/explain/rows-removed-by-filter>
+The [PgMustard Glossary](https://www.pgmustard.com/docs/explain/rows-removed-by-filter) explains it as:
 
 > This is a per-loop average.
 
-What does this mean? If more than one loop was used for the plan node (`loops=2` or more), our plan node was a Seq Scan, then the "Rows Removed" is an average among the loops.
+What does this mean? If more than one loop was used for the plan node (e.g. `loops=2` or greater), for example like in the Seq Scan node here, then "Rows Removed by Filter" is an average value among the loops.
 
-For example in one loop if 10 rows were removed, then 30 in a second, we'd expect to see 20 as an average of the two loops.
+For example, if one loop removed 10 rows, and another removed 30 rows, we'd expect to see a value of 20 as the average of the two loops.
 
-However, when there’s one loop (`loops=1`), then the figure is an average of one loop, or in other words should be the exact number of rows that were processed and discarded.
+However, when there’s one loop (`loops=1`), the figure is the average of *one* loop, meaning it's the exact number of rows that were processed and removed.
 
 ## Other Tidbits
-- The [PostgreSQL EXPLAIN documentation](https://www.postgresql.org/docs/current/using-explain.html) describes how "rows removed by filter" appears only when `ANALYZE` is added to `EXPLAIN`. When `EXPLAIN` is used on it’s own, we see a plan estimate and no "Rows Removed" information.
-- Rows Removed Applies for filter conditions like a `WHERE` clause, but can also be added for conditions on a `JOIN` node
-- Rows Removed information appears when *at least one row is scanned for evaluation*, or a "potential join pair" (for join nodes) when rows were discarded by the filter condition
+- The [PostgreSQL EXPLAIN documentation](https://www.postgresql.org/docs/current/using-explain.html) describes how "rows removed by filter" appears only when `ANALYZE` is added to `EXPLAIN`.
+- "Rows Removed by Filter" Applies for filter conditions like a `WHERE` clause, but can also be added for conditions on a `JOIN` node
+- "Rows Removed by Filter" information appears when *at least one row is scanned for evaluation*, or a "potential join pair" (for join nodes) when rows were discarded by the filter condition
+- Michael C. notes that using `ORDER BY`, commonly used with `LIMIT`, can produce more predictable planning results. See here: <https://twitter.com/Xof/status/1413542818673577987>
+- Michael also noted that when "Rows Returned by Filter" is an average, it's rounded to the nearest integer
 
 ## Takeaways
-- For Sequential Scans when a `LIMIT 1` is used, Rows Removed *may* equal "one less" than the total row count, or it may not. You'll need to look at the access method, whether the query has a limit, and there may be an "early" match resulting in less "Rows Removed" than expected.
-- When viewing "Rows Removed," check whether the plan node had more than one loop. When there’s more than one loop, the number that’s returned is an average among all the loops.
-- When working on performance optimization, a high amount of rows removed indicates an optimization opportunity. There's likely a helpful index, or an index could be made more selective using an expression. Generally the goal is to access fewer pages/buffers, resulting in less latency, achieving a faster execution time.
+- For Sequential Scans when `LIMIT 1` is used, "Rows Removed by Filter" *may* be "one less" than the total row count or it may not. Since there's a `LIMIT 1`, there may be an "early match" resulting in fewer "Rows Removed by Filter" than expected.
+- When viewing "Rows Removed by Filter" check whether the plan node had more than one loop. When there’s more than one loop, the number that’s returned is an average from all loops.
+- When working on performance optimization, a high *proportion* of rows removed indicates an optimization opportunity. There's likely a helpful index that's missing, or an existing index could be made more selective with an expression. Generally the goal is to access fewer pages/buffers, reducing latency, and achieving a faster execution time.
+
+## Thank You
+A special thank you to Michael Christofides, founder of [PgMustard](https://www.pgmustard.com), for reviewing an earlier draft of this post.
 
 Thanks for reading!
