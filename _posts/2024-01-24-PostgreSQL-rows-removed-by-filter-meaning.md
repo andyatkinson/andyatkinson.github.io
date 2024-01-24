@@ -50,7 +50,7 @@ For example in one loop if 10 rows were removed, then 30 in a second, we'd expec
 However, when there’s one loop (`loops=1`), then the figure is an average of one loop, or in other words should be the exact number of rows that were processed and discarded.
 
 ## Other Tidbits
-- The PostgreSQL documentation explains that "rows removed by filter" appears only when `ANALYZE` is added to `EXPLAIN`. When `EXPLAIN` is used on it’s own, we see a plan estimate and no "Rows Removed" information.
+- The [PostgreSQL EXPLAIN documentation](https://www.postgresql.org/docs/current/using-explain.html) describes how "rows removed by filter" appears only when `ANALYZE` is added to `EXPLAIN`. When `EXPLAIN` is used on it’s own, we see a plan estimate and no "Rows Removed" information.
 - Rows Removed Applies for filter conditions like a `WHERE` clause, but can also be added for conditions on a `JOIN` node
 - Rows Removed information appears when *at least one row is scanned for evaluation*, or a "potential join pair" (for join nodes) when rows were discarded by the filter condition
 
