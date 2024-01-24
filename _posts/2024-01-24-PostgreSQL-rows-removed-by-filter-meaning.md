@@ -14,10 +14,13 @@ For example, when selecting one row based on a unique column value, the "Rows Re
 
 However, for *different* unique values, "Rows Removed" might be "slightly" less, or nearly none at all. What's going on there?
 
+![Analyzing Rows Removed by Filter in psql](/assets/images/posts/query-code.jpg)
+<small>Analyzing "Rows Removed By Filter" in psql</small>
+
 ## Digging Into "Rows Removed"
 Here were the circumstances:
 
-- We’re working on a table of 20 thousand rows
+- We’re working on a table with 20210 rows
 - We queried for a single row, based on a unique column value.
 - For all queries, a Sequential Scan was used for filtering. While an index would be useful, we were intentionally not using one here.
 - All data was accessed from shared buffers, confirmed by prepending `EXPLAIN (ANALYZE, BUFFERS)` to queries.
