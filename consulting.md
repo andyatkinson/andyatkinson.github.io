@@ -31,7 +31,7 @@ I've worked on multi-terabyte PostgreSQL databases with Rails apps performing th
 
 ## Let's Talk
 
-Let’s chat. Schedule a 30-minute meeting using the calendar below, or [contact me](/contact) for questions or to arrange a different time.
+Schedule a 30-minute meeting using the calendar below, or [contact me](/contact) for questions or to arrange a different time.
 
 <!-- Calendly inline widget begin -->
 <div class="calendly-inline-widget" data-url="https://calendly.com/pgrailsbook/30min?hide_gdpr_banner=1" style="min-width:350px;height:700px;"></div>
