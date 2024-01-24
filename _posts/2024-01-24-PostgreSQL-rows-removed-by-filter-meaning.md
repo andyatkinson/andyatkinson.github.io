@@ -12,13 +12,15 @@ Sometimes the values were very sensible, and other times they weren't.
 
 For example, when selecting one row based on a unique column value, the "Rows Removed" figure was "one less" than the total row count. Very sensible. None of the other rows matched the filter condition.
 
-However, for *different* unique values, "Rows Removed" might be "slightly" less, or nearly none at all. What's going on there?
+However, for *different* unique values, "Rows Removed" might be "slightly" less, nearly none at all, or something in between.
+
+In the example below, from 20210 total rows, matching one row, we see 20187 were evaluted and discarded. Where does 20187 come from?
 
 ![Analyzing Rows Removed by Filter in psql](/assets/images/posts/query-code.jpg)
 <small>Analyzing "Rows Removed By Filter" in psql</small>
 
 ## Digging Into "Rows Removed"
-Here were the circumstances:
+Here are the details:
 
 - We’re working on a table with 20210 rows
 - We queried for a single row, based on a unique column value.
