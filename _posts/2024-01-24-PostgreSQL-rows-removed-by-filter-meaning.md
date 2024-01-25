@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "What's the meaning of 'Rows Removed By Filter' in PostgreSQL Query Plans?"
-tags: []
-date: 2024-01-24
+tags: [PostgreSQL]
+date: 2024-01-25
 comments: true
 ---
 
