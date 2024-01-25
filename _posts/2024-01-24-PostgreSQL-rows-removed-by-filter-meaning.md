@@ -22,9 +22,9 @@ Let’s discuss the circumstances of our table, the queries, and the behavior.
 
 - We queried a "users" table with 20210 total rows. The table uses an integer sequence starting from 1.
 - New rows **are not** being inserted. We’re working with a static set of rows for this entire experiment session.
-- Let’s assume that VACUUM has never run after the rows were inserted
+- Let’s assume that `VACUUM` has never run after the rows were inserted
 - We used the same `WHERE` clause in the query, changing only the `name_code` string column, which holds a mostly-unique (but not guaranteed or enforced with a constraint) string "code" value for each row.
-- We set a Limit of 1 on the queries, but no `ORDER BY`, and no `OFFSET`. In practice, a `LIMIT` would often be accompanied by an `ORDER BY`, but that wasn’t the case here.
+- We set a `LIMIT` of 1 on the queries, but no `ORDER BY`, and no `OFFSET`. In practice, a `LIMIT` would often be accompanied by an `ORDER BY`, but that wasn’t the case here.
 - A Sequential Scan was accessed to access the row data, because there was no index. In a production system, an index on the `name_code` column supporting this type of query would be a good idea. However, in this post we’re aiming to understand the behavior without an index added.
 - All data was accessed from shared buffers, confirmed by adding `BUFFERS` to `EXPLAIN (ANALYZE)` in front of the query, and seeing [`Buffers: shared hit` in the execution plan](https://www.pgmustard.com/docs/explain/buffers-shared-hit).
 
@@ -45,7 +45,7 @@ What was happening based on the LIMIT 1 being in the query, was as soon as Postg
 
 Ok. With that in mind, how does that translate to the Rows Removed by Filter values?
 
-When supplying `name_code` values from earlier inserted rows, in earlier pages, we’d see smaller values for Rows Removed by Filter. For `name_code` values "late" in the insertion order, many more rows were processed and discarded on the way towards matching the query condition, for a specific `name_code` value, with a Limit of 1. We could see this in the planner output, as many more pages/buffers were accessed.
+When supplying `name_code` values from earlier inserted rows, in earlier pages, we’d see smaller values for Rows Removed by Filter. For `name_code` values "late" in the insertion order, many more rows were processed and discarded on the way towards matching the query condition, for a specific `name_code` value, with a `LIMIT` of 1. We could see this in the planner output, as many more pages/buffers were accessed.
 
 We could estimate the number of rows stored in each 8kb page, which was about 28 rows per page in this case.
 
@@ -101,7 +101,7 @@ Now we see Rows Removed by Filter: 10000, exactly matching the offset.
 
 ## Takeaways
 - When `LIMIT 1` is used, and no ordering or offset is specified, "Rows Removed by Filter" shows a value based on how PostgreSQL accesses the data, which could be insertion order, showing the number of rows filtered out from the pages/buffers it’s accessed.
-- PostgreSQL tries to access as few pages/buffers as possible. When any match is found for the Limit, it’s done working.
+- PostgreSQL tries to access as few pages/buffers as possible. When any match is found for the `LIMIT`, it’s done working.
 - When analyzing "Rows Removed by Filter" figures, check out whether the plan node had more than one loop. In that case, the rows are an average of all loops, rounded to the nearest integer.
 - For performance work, a high *proportion* of rows filtered out indicates an optimization opportunity. There's likely a helpful index that's missing that would require far less filtering. For the best performance, our goal is to access as few pages/buffers as possible.
 
