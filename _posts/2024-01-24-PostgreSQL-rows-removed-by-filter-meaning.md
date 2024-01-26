@@ -6,13 +6,13 @@ date: 2024-01-25
 comments: true
 ---
 
-Recently I was giving a training on the PostgreSQL query planner output, describing the bits of information. We discussed the "Rows Removed by Filter" data, and how that worked.
+Recently I was giving a training on the PostgreSQL query planner output, describing the bits of information. We discussed the "Rows Removed by Filter" count as we prepared to add an index.
 
-I described how the count of removed rows was one less than the total, which made sense since the query had a `LIMIT` of 1.
+The count was one less than the total row count, which made sense since the query had a `LIMIT` of 1, and was finding a unique value.
 
-However, as I changed the `WHERE` clause parameter values, the values for "Rows Removed by Filter" surprised me. I realized I didn’t fully understand its behavior, so I wanted to take that opportunity to learn more.
+However, as I tried different `WHERE` clause values, the "Rows Removed by Filter" count started to confuse me. I realized I didn’t fully understand the behavior, and would need to dig in.
 
-That opportunity became this blog post. Along the way, I tapped in Michael Christofides,[^michael] founder of [PgMustard](https://www.pgmustard.com), for some help. Michael helped by reading earlier versions of this post, and even paired up to talk through the findings.
+Along the way, I asked Michael Christofides (of [PgMustard](https://www.pgmustard.com)) for help. Michael was gracious to read this post, and even pair up and talk through the findings.
 
 What did we find? Let’s dive in.
 
@@ -92,7 +92,5 @@ With that `name_code`, we see "Rows Removed by Filter: 10000", which exactly mat
 - When `LIMIT 1` is used, PostgreSQL finds the first match and returns. The default ordering is likely the insertion order of the rows.
 - When analyzing "Rows Removed by Filter" figures, check whether the plan node had more than one loop. In that case, the rows are an average of all loops, rounded to the nearest integer.
 - For performance work, a high *proportion* of rows filtered out indicates an optimization opportunity. Adding an index may greatly reduce the need to filter so many rows, cause so much storage access, and speed up your query.
-
-[^michael]: A special thank you to Michael Christofides, founder of [PgMustard](https://www.pgmustard.com), for reviewing drafts of this post, and pairing up and helping me understand the planner behavior and output.
 
 Thanks for reading!
