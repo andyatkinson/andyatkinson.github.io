@@ -12,7 +12,14 @@ Remote Ruby is a podcast I listen to regularly, so it was a lot of fun to be a g
 
 Some of the topics we discussed were my process of writing the book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/), what’s trending in PostgreSQL now, storage access and database concepts, and of course some new things in Ruby on Rails.
 
-Listen to the episode here 👉 <https://remoteruby.com/2260490/14003765-unleashing-the-power-of-postgres-with-andrew-atkinson>
+<!-- Callout box -->
+<section>
+<div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
+<h2>Podcast</h2>
+<p>👉 <a href="https://www.remoteruby.com/2260490/14003765-unleashing-the-power-of-postgres-with-andrew-atkinson">Listen to the episode</a></p>
+</div>
+</section>
+
 
 ## Exciting times in PostgreSQL
 
