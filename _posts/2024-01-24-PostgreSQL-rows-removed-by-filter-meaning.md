@@ -6,7 +6,7 @@ date: 2024-01-25
 comments: true
 ---
 
-Recently I was giving a training on the PostgreSQL query planner output, describing the bits of information. We discussed the "Rows Removed by Filter" count as we prepared to add an index.
+Recently, I was giving a training and showinf the PostgreSQL query planner output. We discussed the "Rows Removed by Filter" count as we prepared to add an index.
 
 The count was one less than the total row count, which made sense since the query had a `LIMIT` of 1, and was finding a unique value.
 
@@ -14,7 +14,7 @@ However, as I tried different `WHERE` clause values, the "Rows Removed by Filter
 
 Along the way, I asked Michael Christofides (of [PgMustard](https://www.pgmustard.com)) for help. Michael was gracious to read this post, and even pair up and talk through the findings.
 
-What did we find? Let’s dive in.
+What did we find?
 
 ## Digging Into "Rows Removed by Filter"
 
@@ -29,9 +29,7 @@ Let’s discuss the table and query details, and other circumstances.
 - All data was accessed from shared buffers, confirmed by adding `BUFFERS` to `EXPLAIN (ANALYZE)` and seeing [`Buffers: shared hit` in the execution plan](https://www.pgmustard.com/docs/explain/buffers-shared-hit).
 
 ![Analyzing Rows Removed by Filter in psql](/assets/images/posts/query-code.jpg)
-<small>Analyzing "Rows Removed By Filter" in psql</small>
-
-The random number portion of the `name_code` values had collisions. When generating numbers between 1 and 10 million, we had unique codes for the roughly 20 thousand rows. We found this out when adding a unique index or unique constraint to the table.
+<small>Analyzing "Rows Removed By Filter"</small>
 
 ## Expectation versus reality
 
@@ -39,13 +37,13 @@ Although I expected "Rows Removed by Filter" to be one less than the total row c
 
 ## What was happening?
 
-With the `LIMIT 1` in the query, as soon as PostgreSQL found any match, there was an "early return." There was no need to access additional pages of data.
-
-With that in mind, how does that translate to the "Rows Removed by Filter" values?
+With the `LIMIT 1` in the query, as soon as PostgreSQL found any match, there was an "early return." There was no need to access additional rows in pages.
 
 When supplying `name_code` values from earlier inserted rows, in earlier pages, we’d see smaller values for "Rows Removed by Filter."
 
-For `name_code` values "late" in the insertion order, many more rows were removed before finding a match. We could see this in the planner output as many more pages/buffers were accessed.
+For `name_code` values "late" in the insertion order, many more rows were removed before finding a match.
+
+We could confirm this in the planner output by observing greater numbers of buffers accessed.
 
 
 ## Performance details
