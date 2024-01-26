@@ -6,7 +6,7 @@ date: 2024-01-25
 comments: true
 ---
 
-Recently, I was giving a training and showinf the PostgreSQL query planner output. We discussed the "Rows Removed by Filter" count as we prepared to add an index.
+Recently, I was showing the PostgreSQL query planner output in a training session. We discussed the "Rows Removed by Filter" count as we prepared to add an index based on a high proportion of filtered rows.
 
 The count was one less than the total row count, which made sense since the query had a `LIMIT` of 1, and was finding a unique value.
 
