@@ -464,17 +464,17 @@ This is also a really cool [Version Upgrade Comparison Tool: 10 to 12](https://w
 
 October 2018
 
-* Improves parallel query performance and parallelism of B-tree index creation.
+* Improves parallel query performance and parallelism of B-tree index creation
 * Adds partitioning by hash key
 * Significant partitioning improvements
-* Adds "covering" indexes via `INCLUDE` to add more data to the index. Docs: [Index only scans and Covering indexes](https://www.postgresql.org/docs/11/indexes-index-only-scans.html)
+* Adds "covering" indexes with `INCLUDE` keyword. Adds "payload columns" to indexes. Docs: [Index only scans and Covering indexes](https://www.postgresql.org/docs/11/indexes-index-only-scans.html)
 
 ## PG 12
 
 [Release announcement](https://www.postgresql.org/about/news/postgresql-12-released-1976/). Released October 2019.
 
 * Partitioning performance improvements
-* Re-index concurrently
+* `REINDEX` gains support for `CONCURRENTLY`. This is very helpful for online index rebuilds, to remove "bloat" from index entries.
 
 ## PG 13
 
@@ -484,19 +484,20 @@ Released September 2020
 
 ## PG 14
 
-* More of [`query_id`](https://blog.rustprooflabs.com/2021/10/postgres-14-query-id)
+* More support for [`query_id`](https://blog.rustprooflabs.com/2021/10/postgres-14-query-id)
 * [Multi-range types](https://www.crunchydata.com/blog/better-range-types-in-postgres-14-turning-100-lines-of-sql-into-3)
 
 ## PG 15
 
-- SQL `MERGE`
+- SQL `MERGE` command for Upserts!
 
 ## PG 16
 
 Released September 2023
 
-- pg_stat_io
-- Replication based  followers
+- `pg_stat_io` System View
+- Replication running from a standby as a source
+- Bi-directional or "active-active" Logical Replication. This is cool! <https://www.crunchydata.com/blog/active-active-postgres-16>
 
 ## RDS
 
@@ -505,6 +506,9 @@ Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-write
 ## Aurora PostgreSQL
 
 - Separates storage and compute
+- "Fast clones"
+- Regional offering (single region) and Global offering (multi-region)
+- Can create multi-region replication natively, or without the need for VPC Peering
 
 ## AWS RDS Parameter Groups
 
@@ -528,7 +532,9 @@ Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-write
 ## Native Replication
 
 - Physical Replication
-- Logical Replication
+- Logical Replication using PUBLICATION and SUBSCRIPTION objects.
+- PostgreSQL 16 gained bi-directional logical replication for the same table, on two separate instances!
+
 
 ## PostgreSQL Logical Replication
 
@@ -639,6 +645,7 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 * `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://brianchildress.co/reset-auto-increment-in-postgres/>
 * `ALTER SEQUENCE <seq-name> RESTART WITH 1;` (e.g. `users_id_seq`)
 * Serial and BigSerial are special types that use Sequences
+* Logical Replication restrictions: "Sequence data is not replicated" (as of PG 16) <https://www.postgresql.org/docs/current/logical-replication-restrictions.html>
 
 ## Identity Columns
 
