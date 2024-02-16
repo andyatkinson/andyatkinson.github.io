@@ -277,3 +277,4 @@ multiuser
 Multiversion
 bg
 Bucketable
+pg_locks
