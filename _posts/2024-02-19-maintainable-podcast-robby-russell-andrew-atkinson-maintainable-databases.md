@@ -100,10 +100,8 @@ We successfully used Coverband to remove thousands of lines of code from dozens 
 </div>
 </section>
 
-
 [^1]: <https://github.com/danmayer/coverband>
 [^2]: <https://mixpanel.com/blog/upsides-to-unshipping-the-art-of-removing-features-and-products>
-
 
 ## Thanks
 
