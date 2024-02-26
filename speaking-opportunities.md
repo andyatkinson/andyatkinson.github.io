@@ -4,6 +4,20 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## Rubber Duck Dev Show
+- <cite>2024-01-29</cite>
+- Podcast (audio, video)
+- [What Developers Should Know About Postgres With Andrew Atkinson](https://www.rubberduckdevshow.com/episodes/114-what-developers-should-know-about-postgres-with-andres-atkinson/)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KGDPrqAxFPk?si=y7oosfT_X1kkPG3-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+## Maintainable Podcast
+
+- <cite>2024-02-19</cite>
+- Podcast (audio)
+- [Maintainable Podcast — Maintainable…Databases? 🎙️](/blog/2024/02/19/maintainable-podcast-robby-russell-andrew-atkinson-maintainable-databases)
+
 ## Ruby Rogues
 - <cite>2024-01-18</cite>
 - Podcast (audio, video)
