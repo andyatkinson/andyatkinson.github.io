@@ -9,6 +9,7 @@ title: Open Source
  * PostgreSQL docs:
     - <https://github.com/postgres/postgres/commit/16ace6f7452a968f2b5b058ccccd75db4c56ef34>
     - <https://github.com/postgres/postgres/commit/dab5538f0bfc4cca76396f5d510e2df6f5350d4c>
+    - <https://github.com/postgres/postgres/commit/363eb059966d0be0a41c206cee40dfd21eb73251>
  * [Ruby on Rails](http://contributors.rubyonrails.org/contributors/andy-atkinson/commits) - Committed a couple of small improvements
  * [Delayed Job Web gem](https://github.com/ejschmitt/delayed_job_web) - Gem maintainer. Web interface to delayed job (Ruby-based background processing).
  * [rails/globalid](https://github.com/rails/globalid/commits?author=andyatkinson) - Added unit tests
