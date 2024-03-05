@@ -16,6 +16,42 @@ Along the way, I asked Michael Christofides (of [PgMustard](https://www.pgmustar
 
 What did we find?
 
+## Setting up the data
+
+We're using the `users` table, `rideshare` schema, in the [Rideshare database](https://github.com/andyatkinson/rideshare).
+
+This table does not have a `name_code` column, so we're adding that and populating it with the following SQL statements.
+
+We're disabling Autovacuum for the `rideshare.users` table to rule that out from interfering.
+
+```sql
+-- Disable Autovacuum so we have control over it
+ALTER TABLE rideshare.users SET (autovacuum_enabled = false);
+
+-- Add name_code column
+ALTER TABLE rideshare.users
+ADD COLUMN name_code VARCHAR (25)
+DEFAULT NULL;
+
+-- Populate name_code values
+WITH u1 AS (
+    SELECT id,
+    CONCAT(SUBSTRING(first_name, 1, 1),
+           SUBSTRING(last_name, 1, 1),
+           FLOOR(RANDOM() * 10000 + 1)::INTEGER
+    ) AS code
+    FROM users
+)
+UPDATE users u
+SET name_code = u1.code
+FROM u1
+WHERE u.id = u1.id;
+```
+
+From this point forward, if you're interested in following along, we'll assume you've downloaded the Rideshare source code, created the database, the `users` table, and have applied the commands above.
+
+This means when you run `\d users` you'll have a `name_code` column and all 20,000+ rows will have a value populated.
+
 ## Digging Into "Rows Removed by Filter"
 
 Let’s discuss the table and query details, and other circumstances.
@@ -86,9 +122,9 @@ With that `name_code`, we see "Rows Removed by Filter: 10000", which exactly mat
 - Michael noted that using `ORDER BY`, which is commonly used with `LIMIT`, can produce more predictable planner results. See this thread: <https://twitter.com/Xof/status/1413542818673577987>
 
 ## Takeaways
-- Without an explicit ordering, and when using a `LIMIT`, the results of "Rows Removed by Filter" may be surprising.
+- Without an explicit ordering (`ORDER BY`), and when using a `LIMIT`, the results of "Rows Removed by Filter" may be surprising.
 - When `LIMIT 1` is used, PostgreSQL finds the first match and returns. The default ordering is likely the insertion order of the rows.
 - When analyzing "Rows Removed by Filter" figures, check whether the plan node had more than one loop. In that case, the rows are an average of all loops, rounded to the nearest integer.
-- For performance work, a high *proportion* of rows filtered out indicates an optimization opportunity. Adding an index may greatly reduce the need to filter so many rows, cause so much storage access, and speed up your query.
+- For performance work, *a high proportion of rows filtered out* indicates an optimization opportunity. Adding an index may greatly reduce the filtering of so many rows, reducing storage access, and speeding up your query.
 
 Thanks for reading!
