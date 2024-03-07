@@ -7,7 +7,7 @@ title: Speaking Opportunities
 ## postgres.fm
 - <cite>2024-03-07</cite>
 - Podcast (audio, video)
-- []()
+- [Rails + Postgres Postgres.FM 086 — Extended blog post edition! 🎙️](/blog/2024/03/07/postgresfm-podcast-rails-plus-postgres)
 
 
 ## Rubber Duck Dev Show
