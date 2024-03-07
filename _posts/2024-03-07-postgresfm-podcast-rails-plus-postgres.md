@@ -1,35 +1,36 @@
 ---
 layout: post
-title: "Rails + Postgres | Postgres.FM 086 | podcast"
-tags: []
+title: "Rails + Postgres Postgres.FM 086 — Extended blog post edition! 🎙️"
+tags: [Ruby on Rails, podcast]
 date: 2024-03-07
 comments: true
 ---
 
-Postgres + Rails postgres.fm: Super extended blog post edition!
-
-
-
-I was a guest on the most recent episode of postgres.fm, and had a lot of fun! postgres.fm is one of my favorite and most listened-to podcasts, really since it started back in August 2022.
+I recently joined Michael and Nikolay as a guest on a favorite podcast of mine, [postgres.fm](https://postgres.fm). postgres.fm is a favorite and my most listened-to podcast, going back to when it started back in August 2022. Why is that?
 
 ## Why I like the postgres.fm podcast
 
-As a weekly podcast covering PostgreSQL topics, nearing 100 episodes, Michael and Nikolay have covered a lot of topics! All of the episodes have had great content, covering valuable topics at a nice level of depth. Each host brings their background and perspective, and they seem to complement each other.
+As a weekly-release podcast covering PostgreSQL for nearly 100 episodes, Michael and Nikolay have covered a lot of ground! All of the episodes have great content, covering a nice level of depth, in a short amount of time. Each host brings their unique perspectives and they seem to complement each other.
 
-The launch of the podcast overlapped with the early phase of writing my PostgreSQL book. Each Friday morning when episodes were released in the US, I’d often hop onto my treadmill and listen to them while walking or running. I’d usually have follow-up ideas and things to experiment with after each one.
+The launch of the podcast overlapped with whem I was getting started writing my PostgreSQL book. Each Friday morning as episodes were released in the US, I’d hop onto my treadmill and listen. I’d usually have follow-up ideas and notes from each episode.
 
-The weekly release cadence helped me stay motivated while writing, and broadened my perspectives on a variety of topics. I’m really thankful that Michael and Nikolay created the podcast, and have continued to release episodes each week. I know it’s a lot of work, and appreciated having the opportunity to contribute to that.
+The weekly release cadence helped me stay motivated while writing, and the coverage helped broaden my perspectives.
 
-Now, on with the questions and follow-ups from the episode!
+I’m really thankful Michael and Nikolay created the podcast, and continued to release episodes each week. I know it’s been a lot of work for them. They've generously shared their knowledge with the community.
+
+Now, on with the Rails + Postgres episode!
+
 ## Is Postgres a popular choice for Rails?
 
-This was difficult to answer with confidence. Subjectively, PostgreSQL feels like the most popular relational database choice for new apps, but I’m in a bubble as I surround myself with PostgreSQL news sources. Michael pointed out how we’re all biased in the episode as we’re all focused on PostgreSQL whether for business or for the book and my jobs, in my case.
+This was the first question from Michael. It's difficult to answer with confidence, especially since I'm in sort of a bubble of PostgreSQL fans.
+
+Subjectively, PostgreSQL feels like the most popular relational database choice for new Rails apps.
 
 To add a little objectivity, we did bring in the Planet Argon survey with results from 2600 respondents from 2022.
 
-The 2022 Ruby on Rails Community Survey from Planet Argon,[1] 2,660 members responded. In the databases section, PostgreSQL flipped with MySQL for the top choice "typically used" from around 2014 onward and continues to be there.
+The 2022 Ruby on Rails Community Survey from Planet Argon[^1] with more than 2,660 responses, in the databases section PostgreSQL took over in 2014 from MySQL as the top choices for being "typically used" and continues to stay there.
 
-[1] https://rails-hosting.com/2022/#databases
+[^1]: <https://rails-hosting.com/2022/#databases>
 
 ## What about MySQL and others?
 
@@ -39,11 +40,11 @@ There are still benefits for PostgreSQL though. Since the use and ongoing invest
 
 From Active Record then, PostgreSQL has gained support in the framework for Multiple Databases, including Sharding support via Horizontal Sharding, Read and Write splitting with automatic routing of reads to a replica, at least with basic implementations available natively without additional dependencies. The benefit of native framework support is that these features are well tested and well documented.
 
-We can draw lines to those companies by digging into the commit history for Ruby on Rails and Active Record for those features like "Horizontal Sharding" [3].
+We can draw lines to those companies by digging into the commit history for Ruby on Rails and Active Record for those features like "Horizontal Sharding." [^3]
 
-[2] https://github.blog/2021-07-12-adding-support-cross-cluster-associations-rails-7/
+[^2]: <https://github.blog/2021-07-12-adding-support-cross-cluster-associations-rails-7>
 
-[3] https://edgeguides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding
+[^3]: <https://edgeguides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding>
 
 
 Other supported database options are the SQLite relational database for Active Record.
@@ -51,6 +52,7 @@ Other supported database options are the SQLite relational database for Active R
 Commercial relational databases like Oracle or SQL Server (MS SQL), or non-relational databases like MongoDB or DynamoDB may work with Active Record, but would require adding more dependencies as they’re not natively supported.
 
 ## How do folks typically query Postgres from a Rails app?
+
 Rails developers usually interact with PostgreSQL via the Active Record ORM.
 
 To do that, they place PostgreSQL connection details into the db/config.yml YAML configuration file, then add a Ruby postgres driver like the "pg" gem, which is responsible for establishing connections from the app to PostgreSQL.
@@ -68,6 +70,7 @@ We can use the Rails Console to run snippets of Active Record code, and inspect 
 For example we might run "User.find(1)" in the Rails Console, which would execute a query like `["SELECT * FROM users WHERE id = ?", 1]`. Active Record can do a lot of things before sending the query, such as annotating queries with comments describing which code generated the query.
 
 ## What’s the ORM like? Any tips around setup?
+
 Active Record is used in two major ways.
 
 Most people would first think of using the ORM to write application code that produces SQL queries. The SQL queries persist or retrieve data that’s associated with in-memory Active Record object instances.
@@ -90,6 +93,7 @@ There is no concept of safety though, which refers to operations that take long 
 
 
 ## What’s the schema.rb vs structure.sql beef about?
+
 This is not a "real" beef (hehe), but is a sort of a decision point Rails programmers make, or re-make over time.
 
 In Active Record, the schema is represented as a text file that’s checked into source code control within the repository. This file represents the entire state of the database, and is a secondary file that’s derived from other smaller files that each represent an incremental change. These incremental change files are called "Migrations."
@@ -109,22 +113,23 @@ This can result from not thinking about joins in the relational DB possibly, sin
 
 To generalize this a bit further, a DBA could see inefficient query plans being generated, which could come from inefficient schema design, misuse of features, or under-use of indexes. Another form of inefficient queries could be "SELECT *" when fewer columns would be adequate, not adding all the possible query restrictions to the WHERE clauses, or not adding a LIMIT and returning more rows than necessary. These aren’t limited to Ruby on Rails, but perhaps all ORM users can fall into these kinds of traps but not closely thinking about the SQL and without storing and accessing as little data as possible in each operation. 
 
-Another common poor-performer at least < Postgres 14 is the "giant list of values in an IN clause." Performance for large amounts of values like 1000 or more was improved in PostgreSQL 14. 
-(Andy add links)
-https://pganalyze.com/blog/5mins-postgres-performance-in-lists-vs-any-operator-bind-parameters
-James Coleman patch (copied from the 5min of Postgres links): https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=50e17ad28
+Another common poor-performer at least < Postgres 14 is the "giant list of values in an IN clause." Performance for large amounts of values like 1000 or more was improved in PostgreSQL 14.
+
+- <https://pganalyze.com/blog/5mins-postgres-performance-in-lists-vs-any-operator-bind-parameters>
+
+James Coleman patch (copied from the 5min of Postgres links): <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=50e17ad28>
 
 Benoit is also working with PostgreSQL contributor Peter G. on a certain type of query pattern with multiple WHERE clause conditions that causes an additional filtering step within an index scan, leading to poorly performing plans. This could happen in Active Record when chaining together multiple "where()" clause conditions.
 
 Per Benoit, Peter says the fix going into PostgreSQL should ship in version 17, that can identify this scenario, and optimize the query plan to avoid the additional filtering step.
 
-For "SELECT *" we can use an option in Active Record to enumerate all fields. This might make it more obvious for developers during development, that all fields are being fetched.
+For `SELECT *` we can use an option in Active Record to enumerate all fields. This might make it more obvious for developers during development, that all fields are being fetched.
 
-Config.active_record.enumerate_columns_in_select_statements
-https://www.bigbinary.com/blog/rails-7-adds-setting-for-enumerating-columns-in-select-statements
+`config.active_record.enumerate_columns_in_select_statements` option described here: <https://www.bigbinary.com/blog/rails-7-adds-setting-for-enumerating-columns-in-select-statements>
 
 This change in Active Record adds to the Active Record instrumentation events and warns about very large result sets being returned.
-https://github.com/rails/rails/pull/50887
+
+- <https://github.com/rails/rails/pull/50887>
 
 Nikolay pointed out that pg_stat_statements shows the rows returned as a stats column, which can also be used to identify opportunities to add more query restrictions or a LIMIT clause.
 
@@ -135,7 +140,8 @@ Another big category DBAs might be surprised about is that Rails developers are 
 For example, an index being added to a table that’s actively receiving writes, without adding hte index using the CONCURRENTLY option, and causing errors due to blocked writes. This can be detected by tools that force the use of CONCURRENTLY, and are added into the Migrations process for developers, but this doesn’t happen automatically with Ruby on Rails. As mentioned before, there’s no built-in concept of "safety."
 
 
-## What’s the Rails + Postgres tooling ecosystem like? What are gems? 
+## What’s the Rails + Postgres tooling ecosystem like? What are gems?
+
 The Ruby open source shared library code ecosystem is very rich. In the book we cover more than 40 open source software items, with around 20 of those being Ruby gems that are added to the Rideshare application for examples and exercises throughout the book. These are Ruby gems that for the most part, I’ve used in production apps at companies with significant scale, and they’ve proven the test of time.
 
 RubyGems are the mechanism in the Ruby language to package up and distribute code. They are built and hosted usually on rubygems.org. They are roughly equivalent to PostgreSQL extensions, in that they leverage extension points, and add functionality to the core.
@@ -155,9 +161,9 @@ Once you can identify the costly parts, you can develop your bag of tricks for h
 
 For myths, I think developers think that JOIN operations are very costly and should be avoided, which means that normalizing data may be avoided.
 
-Brian Davis has a great post with benchmarks showing the cost of a join. The takeaway for me from that post was that the cost of a join is nominal and should not limit the use of good data normalization practices, even when tables grow to millions of rows and rows are being joined together from many tables at once.
+Brian Davis has a great post with benchmarks showing the cost of a join.[^5] The takeaway for me from that post was that the cost of a join is nominal and should not limit the use of good data normalization practices, even when tables grow to millions of rows and rows are being joined together from many tables at once.
 
-https://www.brianlikespostgres.com/cost-of-a-join.html
+[^5]: <https://www.brianlikespostgres.com/cost-of-a-join.html>
 
 Nothing’s free though, and this does mean that a developer needs to create an efficient schema design with appropriate use of types, and create well-placed indexes that support the queries and join operations. For example, making sure that foreign keys are indexed, likely making good use of Multicolumn and Covering indexes, and using indexes to support ordering operations among other tactics.
 
@@ -173,7 +179,8 @@ Part of this is credited to how extensible PostgreSQL is, supporting many more d
 I think web application developers really want to know which queries to optimize, and for that optimization process to be succinct and repeatable. PGSS (pg_stat_statements) is a great visibility tool but still lacks things like "samples". In PostgreSQL 16 we gained "generic plans" but samples with full query text would help.
 
 I also gave a 5 minute lightning talk on some visibility tools at PGConf NYC. Michael and I collaborated on how to use the queryid "fingerprint" information that PostgreSQL gained in 14, to combine that with auto_explain information in 16 to get samples from the postgresql.log file, at least when the timing of a query exceeds a minimum.
-https://speakerdeck.com/andyatkinson/pgconf-nyc-2023-lightning-talk
+
+- <https://speakerdeck.com/andyatkinson/pgconf-nyc-2023-lightning-talk>
 
 Since PostgreSQL adds catalog views over time, maybe a new catalog view or an expanded existing catalog could contain query text samples for certain queries by their queryid identifier, or even collect samples based on different thresholds like "excessive buffers", excessive row counts, that we could then use to add those optimizations. A "max_samples" could be set so that old samples are removed.
 
@@ -191,7 +198,7 @@ There is a lot of content in the book that’s not related to Ruby on Rails at a
 
 We didn’t cover some of the breadth of support for PostgreSQL features in Active Record, so I wanted to add some of that in here in this section. These topics are all covered in the book.
 
-Consider exploring the PostgreSQL page within the Active Record documentation for the current released major version - 7.1: https://guides.rubyonrails.org/v7.1/active_record_postgresql.html
+Consider exploring the PostgreSQL page within the Active Record documentation for the current released major version - 7.1: <https://guides.rubyonrails.org/v7.1/active_record_postgresql.html>
 
 - PostgreSQL Generated columns (Active Record virtual stored columns)
 - Deferrable foreign keys support
@@ -201,25 +208,34 @@ Consider exploring the PostgreSQL page within the Active Record documentation fo
 - Full text search using tsvector
 - Database views
 - Advanced Data types like Arrays and Ranges
-- Query hint planning from Active Record, using pg_hint_plan. The book has an example of how to use this. 
+- Query hint planning from Active Record, using `pg_hint_plan`. The book has an example of how to use this. 
 - RETURNING clause, with INSERT (and possible other DML ops in the future)
 
 
 ## Additional Links
 
-- GitLab Migration Style Guide (mentioned by Nikolay) https://docs.gitlab.com/ee/development/migration_style_guide.html
-- Lukas Fittl’s gem mentioned in the show, that helps keep the SQL structure dump consistently formatted https://github.com/lfittl/activerecord-clean-db-structure
+- GitLab Migration Style Guide (mentioned by Nikolay) <https://docs.gitlab.com/ee/development/migration_style_guide.html>
+- Lukas Fittl’s gem mentioned in the show, that helps keep the SQL structure dump consistently formatted <https://github.com/lfittl/activerecord-clean-db-structure>
 
 
+## Errors
+
+I mentioned Rails was used at DoorDash, but I don’t know if that's true.
+
+I knew DoorDash used PostgreSQL in the past, but I could only find public writing about having used the Python Django framework.
+
+The DoorDash engineering blog has some nice posts on production migration operations with PostgreSQL.
+
+- <https://doordash.engineering/2022/01/19/making-applications-compatible-with-postgres-tables-bigint-update/>
 
 
-## Errors in what I said
-
-I mentioned Rails was used at DoorDash, but I don’t actually know if that was ever the case. I may have been confused.
-
-I found that DoorDash used PostgreSQL in the past, and also used the Python Django framework. The DoorDash engineering blog has some nice posts on production migration operations with PostgreSQL. https://doordash.engineering/2022/01/19/making-applications-compatible-with-postgres-tables-bigint-update/
-
-
+<!-- Callout box -->
+<section>
+<div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
+<h2>Podcast</h2>
+<p>👉 <a href="https://postgres.fm/episodes/rails-postgres">Listen to the episode</a></p>
+</div>
+</section>
 
 ## Wrapping Up
 
