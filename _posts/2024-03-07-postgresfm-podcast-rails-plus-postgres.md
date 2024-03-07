@@ -82,17 +82,17 @@ Active Record is pleasant to use as a Ruby programmer, just as the Ruby programm
 
 Active Record is one of the main reasons Rails developers like Rails.
 
-While Active Record helpers are designed to allow developers to not write SQL, for developers do *do* wish to write SQL, that's also possible using Active Record. This can be quite handy to co-mingle SQL and Active Record code.
+While Active Record helpers are designed to allow developers to not write SQL, for developers that *do* wish to write SQL, that's also possible using Active Record. This can be quite handy to co-mingle SQL and Active Record code.
 
 ## Active Record for schema evolution management
 
-Besides activing as an ORM, there's another primary use of Active Record, and that's as the schema management and evolution tool. This means we're writing Active Record to modify database objects, creating things like tables, indexes, or views.
+Besides acting as an ORM, there's another primary use of Active Record, and that's as the schema management and evolution tool. This means we're writing Active Record to modify database objects, creating things like tables, indexes, or views.
 
 Outside of Ruby on Rails, other communities might use tools like Flyway or Liquibase, or a tool that's built in to the web framework.
 
 Active Record has a lot of nice helpers to perform DDL changes, and beyond that, there are lots of open source libraries that enhance Active Record further for "Migrations."
 
-There is no concept of safe migrations though, which are migrations that take long locks and can block concurrent operations. Fortunately, open source libraries exist that can be easily added to achieve this.
+There's no concept of safe migrations though, which are migrations that take long locks and can block concurrent operations. Fortunately, open source libraries exist that can be easily added to achieve this.
 
 
 ## What’s the schema.rb vs structure.sql beef about?
@@ -169,13 +169,13 @@ Brian Davis has a great post with benchmarks showing the cost of a join.[^5] The
 
 [^5]: <https://www.brianlikespostgres.com/cost-of-a-join.html>
 
-There is a cost though of course. This means the developer needs to use efficient schema design choices and create well-placed indexes that support the queries and join operations.
+There's a cost though of course. This means the developer needs to use efficient schema design choices and create well-placed indexes that support the queries and join operations.
 
 For example, tactics like indexing foreign keys, using Multicolumn and Covering indexes, and using indexes to support `ORDER BY` operations.
 
 Another myth is that PostgreSQL isn’t capable of certain kinds of work like Full Text Search, caching, analytics, sharding, or background jobs. Instead, teams might add additional non-relational databases, and a complicated data synchronization process.
 
-While this was more true 10 years ago with slower and smaller and more expensive disks, with SSDs and all the performance improvements to PostgreSQL over the last decade, this is not true today.
+While this was more true 10 years ago with slower and smaller and more expensive disks, with SSD drives and the performance improvements to PostgreSQL over the last decade, this is not true today.
 
 PostgreSQL is often heavily *under-utilized* in the overall workloads for business applications. Instead of using PostgreSQL, teams might be using a hodgepodge mix of database systems, taking on a lot more complexity, maintenance, and cost.
 
@@ -187,7 +187,7 @@ I gave a 5 minute lightning talk on some visibility tools at PGConf NYC to help 
 
 - <https://speakerdeck.com/andyatkinson/pgconf-nyc-2023-lightning-talk>
 
-Since PostgreSQL adds and enhances system catalogs, maybe a catalog could contain query text samples for certain queries by their `queryid` identifier, or even collect samples based on different thresholds like excessive buffers or excessive row counts, that we could then use as informatino to perform query optimizations.
+Since PostgreSQL adds and enhances system catalogs, maybe a catalog could contain query text samples for certain queries by their `queryid` identifier, or even collect samples based on different thresholds like excessive buffers or excessive row counts, that we could then use as information to perform query optimizations.
 
 ## Post-show ideas/reflections/thoughts
 
@@ -197,7 +197,7 @@ Within the source code directory, there’s a "postgresql" directory that has so
 
 We didn’t cover this, but the book also uses the PostgreSQL client "psql" exclusively. Since Rails developers are used to working with the Rails Console, I hoped some readers might pick up psql as their go-to client.
 
-There is a lot of content in the book that’s not related to Ruby on Rails at all. For example, SQL language functions, PL/pgSQL functions, shell scripts, table partitioning, full text search (with `tsvector` and `tsquery`) are covered. We also show how to use PostgreSQL as a message queue or for background jobs with `LISTEN` and `NOTIFY`, and some brief coverage of the `pgvector` extension and vector similarity search.
+There's a lot of content in the book that’s not related to Ruby on Rails at all. For example, SQL language functions, PL/pgSQL functions, shell scripts, table partitioning, full text search (with `tsvector` and `tsquery`) are covered. We also show how to use PostgreSQL as a message queue or for background jobs with `LISTEN` and `NOTIFY`, and some brief coverage of the `pgvector` extension and vector similarity search.
 
 ##  More coverage of Active Record and PostgreSQL
 
