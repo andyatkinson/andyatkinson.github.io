@@ -6,17 +6,17 @@ date: 2024-03-07
 comments: true
 ---
 
-I recently joined Michael and Nikolay as a guest on a favorite podcast of mine, [postgres.fm](https://postgres.fm). postgres.fm is a favorite and my most listened-to podcast, going back to when it started back in August 2022. Why is that?
+I recently joined Michael and Nikolay as a guest on a favorite podcast of mine, [postgres.fm](https://postgres.fm), which has been a favorite going back to when it started in August 2022. Why's that?
 
 ## Why I like the postgres.fm podcast
 
-As a weekly-release podcast covering PostgreSQL for nearly 100 episodes, Michael and Nikolay have covered a lot of ground! All of the episodes have great content, covering a nice level of depth, in a short amount of time. Each host brings their unique perspectives and they seem to complement each other.
+As a weekly-release podcast covering PostgreSQL for nearly 100 episodes, Michael and Nikolay have covered a lot of ground! All of the episodes have great content, covering a nice level of depth, in a short amount of time. Each host brings their unique perspective.
 
-The launch of the podcast overlapped with whem I was getting started writing my PostgreSQL book. Each Friday morning as episodes were released in the US, I’d hop onto my treadmill and listen. I’d usually have follow-up ideas and notes from each episode.
+The launch of the podcast overlapped with writing my PostgreSQL book. Most Friday mornings of episode releases, I’d hop onto my treadmill and listen. I’d usually have follow-up ideas and notes from each episode.
 
 The weekly release cadence helped me stay motivated while writing, and the coverage helped broaden my perspectives.
 
-I’m really thankful Michael and Nikolay created the podcast, and continued to release episodes each week. I know it’s been a lot of work for them. They've generously shared their knowledge with the community.
+I’m really thankful to Michael and Nikolay for creating the podcast, and releasing episodes each week. I know it’s been a lot of work for them, and it's been quite generous of them to share their knowledge with the community.
 
 Now, on with the Rails + Postgres episode!
 
@@ -26,30 +26,29 @@ This was the first question from Michael. It's difficult to answer with confiden
 
 Subjectively, PostgreSQL feels like the most popular relational database choice for new Rails apps.
 
-To add a little objectivity, we did bring in the Planet Argon survey with results from 2600 respondents from 2022.
+To add a little objectivity, we did bring in the Planet Argon survey with results from more than 2600 respondents from 2022.
 
-The 2022 Ruby on Rails Community Survey from Planet Argon[^1] with more than 2,660 responses, in the databases section PostgreSQL took over in 2014 from MySQL as the top choices for being "typically used" and continues to stay there.
+The 2022 Ruby on Rails Community Survey from Planet Argon[^1] responses show that PostgreSQL took over in 2014 from MySQL, as the top choice of being "typically used" as the relational database, and has continued to stay there.
 
 [^1]: <https://rails-hosting.com/2022/#databases>
 
 ## What about MySQL and others?
 
-As far as other open source relational databases, MySQL or MariaDB are very popular for Ruby on Rails apps today, and also Rails apps that started in the 2000s. Companies like Shopify, GitHub, Airbnb that famously started on Ruby on Rails in the 2000s all generally started with MySQL and continue to use it, per my understanding of publicly shared tech stack info.
+As far as other open source relational databases, MySQL or MariaDB are popular for Ruby on Rails apps today, and have been since Rails started in the 2000s. Companies like Shopify, GitHub, Airbnb that famously adopted Ruby on Rails in the 2000s and continue to use it, all generally started with MySQL and continue to use it. For those companies that have invested heavily in performance, sharding,[^2] and other operations, it makes a lot of sense to stick with their relational database.
 
-There are still benefits for PostgreSQL though. Since the use and ongoing investment into Ruby on Rails has happened at these bigger, public, successful companies, engineers there in some cases are paid to work on Rails, or are able to work on Rails at their jobs, besides all the generosity from open source volunteers, and those investments going into Active Record benefit all the supported relational databases.
+The investments these companies have made into Ruby on Rails though still provides benefits to PostgreSQL.
 
-From Active Record then, PostgreSQL has gained support in the framework for Multiple Databases, including Sharding support via Horizontal Sharding, Read and Write splitting with automatic routing of reads to a replica, at least with basic implementations available natively without additional dependencies. The benefit of native framework support is that these features are well tested and well documented.
+From investments into Active Record engineers at those companies have made into open source, PostgreSQL has gained framework support for Multiple Databases, including support for sharding as "Horizontal Sharding," read and write splitting with automatic routing of reads to a replica ("Automatic Role Switching"), and more.
 
-We can draw lines to those companies by digging into the commit history for Ruby on Rails and Active Record for those features like "Horizontal Sharding." [^3]
+We can see this investment by digging into the commit history for Ruby on Rails and Active Record from engineers at those companies, and for features like Horizontal Sharding. [^3]
 
 [^2]: <https://github.blog/2021-07-12-adding-support-cross-cluster-associations-rails-7>
 
 [^3]: <https://edgeguides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding>
 
+Other supported relational database options include SQLite.
 
-Other supported database options are the SQLite relational database for Active Record.
-
-Commercial relational databases like Oracle or SQL Server (MS SQL), or non-relational databases like MongoDB or DynamoDB may work with Active Record, but would require adding more dependencies as they’re not natively supported.
+Commercial relational databases like Oracle or SQL Server (MS SQL), or non-relational databases like MongoDB or DynamoDB may work with Active Record, but require additional library code.
 
 ## How do folks typically query Postgres from a Rails app?
 
@@ -59,50 +58,56 @@ To do that, they place PostgreSQL connection details into the db/config.yml YAML
 
 Active Record creates an application-level connection pool to lazily open physical database connections to PostgreSQL. These are opened up and left idle when not in use for up to 5 minutes by default.
 
-With that pool of connections available from the application, Active Record Ruby code that developers write will perform reads and writes to PostgreSQL.
+With that pool of connections available, Active Record Ruby writes and reads data to PostgreSQL.
 
-Besides applications as the "clients," teams might use CLI clients like psql or graphical clients like TablePlus or DBeaver to connect to PostgreSQL for introspection, administration, or other tasks.
+Besides applications as "clients," teams might use CLI clients like psql or graphical clients like TablePlus or DBeaver.
 
-Rails applications ship with a "Rails Console," which is an enhanced version of the interactive Ruby interpreter REPL that’s included with Ruby.
+Rails applications ship with a "[Rails Console](https://guides.rubyonrails.org/command_line.html)" which is an enhanced version of the interactive Ruby interpreter REPL included with Ruby.
 
 We can use the Rails Console to run snippets of Active Record code, and inspect the generated SQL.
 
-For example we might run "User.find(1)" in the Rails Console, which would execute a query like `["SELECT * FROM users WHERE id = ?", 1]`. Active Record can do a lot of things before sending the query, such as annotating queries with comments describing which code generated the query.
+For example we might run `User.find(1)` which would generate and execute a SQL query like `["SELECT * FROM users WHERE id = ?", 1]`.
+
+Active Record can do a lot of things before sending the query, such as annotating queries as [Query Logs](https://api.rubyonrails.org/v7.0.4/classes/ActiveRecord/QueryLogs.html) which are comments that describe where the query was generated.
 
 ## What’s the ORM like? Any tips around setup?
 
 Active Record is used in two major ways.
 
-Most people would first think of using the ORM to write application code that produces SQL queries. The SQL queries persist or retrieve data that’s associated with in-memory Active Record object instances.
+Most people think of the ORM usage that writes SQL queries from programming language code (Active Record in Ruby). The SQL queries either persist or retrieve data that populates in-memory Active Record object instances.
 
-How does that work? Mainly, we create Ruby classes as "models" that map up PostgreSQL table names, and "associations" to link up associated models with each other.
+The ORM use is primarily Ruby classes as "models" in our application code, which could be business logic, that are then mapped to PostgreSQL table names. "Associations" in Active Record are used to link models together.
 
-Active Record is pleasant to use as a Ruby programmer, just as the Ruby programming language is pleasant to use. Ruby and Active Record can be more compact compared with SQL or more verbose languages like Java, and can have less "obscure" incantations or boilerplate to get things done.
+Active Record is pleasant to use as a Ruby programmer, just as the Ruby programming language is pleasant to use. They complement each other. Ruby and Active Record are more compact compared with SQL or more verbose programming languages like Java in my experience.
 
-Active Record could be one of the main reasons Rails developers like Rails. While Active Record helpers are designed to allow developers to not need to write SQL, Active Record also allows developers to write SQL within strings, use bind parameters, and map responses to primitive types or to Active Record instances. This can be quite handy to co-mingle SQL and Active Record code.
+Active Record is one of the main reasons Rails developers like Rails.
+
+While Active Record helpers are designed to allow developers to not write SQL, for developers do *do* wish to write SQL, that's also possible using Active Record. This can be quite handy to co-mingle SQL and Active Record code.
 
 ## Active Record for schema evolution management
 
-Besides generating SQL queries, Active Record is also used to modify the "schema" or structure of the database. This is when we’re adding database objects like tables, indexes, etc.
+Besides activing as an ORM, there's another primary use of Active Record, and that's as the schema management and evolution tool. This means we're writing Active Record to modify database objects, creating things like tables, indexes, or views.
 
-Outside of Ruby on Rails, other popular technologies for this are Flyway or Liquibase, of a built-in mechanism the web framework provides.
+Outside of Ruby on Rails, other communities might use tools like Flyway or Liquibase, or a tool that's built in to the web framework.
 
-Active Record has a lot of nice helpers to perform these kinds of DDL changes, and beyond that, there are lots of additional open source libraries that enhance Active Record further.
+Active Record has a lot of nice helpers to perform DDL changes, and beyond that, there are lots of open source libraries that enhance Active Record further for "Migrations."
 
-There is no concept of safety though, which refers to operations that take long locks and can block other concurrent operations. Fortunately there are open source libraries to add to Ruby on Rails that help avoid unsafe DDL operations. 
+There is no concept of safe migrations though, which are migrations that take long locks and can block concurrent operations. Fortunately, open source libraries exist that can be easily added to achieve this.
 
 
 ## What’s the schema.rb vs structure.sql beef about?
 
-This is not a "real" beef (hehe), but is a sort of a decision point Rails programmers make, or re-make over time.
-
 In Active Record, the schema is represented as a text file that’s checked into source code control within the repository. This file represents the entire state of the database, and is a secondary file that’s derived from other smaller files that each represent an incremental change. These incremental change files are called "Migrations."
 
-The text file may be a Ruby file or a SQL file. When PostgreSQL is used, the SQL file that’s generated is almost exclusively the output from running "pg_dump" against the application database, with a bit more content added to the end.
+The text file may be a Ruby file or a SQL file. When PostgreSQL is used and the SQL format is chosen, the output file is generated from running `pg_dump` against the local application database.
 
-The Ruby version is schema.rb, and is 100% Ruby code, and has maybe 90% of the information that the SQL version has. For example some database objects are not captured at all in the Ruby version of the file. This is a big problem if you want the highest fidelity information about your database schema design saved into this file.
+The Ruby version is the default though, and is called `schema.rb`, and is 100% Ruby code. This file has maybe 90% of the information that the SQL version would have, so often in the course of an application, teams might *switch* to the SQL version to gain greater fidelity in how the database state is represented in file form.
 
-In those cases, developers need to either extend the Ruby version of the file, or switch to adopting the SQL version. For teams that aren’t used to working with pg_dump output, and mostly work exclusively with Ruby or serialization formats like YAML, adopting the SQL version of the file can represent a significant change that they might push off or avoid. 
+For example, some database objects are not captured at all in the Ruby version of the file, such as database triggers. This can be a big problem when you're using those features, as newer instances of the application would have inconsistent database objects.
+
+In those cases, developers need to extend the Ruby version capabilities, or switch to the SQL version.
+
+For teams that aren’t used to working with `pg_dump` output, and mostly work exclusively with Ruby or serialization formats like YAML, adopting the SQL version might be a significant change for them, and they may push it off or avoid it.
 
 
 ## Any issues a DBA is more likely to see in a Postgres instance serving Rails-like applications?

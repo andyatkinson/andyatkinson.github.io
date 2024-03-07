@@ -17,6 +17,7 @@ mailchimp_url: 'https://gmail.us3.list-manage.com/subscribe/post?u=e41bf915471ba
 # Add your GA Tracking Id
 ga_analytics: UA-8656956-2
 
+
 # Contact form setings
 email: andyatkinson@gmail.com
 contact_page_description: "Send me a message!"
