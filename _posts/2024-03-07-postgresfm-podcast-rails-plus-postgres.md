@@ -114,96 +114,96 @@ For teams that aren’t used to working with `pg_dump` output, and mostly work e
 
 The N+1 pattern can show up commonly from Active Record, which is an inefficient query pattern where repeated queries inside a loop can be rewritten to be a single query for multiple values.
 
-This can result from not thinking about joins in the relational DB possibly, since developers are working in the object-oriented code paradigm, and not as much thinking about the queries being generated.
+This can result from not thinking about `JOIN` operations possibly, since developers are usually working in the object-oriented code paradigm, and thinking as much about the relational data model, and database operations.
 
-To generalize this a bit further, a DBA could see inefficient query plans being generated, which could come from inefficient schema design, misuse of features, or under-use of indexes. Another form of inefficient queries could be "SELECT *" when fewer columns would be adequate, not adding all the possible query restrictions to the WHERE clauses, or not adding a LIMIT and returning more rows than necessary. These aren’t limited to Ruby on Rails, but perhaps all ORM users can fall into these kinds of traps but not closely thinking about the SQL and without storing and accessing as little data as possible in each operation. 
+To generalize this further, a DBA could see inefficient queries due to inefficient schema design, missing indexes, the existences of unused indexes, missed opportunities for HOT updates, poorly tuned databases, or many more common operational issues.
 
-Another common poor-performer at least < Postgres 14 is the "giant list of values in an IN clause." Performance for large amounts of values like 1000 or more was improved in PostgreSQL 14.
+Another form of inefficient queries could be `SELECT *` when fewer columns are sufficient, or not adding query restrictions to `WHERE` clauses or `JOIN` conditions, or not adding a `LIMIT` and returning more rows than necessary.
+
+Some of these query inefficiencies aren’t limited to Ruby on Rails, and might be common whenever an ORM is used, as developers can fall into these kinds of traps by not closely considering their SQL queries.
+
+Another common poor-performer especially on versions earlier than Postgres 14 is the pattern of a "giant list of values for an `IN` clause," or limited use of `IN` vs. `ANY()`.
 
 - <https://pganalyze.com/blog/5mins-postgres-performance-in-lists-vs-any-operator-bind-parameters>
+- <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=50e17ad28>
 
-James Coleman patch (copied from the 5min of Postgres links): <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=50e17ad28>
+For `SELECT *` or when no `SELECT()` statement is provided, we can use an option in Active Record that enumerates all fields. This could help developers find this during development, and determine whether a narrower list of columns would suffice.
 
-Benoit is also working with PostgreSQL contributor Peter G. on a certain type of query pattern with multiple WHERE clause conditions that causes an additional filtering step within an index scan, leading to poorly performing plans. This could happen in Active Record when chaining together multiple "where()" clause conditions.
+- `config.active_record.enumerate_columns_in_select_statements` <https://www.bigbinary.com/blog/rails-7-adds-setting-for-enumerating-columns-in-select-statements>
 
-Per Benoit, Peter says the fix going into PostgreSQL should ship in version 17, that can identify this scenario, and optimize the query plan to avoid the additional filtering step.
-
-For `SELECT *` we can use an option in Active Record to enumerate all fields. This might make it more obvious for developers during development, that all fields are being fetched.
-
-`config.active_record.enumerate_columns_in_select_statements` option described here: <https://www.bigbinary.com/blog/rails-7-adds-setting-for-enumerating-columns-in-select-statements>
-
-This change in Active Record adds to the Active Record instrumentation events and warns about very large result sets being returned.
+Another recent improvement to highlight in Active Record adds to the Active Record instrumentation, warning about very large result sets.
 
 - <https://github.com/rails/rails/pull/50887>
 
-Nikolay pointed out that pg_stat_statements shows the rows returned as a stats column, which can also be used to identify opportunities to add more query restrictions or a LIMIT clause.
+Nikolay pointed out that `pg_stat_statements` also includes the rows returned as one of the statistics, which again is an opportunity for a developer or DBA to look at their query workload and add more query restrictions.
+
 
 ## Structural changes on live databases
 
-Another big category DBAs might be surprised about is that Rails developers are "owning" the schema evolution, including making possible unsafe DDL changes.
+Another possible surprise for DBAs new to Rails, is that Rails developers typically "own" the schema design for the applications, which can mean they might make unsafe DDL changes not knowing the impact.
 
-For example, an index being added to a table that’s actively receiving writes, without adding hte index using the CONCURRENTLY option, and causing errors due to blocked writes. This can be detected by tools that force the use of CONCURRENTLY, and are added into the Migrations process for developers, but this doesn’t happen automatically with Ruby on Rails. As mentioned before, there’s no built-in concept of "safety."
+For example, adding an index to a table without using the `CONCURRENTLY` keyword, then causing errors due to blocked writes.
+
+While Active Record doesn't detect this, fortunately open source tools can, and are often added to Rails applications to add safety.
 
 
 ## What’s the Rails + Postgres tooling ecosystem like? What are gems?
 
-The Ruby open source shared library code ecosystem is very rich. In the book we cover more than 40 open source software items, with around 20 of those being Ruby gems that are added to the Rideshare application for examples and exercises throughout the book. These are Ruby gems that for the most part, I’ve used in production apps at companies with significant scale, and they’ve proven the test of time.
+The Ruby open source shared library code ecosystem is very rich. In the book we cover more than 40 open source software items, with around 20 of those being Ruby gems (the other 20 are PostgreSQL extensions) that are added to the Rideshare application, used for examples and exercises in the book.
 
-RubyGems are the mechanism in the Ruby language to package up and distribute code. They are built and hosted usually on rubygems.org. They are roughly equivalent to PostgreSQL extensions, in that they leverage extension points, and add functionality to the core.
+RubyGems are the mechanism in the Ruby language to package up and distribute shared library code. They are built and hosted usually on <rubygems.org>. They are roughly equivalent to PostgreSQL extensions, in that they leverage extension points, and add functionality to the core.
 
-Ruby gems that are helpful for running PostgreSQL apps range from "helpers" that developers can run to compare their application code and PostgreSQL database, for example rails-pg-extras, database_consistency, or others are mentioned in the book.
-Another category would be gems that help avoid unsafe DDL changes, by adding a safety concept to migrations. These gems identify blocking operations in PostgreSQL and suggest non-blocking alternatives, such as creating indexes concurrently.
-
-The book covers these gems or you can explore the Ruby Toolbox which has gems grouped into categories. https://www.ruby-toolbox.com/
+The book covers these gems or you can explore the Ruby Toolbox which has gems grouped into categories. <https://www.ruby-toolbox.com/>
 
 ## Any tips, or myths, around scaling?
 
 I have some generic tips for creating high performance PostgreSQL queries.
 
-Learn how to understand the costs of the components for a query, by regularly using the query planner. The planner provides this cost information, and your job as a developer is to lower the cost, mostly by adding well-placed indexes.
+First, learn how to understand the "costs" for components of a query, by regularly inspecting query plans using the `EXPLAIN` keyword and query planner.
 
-Once you can identify the costly parts, you can develop your bag of tricks for how to optimize parts which includes indexes and other tactics.
+The planner provides cost information, and the job of developers writing queries is to lower the cost of them, mostly by adding well-placed indexes.
 
-For myths, I think developers think that JOIN operations are very costly and should be avoided, which means that normalizing data may be avoided.
+For myths, I think developers think that `JOIN` operations are so costly as to be avoided, which means that they may skip out on good data normalization practices.
 
-Brian Davis has a great post with benchmarks showing the cost of a join.[^5] The takeaway for me from that post was that the cost of a join is nominal and should not limit the use of good data normalization practices, even when tables grow to millions of rows and rows are being joined together from many tables at once.
+Brian Davis has a great post with benchmarks showing the cost of a join.[^5] The takeaway for me from that post was that the cost of a join is nominal and should not limit the use of good data normalization practices, even when tables grow to millions of rows, and many `JOIN`s are being performed at once.
 
 [^5]: <https://www.brianlikespostgres.com/cost-of-a-join.html>
 
-Nothing’s free though, and this does mean that a developer needs to create an efficient schema design with appropriate use of types, and create well-placed indexes that support the queries and join operations. For example, making sure that foreign keys are indexed, likely making good use of Multicolumn and Covering indexes, and using indexes to support ordering operations among other tactics.
+There is a cost though of course. This means the developer needs to use efficient schema design choices and create well-placed indexes that support the queries and join operations.
 
+For example, tactics like indexing foreign keys, using Multicolumn and Covering indexes, and using indexes to support `ORDER BY` operations.
 
-Another myth is that PostgreSQL isn’t capable of certain kinds of work like full text search, caching, analytics, sharding, or background jobs, and adding in other non-relational companion databases is needed.
+Another myth is that PostgreSQL isn’t capable of certain kinds of work like Full Text Search, caching, analytics, sharding, or background jobs. Instead, teams might add additional non-relational databases, and a complicated data synchronization process.
 
-While this was more true 10 years ago with slower and smaller and more expensive disks, with SSDs and all the performance improvements to PostgreSQL over the last decade, this is not true today. In fact, often PostgreSQL is going heavily under-utilized in the overall workloads at businesses. This means they’re using a hodgepodge of database systems when PostgreSQL could handle all the needs.
+While this was more true 10 years ago with slower and smaller and more expensive disks, with SSDs and all the performance improvements to PostgreSQL over the last decade, this is not true today.
 
-Part of this is credited to how extensible PostgreSQL is, supporting many more data types and indexes and other capabilities beyond the core offering. If the core PostgreSQL isn’t sufficient for analytics or full text search, there are a variety of extensions that can be added to help serve these use cases, without needing to synchronize and operate additional databases.
+PostgreSQL is often heavily *under-utilized* in the overall workloads for business applications. Instead of using PostgreSQL, teams might be using a hodgepodge mix of database systems, taking on a lot more complexity, maintenance, and cost.
 
 ## Is there anything you’d like to see from the Postgres community that would make things easier/better for Rails users?
 
-I think web application developers really want to know which queries to optimize, and for that optimization process to be succinct and repeatable. PGSS (pg_stat_statements) is a great visibility tool but still lacks things like "samples". In PostgreSQL 16 we gained "generic plans" but samples with full query text would help.
+I think web application developers really want to know which queries to optimize, and for that optimization process to be succinct and repeatable. PGSS (`pg_stat_statements`) is a great visibility tool but still lacks things like "samples". In PostgreSQL 16 we gained "generic plans" but samples with full query text would help.
 
-I also gave a 5 minute lightning talk on some visibility tools at PGConf NYC. Michael and I collaborated on how to use the queryid "fingerprint" information that PostgreSQL gained in 14, to combine that with auto_explain information in 16 to get samples from the postgresql.log file, at least when the timing of a query exceeds a minimum.
+I gave a 5 minute lightning talk on some visibility tools at PGConf NYC to help raise awareness of what we've got now in PostgreSQL 16. Michael and I collaborated on how to use the queryid "fingerprint" information that PostgreSQL gained in 14 with `auto_explain`, but that's limited to configuring your system to only log queries that are quite lengthy, when we might want samples from "fast" queries too.
 
 - <https://speakerdeck.com/andyatkinson/pgconf-nyc-2023-lightning-talk>
 
-Since PostgreSQL adds catalog views over time, maybe a new catalog view or an expanded existing catalog could contain query text samples for certain queries by their queryid identifier, or even collect samples based on different thresholds like "excessive buffers", excessive row counts, that we could then use to add those optimizations. A "max_samples" could be set so that old samples are removed.
+Since PostgreSQL adds and enhances system catalogs, maybe a catalog could contain query text samples for certain queries by their `queryid` identifier, or even collect samples based on different thresholds like excessive buffers or excessive row counts, that we could then use as informatino to perform query optimizations.
 
 ## Post-show ideas/reflections/thoughts
 
-For anyone interested in exploring a bit with Rails and PostgreSQL, the book uses a Rails application on GitHub called "Rideshare", throughout the book for examples and exercises. We didn’t mention this in the episode, but I wanted to mention it here. The application is public and available here: https://github.com/andyatkinson/rideshare
+For anyone interested in exploring a bit with Rails and PostgreSQL, the book uses a Rails application on GitHub called "Rideshare", throughout the book for examples and exercises. We didn’t mention this in the episode, but I wanted to mention it here. The application is public and available here: <https://github.com/andyatkinson/rideshare>
 
-Within the source code directory, there’s a "postgresql" that has some goodies https://github.com/andyatkinson/rideshare/tree/main/postgresql like a .pgpass file to store the credentials, a config file for pgbouncer, and a postgresql sample config file with some of the changes made during exercises in the book.
+Within the source code directory, there’s a "postgresql" directory that has some goodies <https://github.com/andyatkinson/rideshare/tree/main/postgresql> like a `.pgpass` file to store credentials, a config file for pgbouncer, and a postgresql sample config file with some changes made in book exercises.
 
-We didn’t cover this, but the book examples all use the built-in command line PostgreSQL client "psql" exclusively. Since Rails developers are used to working with the Rails Console, I wanted to advocate for using the built-in CLI client psql.
+We didn’t cover this, but the book also uses the PostgreSQL client "psql" exclusively. Since Rails developers are used to working with the Rails Console, I hoped some readers might pick up psql as their go-to client.
 
-There is a lot of content in the book that’s not related to Ruby on Rails at all. For example, SQL language functions, PL/pgSQL functions, shell scripts, table partitioning, full text search (with tsvector and tsquery), using Postgres as a message queue or for background jobs with LISTEN and NOTIFY, and some brief coverage of pgvector, and vector similarity searching.
+There is a lot of content in the book that’s not related to Ruby on Rails at all. For example, SQL language functions, PL/pgSQL functions, shell scripts, table partitioning, full text search (with `tsvector` and `tsquery`) are covered. We also show how to use PostgreSQL as a message queue or for background jobs with `LISTEN` and `NOTIFY`, and some brief coverage of the `pgvector` extension and vector similarity search.
 
 ##  More coverage of Active Record and PostgreSQL
 
 We didn’t cover some of the breadth of support for PostgreSQL features in Active Record, so I wanted to add some of that in here in this section. These topics are all covered in the book.
 
-Consider exploring the PostgreSQL page within the Active Record documentation for the current released major version - 7.1: <https://guides.rubyonrails.org/v7.1/active_record_postgresql.html>
+Consider exploring the PostgreSQL page within the Active Record documentation: <https://guides.rubyonrails.org/v7.1/active_record_postgresql.html>
 
 - PostgreSQL Generated columns (Active Record virtual stored columns)
 - Deferrable foreign keys support
@@ -214,7 +214,7 @@ Consider exploring the PostgreSQL page within the Active Record documentation fo
 - Database views
 - Advanced Data types like Arrays and Ranges
 - Query hint planning from Active Record, using `pg_hint_plan`. The book has an example of how to use this. 
-- RETURNING clause, with INSERT (and possible other DML ops in the future)
+- `RETURNING` clause for `INSERT` (and possible other DML ops in the future: <https://github.com/rails/rails/pull/47161>)
 
 
 ## Additional Links
