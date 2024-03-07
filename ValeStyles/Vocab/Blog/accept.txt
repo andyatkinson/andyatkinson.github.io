@@ -293,3 +293,7 @@ pageinspect
 andy
 andy
 Zhang
+pg_hint_plan
+Liquibase
+DBeaver
+Shopify

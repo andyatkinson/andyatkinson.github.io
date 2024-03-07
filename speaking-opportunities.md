@@ -4,6 +4,12 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## postgres.fm
+- <cite>2024-03-07</cite>
+- Podcast (audio, video)
+- []()
+
+
 ## Rubber Duck Dev Show
 - <cite>2024-01-29</cite>
 - Podcast (audio, video)
