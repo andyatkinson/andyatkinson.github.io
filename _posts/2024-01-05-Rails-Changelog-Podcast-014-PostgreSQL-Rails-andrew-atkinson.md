@@ -14,9 +14,15 @@ Fun fact: Emmanuel and I have both been editors for [This Week in Rails](https:/
 
 ## The episode
 
-The episode is: “014: PostgreSQL for Rails Developers with Andrew Atkinson” 
+The episode is: "014: PostgreSQL for Rails Developers with Andrew Atkinson."
 
-Listen to it here: <https://www.railschangelog.com/14>
+<!-- Callout box -->
+<section>
+<div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
+<h2>Podcast</h2>
+<p>👉 <a href="https://www.railschangelog.com/14">Listen to the episode</a></p>
+</div>
+</section>
 
 What sorts of things did we talk about? Prior to the episode, we devised a plan to cover Ruby on Rails features that are database related, and connect them to their coverage in my new book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
