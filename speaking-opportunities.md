@@ -9,7 +9,6 @@ title: Speaking Opportunities
 - Podcast (audio, video)
 - [Rails + Postgres Postgres.FM 086 — Extended blog post edition! 🎙️](/blog/2024/03/07/postgresfm-podcast-rails-plus-postgres)
 
-
 ## Rubber Duck Dev Show
 - <cite>2024-01-29</cite>
 - Podcast (audio, video)
@@ -17,9 +16,7 @@ title: Speaking Opportunities
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KGDPrqAxFPk?si=y7oosfT_X1kkPG3-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-
 ## Maintainable Podcast
-
 - <cite>2024-02-19</cite>
 - Podcast (audio)
 - [Maintainable Podcast — Maintainable…Databases? 🎙️](/blog/2024/02/19/maintainable-podcast-robby-russell-andrew-atkinson-maintainable-databases)
@@ -43,6 +40,11 @@ title: Speaking Opportunities
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/90pWCR9O10Q?si=ISk1mw23XZiFLdTR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+## Code With Jason
+- <cite>2023-11-25</cite>
+- Podcast (audio)
+- [Episode 207 - My Consulting Work (featuring Andrew Atkinson) 🎙️](https://www.codewithjason.com/podcast/14230219-207-my-consulting-work-featuring-andrew-atkinson/)
+
 ## The Rails Changelog
 - <cite>2023-10-01</cite>
 - Podcast (audio)
@@ -60,12 +62,10 @@ title: Speaking Opportunities
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/0wtOKD7iJT8?si=TG2ubliJpaxRV24R" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-
 ## Code and the Coding Coders who Code it!
 - <cite>2023-08-22</cite>
 - Podcast (audio)
 - [Episode 27 Andrew Atkinson 🎙️](/blog/2023/08/22/code-coding-coders-podcast-drew-bragg)
-
 
 ## San Francisco PostgreSQL User Group
 - <cite>2023-08-17</cite>
@@ -83,11 +83,10 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sRxN3i-Q8l4?si=6KkMTu4dvwJ1AwnP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-
 ## Code With Jason
 - <cite>2023-07-28</cite>
 - Podcast (audio)
-- [190 — PostgreSQL and Sin City Ruby 🎙️](/blog/2023/07/28/code-with-jason-postgresql-sin-city-ruby)
+- [Episode 190 — PostgreSQL and Sin City Ruby 🎙️](/blog/2023/07/28/code-with-jason-postgresql-sin-city-ruby)
 
 ## PGDay Chicago 2023
 - <cite>2023-04-20</cite>
@@ -97,12 +96,10 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 
 <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/8c1c25764d7d4158b89556c998c141f1" title="Partitioning Billions of Rows Without Downtime" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 314;" data-ratio="1.78343949044586"></iframe>
 
-
 ## Ruby For All
 - <cite>2023-01-19<br/>
 - Podcast (audio)
 - [Ruby For All Podcast: My Guest Experience 🎙️](/blog/2023/01/19/ruby-for-all-podcast-guest-postgresql)
-
 
 ## Rubber Duck Dev Show
 - <cite>2022-09-22</cite>
@@ -114,7 +111,7 @@ This was an updated version of the talk given at PGDay Chicago earlier in the ye
 ## Code With Jason
 - <cite>2022-08-01</cite>
 - Podcast (audio)
-- <https://www.codewithjason.com/podcast/11223850-160-postgresql-with-andrew-atkinson/>
+- Episode 160 - <https://www.codewithjason.com/podcast/11223850-160-postgresql-with-andrew-atkinson/>
 
 ## RailsConf 2022
 - <cite>2022-05-18</cite>
