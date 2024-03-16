@@ -31,11 +31,15 @@ title: High Performance PostgreSQL for Rails Book
 - [4.86 Average Rating on Goodreads](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 
-> It’s a helpful companion into the depths of Postgres functionality. If you’re looking to step out of the comfort of a Rails console and into a psql console, I recommend taking this with you.
+> It's a helpful companion into the depths of Postgres functionality. If you're looking to step out of the comfort of a Rails console and into a psql console, I recommend taking this with you.
 <cite>- Kevin Murphy</cite>
 
 > If you are a Rails engineer who always wanted to understand how to have a greater impact on your work through taking command of your database, this is the book for you!
 <cite>- Daniel Kaczmarczyk</cite>
+
+> A book with this information would've allowed me to shortcut several years off of learning Postgres the hard way.
+<cite>- Dave Copeland</cite>
+
 
 ## Upcoming Appearances
 
