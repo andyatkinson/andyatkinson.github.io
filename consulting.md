@@ -24,7 +24,7 @@ I love working with teams and providing educational material. I wrote a bestsell
 👨 As a [conference presenter](/speaking-opportunities) and educator, I'm ready to train your team on PostgreSQL and Active Record topics. We can use existing materials or create a custom plan.<br/>
 
 
-## Testimonials 🤝
+## Recommendations 🤝
 > We hired Andrew to help us better understand the PostgreSQL database operations for our Rails apps. Andrew helped us look at a variety of issues and provided guidance and recommendations.
 <cite>- Kevin, CTO, Clearscope</cite>
 
@@ -33,6 +33,8 @@ I love working with teams and providing educational material. I wrote a bestsell
 
 > Andrew provided our team with training on query plans and indexes, then rewrote an important query, greatly improving the performance.
 <cite>- John, Director of Engineering</cite>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Highly recommended PostgreSQL and Rails consultant:<a href="https://t.co/D0epf8g3gP">https://t.co/D0epf8g3gP</a></p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1765481120756322313?ref_src=twsrc%5Etfw">March 6, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 ## Let's Talk
