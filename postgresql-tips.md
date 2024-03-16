@@ -660,3 +660,20 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 - [Postgres full-text search is Good Enough!](http://rachbelaid.com/postgres-full-text-search-is-good-enough/)
 - [Postgres Full Text Search vs the rest](https://supabase.com/blog/postgres-full-text-search-vs-the-rest)
 - [Full Text Search in Milliseconds with Rails and PostgreSQL](https://pganalyze.com/blog/full-text-search-ruby-rails-postgres)
+
+## Engineering blog posts
+
+Big companies use PostgreSQL and Ruby on Rails.
+
+Sharding and Scaling
+
+- [The growing pains of database architecture](https://www.figma.com/blog/how-figma-scaled-to-multiple-databases/)
+- [Herding elephants: Lessons learned from sharding Postgres at Notion](https://www.notion.so/blog/sharding-postgres-at-notion)
+- [The Great Re-shard: adding Postgres capacity (again) with zero downtime](https://www.notion.so/blog/the-great-re-shard)
+- [Partitioning GitHub’s relational databases to handle scale](https://github.blog/2021-09-27-partitioning-githubs-relational-databases-scale/)
+- [How GitHub Partitioned Its Relational Database to Improve Reliability at Scale](https://www.infoq.com/news/2021/09/GitHub-database-partition/)
+- [Scaling at Instacart: Distributing Data Across Multiple Postgres Databases with Rails](https://tech.instacart.com/scaling-at-instacart-distributing-data-across-multiple-postgres-databases-with-rails-13b1e4eba202)
+
+Operational Excellence
+
+- [Zero-Downtime PostgreSQL Cutovers](https://www.instacart.com/company/how-its-made/zero-downtime-postgresql-cutovers/)
