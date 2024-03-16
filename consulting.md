@@ -25,12 +25,11 @@ I love working with teams and providing educational material. I wrote a bestsell
 
 
 ## Testimonials 🤝
-> We hired Andrew to help us understand our PostgreSQL database operations for our Rails apps. Using tools like PgAnalyze, Andrew helped us look at a variety of issues, providing guidance and recommendations.
+> We hired Andrew to help us better understand the PostgreSQL database operations for our Rails apps. Andrew helped us look at a variety of issues and provided guidance and recommendations.
 <cite>- Kevin, CTO, Clearscope</cite>
 
 > Andrew helped us tune PostgreSQL parameters, build our multi-database integration, and optimize queries.
 <cite>- Brendan, VP of Engineering</cite>
-
 
 > Andrew provided our team with training on query plans and indexes, then rewrote an important query, greatly improving the performance.
 <cite>- John, Director of Engineering</cite>
