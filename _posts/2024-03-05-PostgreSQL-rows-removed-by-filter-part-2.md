@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "'Rows Removed By Filter', Inspecting Pages, Buffer Cache — Part Two"
-tags: [postgresql]
+tags: [PostgreSQL]
 date: 2024-03-05
 comments: true
 ---
