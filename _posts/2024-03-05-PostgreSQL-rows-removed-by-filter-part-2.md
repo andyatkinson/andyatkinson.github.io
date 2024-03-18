@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "What's 'Rows Removed By Filter' all about — Part Two"
-tags: []
+title: "'Rows Removed By Filter', Inspecting Pages, Buffer Cache — Part Two"
+tags: [postgresql]
 date: 2024-03-05
 comments: true
 ---
@@ -242,7 +242,7 @@ SCHEMA rideshare;
 SET search_path = 'rideshare';
 ```
 
-Now we can query the buffer cache contents, and see the resuls as rows.
+Now we can query the buffer cache contents, and see the results as rows.
 
 Let’s look at the first 3 buffers.
 
