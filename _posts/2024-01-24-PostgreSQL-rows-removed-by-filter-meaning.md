@@ -127,4 +127,10 @@ With that `name_code`, we see "Rows Removed by Filter: 10000", which exactly mat
 - When analyzing "Rows Removed by Filter" figures, check whether the plan node had more than one loop. In that case, the rows are an average of all loops, rounded to the nearest integer.
 - For performance work, *a high proportion of rows filtered out* indicates an optimization opportunity. Adding an index may greatly reduce the filtering of so many rows, reducing storage access, and speeding up your query.
 
+## Part Two
+
+Check out the second part of this series, where we continue analyzing Rows Removed by Filter, inspecting disk pages and the buffer cache.
+
+Check out part two here: ['Rows Removed By Filter', Inspecting Page, Buffer Cache — Part Two](/blog/2024/03/05/PostgreSQL-rows-removed-by-filter-part-2).
+
 Thanks for reading!
