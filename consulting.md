@@ -8,13 +8,13 @@ title: PostgreSQL and Rails Independent Consulting
 <small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hi 👋
-I’m **Andrew**, and I'd love to help you with your **PostgreSQL** 🐘 databases and **Ruby on Rails** 💎 web applications.
+I’m **Andrew**, and I'd love to help you with your 🐘 **PostgreSQL** databases and 💎 **Ruby on Rails** web applications.
 
 ## Why work with me?
 
 I've optimized multi-terabyte PostgreSQL databases running thousands of queries per second. I understand the kinds of challenges faced at that scale.
 
-I love working with teams and providing educational material. I wrote a bestselling book [**High Performance PostgreSQL for Rails**](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/), published by Pragmatic Programmers in 2024, to help more engineers acquire these skills.
+I love working with teams and providing educational content. I wrote a bestselling book [*High Performance PostgreSQL for Rails*](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) published by Pragmatic Programmers in 2024, to help more engineers learn these skills.
 
 ## What will we work on?
 
