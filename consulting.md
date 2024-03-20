@@ -25,6 +25,9 @@ I love working with teams and providing educational content. I wrote a bestselli
 
 
 ## Recommendations 🤝
+> I wanted to fill some knowledge gaps on the team around some Postgres topics. Andrew's book was the first thing we reached for but we also brought him in to deliver two sessions of live training on some advanced topics. This gave us the opportunity to ask questions, delve deeper, and ensure everyone understood the material.
+<cite>Jamie, CTO, Podia</cite>
+
 > We hired Andrew to help us better understand the PostgreSQL database operations for our Rails apps. Andrew helped us look at a variety of issues and provided guidance and recommendations.
 <cite>- Kevin, CTO, Clearscope</cite>
 
@@ -36,12 +39,13 @@ I love working with teams and providing educational content. I wrote a bestselli
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Highly recommended PostgreSQL and Rails consultant:<a href="https://t.co/D0epf8g3gP">https://t.co/D0epf8g3gP</a></p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1765481120756322313?ref_src=twsrc%5Etfw">March 6, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Best rails, Postgres and performance consultant you can find. 🚀 <a href="https://t.co/rUwwvxqXfU">https://t.co/rUwwvxqXfU</a></p>&mdash; Shao | 少蒙 (@randomor) <a href="https://twitter.com/randomor/status/1744804349602304005?ref_src=twsrc%5Etfw">January 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Let's Talk
 
-Schedule a 30-minute meeting using the calendar below, or [contact me](/contact) for questions or to arrange a different time.
+Schedule a 30-minute call at [calendly.com/pgrailsbook](https://calendly.com/pgrailsbook/30min) below, or [contact me](/contact) for questions or to arrange a different time.
 
-I'm looking forward to working with you!
+I'm looking forward to meeting you and working together.
 
 <!-- Calendly inline widget begin -->
 <div class="calendly-inline-widget" data-url="https://calendly.com/pgrailsbook/30min?hide_gdpr_banner=1" style="min-width:350px;height:700px;"></div>
