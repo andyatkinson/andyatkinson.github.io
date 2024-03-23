@@ -26,10 +26,10 @@ I love working with teams and providing educational content. I wrote a bestselli
 
 ## Recommendations 🤝
 > I wanted to fill some knowledge gaps on the team around some Postgres topics. Andrew's book was the first thing we reached for but we also brought him in to deliver two sessions of live training on some advanced topics. This gave us the opportunity to ask questions, delve deeper, and ensure everyone understood the material.
-<cite>Jamie, CTO, Podia</cite>
+<cite>Jamie, CTO, [Podia](https://www.podia.com)</cite>
 
 > We hired Andrew to help us better understand the PostgreSQL database operations for our Rails apps. Andrew helped us look at a variety of issues and provided guidance and recommendations.
-<cite>- Kevin, CTO, Clearscope</cite>
+<cite>- Kevin, CTO, [Clearscope](https://www.clearscope.io)</cite>
 
 > Andrew helped us tune PostgreSQL parameters, build our multi-database integration, and optimize queries.
 <cite>- Brendan, VP of Engineering</cite>
