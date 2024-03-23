@@ -42,9 +42,13 @@ title: High Performance PostgreSQL for Rails Book
 > A book with this information would've allowed me to shortcut several years off of learning Postgres the hard way.
 <cite>- Dave Copeland</cite>
 
+## Stay Informed!
+
+[Sign up for my Newsletter](https://pgrailsbook.com) covering book topics, consulting, and more. Around 1x/email per month.
+
 
 ## Upcoming Appearances
 
-- May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
-- April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
 - March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
+- April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
+- May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
