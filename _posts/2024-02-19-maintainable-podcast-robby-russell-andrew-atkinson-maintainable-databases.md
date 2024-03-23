@@ -84,9 +84,9 @@ How does Unshipping help with software maintenance?
 
 ## How to Unship
 
-One of the most impactful things we added to our stack of tools to help remove unused code was setting up instrumentation of the codebase with the Coverband[^1] project. Coverband tracks when lines of code are executed, and persists that information into Redis. Using that instrumentation data with our production systems, we can collect information about which code is called, and critically, which code is *not* called.
+One of the most impactful things we added to our stack of tools to help remove unused code was setting up instrumentation of the codebase with the Coverband[^1] project. Coverband tracks when lines of code are executed, and stores that information into Redis. Using that instrumentation data with our production systems, we can collect information about which code is called, and critically, which code is *not* called.
 
-We can cross-reference that with APM data from a system like Data Dog. For example, if we see lines of code within classes aren’t invoked at all, we can confirm that the API endpoint caller code was also not invoked. Once some time has passed, we’re quite confident this code can be retired and removed. From that point we can fully unship it including documentation, altering customers, providing alternatives when appropriate and more.
+We can cross-reference that with APM data from a system like Data Dog. For example, if we see lines of code within classes aren’t invoked at all, we can confirm that the API endpoint caller code was also not invoked. Once some time has passed, we’re quite confident this code can be retired and removed. From that point we can fully unship it including documentation, alerting customers and providing alternatives when possible.
 
 We successfully used Coverband to remove thousands of lines of code from dozens of PRs to our core monolith, representing many features that had been abandoned over time, in a codebase which had around 100K LOC. From those removals we also removed many dependencies. We got knock-on benefits by simplifying the system too, like improving the speed and reliability of the test suite, which helps us review and release changes faster.
 
