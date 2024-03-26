@@ -37,6 +37,8 @@ I love working with teams and providing educational content. I wrote a bestselli
 > Andrew provided our team with training on query plans and indexes, then rewrote an important query, greatly improving the performance.
 <cite>- John, Director of Engineering</cite>
 
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">You chance to hire a Rails and PG expert 😉 <a href="https://t.co/w6fTL3N840">https://t.co/w6fTL3N840</a></p>&mdash; Tobias_Petry.sql (@tobias_petry) <a href="https://twitter.com/tobias_petry/status/1745138817521066481?ref_src=twsrc%5Etfw">January 10, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Highly recommended PostgreSQL and Rails consultant:<a href="https://t.co/D0epf8g3gP">https://t.co/D0epf8g3gP</a></p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1765481120756322313?ref_src=twsrc%5Etfw">March 6, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Best rails, Postgres and performance consultant you can find. 🚀 <a href="https://t.co/rUwwvxqXfU">https://t.co/rUwwvxqXfU</a></p>&mdash; Shao | 少蒙 (@randomor) <a href="https://twitter.com/randomor/status/1744804349602304005?ref_src=twsrc%5Etfw">January 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
