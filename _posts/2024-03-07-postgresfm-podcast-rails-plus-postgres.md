@@ -8,6 +8,9 @@ comments: true
 
 I recently joined Michael and Nikolay as a guest on a favorite podcast of mine, [postgres.fm](https://postgres.fm), which has been a favorite going back to when it started in August 2022. Why's that?
 
+![Andrew, Nikolay, and Michael on Rails + Postgres postgres.fm podcast](/assets/images/posts/2024/postgresfm.jpg)
+<small>Andrew, Nikolay, and Michael on Rails + Postgres postgres.fm podcast. Image credit: <a href="https://postgres.fm/">postgres.fm</a>.</small>
+
 ## Why I like the postgres.fm podcast
 
 As a weekly-release podcast covering PostgreSQL for nearly 100 episodes, Michael and Nikolay have covered a lot of ground! All of the episodes have great content, covering a nice level of depth, in a short amount of time. Each host brings their unique perspective.
