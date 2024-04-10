@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Free Workshop: 'Build High Performance Active Record Apps'"
-tags: [Conference]
+title: "📆 Free Workshop: 'Build High Performance Active Record Apps'"
+tags: [Conferences, Events]
 date: 2024-04-10
 comments: true
 ---
