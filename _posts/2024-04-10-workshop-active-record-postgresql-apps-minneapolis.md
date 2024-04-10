@@ -45,7 +45,7 @@ The venue requires that we provide a list of attendees in advance. For that reas
 - 7:35 - 8:20 PM Second half: Replication, Multi-DB
 - 8:30 PM Event ends
 
-## Why am I doing this?
+## Why is this workshop free?
 
 I’d like to offer this workshop for free to get a good real-world runthrough in before delivering it at the RailsConf conference.
 
