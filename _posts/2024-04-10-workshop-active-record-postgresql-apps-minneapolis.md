@@ -13,6 +13,7 @@ There is limited space, capped at 25, and registration **must** be in advance. M
 - Event link: <http://pgrailsbook-workshops.eventbrite.com>
 - Date: Tuesday, April 23rd, 6PM - 6:30PM
 - Location: Industrious, 60 South 6th Street #2800 Minneapolis, MN 55402
+- Registration Ends: Sunday, April 21 at 11PM CT
 
 This event has no charge for attendance. You’ll need to figure out parking or transportation to the venue. We'll provide pizza during the reception portion. Bring your laptop and be ready to install software, create databases, and populate data.
 
