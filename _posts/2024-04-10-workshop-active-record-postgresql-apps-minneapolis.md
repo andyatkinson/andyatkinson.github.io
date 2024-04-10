@@ -15,12 +15,11 @@ There is limited space, capped at 25, and registration **must** be in advance. M
 - Location: Industrious, 60 South 6th Street #2800 Minneapolis, MN 55402
 - Registration Ends: Sunday, April 21 at 11PM CT
 
-This event has no charge for attendance. You’ll need to figure out parking or transportation to the venue. We'll provide pizza during the reception portion. Bring your laptop and be ready to install software, create databases, and populate data.
+There's no charge to attend. You’ll need to figure out parking or transportation to the venue. We'll provide pizza. Bring your laptop and be ready to install software, create databases, and populate data.
 
-This event will be focused more on examples and exercises compared with a slide deck lecture style.
+This event will be focused more on examples and exercises, supported with some slides to provide context and instructions.
 
-This is intended for an intermediate audience, but we can dial up or down the information depth based on participant questions.
-
+This is intended to be an intermediate level event, so please have PostgreSQL installed in advance, and be prepared to install and operate a Rails app. That said, we can adjust the information based on participant feedback.
 
 ## Sponsors
 
