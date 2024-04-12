@@ -6,10 +6,27 @@ title: High Performance PostgreSQL for Rails Book
 
 # Buy the Book!
 
+## USA
 - [Beta Ebook Pragmatic Programmers](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails)
-- [Paperback Pre-Order Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
-- [Paperback Pre-Order B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
-- [Paperback Pre-Order Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
+- [Paperback Pre-order Bookshop.org](https://bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/21240568?ean=9798888650387)
+- [Paperback Pre-order Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
+- [Paperback Pre-order B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
+- [Paperback Pre-order Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
+- [Paperback Pre-order Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
+
+## Outside the USA (English language)
+- [UK - uk.Bookshop.org](https://uk.bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/7669141)
+- [Denmark - plusbog.dk](https://www.plusbog.dk/high-performance-postgresql-for-rails-andrew-atkinson-9798888650387?physicalbookisbn=9798888650387)
+- [Denmark - williamdam.dk](https://www.williamdam.dk/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications__3721379)
+- [The Netherlands - Bruna.nl](https://www.bruna.nl/engelse-boeken/high-performance-postgresql-for-rails-9798888650387)
+- [Portugal - Bertrand.pt](https://www.bertrand.pt/livro/high-performance-postgresql-for-rails-andrew-atkinson/29905808)
+- [Canada - indigo.ca](https://www.indigo.ca/en-ca/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications/9798888650387.html)
+- [Hungary - bookline.hu](https://bookline.hu/product/home.action?_v=Atkinson_Andrew_High_Performance_Postg&type=200&id=6593954)
+- [Japan - amazon.jp](https://www.amazon.co.jp/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY)
+- [Germany - amazon.de](https://www.amazon.de/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=A3JWKAKR8XB7XF&language=de_DE)
+
+## Independent (USA)
+- [USA - PA - doylestownbookshop.com](https://www.doylestownbookshop.com/book/9798888650387)
 
 ![High Performance PostgreSQL for Rails Book](/assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg)
 <small>High Performance PostgreSQL for Rails Book Cover Design</small>
@@ -30,8 +47,7 @@ title: High Performance PostgreSQL for Rails Book
 
 ## Ratings and Reviews
 
-- [4.86 Average Rating on Goodreads](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
-- [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
+- [4.75 score, 8 ratings on Goodreads](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 
 > It's a helpful companion into the depths of Postgres functionality. If you're looking to step out of the comfort of a Rails console and into a psql console, I recommend taking this with you.
 <cite>- Kevin Murphy</cite>
@@ -45,6 +61,11 @@ title: High Performance PostgreSQL for Rails Book
 ## Stay Informed!
 
 [Sign up for my Newsletter](https://pgrailsbook.com) covering book topics, consulting, and more. Around 1x/email per month.
+
+## Community Links
+
+- [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
+- [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
 
 
 ## Upcoming Appearances
