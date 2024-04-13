@@ -4,6 +4,11 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## Hacking Postgres
+- <cite>2024-04-15</cite>
+- Podcast (audio, video)
+- [🎙️ Hacking Postgres 🐘 podcast - Season 2, Ep. 1 - Andrew Atkinson](blog/2024/04/15/hacking-postgres-podcast-andrew-atkinson)
+
 ## postgres.fm
 - <cite>2024-03-07</cite>
 - Podcast (audio, video)
