@@ -12,6 +12,8 @@ Hacking Postgres has had a lot of great Postgres contributors as guests on the s
 
 Ry asked me about when I got started with PostgreSQL and what my role looks like today.
 
+{% include image-caption.html imageurl="/assets/images/posts/hacking-postgres-podcast.jpg" title="Hacking Postgres Podcast" caption="Hacking Postgres Season 2, Ep. 1 - Andrew Atkinson" %}
+
 ## PostgreSQL Origin
 
 Ry has also been a Ruby on Rails programmer, so that was a fun background we shared. We both started on early versions of Ruby on Rails in the 2000s, and were also early users of Heroku in the late 2000s.
