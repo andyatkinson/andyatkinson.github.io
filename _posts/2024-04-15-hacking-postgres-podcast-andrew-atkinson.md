@@ -52,7 +52,7 @@ Philippe Noël, CEO of ParadeDB, Season 1, Episode 8: <https://tembo.io/blog/hac
 
 Recently I listened to this episode with Burak Yucesoy of Ubicloud. Burak has worked on various extensions too like [postgres-hll](https://github.com/citusdata/postgresql-hll), "high cardinality estimates" using the HyperLogLog data structure. This extension is also mentioned in the book.
 
-I also enjoyed the episode with Bertrand Drouvot as the guest. Bertrand covered some of these items:
+I also enjoyed the episode with Bertrand Drouvot as the guest: <https://tembo.io/blog/hacking-postgres-ep9>. Bertrand covered some of these items:
 
 - pgsentinel <https://github.com/pgsentinel/pgsentinel>
 - explain.dalibo.com for plan visualization. <https://explain.dalibo.com/>
