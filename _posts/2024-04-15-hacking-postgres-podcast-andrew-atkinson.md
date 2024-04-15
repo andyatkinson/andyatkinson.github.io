@@ -1,32 +1,38 @@
 ---
 layout: post
-title: "🎙️ Hacking Postgres 🐘 podcast - Season 2, Ep. 1 - Andrew Atkinson"
-tags: [Podcast]
+title: "🎙️ Hacking Postgres 🐘 Podcast - Season 2, Ep. 1 - Andrew Atkinson"
+tags: [Podcast, PostgreSQL, Open Source, Ruby on Rails]
 date: 2024-04-15
 comments: true
 ---
 
-Recently I joined Ry Walker as a guest on the [Hacking Postgres](https://www.youtube.com/playlist?list=PL11N188AYb_Z04oQJgllNEY5m7gCcY8tH) podcast, produced by Tembo, where Ry is the CEO.
+Recently I joined Ry Walker, CEO of [Tembo](https://tembo.io), as a guest on the [Hacking Postgres](https://www.youtube.com/playlist?list=PL11N188AYb_Z04oQJgllNEY5m7gCcY8tH) podcast.
 
-Hacking Postgres has had a lot of Postgres contributors on the show, so it was an honor to be a guest. Ry asked me about when I got started with PostgreSQL and what my role looks like today. Besides completing work individually, my great role with PostgreSQL has been advocacy and education with teams I’m part of, through writing, conference presentations, and now with clients that hire me.
+Hacking Postgres has had a lot of great Postgres contributors as guests on the show, so I was honored to be a part of it being that my contributions are more in the form of developer education and advocacy.
+
+Ry asked me about when I got started with PostgreSQL and what my role looks like today.
+
+{% include image-caption.html imageurl="/assets/images/posts/hacking-postgres-podcast.jpg" title="Hacking Postgres Podcast" caption="Hacking Postgres Season 2, Ep. 1 - Andrew Atkinson" %}
 
 ## PostgreSQL Origin
 
-Ry is also a Ruby on Rails programmer, so that was a fun background we shared. We both started on early versions of Ruby on Rails in the 2000s, and were also early users of Heroku in the late 2000s.
+Ry has also been a Ruby on Rails programmer, so that was a fun background we shared. We both started on early versions of Ruby on Rails in the 2000s, and were also early users of Heroku in the late 2000s.
 
-Since PostgreSQL was the default DB for Rails apps deployed on Heroku, for many Rails programmers it was the first time they used PostgreSQL. Heroku valued the fit and finish of their hosted platform offering, and provided best in class documentation and developer experience as a cutting edge platform as a service (Paas). The popularity of that platform helped grow the use of PostgreSQL amongst Rails programmers even beyond Heroku. 
+Since PostgreSQL was the default DB for Rails apps deployed on [Heroku](https://heroku.com), for many Rails programmers it was the first time they used PostgreSQL. Heroku valued the fit and finish of their hosted platform offering, and provided best in class documentation and developer experience as a cutting edge platform as a service (PaaS). The popularity of that platform helped grow the use of PostgreSQL amongst Rails programmers even beyond Heroku. 
 
-## The Tembo Team
+For me, Heroku was where I really started using PostgreSQL and learning about some of the performance optimization tactics "basics" as a web app developer.
 
-Besides Ry, I’ve also had the chance to meet more folks from Tembo. Adam Hendel is a founding engineer and also based here in Minnesota. I also met Samay Sharma, PostgreSQL contributor and now CTO of Tembo, at PGConf NYC 2023 last Fall. While not an employee or affiliated with the company at all, it’s been interesting to track what they’re up to, and get little glimpses into starting up a whole company that’s focused on leveraging the power and extensibility of PostgreSQL.
+## Meeting The Tembo Team
 
-If you’d like to learn more, Adam was the guest for the Season 1, Episode 2 episode, which you can find here: <https://tembo.io/blog/hacking-postgres-ep2>
+Besides Ry, I’ve also had the chance to meet more folks from Tembo. Adam Hendel is a founding engineer and also based here in Minnesota. I also met Samay Sharma, PostgreSQL contributor and now CTO of Tembo, at [PGConf NYC 2023](/blog/2023/10/10/pgconf-nyc-2023) last Fall. While not an employee or affiliated with the company at all, it’s been interesting to track what they’re up to, and get little glimpses into starting up a whole company that’s focused on leveraging the power and extensibility of PostgreSQL.
 
-## PostgreSQL via Ruby on Rails
+If you’d like to learn more about Adam's background, Adam was the guest for Season 1, Episode 2 of Hacking Postgres, which you can find here: <https://tembo.io/blog/hacking-postgres-ep2>
 
-Ruby on Rails as a web development framework has great support via the ORM - Active Record - for basic and advanced Postgres.
+## Using PostgreSQL with Ruby on Rails Apps
 
-There’s support for composite primary keys (CPK), common table expressions (CTE), and if you don’t like the SQL that Active Record generates, you can always write your own as query text within strings, binding parameters as needed. If your work is scaling up, Active Record helps by offering writer and role separation, and the ability to run copies of your DB via Horizontal Sharding.
+Ruby on Rails as a web development framework has great support via the ORM - Active Record - for basic and advanced Postgres features.
+
+There’s support for [composite primary keys](https://guides.rubyonrails.org/active_record_composite_primary_keys.html) (CPK), [common table expressions](https://apidock.com/rails/ActiveRecord/QueryMethods/with) (CTE), and if you don’t like the SQL that Active Record generates, you can always write your own as query text within strings, binding parameters as needed. If your work is scaling up, Active Record helps by offering writer and role separation, and the ability to run copies of your DB via [Horizontal Sharding](https://guides.rubyonrails.org/v7.0/active_record_multiple_databases.html#horizontal-sharding).
 
 There’s even a page dedicated to PostgreSQL support by Active Record on the official Ruby on Rails documentation here: <https://guides.rubyonrails.org/active_record_postgresql.html>
 
@@ -36,30 +42,32 @@ The Ruby on Rails app the book uses is called Rideshare and is here: <https://gi
 
 I’m pretty sure this is the only book of its kind that goes into as much depth both with PostgreSQL and Active Record!
 
-## Hacking Postgres
+## Hacking Postgres Podcast
 
 There have been a lot of great episodes on the podcast.
 
-[Marco Slot](https://tembo.io/blog/hacking-postgres-ep1) was the first guest. I remember the episode coming out around the time of PGConf NYC 2023. Marco is the creator of the `pg_cron` <https://github.com/citusdata/pg_cron> extension which I’ve used professionally, and included in examples in Rideshare for the book.
+[Marco Slot](https://tembo.io/blog/hacking-postgres-ep1) was the overall first guest, Season 1, Episode 1. I remember the episode coming out around the time of PGConf NYC 2023.
 
-Phillippe Noee, CEO of ParadeDB, <https://tembo.io/blog/hacking-postgres-ep8>, `pg_bm25` for Elasticsearch-like search in Postgres. <https://blog.paradedb.com/pages/introducing_search>
+Marco is the creator of the `pg_cron` <https://github.com/citusdata/pg_cron> extension which I’ve used professionally, and included in examples in Rideshare for the book.
 
-Recently I listened to this episode with Burak Yucesoy of Ubicloud. Burak has worked on various extensions too like postgres-hll, "high cardinality estimates" using the HyperLogLog data structure. This extension is also mentioned in the book.
+Philippe Noël, CEO of ParadeDB, Season 1, Episode 8: <https://tembo.io/blog/hacking-postgres-ep8>, `pg_bm25` for Elasticsearch-like search in Postgres. <https://blog.paradedb.com/pages/introducing_search>
 
-Bertrand Drouvot
+Recently I listened to this episode with Burak Yucesoy of Ubicloud. Burak has worked on various extensions too like [postgres-hll](https://github.com/citusdata/postgresql-hll), "high cardinality estimates" using the HyperLogLog data structure. This extension is also mentioned in the book.
+
+I also enjoyed the episode with Bertrand Drouvot as the guest: <https://tembo.io/blog/hacking-postgres-ep9>. Bertrand covered some of these items:
 
 - pgsentinel <https://github.com/pgsentinel/pgsentinel>
 - explain.dalibo.com for plan visualization. <https://explain.dalibo.com/>
 - `pg_directpaths` <https://github.com/bdrouvot/pg_directpaths> with some super speed inserts, even much faster than inserting into unlogged tables!
 
-I like these ideas Bertrand shared for more capabilities in Postgres for DBAs:
+I like the ideas Bertrand shared for more observability that's useful for Postgres DBAs:
 
-- For a long running query, the ability to see which part is being processed. For example buffers/pages could be accessed, there could be filtering, there could be sorting going on.  For OLTP we typically have short queries, but even then they can go long and appear to be stuck.
-- For a normalized query from pg_stat_statements, the ability to see the query plans used for that query. It would be interesting to look back and see whether a bad plan popped in at some point.
+- For a long running queries, seeing which parts are being processed. For example, which part of the processing is happening, buffers access? Filtering? Sorting? For OLTP we typically have short queries, but even then they can go long and appear to be stuck.
+- For a normalized query from `pg_stat_statements`, the ability to see the query plans that were for that query. It would be interesting to look back and see whether a bad plan popped in at some point.
 
-## More Podcasts
+## More Podcast Recommendations
 
-Here’s a collection of recent podcasts or podcast episodes I’d like to recommend:
+Ry likes to ask about podcasts the guest recommends. Here’s a collection of recent podcast episodes or podcasts I’d recommend:
 
 - postgres.fm is a favorite! I appeared recently as a guest on Rails + Postgres <https://postgres.fm/episodes/rails-postgres>
 - Scaling Postgres with Creston Jamison <https://www.scalingpostgres.com/>
@@ -67,15 +75,15 @@ Here’s a collection of recent podcasts or podcast episodes I’d like to recom
 - Ruby For All <https://twitter.com/andatki/status/1776392158674821288>
 - YAGNI <https://twitter.com/andatki/status/1776391049205927953>
 
+## "Just Use Postgres"
 
-## Just Use Postgres
-Ry and I briefly touched on database sprawl, which is something I’ve seen at most places I’ve worked. That last chapter in my book addresses this, brining a lot of things together the reader has learned from earlier chapters.
+Ry and I briefly touched on "database sprawl," which is something I’ve seen in the wild. The last chapter of my book addresses this topic, bringing a lot of things together the reader has learned from earlier chapters, with the goal of using PostgreSQL for more types of work.
 
-Redis is a very popularly used second database in the Ruby on Rails community. Commonly, Redis is used for cache data, background job or message queue style data that’s small in size and transient, or for storing other small bits of data with high write and read speed and without the need for indexing, like user session data.
+For example, Redis is a very popular second database in the Ruby on Rails community. Commonly, Redis is used to write and read cache data, background job or message queue data that's small and transient, or for storing other small bits of data like user session data.
 
-While Redis works well for those things, it does carry more cost, expands the operational topology meaning it’s another piece of infrastructure to provision, patch, upgrade, and observe. What if we used Postgres for those things instead?
+While Redis works well for those things, operating a Redis instance or cluster does carry more operational cost for the team, as it's another piece of infrastructure to provision, patch, upgrade, and observe. What if we used Postgres for those things instead?
 
-We explore these approaches, using concrete implementations and open source code:
+We explore specific tactics for doing that with use cases like:
 
 - Background jobs without Redis
 - Full text search within PostgreSQL, tsquery, tsvector
@@ -84,10 +92,16 @@ We explore these approaches, using concrete implementations and open source code
 
 ## Resources
 
-- Episode video: <https://www.youtube.com/watch?v=CAbGPydw_NY>
+- Here's the Hacking Postgres episode video: <https://www.youtube.com/watch?v=CAbGPydw_NY>
 
-## Wrapping Up
+The tweet is embedded below.
 
-This was fun to be a part of. I’m glad the Tembo team is offering Postgres and shaking things up by customizing it, offering various stacks, providing an extension registry, and more contributions to the greater ecosystem. Having more choices will benefit developers.
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Hacking Postgres Season 2 is here!<br><br>We&#39;re releasing new episodes every Thursday through the end of May, so stay tuned for more great Postgres content!<br><br>First up, we&#39;ve got Andrew Atkinson (<a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a>) a Software Engineer who specializes in building high-performance web applications… <a href="https://t.co/q22nc8WQg1">pic.twitter.com/q22nc8WQg1</a></p>&mdash; Tembo - Multi-Workload Postgres (@tembo_io) <a href="https://twitter.com/tembo_io/status/1776044934002270390?ref_src=twsrc%5Etfw">April 5, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-The Hacking Postgres is a fun way to get to know more about the community and their contributions. 
+## Wrapping Up and Thank You
+
+Hacking Postgres with Ry was a good time! I’m glad the Tembo team is offering Postgres as a server in new ways, by customizing it with curated sets of extensions as various stacks, providing an extension registry, and contributing to the greater PostgreSQL ecosystem. Having more choices benefits developers, providing new solutions for long-standing challenges.
+
+I recommend the "Hacking Postgres" podcast as a great way to get to know some of the PostgreSQL contributor community, and tech innovations in the greater ecosystem.
+
+Thank you to Ry for hosting and interviewing me, Adam for recommending me, and Jonathan and the production team behind the scenes for your support in the process.

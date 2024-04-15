@@ -15,15 +15,20 @@ title: High Performance PostgreSQL for Rails Book
 - [Paperback Pre-order Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## Outside the USA (English language)
-- [UK - uk.Bookshop.org](https://uk.bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/7669141)
-- [Denmark - plusbog.dk](https://www.plusbog.dk/high-performance-postgresql-for-rails-andrew-atkinson-9798888650387?physicalbookisbn=9798888650387)
-- [Denmark - williamdam.dk](https://www.williamdam.dk/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications__3721379)
-- [The Netherlands - Bruna.nl](https://www.bruna.nl/engelse-boeken/high-performance-postgresql-for-rails-9798888650387)
-- [Portugal - Bertrand.pt](https://www.bertrand.pt/livro/high-performance-postgresql-for-rails-andrew-atkinson/29905808)
-- [Canada - indigo.ca](https://www.indigo.ca/en-ca/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications/9798888650387.html)
-- [Hungary - bookline.hu](https://bookline.hu/product/home.action?_v=Atkinson_Andrew_High_Performance_Postg&type=200&id=6593954)
-- [Japan - amazon.jp](https://www.amazon.co.jp/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY)
-- [Germany - amazon.de](https://www.amazon.de/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=A3JWKAKR8XB7XF&language=de_DE)
+<details>
+<summary>International sellers</summary>
+<ul>
+<li><a href="https://uk.bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/7669141">UK - uk.Bookshop.org</a></li>
+<li><a href="https://www.plusbog.dk/high-performance-postgresql-for-rails-andrew-atkinson-9798888650387?physicalbookisbn=9798888650387">Denmark - plusbog.dk</a></li>
+<li><a href="https://www.williamdam.dk/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications__3721379">Denmark - williamdam.dk</a></li>
+<li><a href="https://www.bruna.nl/engelse-boeken/high-performance-postgresql-for-rails-9798888650387">The Netherlands - Bruna.nl</a></li>
+<li><a href="https://www.bertrand.pt/livro/high-performance-postgresql-for-rails-andrew-atkinson/29905808">Portugal - Bertrand.pt</a></li>
+<li><a href="https://www.indigo.ca/en-ca/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications/9798888650387.html">Canada - indigo.ca</a></li>
+<li><a href="https://bookline.hu/product/home.action?_v=Atkinson_Andrew_High_Performance_Postg&type=200&id=6593954">Hungary - bookline.hu</a></li>
+<li><a href="https://www.amazon.co.jp/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY">Japan - amazon.jp</a></li>
+<li><a href="https://www.amazon.de/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=A3JWKAKR8XB7XF&language=de_DE">Germany - amazon.de</a></li>
+</ul>
+</details>
 
 ## Independent (USA)
 - [USA - PA - doylestownbookshop.com](https://www.doylestownbookshop.com/book/9798888650387)
