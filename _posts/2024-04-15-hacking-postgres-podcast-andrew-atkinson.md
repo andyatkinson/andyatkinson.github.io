@@ -100,7 +100,7 @@ The tweet is embedded below.
 
 ## Wrapping Up and Thank You
 
-Hacking Postgres with Ry was a good time! I’m glad the Tembo team is offering Postgres as a server in new ways, by customizing it with curated sets of extensions as various stacks, providing an extension registry, and contributing to the greater PostgreSQL ecosystem. Having more choices benefits developers, providing new solutions for long-standing challenges.
+Hacking Postgres with Ry was a good time! I’m glad the Tembo team is offering Postgres as a service in new ways, by customizing it with curated sets of extensions as various stacks, providing an extension registry, and contributing to the greater PostgreSQL ecosystem. Having more choices benefits developers, providing new solutions for long-standing challenges.
 
 I recommend the "Hacking Postgres" podcast as a great way to get to know some of the PostgreSQL contributor community, and tech innovations in the greater ecosystem.
 
