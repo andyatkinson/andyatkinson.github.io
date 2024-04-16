@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Use Cases for Merging and Splitting Partitions With Minimal Locking in PostgreSQL 17"
+title: "✂️ Use Cases for Merging and Splitting Partitions With Minimal Locking in PostgreSQL 17"
 tags: [PostgreSQL, Open Source]
 date: 2024-04-16
 comments: true
