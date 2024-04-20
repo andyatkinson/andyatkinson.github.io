@@ -41,26 +41,25 @@ Type `\d customers` to "describe" the customers table you just created.
 
 Using the same CSV file from an earlier article (or create a couple sample rows like below), load it into PostgreSQL using the COPY command.
 
-The file should look like this. Create it in your editor (`vim /tmp/customers.txt`) using an absolute path, if you don't already have the file in this location.
+Create it in your editor (`vim /tmp/customers.csv`) using an absolute path, if you don't already have the file in this location.
 
-It only needs a couple of rows for demonstration purposes.
+The file has no header row and a couple of data rows for demonstration purposes.
 
 ```bash
-% cat customers.txt
+% cat customers.csv
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 ```
 
-With the file in place, load it using the Copy command into the table you've just created.
+With the file in place, load it using the COPY command into the users table you've just created.
 
 ```sql
-COPY customers(email, full_name)
-FROM '/tmp/customers.txt'
+COPY customers (email, full_name)
+FROM '/tmp/customers.csv'
 DELIMITER ',' CSV;
 ```
 
-If it was successful, you'll see `COPY 2` as output.
-
+If the rows loaded successfully, you'll see `COPY 2` as output.
 
 View the rows in the customers table.
 
