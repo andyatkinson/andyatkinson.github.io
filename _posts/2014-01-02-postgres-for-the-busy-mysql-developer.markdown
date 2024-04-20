@@ -37,7 +37,7 @@ CREATE TABLE customers (
     full_name TEXT);
 ```
 
-Type `\d customers` to "describe" the table you just created.
+Type `\d customers` to "describe" the customers table you just created.
 
 Using the same CSV file from an earlier article (or create a couple sample rows like below), load it into PostgreSQL using the COPY command.
 
