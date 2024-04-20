@@ -109,14 +109,16 @@ We can follow the basics shown here with the COPY command to efficiently load an
 
 ## Running Queries
 
-Running a query from the command line and combining the output with `grep` is powerful.
+Running a query from the command line allows us to script operations.
 
-Here is quick search of the "customers" table for content like columns, containing "email":
+Here is quick search of the "customers" table content for text that matches "email":
 
 ``` bash
 psql -U andy -d company_stuff \
   -c "\d customers" | grep email
 ```
+
+This is a quick way to check whether the table has a column named "email."
 
 Running ad hoc queries and commands is useful for scripting operations.
 
