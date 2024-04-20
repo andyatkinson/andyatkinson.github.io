@@ -8,7 +8,20 @@ tags: [MySQL, PostgreSQL, Productivity, Databases]
 
 For a new project I'll be using PostgreSQL. I have more experience with MySQL so I wanted to quickly learn PostgreSQL and port over some of my skills.
 
-In this post I'll be sharing what I learned! Statements should be run using the psql command line client.
+First I reviewed some of the equivalent commands.
+
+## MySQL to PostgreSQL Resources
+
+* [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
+* [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
+* [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
+* [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+
+In this post I'll be sharing what I learned!
+
+I wanted to learn how to work with CSV files and run queries from the command line.
+
+Statements can be run using the psql command line client.
 
 ## Roles
 
@@ -107,9 +120,3 @@ Running ad hoc queries and commands is useful for scripting operations.
 
 That's it for now!
 
-## Mysql to PostgreSQL Resources
-
-* [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
-* [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
-* [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
-* [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
