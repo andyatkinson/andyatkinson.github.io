@@ -12,7 +12,7 @@ In this post I'll be sharing what I learned! Statements should be run using the 
 
 ## Roles
 
-Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` (described users) in psql. These are "meta-commands."
+Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` (describe users) in psql. These are "meta-commands," and they start with a backslash (it tilts backwards) not a forward slash. 😊
 
 Roles have Privileges, which give them the ability to perform various operations.
 
