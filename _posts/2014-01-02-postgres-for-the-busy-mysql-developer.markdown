@@ -17,11 +17,13 @@ First I reviewed some of the equivalent commands.
 * [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
 * [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
 
-In this post I'll be sharing what I learned!
+This posr will cover:
 
-I wanted to learn how to work with CSV files and run queries from the command line.
+- Working with users in PostgreSQL
+- Working with CSV files
+- Running queries from the command line
 
-Statements can be run using the psql command line client.
+In this post, I'll share what I learned!
 
 ## Roles
 
