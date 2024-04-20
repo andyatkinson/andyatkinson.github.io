@@ -96,13 +96,14 @@ We can follow the basics shown here with the COPY command to efficiently load an
 
 Running a query from the command line and combining the output with `grep` is powerful.
 
-Here is quick search in the "customers" database for columns named like "email":
+Here is quick search of the "customers" table for content like columns, containing "email":
 
 ``` bash
-psql -U andy -d company_stuff -c "\d customers" | grep email
+psql -U andy -d company_stuff \
+  -c "\d customers" | grep email
 ```
 
-This can be used to quickly check a particular database, whether a table has a particular column.
+Running ad hoc queries and commands is useful for scripting operations.
 
 That's it for now!
 
