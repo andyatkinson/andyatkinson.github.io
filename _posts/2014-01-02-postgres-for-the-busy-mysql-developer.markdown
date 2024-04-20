@@ -90,7 +90,7 @@ jane@example.com,Jane Doe
 andy@example.com,Andrew Atkinson
 ```
 
-The Copy command can be used for loading and dumping data.
+We can follow the basics shown here with the COPY command to efficiently load and dump data.
 
 ## Running Queries
 
