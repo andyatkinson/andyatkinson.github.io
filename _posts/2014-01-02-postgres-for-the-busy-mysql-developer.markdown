@@ -49,7 +49,8 @@ CREATE DATABASE company_stuff;
 CREATE TABLE customers (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     email TEXT,
-    full_name TEXT);
+    full_name TEXT
+);
 ```
 
 Type `\d customers` to "describe" the customers table you just created.
@@ -60,8 +61,9 @@ Create it in your editor (`vim /tmp/customers.csv`) using an absolute path, if y
 
 The file has no header row and a couple of data rows for demonstration purposes.
 
-```bash
-% cat customers.csv
+```sh
+cat customers.csv
+
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 ```
@@ -89,7 +91,11 @@ SELECT * FROM customers;
 Insert another record and then dump all the records out again as a new CSV file.
 
 ```sql
-INSERT INTO customers (email, full_name) VALUES ('andy@example.com', 'Andrew Atkinson');
+INSERT INTO customers (email, full_name)
+VALUES (
+  'andy@example.com',
+  'Andrew Atkinson'
+);
 
 COPY customers(email, full_name)
 TO '/tmp/more_customers.csv'
@@ -98,8 +104,9 @@ WITH DELIMITER ',';
 
 Verify the output of the CSV file.
 
-```bash
-~ $ cat /tmp/more_customers.csv
+```sh
+cat /tmp/more_customers.csv
+
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 andy@example.com,Andrew Atkinson
@@ -113,7 +120,7 @@ Running a query from the command line allows us to script operations.
 
 Here is quick search of the "customers" table content for text that matches "email":
 
-``` bash
+```sh
 psql -U andy -d company_stuff \
   -c "\d customers" | grep email
 ```
