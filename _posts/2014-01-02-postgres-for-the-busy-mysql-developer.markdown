@@ -31,7 +31,7 @@ Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du`
 
 Roles have Privileges, which give them the ability to perform various operations.
 
-Type `\list` (or `\l`) to see all databases and `\c <database-name>` to connect to a database (replacing "<database-name>" with your database name).
+Type `\list` (or `\l`) to see all databases and `\c database-name` to connect to a database (replacing "database-name" with your database name).
 
 The `\dt` meta-command describes all tables, and `\d` with a table name argument, describes a specific table.
 
