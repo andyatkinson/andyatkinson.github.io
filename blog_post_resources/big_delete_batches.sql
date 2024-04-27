@@ -7,6 +7,7 @@ CREATE TABLE clicks (
   created_at TIMESTAMP WITHOUT TIME ZONE
 );
 
+
 -- Slice of records from day of incident
 -- Add an index to the original big table, to speed up the selection
 -- for the same query conditions
@@ -22,6 +23,14 @@ SELECT *
 FROM clicks
 WHERE (created_at >= '2024-03-19 00:00:00'::TIMESTAMP WITHOUT TIME ZONE)
 AND (created_at < '2024-03-20 00:00:00'::TIMESTAMP WITHOUT TIME ZONE);
+
+
+SELECT link_id, created_at, session_id, count(*)
+FROM clicks_20240319
+GROUP BY 1, 2,3
+HAVING COUNT(*) > 1
+ORDER BY count(*) DESC
+LIMIT 10;
 
 
 -- Now we're ready to find duplicates
@@ -50,3 +59,36 @@ SELECT
 FROM duplicates d
 JOIN hits h ON d.id = h.id
 WHERE d.rownum > 1;
+
+
+
+-- Anonymouse DO block to create batched DELETE
+-- statements in batches. The batch size below is set on the
+-- LIMIT clause and is 10000
+--
+DO
+$do$
+DECLARE
+   _max_id integer := -1;  -- assuming positive, unique IDs!
+BEGIN
+LOOP
+   WITH cte AS (
+      SELECT id  -- don't use *, we only need id
+      FROM   clicks_20240319_dupe_ids t1
+      WHERE  t1.id > _max_id
+      ORDER  BY id
+      LIMIT  10000
+      )
+   , del AS (
+      DELETE FROM clicks t
+      USING  cte c
+      WHERE  t.id = c.id
+      )
+   SELECT max(id) FROM cte
+   INTO _max_id;
+
+   EXIT WHEN _max_id IS NULL;
+   COMMIT;
+END LOOP;
+END
+$do$;
