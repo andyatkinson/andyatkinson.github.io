@@ -1,11 +1,18 @@
 -- Original clicks table
 CREATE TABLE clicks (
-  id BIGINT,
+  id BIGINT GENERATED ALWAYS AS IDENTITY,
   company_id INTEGER NOT NULL,
   session_id TEXT,
   link_id BIGINT,
   created_at TIMESTAMP WITHOUT TIME ZONE
 );
+
+INSERT INTO clicks (company_id, session_id, link_id)
+SELECT
+  floor(random()*100),
+  SUBSTR(MD5(RANDOM()::TEXT), 0, 6)
+  floor(random()*100),
+FROM GENERATE_SERIES(1,1000000) s;
 
 
 -- Slice of records from day of incident
