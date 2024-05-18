@@ -44,9 +44,9 @@ I loved meeting new people as well! I met Manu at the speaker’s dinner. Manu p
 
 I met some of the Revela team there, including the CTO John and engineer John S. Also Wes G.
 
-I stayed after Nadia Odunayo’s great (co-founder of The StoryGraph) opening morning keynote. I wanted to introduce myself to Nadia given they’re scaling up and building on Rails and PostgreSQL, and offer up some kind of future collaboration! Besides my PostgreSQL skills, as a new author, I appreciate that they’re building a new platform for communities around books.
+I stayed after Nadia Odunayo’s great opening morning keynote to introduce myself. Their team is scaling up, building on Rails and PostgreSQL, and I wanted to offer up some kind of future collaboration opportunity!
 
-For The StoryGraph, I hope to get my first review or rating for High Performance PostgreSQL for Rails on the site. It’s currently empty!
+For The StoryGraph, I hope to get my first review or rating for High Performance PostgreSQL for Rails on the site. While we've got some [ratings on Goodreads](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails), The StoryGraph is currently empty!
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Hey <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a>, I’d love for the first rating or review from a reader of my book to get added to <a href="https://twitter.com/thestorygraph?ref_src=twsrc%5Etfw">@thestorygraph</a>!<br><br>I’ll be giving away free ebook copies of the book this week or you can get it for under 20 bucks with code RailsConf2024PG. 😊 cc <a href="https://twitter.com/nodunayo?ref_src=twsrc%5Etfw">@nodunayo</a><a href="https://t.co/j8YJlYiRYE">https://t.co/j8YJlYiRYE</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787856253131030968?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
