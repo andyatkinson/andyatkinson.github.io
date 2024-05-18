@@ -4,6 +4,7 @@ title: "RailsConf 2024 Conference — The Long Goodbye"
 tags: [Ruby on Rails, Podcasts, Conferences, Open Source]
 date: 2024-05-17
 comments: true
+image: /assets/img/posts/2024/railsconf-2024-1.jpg
 ---
 
 {% include image-caption.html imageurl="/assets/images/posts/2024/railsconf-2024-1.jpg" title="Andrew Atkinson presenting at RailsConf conference 2024" caption="Andrew Atkinson. RailsConf 2024. Photo: <a href='https://www.aliceheartphotography.com'>Alice Heart Photography</a>" %}
@@ -57,7 +58,7 @@ RailsConf came back again in 2011, and I went again! The next time I went to Rai
 
 Who else was someone new to meet? Sairo from Venezuela, who gave a lightning talk! I also got to meet Joshua Wood and Ben Curtis from Honeybadger, and shared that I was a big fan of their product!
 
-I also got to meet Xavier Noria and spend a whole lunch with Xavier. We had a great conversation about some of the challenges as independent consultants, the benefits, and about writing technical books.
+I also got to meet [Xavier Noria](https://hashref.com) and spend a whole lunch with Xavier. We had a great conversation about some of the challenges as independent consultants, the benefits, and about writing technical books.
 
 Another person was Erica who I met off and on throughout the conference, and who later gave Lightning talk!
 
