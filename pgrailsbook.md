@@ -7,19 +7,25 @@ title: High Performance PostgreSQL for Rails Book
 # Buy the Book!
 
 ## USA
-- [Beta Ebook Pragmatic Programmers](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails)
-- [Paperback Pre-order Bookshop.org](https://bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/21240568?ean=9798888650387)
-- [Paperback Pre-order Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
-- [Paperback Pre-order B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
-- [Paperback Pre-order Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
-- [Paperback Pre-order Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
-## Outside the USA (English language)
+### Ebook
+- [Beta Ebook Pragmatic Programmers](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails)
+
+### Paper
+- [Pre-order Bookshop.org](https://bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/21240568?ean=9798888650387)
+- [Pre-order Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
+- [Pre-order B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
+- [Pre-order Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
+- [Pre-order Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
+
+
+## Ratings
+- [Goodreads: 4.78, 9 ratings](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+
+## Outside USA (English language)
 <details>
 <summary>International sellers</summary>
 <ul>
-Availabl://www.amazon.co.uk/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY
-
 <li><a href="https://www.amazon.co.uk/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY">UK - Amazon.uk</a></li>
 <li><a href="https://uk.bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/7669141">UK - uk.Bookshop.org</a></li>
 <li><a href="https://www.plusbog.dk/high-performance-postgresql-for-rails-andrew-atkinson-9798888650387?physicalbookisbn=9798888650387">Denmark - plusbog.dk</a></li>
@@ -54,8 +60,6 @@ Availabl://www.amazon.co.uk/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I think <a href="https://t.co/HQhb03ZkKK">https://t.co/HQhb03ZkKK</a> by <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a> is a &quot;game-upgrader&quot; for <a href="https://twitter.com/hashtag/Rails?src=hash&amp;ref_src=twsrc%5Etfw">#Rails</a> devs using <a href="https://twitter.com/hashtag/PostgreSQL?src=hash&amp;ref_src=twsrc%5Etfw">#PostgreSQL</a>. It covers so much ranging from ActiveRecord, SQL, bulk data, cursors, sharding, replication, partitioning, FTS...<br><br>Want Rails to scale? Gotta leverage the DB👍<a href="https://twitter.com/hashtag/programming?src=hash&amp;ref_src=twsrc%5Etfw">#programming</a></p>&mdash; Mohit Sindhwani (onghu@ruby.social) (@onghu) <a href="https://twitter.com/onghu/status/1728305090170126592?ref_src=twsrc%5Etfw">November 25, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Ratings and Reviews
-
-- [4.75 score, 8 ratings on Goodreads](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 
 > It's a helpful companion into the depths of Postgres functionality. If you're looking to step out of the comfort of a Rails console and into a psql console, I recommend taking this with you.
 <cite>- Kevin Murphy</cite>

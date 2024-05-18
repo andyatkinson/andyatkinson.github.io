@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "🎙️ Hacking Postgres 🐘 Podcast - Season 2, Ep. 1 - Andrew Atkinson"
+title: "🎙️ Hacking Postgres 🐘 Podcast — Season 2, Ep. 1 Andrew Atkinson"
 tags: [Podcast, PostgreSQL, Open Source, Ruby on Rails]
 date: 2024-04-15
 comments: true
