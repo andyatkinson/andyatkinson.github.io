@@ -75,17 +75,17 @@ Workshop Day!
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Workshop day <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a>! Would love to see you in &quot;140 B-C&quot; at 2:30 PM for &quot;High Performance Active Record Apps.&quot; <br>In main room b4 for install help. More stickers to hand out. Look for my sign! 😂 5 free ebook copies to give out today and tmrw. Stay tuned! <a href="https://twitter.com/pragprog?ref_src=twsrc%5Etfw">@pragprog</a> <a href="https://twitter.com/hashtag/pgrailsbook?src=hash&amp;ref_src=twsrc%5Etfw">#pgrailsbook</a> <a href="https://t.co/MHNcA4gWRq">pic.twitter.com/MHNcA4gWRq</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1788205599894745346?ref_src=twsrc%5Etfw">May 8, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Had great attendance!
+There was great attendance!
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Packed house for <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a><br>talk entitled “Build High Performance Active Record Apps” — the secret ingredient is Postgres. <a href="https://t.co/ng8qrotdT0">pic.twitter.com/ng8qrotdT0</a></p>&mdash; Christopher Winslett (@winsletts) <a href="https://twitter.com/winsletts/status/1788276162801607009?ref_src=twsrc%5Etfw">May 8, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Overall I thought the workshop went well. There were a couple of things that could have gone better, but overall not bad. It was a real honor to bring topics like reading EXPLAIN query plans and designing supportive indexes to developers, that seemed to be soaking it up for the most part.
+Overall I thought the workshop went well. There were a couple of things that could have gone better, but overall not bad. It was a real honor to bring topics like reading EXPLAIN query plans and designing supportive indexes to developers, that seemed to be soaking it up.
 
-In the second half, almost no one had set up a Postgres replica from scratch, and may not realistically do that ever in their jobs. However, if they’re using a replica that’s been set up for them, they’ve got the chance to see it was done.
+In the second half, almost no one had set up a Postgres replica from scratch, and may not realistically do that ever in their jobs. However, if they’re using a replica that’s been set up for them, they’ve got the chance to see how it's done.
 
 Unfortunately there was a replication error that had to do with the system identifier not matching, which seems to happen sometimes when the container restarts and doesn’t use the expected data directory.
 
-Someone gave me feedback “I handled it well”, and indeed it wasn’t really critical to complete in order to understand the higher level abstraction, using Active Record Multiple Databases.
+Someone gave me feedback I handled it well, and indeed it wasn’t really critical to complete in order to understand the higher level abstraction, using Active Record Multiple Databases.
 
 What we tried to show was configuring the primary as the “writer” role, and the replica as the “reader” role. This opens up using the replica instance for read-only queries. Having a live replica ready to go in the event that the primary instance fails, is a good idea. This can greatly improve your recovery time. However, we can also use that instance for our read only queries. Naturally, there are a lot of questions about “replica lag” and “read your own write.” Fortunately for “read your own write” or “read after write” consistency, Active Record has a default implementation. If that doesn’t cut it, we can extend it.
 
