@@ -51,7 +51,7 @@ For The StoryGraph, I hope to get my first review or rating for High Performance
 
 John Nunemaker! Apparently John [hasn’t been to RailsConf since 2010](https://www.johnnunemaker.com/railsconf-2024/), and I recall seeing John there way back then!
 
-[RailsConf 2010 was in Baltimore](/blog/2010/07/01/railsconf-2010), which was significant for me, as my wife and I had just to Baltimore at the time! I was excited RailsConf was in my new adopted city.
+[RailsConf 2010 was in Baltimore](/blog/2010/07/01/railsconf-2010), which was significant for me, as my wife and I had just moved to Baltimore! I was excited RailsConf was in my new adopted city.
 
 RailsConf came back again in 2011, and I went again! The next time I went to RailsConf was 6 years later for [RailsConf Phoenix in 2017](http://andyatkinson.com/blog/2017/06/06/railsconf-2017). That one was also great, and was where I originally met Kasper H. I remember writing Java around that time working at Groupon!
 
@@ -108,7 +108,7 @@ The giveaway was for people that attended the workshop. I even made a little Rub
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">🎉 Congrats to 5 ebook winners of "High Performance PostgreSQL for Rails" <a href="https://twitter.com/pragprog?ref_src=twsrc%5Etfw">@pragprog</a> <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a><br><br>🤓 I made a small Ruby program to pick the winners. See the linked gist in the video. If you didn't win, code `RailsConf2024PG` is still active for 40% off!<a href="https://t.co/7JeMU8Jgd3">https://t.co/7JeMU8Jgd3</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1790210523788628237?ref_src=twsrc%5Etfw">May 14, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-My goal was for about 50 copies of the book to sell in the time of the conference, by promoting it on social media, handing out stickers, telling people about it.
+My hope was for about 50 copies of the book to sell during the conference, by promoting it on social media, handing out stickers, and generally just telling people about it.
 
 I’m happy to say we got there! The book was back into the #2 bestseller spot among [weekly bestsellers](https://pragprog.com/best_sellers/) this week.
 
@@ -119,7 +119,7 @@ Something different compared with any other time in my 15  year programming care
 
 
 ## Hamtramck, MI
-Joshua and Ben Cutis from Honeybadger organized a progressive dinner walking tour, provided by Detroit History Tours. We met in the Hamtramck city, which we learned is a city that’s entirely land-locked within the city of Detroit. Strange!
+Joshua and Ben Cutis from [Honeybadger](https://www.honeybadger.io) organized a progressive dinner walking tour, provided by Detroit History Tours. We met in the Hamtramck city, which we learned is a city that’s entirely land-locked within the city of Detroit. Strange!
 
 {% include image-caption.html imageurl="/assets/images/posts/2024/railsconf-2024-3.jpg" title="Tour group at RailsConf conference 2024" caption="Tour group, Hamtramck, MI. Photo credit: Benjamin W." %}
 
