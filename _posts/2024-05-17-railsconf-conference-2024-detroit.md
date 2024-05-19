@@ -11,14 +11,19 @@ image: /assets/img/posts/2024/railsconf-2024-1.jpg
 
 ## Outline
 
+- Opening
 - Pre-conference activities
 - Arrival
 - Long-time friends and new ones
 - Meet the Authors
 - Workshop
+- Closing Keynote from Irina
 - Book
 - Hamtramck, MI
 - Wrap up — The Long Goodbye
+
+## Opening
+This post is a look back at the weeks leading up to RailsConf 2024, and significant events from the event! There's a big change coming in 2025. Read on to learn more!
 
 ## Pre-conference activities
 - I gave a local, first run of the workshop content for [High Performance Active Record Apps](http://andyatkinson.com/blog/2024/04/10/workshop-active-record-postgresql-apps-minneapolis) in Minneapolis at Industrious. About 15 attended! This first run helped me realize I had too much content and needed to set up examples to copy and paste.
@@ -54,7 +59,7 @@ John Nunemaker! Apparently John [hasn’t been to RailsConf since 2010](https://
 
 RailsConf was back in 2011, and I went again! After those two Baltimore RailsConf editions, I didn’t go again until 6 years later for [RailsConf Phoenix in 2017](http://andyatkinson.com/blog/2017/06/06/railsconf-2017). That one was also great, and was where I originally met Kasper H.
 
-I also met Sairo from Venezuela, and we talked a bit about consulting at the hotel bar. The next day Sairo gave a lightning talk! I also met Joshua Wood and Ben Curtis from Honeybadger, and shared that I was a big fan of their product!
+I also met Sairo from Venezuela at the hotel bar, and we talked about consulting. The next day Sairo gave a lightning talk! I also met Joshua Wood and Ben Curtis from Honeybadger, and shared that I was a big fan of their product!
 
 I also met [Xavier Noria](https://hashref.com) in person, spending a whole lunch together. We had a great conversation about some of the challenges as independent consultants, the benefits, and about writing technical books.
 
@@ -105,9 +110,9 @@ The giveaway was for people that attended the workshop. I even made a little Rub
 
 
 ## Consulting
-I’m now working as a consultant, which is something new in my 15 year programming career, having mostly worked as a full-time employee.
+Now working as a consultant, after having mostly worked as a full-time employee, I was really curious to hear from others working in this model.
 
-I had the chance to meet a lot of other independent consultants like Wale, Cody, Jason, Jeremy, and Kasper, and appreciated all of the conversations.
+I met other independent consultants like Wale, Xavier, Cody, Jason, Jeremy, and Kasper, and appreciated hearing their perspectives and about their experience.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Packed room for <a href="https://twitter.com/kaspth?ref_src=twsrc%5Etfw">@kaspth</a> at <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a>! <a href="https://t.co/c9cI6rLghp">pic.twitter.com/c9cI6rLghp</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787951973058187691?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
