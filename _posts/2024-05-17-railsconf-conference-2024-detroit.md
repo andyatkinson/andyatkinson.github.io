@@ -112,7 +112,7 @@ The giveaway was for people that attended the workshop. I even made a little Rub
 ## Consulting
 Now working as a consultant, after having mostly worked as a full-time employee, I was really curious to hear from others working in this model.
 
-I met other independent consultants like Wale, Xavier, Cody, Jason, Jeremy, and Kasper, and appreciated hearing their perspectives and about their experience.
+I met other independent consultants like Wale O. ([Rails Fever, LLC](https://railsfever.com)), Xavier, Cody N., Jason S., Jeremy S., and Kasper ([@kaspth](https://github.com/kaspth)), and appreciated hearing their perspectives and about their experience.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Packed room for <a href="https://twitter.com/kaspth?ref_src=twsrc%5Etfw">@kaspth</a> at <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a>! <a href="https://t.co/c9cI6rLghp">pic.twitter.com/c9cI6rLghp</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787951973058187691?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
