@@ -11,7 +11,7 @@ image: /assets/img/posts/2024/railsconf-2024-1.jpg
 
 ## Outline
 
-- Pre-flight checks
+- Pre-conference activities
 - Arrival
 - Long-time friends and new ones
 - Meet the Authors
@@ -21,20 +21,20 @@ image: /assets/img/posts/2024/railsconf-2024-1.jpg
 - Wrap up — The Long Goodbye
 
 ## Pre-conference activities
-- I gave a local first run of the content for [High Performance Active Record Apps](http://andyatkinson.com/blog/2024/04/10/workshop-active-record-postgresql-apps-minneapolis) in Minneapolis at Industrious. About 15 attended. This helped me realize I had too much content and needed to make some cuts and structural changes.
-- I was a guest on the Ruby for All podcast with the episode titled [RailsConf 2024 Workshop Spotlight — Build High Performance Active Record Apps with Andy Atkinson](https://www.rubyforall.com/s2/67). This provided another opportunity to prepare a bit for the planned content.
+- I gave a local, first run of the workshop content for [High Performance Active Record Apps](http://andyatkinson.com/blog/2024/04/10/workshop-active-record-postgresql-apps-minneapolis) in Minneapolis at Industrious. About 15 attended! This first run helped me realize I had too much content and needed to set up examples to copy and paste.
+- I was a guest on the Ruby for All podcast for episode [RailsConf 2024 Workshop Spotlight — Build High Performance Active Record Apps with Andy Atkinson](https://www.rubyforall.com/s2/67). This provided another opportunity to prepare a bit.
 
 
 ## On the flight, arrival, hotel
 - Quick flight from Minneapolis to Detroit
-- When arriving at the hotel, I noticed the riverfront walk, the elevated train, and the conference center were all really nice. Great location!
+- The hotel, river walk, elevated train, and conference center were all very nice.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Arrived in Detroit and <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a> in time for the opening keynote by <a href="https://twitter.com/nodunayo?ref_src=twsrc%5Etfw">@nodunayo</a>. Excited to be here! <a href="https://t.co/N8jWTdeocs">pic.twitter.com/N8jWTdeocs</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787851343236940203?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Long-time Friends and New Ones
-Having attended Sin City Ruby twice and RailsConf two years ago, it was nice to reconnect with a lot of friends from the Ruby world from these events.
+Having attended Sin City Ruby twice and RailsConf two years ago, it was nice to reconnect with a lot of friends from the Ruby world.
 
-Some friends I spent at least a little time with were Jeremy, Kasper, Chris, Collin, Cody, Vladimir, Chris, Dominic, Irin, Jason, Elise, Ifat, Kevin (too briefly!), PDX Jared M. from RailsConf 2022, and I said hi only to Mayra from ‘22.
+Some were Jeremy, Kasper, Chris, Collin, Cody, Vladimir, Chris, Dominic, Irin, Jason, Elise, Ifat, Kevin (too briefly!), PDX Jared M. from RailsConf 2022, and (briefly) Mayra from ‘22.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Adam Driver aka <a href="https://twitter.com/collin_jilbert?ref_src=twsrc%5Etfw">@collin_jilbert</a> teaching us how to contribute to Rails! cc <a href="https://twitter.com/GoRails?ref_src=twsrc%5Etfw">@GoRails</a> <a href="https://t.co/L1ebo7fcuS">pic.twitter.com/L1ebo7fcuS</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787925574649860132?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -79,7 +79,7 @@ Great attendance!
 
 Overall I thought the workshop went well. There were a couple of things that could have gone better, but overall it was pretty good. It was a real honor to bring topics like reading EXPLAIN query plans and designing supportive indexes, to developers that might not work in these areas much.
 
-In the second half, we set up a Postgres replica instance from scratch using Docker, then talked about how two instances could be used for writing and reading roles with Active Record.
+In the second half, we set up a Postgres replica instance from scratch, with both instances running in Docker containers, then talked about how two instances could be used for writing and reading roles with Active Record.
 
 {% include image-caption.html imageurl="/assets/images/posts/2024/railsconf-2024-2.jpg" title="Workshop RailsConf conference 2024" caption="Workshop presenter view. RailsConf 2024." %}
 
@@ -89,7 +89,9 @@ Irina gave a great closing keynote, encouraging us all to be more public about b
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Great keynote concept and delivery from <a href="https://twitter.com/inazarova?ref_src=twsrc%5Etfw">@inazarova</a> sharing stories from startups choosing Ruby on Rails! <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a> <a href="https://t.co/GEKCKWvu1f">pic.twitter.com/GEKCKWvu1f</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787956394802770331?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Book
-For me this conference was sort of a celebration of the long and mostly lonely process of writing my first ever book over the last two years. I presented at RailsConf 2022 in Portland, and at the time I’d just signed the book deal, but it was a secret, and very much a "riskier" project being so early in development.
+For me this conference was sort of a celebration of the long and mostly lonely process of [writing my first book](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) over the last two years.
+
+I [presented at RailsConf 2022 in Portland](http://andyatkinson.com/blog/2022/05/23/railsconf-2022), and at the time I’d just signed the book deal, but it was a secret, and very much a "riskier" project being so early in development.
 
 I was able to meet some of the people that directly contributed to the book in the following two years, like Ifat, Xavier, Kevin Murphy a bit at RailsConf, which was nice.
 
@@ -103,7 +105,9 @@ The giveaway was for people that attended the workshop. I even made a little Rub
 
 
 ## Consulting
-I’m now working as a consultant, which is something new in my 15 year programming career. I had the chance to meet a lot of other consultants like Wale, Cody, Jason, Jeremy, and Kasper, and appreciated all of the conversations.
+I’m now working as a consultant, which is something new in my 15 year programming career, having mostly worked as a full-time employee.
+
+I had the chance to meet a lot of other independent consultants like Wale, Cody, Jason, Jeremy, and Kasper, and appreciated all of the conversations.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Packed room for <a href="https://twitter.com/kaspth?ref_src=twsrc%5Etfw">@kaspth</a> at <a href="https://twitter.com/railsconf?ref_src=twsrc%5Etfw">@railsconf</a>! <a href="https://t.co/c9cI6rLghp">pic.twitter.com/c9cI6rLghp</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787951973058187691?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
@@ -126,10 +130,10 @@ Besides the content itself, I loved meeting dozens of old and new friends!
 
 On the first day, we found out that RailsConf 2025 will be the last one. For me this was sad to hear, considering my first RailsConf was nearly 15 years ago, and they’ve been a significant part of my professional journey.
 
-With [RailsConf ending in 2025](https://rubycentral.org/news/anewearforrubycentralevents/), we’re now in a “long goodbye” period, with the chance to reflect on happy memories, along with sadness the event is ending, and nostalgia from past events.
+With [RailsConf ending in 2025](https://rubycentral.org/news/anewearforrubycentralevents/), we’re now in a “long goodbye” period, and might be reflecting on happy memories, experiencing sadness the event is ending, or nostalgia for past events.
 
-Ruby Central will now focus on Rubyconf as the flagship event, which makes sense. In 2024, Ruby events are doing well! This year, Ruby Kaigi in Japan had more than 1000 attendees! Regional Ruby conferences are popping up all over, just check <https://rubyconferences.org/> for one in your area.
+Ruby Central will now focus on Rubyconf as the flagship event. In 2024, Ruby events are doing well! This year, Ruby Kaigi in Japan had more than 1000 attendees! Regional Ruby conferences are popping up all over, just check <https://rubyconferences.org/> for one in your area.
 
-Ruby on Rails will continue to be celebrated annually at the Rails World conference, in its second year, being held in Toronto later this year.
+Ruby on Rails will continue to be celebrated annually at the [Rails World](https://rubyonrails.org/world/2024) conference, in its second year, being held in Toronto later this year.
 
-I hope to see you at RailsConf 2025, where we'll give it a proper send off!
+Looking forward to RailsConf 2025, where we''ll celebrate the end of this decades-long event, together!
