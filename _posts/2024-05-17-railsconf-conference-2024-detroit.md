@@ -39,7 +39,7 @@ This post is a look back at the weeks leading up to RailsConf 2024, and signific
 ## Long-time Friends and New Ones
 Having attended Sin City Ruby twice and RailsConf two years ago, it was nice to reconnect with a lot of friends from the Ruby world.
 
-Some were Jeremy, Kasper, Chris, Collin, Cody, Vladimir, Chris, Dominic, Irin, Jason, Elise, Ifat, Kevin (too briefly!), PDX Jared M. from RailsConf 2022, and (briefly) Mayra from ‘22.
+Some were Jeremy, Kasper, Chris, Collin, Cody, Vladimir, Chris, Dominic, Irina, Jason, Elise, Ifat, Kevin (too briefly!), PDX Jared M. from RailsConf 2022, and (briefly) Mayra from ‘22.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Adam Driver aka <a href="https://twitter.com/collin_jilbert?ref_src=twsrc%5Etfw">@collin_jilbert</a> teaching us how to contribute to Rails! cc <a href="https://twitter.com/GoRails?ref_src=twsrc%5Etfw">@GoRails</a> <a href="https://t.co/L1ebo7fcuS">pic.twitter.com/L1ebo7fcuS</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1787925574649860132?ref_src=twsrc%5Etfw">May 7, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
