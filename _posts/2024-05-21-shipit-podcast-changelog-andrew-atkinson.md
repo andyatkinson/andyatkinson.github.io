@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "🎙️ Ship It Podcast — PostgreSQL with Andrew Atkinson"
-tags: [Podcasts, Open Source]
+tags: [Podcasts, Open Source, PostgreSQL]
 date: 2024-05-21
 comments: true
 ---
@@ -9,8 +9,6 @@ comments: true
 Recently I joined Justin Garrison and Autumn Nash for episode "FROM guests SELECT Andrew" of [Ship It](https://changelog.com/shipit), a [Changelog](https://changelog.com) podcast.
 
 We had a great conversation! I made bullet point notes from the episode, and added extra details.
-
-You'll find those notes below, and a link to the episode itself below.
 
 Let's get into it!
 
@@ -51,14 +49,12 @@ Towards the second half, we dove into a variety of different topics.
 - Justin mentioned he maintains [Awesome Tmux](https://github.com/rothgar/awesome-tmux). I’m a daily Tmux user, and learned it from Brian Hogan’s book [tmux2: Productive Mouse-Free Development](https://pragprog.com/titles/bhtmux2/tmux-2/), which I [recently learned has a new version coming soon](https://x.com/bphogan/status/1783939076149621216).
 
 ## Corrections
-- Bluesky was initially built in PostgreSQL, which was mentioned towards the episode end. Apparently since then, the Bluesky team has moved to ScyllaDB and SQLite. Read more: <https://bsky.app/profile/gergely.pragmaticengineer.com/post/3kqsr3tp67d2g>
-
-Let’s connect on Bluesky: <https://bsky.app/profile/andatki.bsky.social>
+- Bluesky was initially built in PostgreSQL, which was mentioned towards the episode end. Apparently since then, the [Bluesky team has moved to ScyllaDB and SQLite](https://bsky.app/profile/andatki.bsky.social).
 
 ## Wrap Up
-Justin and Autumn were great hosts, and I felt very comfortable as a guest and had a fun conversation, connecting on the tech itself, but also as parents in tech!
+Justin and Autumn were great hosts, and I felt very comfortable as a guest and had a fun conversation connecting on tech and also as parents in tech!
 
-Thanks for reading and listening, and please get in touch with any questions or comments.
+Thanks for reading and listening, and get in touch with any questions or comments!
 
 
 ## Listen to the Episode
