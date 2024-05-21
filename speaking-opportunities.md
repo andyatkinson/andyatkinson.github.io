@@ -4,6 +4,11 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## Ship It! (part of Changelog)
+- <cite>2024-05-21</cite>
+- Podcast (audio)
+- [🎙️ FROM guests SELECT Andrew](blog/2024/05/21/shipit-podcast-changelog-andrew-atkinson)
+
 ## Hacking Postgres
 - <cite>2024-04-15</cite>
 - Podcast (audio, video)
