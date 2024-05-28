@@ -21,6 +21,7 @@ title: High Performance PostgreSQL for Rails Book
 
 ## Ratings
 - [Goodreads: 4.78, 9 ratings](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [The StoryGraph](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd) - Be the first to leave a rating or review!
 
 ## Outside USA (English language)
 <details>
