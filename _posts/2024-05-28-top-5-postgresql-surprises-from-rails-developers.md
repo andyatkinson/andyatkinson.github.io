@@ -126,7 +126,7 @@ This helps a ton for databases, where we’re frequently accessing random data!
 
 What is the relevancy of this to PostgreSQL? Well, PostgreSQL can probably be used for more work than you realize, where you might have brought in Redis before.
 
-Besides physical storage getting faster, PostgreSQL versions have increased performance for building indexes (e.g. de-duplication), [query planning optimizations](https://www.citusdata.com/blog/2024/02/08/whats-new-in-postgres-16-query-planner-optimizer/), and parallel query execution.
+Besides physical storage getting faster, PostgreSQL versions have increased performance for building indexes (e.g. de-duplication), [query planning optimizations](https://www.citusdata.com/blog/2024/02/08/whats-new-in-postgres-16-query-planner-optimizer/), and [parallel query execution](https://www.postgresql.org/docs/current/parallel-query.html).
 
 A misconception developers may have is that PostgreSQL is doing disk-level operations all the time, when in fact many operations that write and read data are being performed in memory flushed (slower) to disk.
 
