@@ -69,6 +69,8 @@ Besides the quantity of pages, PostgreSQL shows us whether the buffers were from
 
 Converting the pages into megabytes helps make it a more familiar measurement unit. For example, by accessing 10,000 pages at an 8kb page size, we're accessing 80MB of data. If our disk accessed 10MB/second, that means it would take at least 8 seconds! Modern drives are much faster, but this approach helps to relate pages (or *buffers*) to storage access speed.
 
+Learn more about inspecting pages in ['Rows Removed By Filter', Inspecting Pages, Buffer Cache — Part Two](http://andyatkinson.com/blog/2024/03/05/PostgreSQL-rows-removed-by-filter-part-2]).
+
 ## 3. Ordering Topics
 Developers had questions about different topics related to ordering queries and columns in indexes.
 
