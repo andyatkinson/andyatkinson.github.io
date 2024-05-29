@@ -2,7 +2,7 @@
 layout: post
 title: "Top Five PostgreSQL Surprises from Rails Devs"
 tags: []
-date: 2024-05-29
+date: 2024-05-28
 comments: true
 ---
 At [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024) earlier this year, I presented advanced PostgreSQL topics to Rails programmers, and had some great feedback afterwards!
