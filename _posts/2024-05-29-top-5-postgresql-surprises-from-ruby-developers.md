@@ -7,7 +7,7 @@ comments: true
 ---
 At [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024) earlier this year, I presented advanced PostgreSQL topics to Ruby programmers, and had some great feedback afterwards!
 
-I took notes about feedback items that were new or noteworthy for Ruby programmers.
+I took notes about feedback items that were new or noteworthy for Rails programmers.
 
 Let's cover the items in no particular order.
 
@@ -137,7 +137,7 @@ For SSDs (the NVMe type), we want them to be locally-attached, not network-attac
 We explore less common uses for PostgreSQL in the last chapter "Advanced Uses" of [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/), inspired by [Just Use Postgres](https://www.amazingcto.com/postgres-for-everything/).
 
 ## Wrapping Up
-I hope this list of the Top 5 PostgreSQL Topics from Ruby Developers was interesting and useful for you!
+I hope this list of the Top 5 PostgreSQL Topics from Rails developers was interesting and useful for you!
 
 Remember that if you use PostgreSQL, there are many powerful capabilities you may not be using. There are also lots of ways to inspect the running operations, getting valuable insights you can use to improve performance and scalability.
 
