@@ -7,27 +7,29 @@ comments: true
 ---
 Recently at [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024), I presented some advanced PostgreSQL topics to Ruby programmers, and took note of items from feedback that were new or prompted discussions.
 
-Let's cover those items in this post! Here are the items:
+Let's cover those items as the explanations may benefit others! Here they are in no particular order:
 
 - Covering Indexes
-- Data stored in pages, and viewing how many (buffers) we accessed
-- Topics related to ordering in queries and indexes
-- Why `SELECT *` is not optimal, and how to enumerate all columns by default
-- Using PostgreSQL over others for more types of work
+- How PostgreSQL stores data in pages, and how we can see how many are accessed
+- Topics related to ordered data in queries and indexes
+- Why `SELECT *` is not optimal, and how to enumerate all table columns in queries by default
+- Using PostgreSQL over other databases, for more types of work
 
-Let's dive into the detail for each item.
+Let's dive into the details of each item.
 
 ## Covering Indexes
 
-[Covering indexes](https://www.postgresql.org/docs/current/indexes-index-only-scans.html) are an indexing strategy in PostgreSQL, that brings the data from two or more columns of data from a table, into an index, to support a query. The PostgreSQL describes a covering index as:
+[Covering indexes](https://www.postgresql.org/docs/current/indexes-index-only-scans.html) are an indexing strategy in PostgreSQL, that brings the data from two or more columns of data from a table, into the index to provide a very targeted data source supporting a query. PostgreSQL describes a covering index as:
 
-> an index specifically designed to include the columns needed by a particular type of query that you run frequently.
+> An index specifically designed to include the columns needed by a particular type of query that you run frequently.
 
-[PostgreSQL Multicolumn indexes](https://www.postgresql.org/docs/current/indexes-multicolumn.html), which are indexes that include two or more columns in their definition, can act as a covering index by providing the data needed for a query and achieving an index only scan.
+[PostgreSQL Multicolumn indexes](https://www.postgresql.org/docs/current/indexes-multicolumn.html), which are indexes that include two or more columns in their definition, can act as a covering index by "covering" all the column data requested in queries, enabling an efficient "index only scan."
 
-From PostgreSQL 12, a new type of covering index could be created by using the `INCLUDE` keyword when defining the index. Why might we do that?
+From PostgreSQL 12, we gained another option. A new keyword allows us to create another type of covering index using the `INCLUDE` keyword. Why might we do that?
 
-The idea would be to include columns that aren’t being filtered on, for example they’re not part of `WHERE` clause conditions, but they are included in the SELECT clause portion of your query. Let’s look at an example index. Here is one I showed in the presentation that uses the Rideshare database from the book High Performance PostgreSQL for Rails:
+The idea is to "include" columns that aren’t being filtered on in the query, but are requested in the `SELECT` clause portion. Let’s look at an example index.
+
+Here is the covering index definition I showed in the presentation, supporting a query for the [Rideshare](https://github.com/andyatkinson/rideshare) database, the example app from the book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/):
 
 ```sql
 CREATE INDEX idx_trips_driv_rat_completed_cov_part
@@ -36,13 +38,15 @@ INCLUDE (rating)
 WHERE completed_at IS NOT NULL;
 ```
 
-The query that uses this index "searches" (also commonly called a "filter" operation) on the `driver_id` column, but performs an aggregation (an "average") on the `rating` column. The `rating` column is listed after the `INCLUDE` keyword, and is said to be a "payload" column. Besides being a covering index, looking at the next portion which is the `WHERE` clause portion, this index is said to be a "partial" index.
+The query that uses this index "searches" (also commonly called a "filter" operation) on the `driver_id` column, but performs an aggregation (an "average") on the `rating` column.
 
-A partial index covers a portion of the rows, being scoped to those rows with a `WHERE` clause that's in the index (not the query).
+The `rating` column is listed after the `INCLUDE` keyword, and is said to be a "payload" column. Besides being a covering index, looking at the next portion which is the `WHERE` clause portion, this index is said to be a "partial" index.
 
-Here the index definition is for only the rows with their `completed_at` timestamp set, in other words, "completed" trips.
+[Partial Indexes](https://www.postgresql.org/docs/current/indexes-partial.html) cover a portion of the total rows, using a `WHERE` clause in the index definition to perform the scoping.
 
-There you have it. The index above is said to be a "covering, partial index," and these types of specialized indexes can yield the best possible performance by enabling efficient index only scans.
+Here the index definition applies only to rows with their `completed_at` timestamp set, in other words, the "completed" trips. This definition applies to both write and read operations for this table.
+
+There you have it. The index above is said to be a "covering, partial index," and these types of specialized indexes that combine multiple capabilities, can yield the powerful results that minimize write latency, and greatly reduce reduce read latency with efficient index only scans, creating fast queries!
 
 ## Viewing Pages Accessed
 
