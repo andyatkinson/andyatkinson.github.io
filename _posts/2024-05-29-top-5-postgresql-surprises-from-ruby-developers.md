@@ -2,32 +2,36 @@
 layout: post
 title: "Top Five PostgreSQL Surprises from Rails Devs"
 tags: []
-date: 2024-04-13
+date: 2024-05-29
 comments: true
 ---
-Recently at [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024), I presented some advanced PostgreSQL topics to Ruby programmers, and took note of items from feedback that were new or prompted discussions.
+At [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024) earlier this year, I presented advanced PostgreSQL topics to Ruby programmers, and had some great feedback afterwards!
 
-Let's cover those items as the explanations may benefit others! Here they are in no particular order:
+I took notes about feedback items that were new or noteworthy for Ruby programmers.
 
-- Covering Indexes
-- How PostgreSQL stores data in pages, and how we can see how many are accessed
-- Topics related to ordered data in queries and indexes
-- Why `SELECT *` is not optimal, and how to enumerate all table columns in queries by default
-- Using PostgreSQL over other databases, for more types of work
+Let's cover the items in no particular order.
+
+1. Covering Indexes
+1. How PostgreSQL stores data in pages, and how we can see how many are accessed
+1. Topics related to ordered data in queries and indexes
+1. Why `SELECT *` is not optimal, and how to enumerate all table columns in queries by default
+1. Using PostgreSQL over other databases, for more types of work
 
 Let's dive into the details of each item.
 
-## Covering Indexes
+## 1. Covering Indexes
 
-[Covering indexes](https://www.postgresql.org/docs/current/indexes-index-only-scans.html) are an indexing strategy in PostgreSQL, that brings the data from two or more columns of data from a table, into the index to provide a very targeted data source supporting a query. PostgreSQL describes a covering index as:
+[Covering indexes](https://www.postgresql.org/docs/current/indexes-index-only-scans.html) are an index design tactic to bring in the data from two or more columns into the index. This type of index provides a targeted data source that supports a query. PostgreSQL describes a covering index as:
 
 > An index specifically designed to include the columns needed by a particular type of query that you run frequently.
 
-[PostgreSQL Multicolumn indexes](https://www.postgresql.org/docs/current/indexes-multicolumn.html), which are indexes that include two or more columns in their definition, can act as a covering index by "covering" all the column data requested in queries, enabling an efficient "index only scan."
+[PostgreSQL Multicolumn indexes](https://www.postgresql.org/docs/current/indexes-multicolumn.html), which are indexes that include two or more columns in their definition, can act as a covering index by "covering" all the column data needed for one or more queries, ideally achieving an efficient "index only scan."
 
-From PostgreSQL 12, we gained another option. A new keyword allows us to create another type of covering index using the `INCLUDE` keyword. Why might we do that?
+When the planner can choose an index only scan, all the data needed for the query is supplied by the index itself.
 
-The idea is to "include" columns that aren’t being filtered on in the query, but are requested in the `SELECT` clause portion. Let’s look at an example index.
+From PostgreSQL 12, we gained another covering index option. The keyword `INCLUDE` was added. How do we use it?
+
+The idea is to specify columns with `INCLUDE` that aren’t being filtered on, but are requested in the `SELECT` clause portion. Let’s look at an example.
 
 Here is the covering index definition I showed in the presentation, supporting a query for the [Rideshare](https://github.com/andyatkinson/rideshare) database, the example app from the book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/):
 
@@ -38,37 +42,48 @@ INCLUDE (rating)
 WHERE completed_at IS NOT NULL;
 ```
 
-The query that uses this index "searches" (also commonly called a "filter" operation) on the `driver_id` column, but performs an aggregation (an "average") on the `rating` column.
+The query that uses this index *filters* on the `driver_id` column, but performs an aggregation (an `AVG()`) on the `rating` column.
 
-The `rating` column is listed after the `INCLUDE` keyword, and is said to be a "payload" column. Besides being a covering index, looking at the next portion which is the `WHERE` clause portion, this index is said to be a "partial" index.
+The `rating` column is listed after the `INCLUDE` keyword, making it a "payload" column.
 
-[Partial Indexes](https://www.postgresql.org/docs/current/indexes-partial.html) cover a portion of the total rows, using a `WHERE` clause in the index definition to perform the scoping.
+In addition to being a covering index, this index uses a `WHERE` clause, limiting the included rows, making it a [partial index](https://www.postgresql.org/docs/current/indexes-partial.html).
 
-Here the index definition applies only to rows with their `completed_at` timestamp set, in other words, the "completed" trips. This definition applies to both write and read operations for this table.
+Here the index selects only rows with their `completed_at` timestamp set, in other words, the "completed" trips. Besides benefitting read performance, using a partial index also lessens the write latency by lessening the rows needing to be maintained in the index.
 
-There you have it. The index above is said to be a "covering, partial index," and these types of specialized indexes that combine multiple capabilities, can yield the powerful results that minimize write latency, and greatly reduce reduce read latency with efficient index only scans, creating fast queries!
+There you have it. The index above is a "covering, partial index," and these types of specialized indexes combine multiple indexing tactics, yielding powerful results that minimize write latency and greatly reduce read latency with efficient index scans and index only scans.
 
-## Viewing Pages Accessed
+## 2. Viewing Pages Accessed
+Pages (or *buffers*) are storage concepts that most web application developers don’t tend to know about, as they are more of an implementation detail of how PostgreSQL stores table and index data. However, it’s beneficial to understand pages because we can get insights into query performance by studying the number of pages accessed.
 
-Pages or buffers are storage concepts that most web application developers don’t tend to know about, as they are more of an implementation detail of how PostgreSQL stores table and index data. However, it’s useful to know this when working on performance optimization, because we can get insights into the amount of data we’re accessing, and whether it’s coming from internal caches or not.
+Whether PostgreSQL is accessing one row or all rows stored in a page, when fetching the data needed for a query, PostgreSQL loads full pages. For a given query, we can see exactly how many pages are loaded.
 
-Whether PostgreSQL is accessing one row or all rows stored in a page, when fetching the data needed for a query, PostgreSQL loads pages. We can see exactly how many were loaded. Why do we care? We care because loading pages incurs I/O latency, which lengthens the execution time of our queries. The less I/O latency our queries have, the faster they execute. At times it can be beguiling where latency is coming from in a query, so we can use observability information to look at the number of pages that are loaded.
+Why do we care? We care because loading pages incurs I/O latency, which lengthens the execution time of our queries. The less I/O latency our queries have, the faster they execute. We can use PostgreSQL observability tools to look at the number of pages being loaded.
 
-To do that, we’ll use the `BUFFERS`. We add it as an argument to `EXPLAIN`. The full command is one we’d run from a SQL client like psql, as `EXPLAIN (ANALYZE, BUFFERS) <query>` replacing "\<query\>" with the SQL query.
+How do we do that? To do that, we’ll use the `BUFFERS` parameter with `EXPLAIN`.
 
-PostgreSQL will show us whether the buffers accessed were in the buffer cache or not. The buffers are 8kb in size by default. PostgreSQL will show us whether 1 or 1000 buffers were accessed, and we can multiply that figure by the page size, to determine how much data we’re moving, perhaps converting it into megabytes to make it a more tangible quantity. This "movement" from loading pages has a latency penalty, which lengthens the execution time of our query.
+The full command is one we’d run from a SQL client like psql, as `EXPLAIN (ANALYZE, BUFFERS) <query>` replacing "\<query\>" with the SQL query.
 
-## Ordering Topics
+Besides the quantity of pages, PostgreSQL shows us whether the buffers were from the buffer cache or not. The buffers are 8kb in size by default. PostgreSQL will show us whether 1 or 1000 buffers were accessed, and we can multiply that figure by the page size to determine how much data is being accessed.
 
-Developers had some questions about ordering, in part because in the presentation I describe a happy accident feeding the planner an explicitly ordered query, and experiencing a plan change that was much more efficient. There are more topics under the umbrella of ordering though. Why do we care? We care because databases heavily leverage ordering concepts when data is accessed, stored, and when queries are planned, among other reasons. As developers, we can benefit from providing ordered data in queries and indexes. 
-An audience member pointed out that they’d seen benefits in ordering their indexes. Indeed, when we add columns to a B-Tree index, the column will be ordered ascending by default. What if our query wants that column in descending (`DESC`) order? We may want to set the column orderiing in the index definition. Here’s an example:
+Converting the pages into megabytes helps make it a more familiar measurement unit. For example, by accessing 10,000 pages at an 8kb page size, we're accessing 80MB of data. If our disk accessed 10MB/second, that means it would take at least 8 seconds! Modern drives are much faster, but this approach helps to relate pages (or *buffers*) to storage access speed.
+
+## 3. Ordering Topics
+Developers had questions about different topics related to ordering queries and columns in indexes.
+
+Databases work well with ordered data when its accessed, stored, and for query planning. As developers, we can benefit by providing ordered data in queries and indexes.
+
+An audience member pointed out ordering columns in their indexes. Indeed, when we add columns to a B-Tree index, columns are ordered ascending by default. What if the query wants that column in descending (`DESC`) order?
+
+We may want to set the column order in descending order in the index definition. Here’s an example:
 
 ```sql
 CREATE INDEX ON trips (completed_at DESC);
 ```
 
-This index orders the `completed_at` column in descending order, which would better support a query that can use the pre-ordered index items to support the ORDER BY operation, especially when they’re already sorted in the desired direction (otherwise a "reverse sort" happens, which is ok).
-Another concept wasn’t related to index design or query design, but more of a "convenience method" for developers. When writing SQL queries and using a ORDER BY clause and the column name, we can use "position arguments" to refer to a column in the `SELECT` clause based on the position (starting from 1) where it is. 
+Another concept related to ordering unrelated to index design or query design is using positional arguments.
+
+When writing SQL queries and using `ORDER BY`, we can use positional arguments to refer to a column in the `SELECT` clause based on the position starting from 1, where the column is.
+
 For example:
 
 ```sql
@@ -77,45 +92,55 @@ FROM users
 ORDER BY 2;
 ```
 
-This query orders the results by `first_name`, which appeared in the "2" position in the `SELECT` clause.
+Here the query orders results by `first_name`, which appeared in the "2" position in the `SELECT` clause.
 
-## Enumerating Columns vs. `SELECT *`
+## 4. Enumerating Columns vs. SELECT *
+Active Record added a setting that [enumerates all columns](https://www.bigbinary.com/blog/rails-7-adds-setting-for-enumerating-columns-in-select-statements) in newer versions of Ruby on Rails.
 
-Active Record added a setting to enumerate all columns in a newer version of Ruby on Rails. Why do we care about this? Well, first we need to understand the problem with not specifying columns in our results, and relying on `SELECT *`, which is the default in Active Record.
-Queries are generated with `SELECT *` meaning no explicit list of columns is sent to the query planner, meaning all columns need to be accessed.
+Why do we care about this? Well, having a narrow and explicit set of columns is important. Why?
 
-If we wished to provide an explicit list of columns, we could do that in Active Record using the `.select()` or `pluck()` methods, with arguments of each column name as a symbol.
+When relying on `SELECT *`, which is the default in Active Record, meaning all columns are accessed.
 
-For example, `select(:id, :name)` would generate a SQL query `SELECT` clause like `SELECT id, name`.
+If we wished to provide an explicit list of columns, we can do that in Active Record using the `.select()` or `pluck()` methods with explicit column names.
 
-The reason we care about this is the aforementioned possibility of an "index only scan." An index only scan is the most efficient and fastest execution type of scan. To achieve that, our query must specify a set of columns that exactly match the set of columns in the multicolumn or covering index.
-Besides that reason, when we rely on `SELECT *`, the columns could be anything from tiny 2-byte `SMALLINT` columns up to 1GB of data stored in a JSONB column as "large texts" (or a text column). PostgreSQL allows us to do this. What is the cost of this?
+For example, `select(:id, :name)` would generate a SQL `SELECT` clause like `SELECT id, name`.
 
-The cost of this is we’re again pulling a lot of data, paying an I/O latency cost for those columns. If they aren’t needed by the client, then we’re unnecessarily slowing down our queries.
-How does this new setting help us? While not directly helping, it adds visibility into this problem or opportunity, depending on how you see it. By enumerating all columns by default, we’ll no longer see queries running "SELECT *", but the full list of columns being accessed, possibly unnecessarily. With that information, the developer can more easily spot opportunities where they can add "select()" and "pluck()" to scope their queries down.
+The reason we care about this is it helps increase the chances for an efficient "index only scan."
 
-## Using PostgreSQL For More Types of Work
+To achieve that, our query must specify a set of columns that exactly match the set of columns in a multicolumn or covering index.
 
-At lunch we discussed why Redis was always the "default" choice in Rails over the last decade for things like cache stores, session stores, or background jobs with Redis (also used as a message queue). What’s changed a lot in the last decade is that random access on SSDs has become far faster compared with the spinning ("rotational media") hard disk drives from 10 and more years ago. SSDs are now cost effective and with big capacity, offering much faster I/O.
+Besides the possibility of index only scans, when we rely on `SELECT *`, the columns could be anything from tiny 2-byte `SMALLINT` columns up to 1GB of data stored in a JSONB column as "large texts" (or a text column).
+
+The problem there is we're again pulling a lot of data, adding I/O latency to our query.
+
+When columns aren't needed by the client, then we’re unnecessarily slowing down our queries.
+
+This setting increases our chances of spotting unnecessary columns, where we can use `select()` and `pluck()` to reduce the columns being accessed.
+
+## 5. Using PostgreSQL For More Types of Work
+At lunch we discussed why Redis was always the "default" choice in Rails over the last decade for things like cache stores, session stores, or background jobs (Sidekiq).
+
+What’s changed a lot in the last decade is that random access on SSDs has become far faster compared with the spinning ("rotational media") hard disk drives from 10 years ago. SSDs are now cost effective and with big capacities.
 
 This helps a ton for databases, where we’re frequently accessing random data!
 
-What is the relevancy of this to PostgreSQL? Well, PostgreSQL can probably be used for that work that you might have been using Redis for, without a problem.
+What is the relevancy of this to PostgreSQL? Well, PostgreSQL can probably be used for more work than you realize, where you might have brought in Redis before.
 
-In part due to the physical storage being faster, and in part because the internals of PostgreSQL itself have gotten faster, whether it be for building indexes, query planning, or query execution.
+Besides physical storage getting faster, PostgreSQL versions have increased performance for building indexes (e.g. de-duplication), [query planning optimizations](https://www.citusdata.com/blog/2024/02/08/whats-new-in-postgres-16-query-planner-optimizer/), and parallel query execution.
 
-A misconception developers may have is that PostgreSQL is doing disk-level operations all the time, when in fact most of the time operations that write and read data are being performed in various cache layers then flushed to durable storage. That being said, when we’re optimizing writes or reads, we may exploit different mechanisms to get the best performance.
+A misconception developers may have is that PostgreSQL is doing disk-level operations all the time, when in fact many operations that write and read data are being performed in memory flushed (slower) to disk.
 
-For SSDs (the NVMe type), we want them to be locally-attached, not network-attached, to avoid network latency affecting our write and read operations. With locally attached NVMe SSD drives on modern hardware, PostgreSQL is a good choice for what you may have used Redis for before, like a general purpose cache store, small transient job data, message queue data, session stores, etc. We explore what that could look like in the last chapter "Advanced Uses" of High Performance PostgreSQL for Rails.
-While PostgreSQL transactions and the MVCC mechanism (outside the scope of this section) are designed for concurrency and durability, which means they do have a latency penalty, the transactional guarantees we gain, the avoidance of possibly complex and error prone synchronization, and the ability to inspect and debug using SQL and common PostgreSQL observability tools, tip the scales towards [Just Using Postgres](https://www.amazingcto.com/postgres-for-everything/).
+That being said, when we’re optimizing writes or reads, we may exploit different mechanisms to get the best performance.
 
+For SSDs (the NVMe type), we want them to be locally-attached, not network-attached, to avoid network latency affecting our write and read operations. With locally attached NVMe SSD drives on modern hardware, PostgreSQL is a good choice for what you may have used Redis for before, like a general purpose cache store, small transient job data, message queue data, session stores, etc.
+
+We explore less common uses for PostgreSQL in the last chapter "Advanced Uses" of [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/), inspired by [Just Use Postgres](https://www.amazingcto.com/postgres-for-everything/).
 
 ## Wrapping Up
+I hope this list of the Top 5 PostgreSQL Topics from Ruby Developers was interesting and useful for you!
 
-I hope this list of the Top 5 PostgreSQL Topics from Ruby Developers was interesting.
-
-Remember that if you use PostgreSQL, there are many powerful capabilities built-in that you may not know about or be using.
-
-I hope you learned something here that you can put into practice for your applications and databases.
+Remember that if you use PostgreSQL, there are many powerful capabilities you may not be using. There are also lots of ways to inspect the running operations, getting valuable insights you can use to improve performance and scalability.
 
 If these topics interest you and you’d like to learn more, please consider buying my book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
+
+Thanks for reading!
