@@ -1,21 +1,23 @@
 ---
 layout: post
-title: "Top Five PostgreSQL Surprises from Rails Devs"
+title: "Top 5 PostgreSQL Surprises from Rails Devs"
 tags: []
 date: 2024-05-28
 comments: true
 ---
-At [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024) earlier this year, I presented advanced PostgreSQL topics to Rails programmers, and had some great feedback afterwards!
+At [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024) earlier this year, I presented a series of advanced PostgreSQL topics to Rails programmers that don’t often work with it deeply, and had great feedback about surprising and interesting things to them afterwards!
 
-I took notes about feedback items that were new or noteworthy for Rails programmers.
+I jotted down each item, as I think this more fresh perspective can be helpful and interesting to Postgres “insiders.”
 
 Let's cover the items in no particular order.
 
-1. Covering Indexes
-1. How PostgreSQL stores data in pages, and how we can see how many are accessed
+## Top 5 PostgreSQL Surprises
+
+1. What Covering Indexes are and how to use them
+1. PostgreSQL data storage in pages, and the relationship to query performance
 1. Topics related to ordered data in queries and indexes
 1. Why `SELECT *` is not optimal, and how to enumerate all table columns in queries by default
-1. Using PostgreSQL over other databases, for more types of work
+1. Using PostgreSQL in place of other databases for more types of work
 
 Let's dive into the details of each item.
 
