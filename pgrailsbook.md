@@ -23,6 +23,10 @@ title: High Performance PostgreSQL for Rails Book
 - [Goodreads: 4.78, 9 ratings](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd) - Be the first to leave a rating or review!
 
+
+![Andrew Atkinson RailsConf 2024](/assets/images/pages/andrew-pgrailsbook-railsconf.jpeg)
+<small>Andrew Atkinson pre-workshop office hours at <a href="/blog/2024/05/17/railsconf-conference-2024-detroit">RailsConf 2024</a>.</small>
+
 ## Outside USA (English language)
 <details>
 <summary>International sellers</summary>
@@ -86,3 +90,20 @@ title: High Performance PostgreSQL for Rails Book
 - March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
 - April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
 - May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
+- June 11, 2024 - [Posette - 2024 Conference](https://www.citusdata.com/posette/speakers/andrew-atkinson/) - SaaS on Rails on PostgreSQL
+
+## Timeline
+
+- 2024 Apr: [Posette 2024](https://www.citusdata.com/posette/speakers/andrew-atkinson/)
+- 2024 Apr: [RailsConf 2024](http://andyatkinson.com/blog/2024/05/17/railsconf-conference-2024-detroit)
+- 2024 Apr: PGDay Chicago
+- 2024 Mar: [Sin City Ruby](http://andyatkinson.com/blog/2024/03/25/sin-city-ruby-2024)
+- 2023 Dec: Beta content complete
+- 2023 Sep: Beta Launch!
+- 2023 Aug: [SFPUG Partitioning Presentation](http://andyatkinson.com/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation)
+- 2023 Jun: Technical Review (first half) edits completed.
+- 2023 Spring: Publication Review completed. Technical Review (first half) started.
+- 2023 Winter: First Draft completed. [PGDay Chicago 2023](https://andyatkinson.com/blog/2023/05/24/pgday-chicago).
+- 2022: Signed Book Deal with Pragmatic Programmers
+- 2022: Presented at [RailsConf 2022](http://andyatkinson.com/blog/2022/05/23/railsconf-2022)
+- 2021: Presented at [PGConf NYC 2021](https://andyatkinson.com/blog/2021/12/06/pgconf-nyc-2021)
