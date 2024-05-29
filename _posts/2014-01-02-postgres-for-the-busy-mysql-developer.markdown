@@ -8,15 +8,30 @@ tags: [MySQL, PostgreSQL, Productivity, Databases]
 
 For a new project I'll be using PostgreSQL. I have more experience with MySQL so I wanted to quickly learn PostgreSQL and port over some of my skills.
 
-In this post I'll be sharing what I learned! Statements should be run using the psql command line client.
+First I reviewed some of the equivalent commands.
+
+## MySQL to PostgreSQL Resources
+
+* [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
+* [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
+* [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
+* [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
+
+This post will cover:
+
+- Working with users in PostgreSQL
+- Working with CSV files
+- Running queries from the command line
+
+In this post, I'll share what I learned!
 
 ## Roles
 
-Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` (described users) in psql. These are "meta-commands."
+Users in PostgreSQL are called "roles". To "describe" all the "users" type `\du` (describe users) in psql. These are "meta-commands," and they start with a backslash (it tilts backwards) not a forward slash. 😊
 
 Roles have Privileges, which give them the ability to perform various operations.
 
-Type `\list` (or `\l`) to see all databases and `\c <database-name>` to connect to a database (replacing <database-name> with your database name).
+Type `\list` (or `\l`) to see all databases and `\c database-name` to connect to a database (replacing "database-name" with your database name).
 
 The `\dt` meta-command describes all tables, and `\d` with a table name argument, describes a specific table.
 
@@ -34,33 +49,34 @@ CREATE DATABASE company_stuff;
 CREATE TABLE customers (
     id BIGSERIAL NOT NULL PRIMARY KEY,
     email TEXT,
-    full_name TEXT);
+    full_name TEXT
+);
 ```
 
-Type `\d customers` to "describe" the table you just created.
+Type `\d customers` to "describe" the customers table you just created.
 
 Using the same CSV file from an earlier article (or create a couple sample rows like below), load it into PostgreSQL using the COPY command.
 
-The file should look like this. Create it in your editor (`vim /tmp/customers.txt`) using an absolute path, if you don't already have the file in this location.
+Create it in your editor (`vim /tmp/customers.csv`) using an absolute path, if you don't already have the file in this location.
 
-It only needs a couple of rows for demonstration purposes.
+The file has no header row and a couple of data rows for demonstration purposes.
 
-```bash
-% cat customers.txt
+```sh
+cat customers.csv
+
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 ```
 
-With the file in place, load it using the Copy command into the table you've just created.
+With the file in place, load it using the COPY command into the users table you've just created.
 
 ```sql
-COPY customers(email, full_name)
-FROM '/tmp/customers.txt'
+COPY customers (email, full_name)
+FROM '/tmp/customers.csv'
 DELIMITER ',' CSV;
 ```
 
-If it was successful, you'll see `COPY 2` as output.
-
+If the rows loaded successfully, you'll see `COPY 2` as output.
 
 View the rows in the customers table.
 
@@ -75,7 +91,11 @@ SELECT * FROM customers;
 Insert another record and then dump all the records out again as a new CSV file.
 
 ```sql
-INSERT INTO customers (email, full_name) VALUES ('andy@example.com', 'Andrew Atkinson');
+INSERT INTO customers (email, full_name)
+VALUES (
+  'andy@example.com',
+  'Andrew Atkinson'
+);
 
 COPY customers(email, full_name)
 TO '/tmp/more_customers.csv'
@@ -84,32 +104,30 @@ WITH DELIMITER ',';
 
 Verify the output of the CSV file.
 
-```bash
-~ $ cat /tmp/more_customers.csv
+```sh
+cat /tmp/more_customers.csv
+
 bob@example.com,Bob Johnson
 jane@example.com,Jane Doe
 andy@example.com,Andrew Atkinson
 ```
 
-The Copy command can be used for loading and dumping data.
+We can follow the basics shown here with the COPY command to efficiently load and dump data.
 
 ## Running Queries
 
-Running a query from the command line and combining the output with `grep` is powerful.
+Running a query from the command line allows us to script operations.
 
-Here is quick search in the "customers" database for columns named like "email":
+Here is quick search of the "customers" table content for text that matches "email":
 
-``` bash
-psql -U andy -d company_stuff -c "\d customers" | grep email
+```sh
+psql -U andy -d company_stuff \
+  -c "\d customers" | grep email
 ```
 
-This can be used to quickly check a particular database, whether a table has a particular column.
+This is a quick way to check whether the table has a column named "email."
+
+Running ad hoc queries and commands is useful for scripting operations.
 
 That's it for now!
 
-## Mysql to PostgreSQL Resources
-
-* [Useful guide on equivalent commands in postgres from mysql](http://granjow.net/postgresql.html)
-* [PostgreSQL quick start for people who know MySQL](http://clarkdave.net/2012/08/postgres-quick-start-for-people-who-know-mysql/)
-* [PostgreSQL for MySQL users](http://www.coderholic.com/postgresql-for-mysql-users/)
-* [How To Use Roles and Manage Grant Permissions in PostgreSQL on a VPS](https://www.digitalocean.com/community/articles/how-to-use-roles-and-manage-grant-permissions-in-postgresql-on-a-vps--2)
