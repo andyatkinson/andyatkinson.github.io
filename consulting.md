@@ -50,7 +50,7 @@ Schedule a 30-minute call at [calendly.com/pgrailsbook](https://calendly.com/pgr
 I'm looking forward to meeting you and working together.
 
 <!-- Calendly inline widget begin -->
-<div class="calendly-inline-widget" data-url="https://calendly.com/pgrailsbook/30min?hide_gdpr_banner=1" style="min-width:350px;height:700px;"></div>
+<div class="calendly-inline-widget" data-url="https://calendly.com/andatki/30min?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
 <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <!-- Calendly inline widget end -->
 
