@@ -58,7 +58,7 @@ I'm offering sessions at $300/session, with the first being paid in advance. A m
 
 For payment information, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
 
-I also offer [consulting](/consulting) where coaching is included, but at a higher cost as I'm taking on a great scope of work, and performing more work myself on your behalf.
+I also offer [consulting](/consulting) where coaching is included.
 
 
 ## Recommendations 🤝
