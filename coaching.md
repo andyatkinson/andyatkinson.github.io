@@ -24,9 +24,9 @@ Sometimes we'll solve issues within a single session, and for other issues you m
 
 ## Example Topics from Past Sessions
 
-Clients often are interested in improved performance and reliability. They often already have an issue when they get in touch.
+Clients often are interested in improved performance and reliability, and might have specific issues in hand when they get in touch.
 
-With that issue, we explore the topics below.
+I also like helping clients build their knowledge and skills gradually. We could explore any of the items below.
 
 - Learning to collect and read query execution plans
 - Designing supportive and helpful indexes for your queries
