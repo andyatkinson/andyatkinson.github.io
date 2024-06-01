@@ -24,11 +24,11 @@ Sometimes we'll solve issues within a single session, and for other issues you m
 
 ## Example Topics from Past Sessions
 
-Clients often are interested in improved performance and reliability, and might have specific issues in hand when they get in touch.
+Clients are usually interested in improving performance and reliability, and might have a current problematic query or set of issues.
 
-I also like helping clients build their knowledge and skills gradually. We could explore any of the items below.
+I also like helping clients build their knowledge and skills gradually. Some example topics we might work on are:
 
-- Learning to collect and read query execution plans
+- Collecting and interpreting query execution plans
 - Designing supportive and helpful indexes for your queries
 - PostgreSQL-specific observability, why and how
 - Improving DevOps practices for database changes
