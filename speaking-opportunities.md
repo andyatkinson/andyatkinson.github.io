@@ -4,10 +4,20 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## IndieRails
+- <cite>2024-06-01</cite>
+- Podcast (audio)
+- [🎙️ Andrew Atkinson - The Postgres Specialist](https://www.indierails.com/35)
+
 ## Ship It! (part of Changelog)
 - <cite>2024-05-21</cite>
 - Podcast (audio)
 - [🎙️ FROM guests SELECT Andrew](blog/2024/05/21/shipit-podcast-changelog-andrew-atkinson)
+
+## Ruby For All
+- <cite>2024-05-02</cite>
+- Podcast (audio)
+- [🎙️ RailsConf 2024 Workshop Spotlight — Build High Performance Active Record Apps with Andy Atkinson](https://www.rubyforall.com/s2/67)
 
 ## Hacking Postgres
 - <cite>2024-04-15</cite>
