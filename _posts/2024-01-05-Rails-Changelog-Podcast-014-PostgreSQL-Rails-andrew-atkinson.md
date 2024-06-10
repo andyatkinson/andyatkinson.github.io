@@ -20,7 +20,7 @@ The episode is: "014: PostgreSQL for Rails Developers with Andrew Atkinson."
 <section>
 <div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
 <h2>Podcast</h2>
-<p>👉 <a href="https://www.railschangelog.com/14">Listen to the episode</a></p>
+<p>🎧 <a href="https://www.railschangelog.com/14">014: PostgreSQL for Rails Developers with Andrew Atkinson</a></p>
 </div>
 </section>
 

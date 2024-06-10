@@ -4,7 +4,7 @@ permalink: /about
 title: About
 ---
 
-### Summary
+## Summary
 
 Andrew (Andy) is a Software Engineer who specializes in building high performance web applications using PostgreSQL and Ruby on Rails.
 
@@ -16,12 +16,12 @@ The podcasts include been a guest on Ruby Rogues, Remote Ruby, The Ruby on Rails
 
 When not at a computer, Andrew spends time with his family and friends in the Minneapolis, MN, USA area, or watching the Timberwolves (NBA)! 🏀
 
-### Education
+## Education
 
 Andrew earned two Bachelors (B.A.Sc. and B.A.) degrees from the [University of Minnesota](http://umn.edu), which included one semester in Toledo, Spain at the Fundación José Ortega y Gasset.
 
 
-### Recommendations
+## Recommendations
 
 > I cannot recommend Andy highly enough for an engineering position at your company. His communication skills, candor, and thoughtfulness will bring tremendous value to any company that he joins.
 <cite>- Director of Product Management</cite>
