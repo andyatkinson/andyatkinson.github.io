@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "🎙️ IndieRails Podcast — Andrew Atkinson - The Postgres Specialist"
-tags: [Podcasts]
+tags: [Podcasts, PostgreSQL]
 date: 2024-06-10
 comments: true
 ---

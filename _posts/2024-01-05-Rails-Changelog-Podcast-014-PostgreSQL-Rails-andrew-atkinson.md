@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "The Rails Changelog — #014: PostgreSQL for Rails Developers with Andrew Atkinson 🎙️"
-tags: [Podcast, Ruby on Rails, Open Source, PostgreSQL]
+tags: [Podcasts, Ruby on Rails, Open Source, PostgreSQL]
 date: 2024-01-05
 comments: true
 ---

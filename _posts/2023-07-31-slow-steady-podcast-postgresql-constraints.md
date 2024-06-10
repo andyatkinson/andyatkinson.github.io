@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Slow & Steady &mdash; Database Constraints with Andrew Atkinson 🎙️"
-tags: [PostgreSQL, Rails, Ruby, Podcast]
+tags: [PostgreSQL, Rails, Ruby, Podcasts]
 date: 2023-07-31
 comments: true
 ---

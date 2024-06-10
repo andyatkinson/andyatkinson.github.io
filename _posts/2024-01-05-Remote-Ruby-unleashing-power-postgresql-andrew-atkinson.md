@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Remote Ruby — Unleashing the Power of Postgres with Andrew Atkinson 🎙️"
-tags: [Podcast, Ruby on Rails, Open Source, PostgreSQL]
+tags: [Podcasts, Ruby on Rails, Open Source, PostgreSQL]
 date: 2024-01-05
 comments: true
 ---
@@ -16,7 +16,7 @@ Some of the topics we discussed were my process of writing the book [High Perfor
 <section>
 <div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
 <h2>Podcast</h2>
-<p>👉 <a href="https://www.remoteruby.com/2260490/14003765-unleashing-the-power-of-postgres-with-andrew-atkinson">Listen to the episode</a></p>
+<p>👉 <a href="https://www.remoteruby.com/2260490/14003765-unleashing-the-power-of-postgres-with-andrew-atkinson">Unleashing the Power of Postgres with Andrew Atkinson</a></p>
 </div>
 </section>
 
@@ -79,7 +79,7 @@ Craig’s episode is called “Decoding Postgres: A Journey Through User-Friendl
 
 How cool to have back-to-back PostgreSQL-themed Remote Ruby episodes!
 
-Check out the episode here 👉  <https://www.remoteruby.com/2260490/14084712-decoding-postgres-a-journey-through-user-friendly-database-experiences-with-craig-kerstiens>
+Check out the episode here 👉 <https://www.remoteruby.com/2260490/14084712-decoding-postgres-a-journey-through-user-friendly-database-experiences-with-craig-kerstiens>
 
 
 ## Wrapping Up

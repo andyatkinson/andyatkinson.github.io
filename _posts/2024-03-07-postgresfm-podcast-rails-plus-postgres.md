@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rails + Postgres Postgres.FM 086 — Extended blog post edition! 🎙️"
-tags: [Ruby on Rails, PostgreSQL, podcast]
+tags: [Ruby on Rails, PostgreSQL, Podcasts]
 date: 2024-03-07
 comments: true
 ---

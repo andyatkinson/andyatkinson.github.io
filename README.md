@@ -24,6 +24,7 @@ Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale
 - For dates on posts, use a date and not a time
 - Bare markdown links are `<>`
 - Using footnotes: make a `[^footnote]` usage where you want it inserted, and a `[^footnote]: Text <link>` at the bottom of the article
+- For Tags, use uppercased and pluralized words, when they're a category like "Podcasts"
 
 #### Theme Bugs and Issues
 

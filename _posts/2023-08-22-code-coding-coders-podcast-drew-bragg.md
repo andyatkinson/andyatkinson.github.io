@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Podcast: Code and the Coding Coders who Code it! Episode 27 Andrew Atkinson 🎙️"
-tags: [Podcast, PostgreSQL, Ruby on Rails, Open Source]
+tags: [Podcasts, PostgreSQL, Ruby on Rails, Open Source]
 date: 2023-08-22
 comments: true
 ---

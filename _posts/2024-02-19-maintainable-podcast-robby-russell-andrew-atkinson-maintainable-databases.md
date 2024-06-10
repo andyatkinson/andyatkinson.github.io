@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Maintainable Podcast — Maintainable…Databases? 🎙️"
-tags: [PostgreSQL, Podcast, Ruby on Rails]
+tags: [PostgreSQL, Podcasts, Ruby on Rails]
 date: 2024-02-19
 comments: true
 ---

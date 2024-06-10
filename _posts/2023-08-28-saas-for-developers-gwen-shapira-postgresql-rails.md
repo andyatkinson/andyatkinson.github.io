@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SaaS for Developers with Gwen Shapira &mdash; Postgres, Performance and Rails with Andrew Atkinson 🎙️"
-tags: [Podcast, Ruby on Rails, Open Source, PostgreSQL]
+tags: [Podcasts, Ruby on Rails, Open Source, PostgreSQL]
 date: 2023-08-28
 comments: true
 ---
