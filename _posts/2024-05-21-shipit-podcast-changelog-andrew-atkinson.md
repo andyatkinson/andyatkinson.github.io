@@ -62,6 +62,6 @@ Thanks for reading and listening, and get in touch with any questions or comment
 <section>
 <div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
 <h2>Podcast</h2>
-<p>👉 <a href="https://changelog.com/shipit/104">Listen to the episode</a></p>
+<p>👉 <a href="https://changelog.com/shipit/104">FROM guests SELECT Andrew</a></p>
 </div>
 </section>
