@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "🎙️ Ship It Podcast — PostgreSQL with Andrew Atkinson"
+title: "🎙️ Ship It! Podcast — PostgreSQL with Andrew Atkinson"
 tags: [Podcasts, Open Source, PostgreSQL]
 date: 2024-05-21
 comments: true
