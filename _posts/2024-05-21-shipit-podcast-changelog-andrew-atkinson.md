@@ -6,11 +6,11 @@ date: 2024-05-21
 comments: true
 ---
 
-Recently I joined Justin Garrison and Autumn Nash for episode "FROM guests SELECT Andrew" of [Ship It](https://changelog.com/shipit), a [Changelog](https://changelog.com) podcast.
+Recently I joined Justin Garrison and Autumn Nash for episode "FROM guests SELECT Andrew" of [Ship It!](https://changelog.com/shipit), a [Changelog](https://changelog.com) podcast.
 
 We had a great conversation! I made bullet point notes from the episode, and added extra details.
 
-Let's get into it!
+Let's get into it.
 
 ## PostgreSQL Community
 - Autumn shared that she met [Henrietta Dombrovskaya](https://postgresql.life/post/henrietta_dombrovskaya/), who is an [author](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient/dp/1484268849), DBA, and who organizes [Chicago PostgreSQL](https://www.meetup.com/chicago-postgresql-user-group/) meetup and the [PgDay Chicago](https://2024.pgdaychicago.org/) conference. This was fun to hear since Henrietta has become a friend. Check out my 2023 coverage of [PgDay Chicago](https://andyatkinson.com/blog/2023/05/24/pgday-chicago).
