@@ -19,6 +19,11 @@ title: Speaking Opportunities
 - Podcast (audio)
 - [🎙️ RailsConf 2024 Workshop Spotlight — Build High Performance Active Record Apps with Andy Atkinson](https://www.rubyforall.com/s2/67)
 
+## Code With Jason
+- <cite>2024-04-20</cite>
+- Podcast (audio)
+- [220 - Sin City Ruby 2024 Recap with Andrew Atkinson](https://www.codewithjason.com/podcast/15018466-220-sin-city-ruby-2024-recap-with-andrew-atkinson/)
+
 ## Hacking Postgres
 - <cite>2024-04-15</cite>
 - Podcast (audio, video)
