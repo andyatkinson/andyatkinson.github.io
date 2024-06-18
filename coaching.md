@@ -1,67 +1,59 @@
 ---
 layout: page
 permalink: /coaching
-title: Postgres Coaching Sessions
+title: PostgreSQL Coaching and Advisory Sessions
 ---
 
 ## Hi 👋
-I’m **Andrew**, and I'd love to help you tune and optimize your 🐘 **PostgreSQL** database operations.
+I’m **Andrew**, and I'd love to help you with your 🐘 **PostgreSQL** database operations.
 
-I'm offering 50 minute coaching sessions where we'll work together on your specific challenges.
+I'm offering 55 minute coaching sessions where we'll work together on any Postgres challenges you're facing.
 
 ## Who are coaching sessions meant for?
-Coaching sessions are meant for smaller tech teams or even solo founders. They're using PostgreSQL and their platform has achieved some success and growth, and they're now facing some challenges.
+Coaching sessions are typically booked by smaller tech teams currently facing issues.
 
-These teams are looking to quickly acquire specialized database operations knowledge, to solve their problems. Clients are usually CTOs, VP Engs, or other hands-on senior engineers, wishing to rapidly grow their knowledge and skills.
+These teams are looking to solve problems, and acquire some skills along the way. Clients are usually CTOs, VP Engs, or other hands-on senior engineers.
 
-I'm providing my knowledge, skills, and past experiences in [PostgreSQL and Ruby on Rails consulting](/consulting), applied to your specific problems.
+I'm providing my knowledge, skills, and past experiences in [PostgreSQL and Ruby on Rails consulting](/consulting) as a service, applied to your specific problems.
 
 ## How will we stay organized?
 
-First we'll discuss the issues you're facing. I'll keep a shared document of notes. Prior to and after the meeting, we'll continue to use the document to ask and answer questions.
+I'll keep a shared document of notes. We'll use the document for async Q&A before and after our meeting.
 
-Sometimes we'll solve issues within a single session, and for other issues you might decide to hire me for multiple sessions to continue working on more demanding issues.
+Sometimes we'll solve issues within a single session, or other times I'll be hired for multiple sessions to keep working on an issue.
 
 ## Example Topics from Past Sessions
 
-Clients are usually interested in improving performance and reliability, and might have a current problematic query or set of issues.
-
-I also like helping clients build their knowledge and skills gradually. Some example topics we might work on are:
-
 - Collecting and interpreting query execution plans
-- Designing supportive and helpful indexes for your queries
-- PostgreSQL-specific observability, why and how
-- Improving DevOps practices for database changes
-- Connecting to instances and leveraging internal PostgreSQL information
-- Tuning parameters for your specific challenges
+- Designing and optimizing indexes
+- Improving PostgreSQL observability
+- Improving Database DevOps practices with cohesive, incremental migrations
+- Tuning parameters for your specific workload
 
 ## Session Logistics
 
-- 50 minute sessions, starting on the hour, Thursdays, between 9AM and 4PM Central Time (UTC−06:00)
-- Client self-schedules using Calendly below
-- Calendly questions will ask for your business contact name, title, email, business name, URL, and mailing address
+- 55 minute sessions, starting on the hour, Thursdays, 10AM - 5PM Central Time (UTC−06:00)
+- Client books any available time below
+- Client provides business name, URL, mailing address, a contact person name, title, and email
 - We'll meet using Google Hangouts
-- Up to 2 people on the client company side can attend, and sessions may be recorded
-- First session must be paid in advance. Subsequent sessions are billed after.
-- Multi-session discounts are available, or start with a single session
+- Up to 2 people on the client company side can attend, additional fee for extra people
+- Sessions must be prepaid.
+- Discount of $100 for agreeing to 4 sessions upfront, and prepaying half
 
-## We'll be most efficient together when...
+## We'll be most efficient working together when...
 
-- You're already using PostgreSQL observability tools like [PgAnalyze](https://pganalyze.com) or [PgHero](https://github.com/ankane/pghero), or need help setting those up
-- You're running PostgreSQL hosted on the Heroku, AWS, Crunchy Bridge, or GCP platforms
-- You can modify PostgreSQL parameters, find and use your `postgresql.log`, or need help learning to do those things
-- If you're not familiar with query stats, reading query plans or designing specialized indexes, we'll work on that!
+- You're using PostgreSQL observability tools like [PgAnalyze](https://pganalyze.com), [PgHero](https://github.com/ankane/pghero), or similar (or are hiring me to help you set those up)
+- You're running PostgreSQL hosted on Heroku, AWS, Crunchy Bridge, GCP, or similar
+- You can modify PostgreSQL parameters and view `postgresql.log` files (or I can help you do that)
 
 ## How much?
 
-I'm offering sessions at $300/session, with the first being paid in advance. A multi-session discount is available when prepaying for 4 sessions.
+Sessions are $300/session and must be prepaid. For payment information, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
 
-For payment information, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
-
-I also offer [consulting](/consulting) where coaching is included.
+If you're looking for a longer and more comprehensive engagement, please see my [consulting](/consulting) page, and consider booking a 30 minute discovery call. Note that for 55 minute coaching sessions, I'm not able to offer a discovery call.
 
 
-## Recommendations 🤝
+## Praise 🤝
 > We hired Andrew to help us better understand the PostgreSQL database operations for our Rails apps. Andrew helped us look at a variety of issues and provided guidance and recommendations.
 <cite>- Kevin, CTO, [Clearscope](https://www.clearscope.io)</cite>
 
@@ -78,12 +70,6 @@ I also offer [consulting](/consulting) where coaching is included.
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Best rails, Postgres and performance consultant you can find. 🚀 <a href="https://t.co/rUwwvxqXfU">https://t.co/rUwwvxqXfU</a></p>&mdash; Shao | 少蒙 (@randomor) <a href="https://twitter.com/randomor/status/1744804349602304005?ref_src=twsrc%5Etfw">January 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Let's Talk
-
-For your first scheduled and pre-paid session, we'd dive straight into the problems you're facing.
-
-If you have questions prior to that, please [contact me](/contact) by email and I will typically respond within a couple of days.
-
-If you're considering a [consulting](/consulting) engagement, I offer a no obligation 30 minute discovery call.
 
 If you're ready to book a coaching session, please reserve a time using the calendar below!
 
