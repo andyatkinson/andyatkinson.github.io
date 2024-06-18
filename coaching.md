@@ -26,11 +26,13 @@ What I bring is my knowledge, skills, and experience from [PostgreSQL and Ruby o
 
 ## Session Logistics
 
-- 55 minutes, Thursdays, 10AM - 5PM US Central Time (UTC−06:00), online (Google Hangouts)
-- Client books on their own, and provides company information: Business name, URL, mailing address, contact person name, title, email
+- 55 minutes per session, bookable on Thursdays, on the hour (or book multiple!) between 10AM - 5PM US Central Time (UTC−06:00), online (Google Hangouts)
+- Client books sessions on their own, and at the time of booking provides needed company information: Business name, URL, mailing address, contact person name, title, email
 - Up to 2 people can attend, recording is fine
 - Sessions are prepaid (See below)
 - Discount of $100 for 4 sessions with half prepaid
+
+The company information flows into a consulting agreement we'll e-sign describing the services, and time tracking and invoicing on my side.
 
 ## We'll be most efficient working together when...
 
