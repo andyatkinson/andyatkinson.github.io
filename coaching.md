@@ -5,24 +5,18 @@ title: PostgreSQL Coaching and Advisory Sessions
 ---
 
 ## Hi 👋
-I’m **Andrew**, and I'd love to help you with your 🐘 **PostgreSQL** database operations.
+I’m **Andrew**, and I'd love to help you solve your 🐘 **PostgreSQL** database performance or operational challenges.
 
-I'm offering 55 minute coaching sessions where we'll work together on any Postgres challenges you're facing.
+I'm offering 55 minute coaching or advisory sessions, where we work together on any Postgres challenges you're facing.
 
 ## Who are coaching sessions meant for?
-Coaching sessions are typically booked by smaller tech teams currently facing issues.
+Coaching sessions are meant for anyone interested, but typically they've been used by smaller tech teams facing Postgres challenges, but without a big budget for more broadly-scoped consulting engagements.
 
-These teams are looking to solve problems, and acquire some skills along the way. Clients are usually CTOs, VP Engs, or other hands-on senior engineers.
+Clients are typically individuals or up to two on the client side, usually the CTOs, VP Engs, or similar senior engineering leaders at the company.
 
-I'm providing my knowledge, skills, and past experiences in [PostgreSQL and Ruby on Rails consulting](/consulting) as a service, applied to your specific problems.
+What I bring is my knowledge, skills, and experience from [PostgreSQL and Ruby on Rails consulting](/consulting) and authoring [High Performance PostgreSQL for Rails](/pgrailsbook), applied to your specific problems.
 
-## How will we stay organized?
-
-I'll keep a shared document of notes. We'll use the document for async Q&A before and after our meeting.
-
-Sometimes we'll solve issues within a single session, or other times I'll be hired for multiple sessions to keep working on an issue.
-
-## Example Topics from Past Sessions
+## Example Topics
 
 - Collecting and interpreting query execution plans
 - Designing and optimizing indexes
@@ -32,13 +26,11 @@ Sometimes we'll solve issues within a single session, or other times I'll be hir
 
 ## Session Logistics
 
-- 55 minute sessions, starting on the hour, Thursdays, 10AM - 5PM Central Time (UTC−06:00)
-- Client books any available time below
-- Client provides business name, URL, mailing address, a contact person name, title, and email
-- We'll meet using Google Hangouts
-- Up to 2 people on the client company side can attend, additional fee for extra people
-- Sessions must be prepaid.
-- Discount of $100 for agreeing to 4 sessions upfront, and prepaying half
+- 55 minutes, Thursdays, 10AM - 5PM US Central Time (UTC−06:00), online (Google Hangouts)
+- Client books on their own, and provides company information: Business name, URL, mailing address, contact person name, title, email
+- Up to 2 people can attend, recording is fine
+- Sessions are prepaid (See below)
+- Discount of $100 for 4 sessions with half prepaid
 
 ## We'll be most efficient working together when...
 
@@ -48,9 +40,9 @@ Sometimes we'll solve issues within a single session, or other times I'll be hir
 
 ## How much?
 
-Sessions are $300/session and must be prepaid. For payment information, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
+$300/session and prepayment is required. For payment options, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
 
-If you're looking for a longer and more comprehensive engagement, please see my [consulting](/consulting) page, and consider booking a 30 minute discovery call. Note that for 55 minute coaching sessions, I'm not able to offer a discovery call.
+For bigger, and more broadly-scoped engagements, please review my [consulting](/consulting) page. For that offering I can offer a 30 minute discovery call where we'll establish mutual fit and scope items. For coaching I'm not able to offer the discovery call.
 
 
 ## Praise 🤝
@@ -64,14 +56,12 @@ If you're looking for a longer and more comprehensive engagement, please see my 
 <cite>- John, Director of Engineering</cite>
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">You chance to hire a Rails and PG expert 😉 <a href="https://t.co/w6fTL3N840">https://t.co/w6fTL3N840</a></p>&mdash; Tobias_Petry.sql (@tobias_petry) <a href="https://twitter.com/tobias_petry/status/1745138817521066481?ref_src=twsrc%5Etfw">January 10, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Highly recommended PostgreSQL and Rails consultant:<a href="https://t.co/D0epf8g3gP">https://t.co/D0epf8g3gP</a></p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1765481120756322313?ref_src=twsrc%5Etfw">March 6, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Best rails, Postgres and performance consultant you can find. 🚀 <a href="https://t.co/rUwwvxqXfU">https://t.co/rUwwvxqXfU</a></p>&mdash; Shao | 少蒙 (@randomor) <a href="https://twitter.com/randomor/status/1744804349602304005?ref_src=twsrc%5Etfw">January 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Let's Talk
 
-If you're ready to book a coaching session, please reserve a time using the calendar below!
+To book, please reserve a time using the calendar below! Thank you!
 
 <!-- Calendly inline widget begin -->
 <div class="calendly-inline-widget" data-url="https://calendly.com/andatki/coaching?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
