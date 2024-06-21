@@ -73,12 +73,12 @@ title: High Performance PostgreSQL for Rails Book
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 - [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
 
-## Upcoming Appearances
-- March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
-- April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
-- May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
-- June 11, 2024 - [Posette - 2024 Conference](https://www.citusdata.com/posette/speakers/andrew-atkinson/) - SaaS on Rails on PostgreSQL
+## Upcoming and Recent Appearances
 - August 1-2, 2024 - [Madison Ruby - 2024 Conference](https://www.madisonruby.com)
+- June 11, 2024 - [Posette - 2024 Conference](https://www.citusdata.com/posette/speakers/andrew-atkinson/) - SaaS on Rails on PostgreSQL
+- May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
+- April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
+- March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
 
 ## Book Events Timeline
 - 2024 Apr: [Posette 2024](https://www.citusdata.com/posette/speakers/andrew-atkinson/)

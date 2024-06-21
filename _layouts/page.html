@@ -14,9 +14,9 @@ layout: default
             {{content}}
         </div>
     </article>
+    {% include promo-box-book.html %}
+
     {% if site.mailchimp_url %}
     {% include newsletter-box.html %}
     {% endif %}
-
-    {% include promo-box-book.html %}
 </main><!-- .site-main -->
