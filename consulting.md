@@ -25,6 +25,9 @@ I love working with teams and providing educational content. I wrote a bestselli
 
 
 ## Recommendations 🤝
+> Working with Andy was super easy and very helpful. I got a deep insight into how Postgres works for the specific problem we were looking at, and what solutions we could implement.
+<cite>Sameer, CTO, [Canopy Analytics](https://www.canopyanalytics.com)</cite>
+
 > I wanted to fill some knowledge gaps on the team around some Postgres topics. Andrew's book was the first thing we reached for but we also brought him in to deliver two sessions of live training on some advanced topics. This gave us the opportunity to ask questions, delve deeper, and ensure everyone understood the material.
 <cite>Jamie, CTO, [Podia](https://www.podia.com)</cite>
 
