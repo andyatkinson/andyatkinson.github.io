@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mastering PostgreSQL for Rails: An Interview with Andy Atkinson"
-tags: [Ruby on Rails, Databases, Books]
+tags: [Ruby on Rails, Databases, Books, PostgreSQL]
 date: 2024-07-01
 comments: true
 ---
