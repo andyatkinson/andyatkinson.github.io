@@ -24,12 +24,14 @@ We’d love for you to share this post or a link to the video in your networks o
 <section>
 <div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
 <h2>Video Interview</h2>
-<p><a href="https://www.youtube.com/watch?v=b7rTr38H8EE">Mastering PostgreSQL for Rails: An Interview with Andy Atkinson</a></p>
+<p><iframe width="560" height="315" src="https://www.youtube.com/embed/b7rTr38H8EE?si=QlrYBws43hR8SxdA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
 </div>
 </section>
 
 P.S. To celebrate the print availability of the book, we’ve got a discount code for 40% off the ebook version. Use code <code>AAPSQLCOMPLETE</code> [at checkout](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) to get the discount.
 
 To read ratings and reviews for the book, please visit [my book page](/pgrailsbook).
+
+Check out Phil's page: <https://philsmy.com/mastering-postgresql-for-rails-an-interview-with-andy-atkinson/>
 
 Thank you!
