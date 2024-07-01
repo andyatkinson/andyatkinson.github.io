@@ -138,10 +138,10 @@ My other offering is Coaching and Advisory sessions, which are low cost, and cou
 
 ## Episode
 
-<!-- Callout box -->
+<!-- callout box -->
 <section>
 <div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
-<h2>Podcast</h2>
+<h2>Episode Link</h2>
 <p>🎧 <a href="https://www.indierails.com/35">Andrew Atkinson - The Postgres Specialist</a></p>
 </div>
 </section>
