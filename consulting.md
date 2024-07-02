@@ -18,10 +18,10 @@ I love working with teams and providing educational content. I wrote a bestselli
 
 ## What will we work on?
 
-📊 We can **improve query performance**, helping avoid unnecessary spending on larger instances<br/>
-💾 Let's optimize the schema design, queries, and indexes, for greater reliability and performance<br/>
-🐘 I'll perform **data migrations** for *primary key conversions* or *partitioned table migrations*, based on a plan we'll review together in advance<br/>
-👨 As a [conference presenter](/speaking-opportunities) and educator, I'm ready to train your team on PostgreSQL and Active Record topics. We can use existing materials or create a custom plan.<br/>
+📊 Identify and improve query performance<br/>
+💾 Optimize schema, query, and index design<br/>
+🐘 Perform data migrations, backfills, or partitioned table migrations<br/>
+👨 Provide 1:1 mentoring for your team, or team-level custom training plans on PostgreSQL, SQL, DB DevOps, or Active Record topics.<br/>
 
 
 ## Recommendations 🤝
