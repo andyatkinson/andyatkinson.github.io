@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Top Five PostgreSQL Surprises from Rails Devs"
-tags: []
+tags: [PostgreSQL, Ruby on Rails]
 date: 2024-05-28
 comments: true
 ---
@@ -140,3 +140,5 @@ Remember that if you use PostgreSQL, a powerful and extensible open source datab
 If these topics interest you and you'd like to learn more, please consider buying my book [High Performance PostgreSQL for Rails](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/).
 
 Thanks for reading!
+
+Also published at [Top Five PostgreSQL Surprises from Rails Developers](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909) on the Pragmatic Programmers blog on Medium.
