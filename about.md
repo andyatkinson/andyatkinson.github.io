@@ -6,15 +6,13 @@ title: About
 
 ## Summary
 
-Andrew (Andy) is a Software Engineer who specializes in building high performance web applications using PostgreSQL and Ruby on Rails.
+Andrew is a Software Engineer and PostgreSQL specialist who enjoys building high performance web applications.
 
-Andrew wrote a book [High Performance PostgreSQL for Rails](https://pgrailsbook.com), published by Pragmatic Programmers in 2024.
+Andrew wrote [High Performance PostgreSQL for Rails](/pgrailsbook), a bestselling book published by [Pragmatic Programmers](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) in 2024.
 
-Andrew has [spoken at conferences and on podcasts](/speaking-opportunities). The conferences include PGDay Chicago, PGConf NYC, RailsConf, and RubyConf Argentina.
+Andrew has [spoken at conferences](/speaking-opportunities) like PGDay Chicago, PGConf NYC, RailsConf, and Sin City Ruby, and been a guest on podcasts like Ship It!, Ruby Rogues, Remote Ruby, The Ruby on Rails podcast, Rails Changelog, [Slow & Steady](https://www.slowandsteadypodcast.com), [Code With Jason](https://www.codewithjason.com), [Ruby for All](https://www.rubyforall.com), and the [Rubber Duck Dev Show](https://www.rubberduckdevshow.com).
 
-The podcasts include been a guest on Ruby Rogues, Remote Ruby, The Ruby on Rails podcast, Rails Changelog, [Slow & Steady](https://www.slowandsteadypodcast.com), [Code With Jason](https://www.codewithjason.com), [Ruby for All](https://www.rubyforall.com), [Rubber Duck Dev Show](https://www.rubberduckdevshow.com), and more!
-
-When not at a computer, Andrew spends time with his family and friends in the Minneapolis, MN, USA area, or watching the Timberwolves (NBA)! 🏀
+When not at a computer, Andrew spends time with his family and friends in Minneapolis, MN, or watching Timberwolves NBA basketball! 🏀
 
 ## Education
 
