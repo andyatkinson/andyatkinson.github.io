@@ -5,16 +5,16 @@ title: PostgreSQL Coaching and Advisory Sessions
 ---
 
 ## Hi 👋
-I’m **Andrew**, and I'd love to help you solve your 🐘 **PostgreSQL** database performance or operational challenges.
+I’m **Andrew**, and I'd love to help you solve your 🐘 **PostgreSQL** database challenges.
 
-I'm offering 55 minute coaching or advisory sessions, where we work together on any Postgres challenges you're facing.
+I'm offering 55 minute sessions for coaching or advice, where we'll work together.
 
 ## Who are coaching sessions meant for?
-Coaching sessions are meant for anyone interested, but typically they've been used by smaller tech teams facing Postgres challenges, but without a big budget for more broadly-scoped consulting engagements.
+Coaching sessions are meant for anyone interested in exploring the problem together, and typically they've picked by smaller tech teams facing challenges, but without a big budget for more broadly-scoped consulting engagements.
 
 Clients are typically individuals or up to two on the client side, usually the CTOs, VP Engs, or similar senior engineering leaders at the company.
 
-What I bring is my knowledge, skills, and experience from [PostgreSQL and Ruby on Rails consulting](/consulting) and authoring [High Performance PostgreSQL for Rails](/pgrailsbook), applied to your specific problems.
+I'll bring my knowledge, skills, and experience from [PostgreSQL and Ruby on Rails consulting](/consulting) and authoring [High Performance PostgreSQL for Rails](/pgrailsbook), applied to your specific problems.
 
 ## Example Topics
 
@@ -28,7 +28,8 @@ What I bring is my knowledge, skills, and experience from [PostgreSQL and Ruby o
 
 - 55 minutes per session, bookable on Thursdays, on the hour (or book multiple!) between 10AM - 5PM US Central Time (UTC−06:00), online (Google Hangouts)
 - Client books sessions on their own, and at the time of booking provides needed company information: Business name, URL, mailing address, contact person name, title, email
-- Up to 2 people can attend, recording is fine
+- Up to 2 people can attend, recording the session is fine
+- Minimum of 2 sessions
 - Sessions are prepaid (See below)
 - Discount of $100 for 4 sessions with half prepaid
 
@@ -42,9 +43,9 @@ The company information flows into a consulting agreement we'll e-sign describin
 
 ## How much?
 
-$300/session and prepayment is required. For payment options, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
+$300/session. Prepayment is required. For payment options, please read my [Client Payments Guide PDF](client-payments-guide.pdf).
 
-For bigger, and more broadly-scoped engagements, please review my [consulting](/consulting) page. For that offering I can offer a 30 minute discovery call where we'll establish mutual fit and scope items. For coaching I'm not able to offer the discovery call.
+For larger engagements, please review my [consulting](/consulting) page. For that I'm offering a complementary 30 minute discovery call. For coaching I'm not able to offer the discovery call.
 
 
 ## Praise 🤝
