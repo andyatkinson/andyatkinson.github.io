@@ -1,9 +1,11 @@
 exclude: [config.ru, Gemfile, Gemfile.lock, Procfile, Rakefile, README.md, vendor, LICENSE.txt]
 
-# Site setings
+# Site settings
 name: 'Andrew Atkinson'
-description: 'Software Engineer'
-meta_description: 'Personal blog Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim'
+title: 'Andrew Atkinson - Software Engineer, Author, High Performance PostgreSQL for Rails'
+description: 'Software Engineer, Author, Consultant'
+meta_description: 'Personal Site Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails Pragmatic Programmers'
+tagline: 'Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails Pragmatic Programmers'
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
@@ -11,7 +13,8 @@ author:
   greetings: 'Hi! My name is Andy and this is my website, blog and portfolio. Please take a look around and thanks for stopping by!'
 favicon: 'assets/images/favicon.ico'
 baseurl:
-production_url: http://andyatkinson.com
+url: https://andyatkinson.com
+production_url: https://andyatkinson.com
 disqus: 'andyatkinson'
 mailchimp_url: 'https://gmail.us3.list-manage.com/subscribe/post?u=e41bf915471ba36d210444e0d&amp;id=d5e090a16c'
 # Add your GA Tracking Id
@@ -24,10 +27,17 @@ contact_page_description: "Send me a message!"
 thankyou_page_description: "Thanks for your message."
 
 # Social links
-#twitter: 'andatki'
+social:
+  name: Andrew Atkinson
+  links:
+    - https://x.com/andatki
+    - https://www.linkedin.com/in/andyatkinson
+    - https://github.com/andyatkinson
 github: 'andyatkinson'
 linkedin: 'andyatkinson'
 stackoverflow: '126688/andy-atkinson?tab=profile'
+twitter:
+  username: andatki
 
 # Navigation
 navigation:

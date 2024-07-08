@@ -4,6 +4,16 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## Software Huddle
+- <cite>2024-07-02</cite>
+- Podcast (audio)
+- [🎥 High Performance Postgres with Andrew Atkinson](https://www.youtube.com/watch?v=Z30x4ujHFBM)
+
+## Interview with Phil Smy
+- <cite>2024-06-29</cite>
+- Podcast (audio)
+- [🎥 Mastering PostgreSQL for Rails: An Interview with Andy Atkinson](https://www.youtube.com/watch?v=b7rTr38H8EE&list=PL9-zCXZQFyvqhkrefUXAfC4FYntQX9SC9&index=2)
+
 ## IndieRails
 - <cite>2024-06-01</cite>
 - Podcast (audio)
