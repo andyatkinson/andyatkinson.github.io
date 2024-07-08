@@ -19,7 +19,7 @@ title: High Performance PostgreSQL for Rails Book
 - [Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## Ratings
-- [Goodreads: 4.82, 11 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [Goodreads: 4.83, 12 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd) - Be the first to leave a rating or review!
 
 <details>
