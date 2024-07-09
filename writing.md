@@ -47,9 +47,7 @@ Update 2022: Now an alum (and still a reader), it was a fun experience.
 
 <https://dev.to/andatki>
 
-- [Ruby For All Podcast: My Guest Experience 🎙️](https://dev.to/andatki/ruby-for-all-podcast-my-guest-experience-2do1)
 - [How Long Does It Take To Create An Index?](https://dev.to/andatki/how-long-does-it-take-to-create-an-index-60o)
-- [Upgrading to PostgreSQL 15 on Mac OS](https://dev.to/andatki/upgrading-to-postgresql-15-on-mac-os-ibg)
 - [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
 
 ## Blogging
