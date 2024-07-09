@@ -6,6 +6,7 @@ title: Writing
 
 ## Medium
 
+- Follow me: [Medium](https://medium.com/@andyatkinson_37196/followers)
 - (20 claps) [Top Five PostgreSQL Surprises from Rails Developers](https://medium.com/p/36d2b8734909)
 
 ## Newsletter: This Week In Rails
