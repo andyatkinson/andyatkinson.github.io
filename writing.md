@@ -4,7 +4,11 @@ permalink: /writing
 title: Writing
 ---
 
-### Newsletter: This Week In Rails
+## Medium
+
+- (20 claps) [Top Five PostgreSQL Surprises from Rails Developers](https://medium.com/p/36d2b8734909)
+
+## Newsletter: This Week In Rails
 
 Andy became a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com/), a curated list of changes in Ruby on Rails.
 
@@ -35,11 +39,11 @@ Update 2021: On hiatus from writing again. The subscriber count had eclipsed 10K
 
 Update 2022: Now an alum (and still a reader), it was a fun experience.
 
-### Ruby Inside
+## Ruby Inside
 
   * [7 Video Presentations From The WindyCityRails 2009 Conference](http://www.rubyinside.com/7-video-presentations-from-the-windycityrails-2009-conference-2592.html)
 
-### DEV
+## DEV
 
 <https://dev.to/andatki>
 
@@ -48,7 +52,7 @@ Update 2022: Now an alum (and still a reader), it was a fun experience.
 - [Upgrading to PostgreSQL 15 on Mac OS](https://dev.to/andatki/upgrading-to-postgresql-15-on-mac-os-ibg)
 - [Dump and Restore PostgreSQL Tables](https://dev.to/andyatkinson/dump-and-load-a-postgresql-table-p0o)
 
-### Blogging
+## Blogging
 
 I keep a blog here on technical topics. I write posts to learn topics more deeply, and to share my knowledge.
 
