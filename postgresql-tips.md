@@ -18,6 +18,9 @@ Below are PostgreSQL-tagged blog posts:
 * <https://sqlfordevs.io>
 * The `EXPLAIN` Glossary from PgMustard <https://www.pgmustard.com/docs/explain>
 * [Optimizing Postgres for write heavy workloads](https://www.youtube.com/watch?v=t8rAOgDdH1U)
+* Book: [PostgreSQL Query Optimization](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient-dp-B0CK5GWWQ1/dp/B0CK5GWWQ1/ref=dp_ob_title_bk)
+* Book: [PostgreSQL 9.0 High Performance](https://www.amazon.com/PostgreSQL-High-Performance-Gregory-Smith-ebook/dp/B0057G9RUG/ref=sr_1_1?crid=1C6XE1MTS5P6Z&dib=eyJ2IjoiMSJ9.gz1V_nruxTv9KBz3395J6C5BjwpiYbZy1KqA0QYls4rGjHj071QN20LucGBJIEps._-fSBXPcduiX88TW4ntB06kJSSm9dnK0j-4FGVj7iOs&dib_tag=se&keywords=high+performance+postgresql+9.0&qid=1720582394&s=books&sprefix=high+performance+postgresql+9.0%2Cstripbooks%2C90&sr=1-1)
+* Book: [PostgreSQL 14 Internals](https://postgrespro.com/community/books/internals)
 
 ## Queries
 

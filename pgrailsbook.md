@@ -8,10 +8,8 @@ title: High Performance PostgreSQL for Rails Book
 <img src="/assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg"/>
 </div>
 
-## Ebook
+## Ebook and Paperback
 - [Pragmatic Programmers](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails)
-
-## Paperback
 - [Bookshop.org](https://bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/21240568?ean=9798888650387)
 - [Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
 - [B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
@@ -23,7 +21,7 @@ title: High Performance PostgreSQL for Rails Book
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd) - Be the first to leave a rating or review!
 
 <details>
-<summary>International sellers</summary>
+<summary>International (outside USA) sellers</summary>
 <ul>
 <li><a href="https://www.amazon.co.uk/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY">UK - Amazon.uk</a></li>
 <li><a href="https://uk.bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/7669141">UK - uk.Bookshop.org</a></li>
@@ -46,6 +44,7 @@ title: High Performance PostgreSQL for Rails Book
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Great week for <a href="https://twitter.com/hashtag/Rails?src=hash&amp;ref_src=twsrc%5Etfw">#Rails</a> books! 🛤️<br><br>Just picked up <a href="https://twitter.com/palkan_tula?ref_src=twsrc%5Etfw">@palkan_tula</a>&#39;s Layered Design for Ruby on Rails Applications and <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a>&#39;s High Performance PostgreSQL for Rails book.<br><br>Perfect timing for some traveling this weekend.</p>&mdash; Chris Oliver (@excid3) <a href="https://twitter.com/excid3/status/1697311965654155578?ref_src=twsrc%5Etfw">August 31, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">I think <a href="https://t.co/HQhb03ZkKK">https://t.co/HQhb03ZkKK</a> by <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a> is a &quot;game-upgrader&quot; for <a href="https://twitter.com/hashtag/Rails?src=hash&amp;ref_src=twsrc%5Etfw">#Rails</a> devs using <a href="https://twitter.com/hashtag/PostgreSQL?src=hash&amp;ref_src=twsrc%5Etfw">#PostgreSQL</a>. It covers so much ranging from ActiveRecord, SQL, bulk data, cursors, sharding, replication, partitioning, FTS...<br><br>Want Rails to scale? Gotta leverage the DB👍<a href="https://twitter.com/hashtag/programming?src=hash&amp;ref_src=twsrc%5Etfw">#programming</a></p>&mdash; Mohit Sindhwani (onghu@ruby.social) (@onghu) <a href="https://twitter.com/onghu/status/1728305090170126592?ref_src=twsrc%5Etfw">November 25, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">“If you use Rails and Postgres, this book is required reading.<br><br>If you use Postgres and a different framework, you will still get a ton of value out of it. Every section goes deep.”<br><br>Thank you <a href="https://twitter.com/jpcamara?ref_src=twsrc%5Etfw">@jpcamara</a>! 🙌<a href="https://twitter.com/hashtag/postgresql?src=hash&amp;ref_src=twsrc%5Etfw">#postgresql</a> <a href="https://twitter.com/hashtag/rubyonrails?src=hash&amp;ref_src=twsrc%5Etfw">#rubyonrails</a> <a href="https://twitter.com/pragprog?ref_src=twsrc%5Etfw">@pragprog</a> <a href="https://t.co/IZRUnwHv8v">https://t.co/IZRUnwHv8v</a></p>&mdash; Andrew Atkinson (@andatki) <a href="https://twitter.com/andatki/status/1802373509156417748?ref_src=twsrc%5Etfw">June 16, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://t.co/00jTI6GLBu">https://t.co/00jTI6GLBu</a> by <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a> <br>You will be really good at PostgreSQL and Rails at the same time</p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1810759758053249478?ref_src=twsrc%5Etfw">July 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Praise and Reviews
 > The most informative and knowledge dense book I have ever read on understanding database performance, bottlenecks, and solutions.
