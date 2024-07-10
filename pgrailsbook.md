@@ -4,7 +4,7 @@ permalink: /pgrailsbook
 title: High Performance PostgreSQL for Rails Book
 ---
 
-<div style="float:right;width:350px;border:1px solid;box-shadow:5px 5px 5px #ccc;">
+<div style="float:right;width:280px;border:1px solid;box-shadow:5px 5px 5px #ccc;">
 <img src="/assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg"/>
 </div>
 
@@ -18,7 +18,7 @@ title: High Performance PostgreSQL for Rails Book
 
 ## Ratings
 - [Goodreads: 4.83, 12 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
-- [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd) - Be the first to leave a rating or review!
+- [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
 <details>
 <summary>International (outside USA) sellers</summary>
