@@ -10,7 +10,7 @@ In this talk attendees will learn how Ruby on Rails and PostgreSQL can be used t
 
 We’ll define SaaS concepts, B2B, B2C, and multi-tenancy. Although Rails doesn't natively support SaaS or multi-tenancy, solutions like Bullet Train and Jumpstart Rails can be used for common SaaS needs.
 
-Next we'll cover database designs from the Apartment and actsastenant gems which support multi-tenancy concepts, and connect their designs to Citus's row and schema sharding capabilities from version 12.0.
+Next we'll cover database designs from the Apartment and acts_as_tenant gems which support multi-tenancy concepts, and connect their designs to Citus's row and schema sharding capabilities from version 12.0.
 
 We’ll also cover PostgreSQL's LIST partitioning and how to use it for efficient detachment of unneeded customer data.
 
