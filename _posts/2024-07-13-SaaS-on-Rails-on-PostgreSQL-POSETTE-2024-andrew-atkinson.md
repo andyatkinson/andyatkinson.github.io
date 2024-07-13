@@ -18,7 +18,7 @@ We'll cover the basics of leveraging Rails 6.1's Horizontal Sharding for databas
 
 Besides the benefits for each tool, limitations will be described so that attendees can make informed choices.
 
-Attendees will leave with a broad survey of building multi-tenant SaaS applications, having reviewed application level designs, database designs, to help them put these into action in their own applications.
+Attendees will leave with a broad survey of building multi-tenant SaaS applications, having reviewed application level designs and database designs, to help them put these into action in their own applications.
 
 
 <!-- callout box -->
