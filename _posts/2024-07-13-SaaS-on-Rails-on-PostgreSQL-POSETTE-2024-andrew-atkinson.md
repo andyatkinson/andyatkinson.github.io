@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "SaaS on Rails on PostgreSQL | POSETTE 2024"
-tags: []
+title: "SaaS on Rails on PostgreSQL — POSETTE 2024"
+tags: [PostgreSQL, Ruby on Rails]
 date: 2024-06-13
 comments: true
 ---
