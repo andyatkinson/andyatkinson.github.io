@@ -7,7 +7,7 @@ title: Speaking Opportunities
 ## POSETTE 2024
 - <cite>2024-06-13</cite>
 - Presentation, virtual
-- [🎥 SaaS on Rails on PostgreSQL](/blog/2024/06/13/SaaS-on-Rails-on-PostgreSQL-POSETTE-2024-andrew-atkinson)
+- [🎥 SaaS on Rails on PostgreSQL](/blog/2024/07/13/SaaS-on-Rails-on-PostgreSQL-POSETTE-2024-andrew-atkinson)
 
 ## Software Huddle
 - <cite>2024-07-02</cite>
