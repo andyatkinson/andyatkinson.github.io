@@ -4,7 +4,7 @@ permalink: /pgrailsbook
 title: High Performance PostgreSQL for Rails Book
 ---
 
-<div style="float:right;width:280px;border:1px solid;box-shadow:5px 5px 5px #ccc;">
+<div style="float:right;width:250px;border:1px solid;box-shadow:5px 5px 5px #ccc;">
 <img src="/assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg"/>
 </div>
 
