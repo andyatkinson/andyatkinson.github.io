@@ -73,6 +73,7 @@ title: High Performance PostgreSQL for Rails Book
 - [Print unboxing Tweet/X 2024 5K views, 110 faves](https://x.com/andatki/status/1811830289309790449)
 - [LinkedIn Unboxing 2024 6K impressions, 235 reactions](https://www.linkedin.com/feed/update/urn:li:activity:7217598021931270144/)
 - [Reddit r/rails High Performance PostgreSQL for Rails, in print, 60 upvotes](https://www.reddit.com/r/rails/comments/1dqhku7/comment/lciq7ka/?context=3)
+- [Reddit r/rails Upcoming Book Launch: High Performance PostgreSQL for Rails, 75 upvotes](https://www.reddit.com/r/rails/comments/15v6eke/upcoming_book_launch_high_performance_postgresql/)
 
 ## Author Profiles
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
