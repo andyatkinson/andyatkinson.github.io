@@ -66,14 +66,16 @@ title: High Performance PostgreSQL for Rails Book
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 - [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
 - [Top Five PostgreSQL Surprises from Rails Developers, Medium](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
+- [New This Week: High Performance PostgreSQL for Rails](https://media.pragprog.com/newsletters/2024-06-25.html)
 
-## Social Shares and Stats
+## Social Shares and Stats, Newsletters
 - [Print availability announcement Tweet/X 2024 26K views](https://x.com/andatki/status/1806373453361999912)
 - [Beta announcement Tweet/X 2023 ~40K views](https://x.com/andatki/status/1696933498219569615)
 - [Print unboxing Tweet/X 2024 5K views, 110 faves](https://x.com/andatki/status/1811830289309790449)
 - [LinkedIn Unboxing 2024 6K impressions, 235 reactions](https://www.linkedin.com/feed/update/urn:li:activity:7217598021931270144/)
 - [Reddit r/rails High Performance PostgreSQL for Rails, in print, 60 upvotes](https://www.reddit.com/r/rails/comments/1dqhku7/comment/lciq7ka/?context=3)
 - [Reddit r/rails Upcoming Book Launch: High Performance PostgreSQL for Rails, 75 upvotes](https://www.reddit.com/r/rails/comments/15v6eke/upcoming_book_launch_high_performance_postgresql/)
+- [Ruby Weekly #711 Mention](https://rubyweekly.com/issues/711)
 
 ## Author Profiles
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
