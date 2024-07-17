@@ -65,6 +65,7 @@ title: High Performance PostgreSQL for Rails Book
 ## Community Links
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 - [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
+- [Top Five PostgreSQL Surprises from Rails Developers, Medium](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
 
 ## Social Shares and Stats
 - [Print availability announcement Tweet/X 2024 26K views](https://x.com/andatki/status/1806373453361999912)

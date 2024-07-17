@@ -141,4 +141,4 @@ If these topics interest you and you'd like to learn more, please consider buyin
 
 Thanks for reading!
 
-Also published at [Top Five PostgreSQL Surprises from Rails Developers](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909) on the Pragmatic Programmers blog on Medium.
+This post was published at [Top Five PostgreSQL Surprises from Rails Developers](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909) on the Pragmatic Programmers blog on Medium, with 20 "Claps" as of July 2024.
