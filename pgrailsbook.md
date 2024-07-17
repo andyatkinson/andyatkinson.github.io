@@ -59,7 +59,6 @@ title: High Performance PostgreSQL for Rails Book
 > If you are a Rails engineer who always wanted to understand how to have a greater impact on your work through taking command of your database, this is the book for you!
 <cite>- Daniel Kaczmarczyk</cite>
 
-
 ## Stay Informed!
 [Sign up for my Newsletter](https://pgrailsbook.com) covering book topics, consulting, and more. Around 1x/email per month.
 
@@ -67,6 +66,10 @@ title: High Performance PostgreSQL for Rails Book
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 - [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
 - [Amazon: About the author](https://www.amazon.com/stores/author/B0D77SXQL9/about)
+
+## Author Profiles
+- [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
+- [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
 ## Upcoming and Recent Appearances
 - August 1-2, 2024 - [Madison Ruby - 2024 Conference](https://www.madisonruby.com)
