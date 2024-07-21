@@ -6,11 +6,11 @@ date: 2024-07-22
 comments: true
 ---
 
-This is a short post describing the basics of [savepoints](https://www.postgresql.org/docs/current/sql-savepoint.html) within a transaction. A transaction is used to form a non-separable unit of work to commit or not, as a unit. Transactions are opened using the BEGIN keyword, then either committed or may be rolled back using `ROLLBACK` without any arguments.
+This is a short post describing the basics of [savepoints](https://www.postgresql.org/docs/current/sql-savepoint.html) within a transaction. A transaction is used to form a non-separable unit of work to commit or not, as a unit. Transactions are opened using the `BEGIN` keyword, then either committed or may be rolled back using `ROLLBACK` without any arguments.
 
-Within the concept of a transaction, there is a further concept that allows for incremental transaction-level persistence, called "savepoints," which can also be described as forming a sub-transaction, as they have similarities to a transaction but occur within one.
+Within the concept of a transaction, there is a further concept that allows for incremental transaction-level persistence, called "savepoints," which create sub-transactions that have similar properties to a transaction.
 
-Savepoints mark a particular state of the transaction changes as a recoverable position. If a particular transaction wishes to recover there, the same `ROLLBACK` keyword can be used (`ROLLBACK TO`) although it must have the savepoint name otherwise the whole transaction will be rolled back.
+Savepoints mark a particular state of the transaction as a recoverable position. In a similar way to how `ROLLBACK` rolls back an entire transaction, `ROLLBACK TO` can be used within a transaction, and with a savepoint name, to restore the state of the data to how it appeared when the savepoint was created.
 
 ## Commands
 Savepoints have some verbs to know about:
