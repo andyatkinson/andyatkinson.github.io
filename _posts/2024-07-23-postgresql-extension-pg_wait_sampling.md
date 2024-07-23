@@ -6,21 +6,21 @@ date: 2024-07-23
 comments: true
 ---
 
-PostgreSQL uses a complex system of locks to balance concurrent read and write operations, with consistent views of data across transactions.
+PostgreSQL uses a complex system of locks to balance concurrent operations and data consistency, across many transactions. Those intricacies are beyond the scope of this post. Here we want to specifically look at queries that are waiting, whether on locks or for other resources, and learn how to get more insights about why.
 
-Trade-offs in balancing concurrency with consistency is an inherent part of the MVCC design that PostgreSQL uses. One of the operational problems that can occur as a result, is that queries can block other queries, or queries can get stuck waiting.
+Balancing concurrency with consistency is an inherent part of the [MVCC](https://www.postgresql.org/docs/current/mvcc.html) system that PostgreSQL uses. One of the operational problems that can occur with this system, is that queries get blocked waiting to acquire a lock, and that wait time can be excessive, causing errors.
 
-In order to understand this in more detail, when queries get stuck waiting, or take a really long time to finish when they’d normally be quick, it’s critical to understand how locks work, and gain visibility into which locks are open, why, and for what purpose.
-
-Fortunately, in PostgreSQL we can access the `pg_waits` and `pg_stat_activity` system catalogs to get that data. Is that enough? What are the shortcomings?
+In order to understand what's happening with near real-time visibility, PostgreSQL provides system views like `pg_waits` and `pg_stat_activity` that can be queried to see what is currently executing. Is that level of visibility enough? If not, what other opportunities are there?
 
 ## Knowledge and Observability
-When a query is blocked, it’s usually waiting to acquire a lock. What is the query holding the lock? That’s the “blocking” query. Things aren’t that straightforward though. A waiting query and blocking query don’t always form a one to one relationship, but may be part of a complex tree relationship of query data, with multiple levels of blocking and waiting queries.
+When a query is blocked and waiting to acquire a lock, we usually want to get more information when debugging.
+
+The query holding the lock is the "blocking" query. A waiting query and a blocking query don’t always form a one-to-one relationship though. There may be multiple levels of blocking and waiting.
 
 ## Real-time observability
-In Postgres, we have “real-time” visibility using `pg_stat_activity`, and `pg_locks`. We can also discover trees of information using these catalogs and well-crafted SQL queries.
+In Postgres, we have "real-time" visibility using `pg_stat_activity`.
 
-We can find queries in a “waiting” state:
+We can find queries in a "waiting" state:
 
 ```sql
 SELECT
@@ -38,13 +38,13 @@ WHERE
     datname = 'rideshare_development';
 ```
 
-We can look at locks being held via the `pg_locks` system catalog.
+We can combine that information with lock information from the `pg_locks` catalog.
 
-Blocking queries SQL:
+Combining information from `pg_waits`, lock info from `pg_locks`, and active query information from `pg_stat_activity` becomes powerful. The query below joins these three sources together.
+
 <https://github.com/andyatkinson/pg_scripts/blob/main/lock_blocking_waiting_pg_locks.sql>
 
-We can combine waiting queries from `pg_waits`, lock acquiring queries via `pg_locks`, with active query information from `pg_stat_activity`. This query joins these three tables together to produce useful results like this.
-
+The result row fields include:
 - `blocked_pid`
 - `blocked_user`
 - `blocking_pid`
@@ -54,21 +54,18 @@ We can combine waiting queries from `pg_waits`, lock acquiring queries via `pg_l
 - `blocked_query_start`
 - `blocking_query_start`
 
-That's all great information, however there can still be a problem.
+That's great information, however there can still be a problem.
 
-When there’s an incident and it’s been resolved, queries are cleared out, we no longer have live activity in `pg_stat_activity`, or live locks to view in `pg_locks`, or waiting queries in `pg_waits`.
+When there’s an incident and after it’s resolved, queries get cleared out and we no longer have historical information, since what we looked at in `pg_stat_activity`, `pg_locks`, and `pg_waits`, was live information.
 
-How can we discover what happened historically? Another scenario is that in the above examples, we’re looking at a single snapshot of results.
-
-How can we take a broader perspective and look at data across many samples, so that we focus on the most problematic areas?
+How can we explore historical context? Or, how can we broaden our searches to include many samples and not just a single sample?
 
 ## Introducing pg_wait_sampling
-To solve the need for historical analysis, and for the collection of many samples that we can base an analysis on, the extension `pg_wait_sampling` was created by Alexander Korotkov. This extension can be compiled locally and used, and fortunately has gained wide support from cloud providers.
-
+To solve the need for historical analysis, and for the collection of many samples, the extension `pg_wait_sampling` was created by Alexander Korotkov to solve these problems.
 
 
 ## Configuring pg_wait_sampling on macOS
-1. Compile extension
+1. Compile extension following instructions on [GitHub postgrespro/pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling)
 1. Edit `postgresql.conf` to add the extension to `shared_preload_libraries`
 1. Restart Postgres (due to shared preload libraries)
 1. Enable extension (via `CREATE EXTENSION` command) from psql, as a superuser (`postgres`)
@@ -78,8 +75,7 @@ To solve the need for historical analysis, and for the collection of many sample
 ## Basic Usage of pg_wait_sampling
 With the extension enabled, we get access to two views:
 
-- `pg_wait_sampling_profile`
-From this view, we get the following fields. The `queryid` field is the same queryid that’s a unique identifier per instance in Postgres that we have available from `pg_stat_statements`.
+From the view `pg_wait_sampling_profile` we get the following fields. The `queryid` field is the same queryid that’s a unique identifier per instance in Postgres that we have available from `pg_stat_statements`.
 
 - `pid`
 - `event_type`
@@ -87,10 +83,7 @@ From this view, we get the following fields. The `queryid` field is the same que
 - `queryid`
 - `count`
 
-
-`pg_wait_sampling_history`
-
-From the sample history, we get these fields:
+Here are fields we get in the `pg_wait_sampling_history`:
 - `pid`
 - `ts` (timestamp)
 - `event_type`
@@ -99,15 +92,16 @@ From the sample history, we get these fields:
 
 
 ## Customization
-- `pg_wait_sampling.sample_interval = '10ms'`
+<https://postgrespro.com/docs/enterprise/9.6/pg-wait-sampling>
+- `pg_wait_sampling.profile_period= '10ms'`
 - `pg_wait_sampling.history_size = 1000`
 
 
 ## Cloud Support
-- AWS RDS [does not list pg_wait_sampling in supported extensions](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html#postgresql-extensions-15x)
 - [GCP Cloud SQL](https://cloud.google.com/sql/docs/postgres/extensions) supports it, and without a server restart
-- Microsoft Azure Database for PostgreSQL - Flexible Server, [does not list pg_wait_sampling in extensions](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions)
 - Tembo [supports pg_wait_sampling via trunk](https://pgt.dev/extensions/pg_wait_sampling)
+- AWS RDS [does not list pg_wait_sampling in supported extensions](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html#postgresql-extensions-15x)
+- Microsoft Azure Database for PostgreSQL - Flexible Server, [does not list pg_wait_sampling in extensions](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions)
 
 AWS seems to have its own wait event analysis.
 
@@ -115,3 +109,10 @@ AWS seems to have its own wait event analysis.
 - Learn more about Alexander on Hacking Postgres: <https://www.youtube.com/watch?v=FrOvwkmAPvg>
 - Extension: <https://github.com/postgrespro/pg_wait_sampling>
 - Announcement blog post: <https://akorotkov.github.io/blog/2016/03/25/wait_monitoring_9_6/>
+- [Exploring Query Locks in Postgres](https://big-elephants.com/2013-09/exploring-query-locks-in-postgres/)
+- `pg_blocking_pids()` <https://pgpedia.info/p/pg_blocking_pids.html>
+
+## Wrap Up
+This post was meant to describe the problem pg_wait_sampling solves, how to install it for macOS and begin exploring the information. In a future post, we may use pg_wait_sampling as part of a concurrency/blocking query analysis and investigation. Stay tuned.
+
+Thanks for reading!
