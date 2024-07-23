@@ -117,3 +117,6 @@ AWS seems to have its own wait event analysis.
 This post was meant to describe the problem pg_wait_sampling solves, how to install it for macOS and begin exploring the information. In a future post, we may use pg_wait_sampling as part of a concurrency/blocking query analysis and investigation. Stay tuned.
 
 Thanks for reading!
+
+## Error Corrections
+An earlier version of this post mentioned `pg_waits` as a view, but this is not a view. Core Postgres provides views [`pg_locks`](https://www.postgresql.org/docs/current/view-pg-locks.html), and [`pg_stat_activity`](https://www.postgresql.org/docs/current/monitoring-stats.html#MONITORING-PG-STAT-ACTIVITY-VIEW).
