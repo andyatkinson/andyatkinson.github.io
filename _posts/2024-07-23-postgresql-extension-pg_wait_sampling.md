@@ -111,6 +111,7 @@ AWS seems to have its own wait event analysis.
 - Announcement blog post: <https://akorotkov.github.io/blog/2016/03/25/wait_monitoring_9_6/>
 - [Exploring Query Locks in Postgres](https://big-elephants.com/2013-09/exploring-query-locks-in-postgres/)
 - `pg_blocking_pids()` <https://pgpedia.info/p/pg_blocking_pids.html>
+- [Postgres.fm Wait events episode](https://postgres.fm/episodes/wait-events)
 
 ## Wrap Up
 This post was meant to describe the problem pg_wait_sampling solves, how to install it for macOS and begin exploring the information. In a future post, we may use pg_wait_sampling as part of a concurrency/blocking query analysis and investigation. Stay tuned.
