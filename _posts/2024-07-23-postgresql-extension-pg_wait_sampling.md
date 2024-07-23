@@ -10,7 +10,7 @@ PostgreSQL uses a complex system of locks to balance concurrent operations and d
 
 Balancing concurrency with consistency is an inherent part of the [MVCC](https://www.postgresql.org/docs/current/mvcc.html) system that PostgreSQL uses. One of the operational problems that can occur with this system, is that queries get blocked waiting to acquire a lock, and that wait time can be excessive, causing errors.
 
-In order to understand what's happening with near real-time visibility, PostgreSQL provides system views like `pg_waits` and `pg_stat_activity` that can be queried to see what is currently executing. Is that level of visibility enough? If not, what other opportunities are there?
+In order to understand what's happening with near real-time visibility, PostgreSQL provides system views like `pg_locks` and `pg_stat_activity` that can be queried to see what is currently executing. Is that level of visibility enough? If not, what other opportunities are there?
 
 ## Knowledge and Observability
 When a query is blocked and waiting to acquire a lock, we usually want to get more information when debugging.
@@ -40,7 +40,7 @@ WHERE
 
 We can combine that information with lock information from the `pg_locks` catalog.
 
-Combining information from `pg_waits`, lock info from `pg_locks`, and active query information from `pg_stat_activity` becomes powerful. The query below joins these three sources together.
+Combining lock information from `pg_locks` and active query information from `pg_stat_activity` becomes powerful. The query below joins these sources together.
 
 <https://github.com/andyatkinson/pg_scripts/blob/main/lock_blocking_waiting_pg_locks.sql>
 
@@ -56,7 +56,7 @@ The result row fields include:
 
 That's great information, however there can still be a problem.
 
-When there’s an incident and after it’s resolved, queries get cleared out and we no longer have historical information, since what we looked at in `pg_stat_activity`, `pg_locks`, and `pg_waits`, was live information.
+When there’s an incident and after it’s resolved, queries get cleared out and we no longer have historical information, since what we looked at in `pg_stat_activity` and `pg_locks` was live information.
 
 How can we explore historical context? Or, how can we broaden our searches to include many samples and not just a single sample?
 
