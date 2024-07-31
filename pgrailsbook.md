@@ -77,9 +77,11 @@ title: High Performance PostgreSQL for Rails Book
 - [Reddit r/rails Upcoming Book Launch: High Performance PostgreSQL for Rails, 75 upvotes](https://www.reddit.com/r/rails/comments/15v6eke/upcoming_book_launch_high_performance_postgresql/)
 - [Ruby Weekly #711 Mention](https://rubyweekly.com/issues/711)
 
-## Author Profiles
+## Author Profiles and Interviews
+- [A Passion for PostgreSQL Chat with Andrew Atkinson](https://forum.devtalk.com/t/spotlight-andrew-atkinson-author-interview-and-ama/156361)
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
+
 
 ## Upcoming and Recent Appearances
 - August 1-2, 2024 - [Madison Ruby - 2024 Conference](https://www.madisonruby.com)
