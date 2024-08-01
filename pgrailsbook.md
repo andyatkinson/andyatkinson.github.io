@@ -79,6 +79,7 @@ title: High Performance PostgreSQL for Rails Book
 
 ## Author Profiles and Interviews
 - [A Passion for PostgreSQL Chat with Andrew Atkinson](https://forum.devtalk.com/t/spotlight-andrew-atkinson-author-interview-and-ama/156361)
+- [Mention from University of Minnesota](https://www.linkedin.com/posts/university-of-minnesota-college-of-continuing-and-professional-studies_programming-softwaredevelopment-softwareengineer-activity-7221199488894345216-Ym6-?utm_source=share&utm_medium=member_desktop)
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
