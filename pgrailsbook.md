@@ -17,7 +17,7 @@ title: High Performance PostgreSQL for Rails Book
 - [Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## Ratings
-- [Goodreads: 4.83, 12 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [Goodreads: 4.77, 13 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
 <details>
@@ -83,19 +83,20 @@ title: High Performance PostgreSQL for Rails Book
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
-
-## Upcoming and Recent Appearances
-- August 1-2, 2024 - [Madison Ruby - 2024 Conference](https://www.madisonruby.com)
+## Upcoming Appearances
 - September 26-27, 2024 - [Rails World 2024](https://rubyonrails.org/world/2024)
 - November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
 
 ## Recent Appearances
+- August 1-2, 2024 - [Madison Ruby - 2024 Conference](https://www.madisonruby.com)
 - June 11, 2024 - [POSETTE - 2024 Conference](https://www.citusdata.com/posette/speakers/andrew-atkinson/) - SaaS on Rails on PostgreSQL
 - May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
 - April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
 - March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
 
 ## Book Events Timeline
+- 2024 August: [Presented at Madison+ Ruby](https://x.com/andatki/status/1820167874062750102)
+- 2024 July: Shipping from major retailers like Amazon.com, including being the [#1 Best Seller in the Ruby Programming category](https://x.com/andatki/status/1819601510797398046)
 - 2024 June: In Print!
 - 2024 Apr: [POSETTE 2024](https://www.citusdata.com/posette/speakers/andrew-atkinson/)
 - 2024 Apr: [RailsConf 2024](http://andyatkinson.com/blog/2024/05/17/railsconf-conference-2024-detroit)

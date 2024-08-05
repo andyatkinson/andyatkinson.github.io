@@ -4,6 +4,10 @@ permalink: /writing
 title: Writing
 ---
 
+## AppSignal
+
+- [What's Coming in Ruby on Rails 7.2: Database Features in Active Record](https://blog.appsignal.com/2024/07/24/whats-coming-in-ruby-on-rails-7-2-database-features-in-active-record.html)
+
 ## Medium
 
 - Follow me: [Medium](https://medium.com/@andyatkinson_37196/followers)
