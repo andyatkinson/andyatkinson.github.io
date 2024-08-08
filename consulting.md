@@ -12,16 +12,19 @@ I’m **Andrew**, and I'd love to help you with your 🐘 **PostgreSQL** databas
 
 ## Why work with me?
 
-I've optimized multi-terabyte PostgreSQL databases running thousands of queries per second. I understand the kinds of challenges faced at that scale.
+I've optimized multi-terabyte PostgreSQL databases running thousands of queries per second. I've worked with PostgreSQL in various forms mostly via AWS, but also on GCP, Heroku, and self-hosted.
 
-I love working with teams and providing educational content. I wrote a bestselling book [*High Performance PostgreSQL for Rails*](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) published by Pragmatic Programmers in 2024, to help more engineers learn these skills.
+I wrote a bestselling book [*High Performance PostgreSQL for Rails*](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) published by Pragmatic Programmers in 2024 to help backend engineers learn these skills.
 
 ## What will we work on?
 
-📊 Identify and improve query performance<br/>
-💾 Optimize schema, query, and index design<br/>
-🐘 Perform data migrations, backfills, or partitioned table migrations<br/>
-👨 Provide 1:1 mentoring for your team, or team-level custom training plans on PostgreSQL, SQL, DB DevOps, or Active Record topics.<br/>
+We'll work on an assessment of your system, identifying opportunities to improve performance, reduce cost, and improve reliability.
+
+📊 Identify problematic queries and improve their performance and efficiency<br/>
+💾 Optimize your schema, query, and index designs for space and cost reduction<br/>
+🐘 Perform data migrations, backfills, or partitioned table migrations as needed based on performance goals<br/>
+👨 Provide mentoring and guidance for your team on PostgreSQL, SQL, database devops, and Active Record topics.<br/>
+🔎 Improve the observability, metrics, and alerts for your system, to help empower the engineers
 
 
 ## Recommendations 🤝
@@ -41,22 +44,13 @@ I love working with teams and providing educational content. I wrote a bestselli
 <cite>- John, Director of Engineering</cite>
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">You chance to hire a Rails and PG expert 😉 <a href="https://t.co/w6fTL3N840">https://t.co/w6fTL3N840</a></p>&mdash; Tobias_Petry.sql (@tobias_petry) <a href="https://twitter.com/tobias_petry/status/1745138817521066481?ref_src=twsrc%5Etfw">January 10, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Highly recommended PostgreSQL and Rails consultant:<a href="https://t.co/D0epf8g3gP">https://t.co/D0epf8g3gP</a></p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1765481120756322313?ref_src=twsrc%5Etfw">March 6, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Best rails, Postgres and performance consultant you can find. 🚀 <a href="https://t.co/rUwwvxqXfU">https://t.co/rUwwvxqXfU</a></p>&mdash; Shao | 少蒙 (@randomor) <a href="https://twitter.com/randomor/status/1744804349602304005?ref_src=twsrc%5Etfw">January 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Let's Talk
+[Contact me](/contact) to get the process started, and I'll send over a questionnare and some pre-meeting documents for your review.
 
-Schedule a 30-minute call at [calendly.com/pgrailsbook](https://calendly.com/pgrailsbook/30min) below, or [contact me](/contact) for questions or to arrange a different time.
-
-I'm looking forward to meeting you and working together.
-
-<!-- Calendly inline widget begin -->
-<div class="calendly-inline-widget" data-url="https://calendly.com/andatki/30min?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-<!-- Calendly inline widget end -->
-
+I'm looking forward to learning how I can help, and thanks for taking a look!
 
 ---------------------
 
@@ -85,10 +79,9 @@ I'm looking forward to meeting you and working together.
 <details>
 <summary>How I Work</summary>
   <ul>
-<li>I’ll provide a Independent Consulting Agreement</li>
-<li>We can use Google Hangouts, Zoom, Tuple, or similar programs for synchronous calls</li>
+<li>I’ll provide a Consulting Agreement and we'll work on a Statement of Work</li>
+<li>We can use Google Hangouts or equivalent tools for calls. I work in the US Central time zone.</li>
 <li>We can use Slack, email, and Google Docs for async work and statuses</li>
-<li>I’ll track detailed time and provide regular invoices</li>
   </ul>
 </details>
 
