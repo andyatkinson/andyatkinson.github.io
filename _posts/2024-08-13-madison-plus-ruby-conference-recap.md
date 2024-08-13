@@ -28,18 +28,18 @@ Since I spent time in the "hallway track" meeting people, I wasn't able to atten
 
 In this section I’ll recap the talks that I did attend.
 
-First up was Sayon, delivering an authentic and inspirational morning keynote titled "Our Superpower."
+First up was Saron, delivering an authentic and inspirational morning keynote titled "Our Superpower."
 
-Sayon connected with the audience through her stories, including her story transitioning into programming and entrepreneurship.
+Saron connected with the audience through her stories, including her story transitioning into programming and entrepreneurship.
 
 ![Madison+ Ruby Conference 2024](/assets/images/madison-ruby/madison-ruby-2.jpg)
-<small>Sayon delivering the morning keynote: "Our Superpower"</small>
+<small>Saron delivering the morning keynote: "Our Superpower"</small>
 
-I loved getting the chance to meet Sayon and Rob later one on one, at a dinner event after the first day. I got to hear about Sayon’s project [BCM.club](https://www.bcm.club) and nerd out with Rob about Postgres database topics.
+I loved getting the chance to meet Saron and Rob later one on one, at a dinner event after the first day. I got to hear about Saron’s project [BCM.club](https://www.bcm.club) and nerd out with Rob about Postgres database topics.
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Late post! Had a blast hosting another <a href="https://t.co/vmQ59NzTIn">https://t.co/vmQ59NzTIn</a> dinner when I spoke at <a href="https://twitter.com/MadisonRuby?ref_src=twsrc%5Etfw">@MadisonRuby</a> in Wisconsin last week! Love getting to hang out with new and old friends over some yummy food. Also tried cheese curds for the first time and they were amazing 😋 <a href="https://t.co/B7PpgxTyPf">pic.twitter.com/B7PpgxTyPf</a></p>&mdash; Saron (@saronyitbarek) <a href="https://twitter.com/saronyitbarek/status/1821707137787302187?ref_src=twsrc%5Etfw">August 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Having written a book with the [Pragmatic Bookshelf](https://pragprog.com), I was especially happy and impressed to hear that Sayon wrote the foreword for the 20th anniversary edition of the Pragmatic Programmer after being encouraged by Dave Thomas to bring her unique perspective.
+Having written a book with the [Pragmatic Bookshelf](https://pragprog.com), I was especially happy and impressed to hear that Saron wrote the foreword for the 20th anniversary edition of the Pragmatic Programmer after being encouraged by Dave Thomas to bring her unique perspective.
 
 Next up was Chantelle, who gave a fun talk that used D&D characters and their attributes as a basis for listeners to rate their own strengths and weaknesses. Chanetelle provided a worksheet and did a great job facilitating and interacting with the audience, challenging listeners to think about their roles on teams.
 
