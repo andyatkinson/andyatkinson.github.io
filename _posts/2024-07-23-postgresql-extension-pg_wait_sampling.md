@@ -63,7 +63,6 @@ How can we explore historical context? Or, how can we broaden our searches to in
 ## Introducing pg_wait_sampling
 To solve the need for historical analysis, and for the collection of many samples, the extension `pg_wait_sampling` was created by Alexander Korotkov to solve these problems.
 
-
 ## Configuring pg_wait_sampling on macOS
 1. Compile extension following instructions on [GitHub postgrespro/pg_wait_sampling](https://github.com/postgrespro/pg_wait_sampling)
 1. Edit `postgresql.conf` to add the extension to `shared_preload_libraries`
@@ -89,7 +88,6 @@ Here are fields we get in the `pg_wait_sampling_history`:
 - `event_type`
 - `event`
 - `queryid`
-
 
 ## Customization
 <https://postgrespro.com/docs/enterprise/9.6/pg-wait-sampling>
