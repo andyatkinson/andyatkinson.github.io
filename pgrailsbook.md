@@ -14,11 +14,12 @@ title: High Performance PostgreSQL for Rails Book
 - [Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
 - [B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
 - [Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
-- [Wal-Mart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
+- [Walmart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## Ratings
 - [Goodreads: 4.77, 13 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
+- [Amazon: 5.0, 2 ratings, 2 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
 
 <details>
 <summary>Sellers outside the USA</summary>
@@ -70,13 +71,13 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 - [Top Five PostgreSQL Surprises from Rails Developers, Medium](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
 - [New This Week: High Performance PostgreSQL for Rails](https://media.pragprog.com/newsletters/2024-06-25.html)
 
-## Social Shares and Stats, Newsletters
-- [Print availability announcement Tweet/X 2024 26K views](https://x.com/andatki/status/1806373453361999912)
-- [Beta announcement Tweet/X 2023 ~40K views](https://x.com/andatki/status/1696933498219569615)
+## Social Media Stats
+- [Print availability announcement Tweet/X 2024 32K views](https://x.com/andatki/status/1806373453361999912)
+- [Beta announcement Tweet/X 2023 40K views](https://x.com/andatki/status/1696933498219569615)
 - [Print unboxing Tweet/X 2024 5K views, 110 faves](https://x.com/andatki/status/1811830289309790449)
-- [LinkedIn Unboxing 2024 6K impressions, 235 reactions](https://www.linkedin.com/feed/update/urn:li:activity:7217598021931270144/)
-- [Reddit r/rails High Performance PostgreSQL for Rails, in print, 60 upvotes](https://www.reddit.com/r/rails/comments/1dqhku7/comment/lciq7ka/?context=3)
-- [Reddit r/rails Upcoming Book Launch: High Performance PostgreSQL for Rails, 75 upvotes](https://www.reddit.com/r/rails/comments/15v6eke/upcoming_book_launch_high_performance_postgresql/)
+- [LinkedIn Unboxing 2024 23K impressions, 380 reactions](https://www.linkedin.com/feed/update/urn:li:activity:7217598021931270144/)
+- [Reddit r/rails High Performance PostgreSQL for Rails, in print, 60 upvotes, 25 comments](https://www.reddit.com/r/rails/comments/1dqhku7/comment/lciq7ka/?context=3)
+- [Reddit r/rails Upcoming Book Launch: High Performance PostgreSQL for Rails, 75 upvotes, 20 comments](https://www.reddit.com/r/rails/comments/15v6eke/upcoming_book_launch_high_performance_postgresql/)
 - [Ruby Weekly #711 Mention](https://rubyweekly.com/issues/711)
 
 ## Author Profiles and Interviews
@@ -97,19 +98,19 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 - March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
 
 ## Book Events Timeline
-- 2024 August: [Presented at Madison+ Ruby](https://x.com/andatki/status/1820167874062750102)
+- 2024 August: [Presented at Madison+ Ruby](/blog/2024/08/13/madison-plus-ruby-conference-recap)
 - 2024 July: Shipping from major retailers like Amazon.com, including being the [#1 Best Seller in the Ruby Programming category](https://x.com/andatki/status/1819601510797398046)
 - 2024 June: In Print!
 - 2024 Apr: [POSETTE 2024](https://www.citusdata.com/posette/speakers/andrew-atkinson/)
-- 2024 Apr: [RailsConf 2024](http://andyatkinson.com/blog/2024/05/17/railsconf-conference-2024-detroit)
+- 2024 Apr: [RailsConf 2024](/blog/2024/05/17/railsconf-conference-2024-detroit)
 - 2024 Apr: [PGDay Chicago 2024](https://2024.pgdaychicago.org)
-- 2024 Mar: [Sin City Ruby](http://andyatkinson.com/blog/2024/03/25/sin-city-ruby-2024)
+- 2024 Mar: [Sin City Ruby](/blog/2024/03/25/sin-city-ruby-2024)
 - 2023 Dec: Beta content complete
 - 2023 Sep: Beta Launch!
-- 2023 Aug: [SFPUG Partitioning Presentation](http://andyatkinson.com/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation)
+- 2023 Aug: [SFPUG Partitioning Presentation](/blog/2023/08/17/postgresql-sfpug-table-partitioning-presentation)
 - 2023 Jun: Technical Review (first half) edits completed.
 - 2023 Spring: Publication Review completed. Technical Review (first half) started.
-- 2023 Winter: First Draft completed. [PGDay Chicago 2023](https://andyatkinson.com/blog/2023/05/24/pgday-chicago).
+- 2023 Winter: First Draft completed. [PGDay Chicago 2023](/blog/2023/05/24/pgday-chicago).
 - 2022: Signed Book Deal with Pragmatic Programmers
-- 2022: Presented at [RailsConf 2022](http://andyatkinson.com/blog/2022/05/23/railsconf-2022)
-- 2021: Presented at [PGConf NYC 2021](https://andyatkinson.com/blog/2021/12/06/pgconf-nyc-2021)
+- 2022: Presented at [RailsConf 2022](/blog/2022/05/23/railsconf-2022)
+- 2021: Presented at [PGConf NYC 2021](/blog/2021/12/06/pgconf-nyc-2021)
