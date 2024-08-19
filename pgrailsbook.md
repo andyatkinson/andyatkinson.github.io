@@ -68,7 +68,7 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 ## Community Links
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 - [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
-- [Top Five PostgreSQL Surprises from Rails Developers, Medium](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
+- [Top Five PostgreSQL Surprises from Rails Developers, Medium, 75 claps](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
 - [New This Week: High Performance PostgreSQL for Rails](https://media.pragprog.com/newsletters/2024-06-25.html)
 
 ## Social Media Stats
