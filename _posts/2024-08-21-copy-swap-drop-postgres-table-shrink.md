@@ -336,6 +336,6 @@ ON CONFLICT (id) DO NOTHING;
 ## Drop the old table
 Now the new smaller table has all the rows needed from the original table, has indexes to support the read operations and constraints, and is receiving new rows.
 
-The former table now can be archived, perhaps by using `pg_dump` to select all rows into a data file that can be backed up and restored.
+The former table can now be archived, perhaps by using `pg_dump` to select all rows into a data file that can be backed up and restored.
 
 Once that's done, the table can be dropped entirely, reclaiming the space from the table data and index data.
