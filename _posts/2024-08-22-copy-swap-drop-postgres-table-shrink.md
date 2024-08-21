@@ -2,7 +2,7 @@
 layout: post
 title: 'Shrinking Big PostgreSQL tables: Copy-Swap-Drop'
 tags: []
-date: 2024-08-21
+date: 2024-08-22
 comments: true
 ---
 
@@ -287,6 +287,21 @@ ALTER TABLE events RENAME TO events_retired;
 -- Rename "intermediate" table to be original table name
 ALTER TABLE events_intermediate RENAME TO events;
 
+-- Grab one more batch of any rows committed
+-- just before this transaction
+WITH t AS (
+  SELECT MAX(id) AS max_id
+  FROM events_intermediate
+)
+INSERT INTO events_intermediate
+OVERRIDING SYSTEM VALUE
+SELECT *
+FROM events
+WHERE id > (SELECT max_id FROM t)
+ORDER BY id
+LIMIT 1000;
+
+
 COMMIT;
 ```
 
@@ -323,20 +338,6 @@ ALTER TABLE events RENAME TO events_intermediate;
 
 -- Make the original jumbo table the main table
 ALTER TABLE events_retired RENAME TO events;
-
--- Grab one more batch of any rows committed
--- just before this transaction
-WITH t AS (
-  SELECT MAX(id) AS max_id
-  FROM events_intermediate
-)
-INSERT INTO events_intermediate
-OVERRIDING SYSTEM VALUE
-SELECT *
-FROM events
-WHERE id > (SELECT max_id FROM t)
-ORDER BY id
-LIMIT 1000;
 
 COMMIT;
 ```
