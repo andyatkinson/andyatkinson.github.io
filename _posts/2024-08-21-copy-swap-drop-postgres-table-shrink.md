@@ -6,7 +6,12 @@ date: 2024-08-21
 comments: true
 ---
 
-In this post, we’ll look at a strategy that effectively shrinks a large table where only a portion of the data is needed.
+In this post, we’ll look at a strategy that effectively shrinks a large table, when only a portion of the data is needed.
+
+## Postgres testing details
+- PostgreSQL 16
+- Default transaction isolation level `READ COMMITTED`
+- Run steps from the psql command line client
 
 ## A few big tables
 Application databases commonly have a few tables that are much larger in size than all the other tables. These jumbo tables contain that data for data-intensive features, capturing granular information at a high frequency.
@@ -224,25 +229,30 @@ Index names need to be unique, so append "1" on or do something else to create a
 
 Change the table name to "events_intermediate" since we're creating the indexes there.
 
+We can omit "USING btree" since btree is the default type.
+
 ```sql
-CREATE UNIQUE INDEX events_pkey1_idx ON events_intermediate USING btree (id);
-CREATE INDEX events_col1_idx1 ON events_intermediate USING btree (col1);
+CREATE UNIQUE INDEX events_pkey1_idx ON events_intermediate (id);
+CREATE INDEX events_col1_idx1 ON events_intermediate (col1);
 ```
 
 ## Primary key using the index
-One more tricky little thing here is that the primary key constraint is there but is not using an index, which is not how it was originally set up.
+One more tricky little thing here is that the primary key constraint is being enforced (try inserting a duplicate) but the unique constraint is not supported with an index at the moment.
+
+That's now how the table was originally set up, and we want the new one to be equivalent.
 
 To do that, we have to run one more command:
 ```sql
 ALTER TABLE events_intermediate
-ADD CONSTRAINT events_pkey1 PRIMARY KEY USING INDEX events_pkey1_idx;
+ADD CONSTRAINT events_pkey1 PRIMARY KEY
+USING INDEX events_pkey1_idx;
 ```
 
 You should see this:
 ```sql
 NOTICE:  ALTER TABLE / ADD CONSTRAINT USING INDEX will rename index "events_pkey1_idx" to "events_pkey1"
 ```
-This renames the index as well, and the target name "events_pkey1" was chosen.
+This renames the index as well, and the name "events_pkey1" was chosen with the rename in mind.
 
 At this point, if you compare both tables using "\d", they should be identical in structure.
 
@@ -314,6 +324,19 @@ ALTER TABLE events RENAME TO events_intermediate;
 -- Make the original jumbo table the main table
 ALTER TABLE events_retired RENAME TO events;
 
+-- Grab one more batch of any rows committed
+-- just before this transaction
+WITH t AS (
+  SELECT MAX(id) AS max_id
+  FROM events_intermediate
+)
+INSERT INTO events_intermediate
+OVERRIDING SYSTEM VALUE
+SELECT *
+FROM events
+WHERE id > (SELECT max_id FROM t)
+ORDER BY id
+LIMIT 1000;
 
 COMMIT;
 ```
