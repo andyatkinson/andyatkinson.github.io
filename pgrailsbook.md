@@ -17,8 +17,8 @@ title: High Performance PostgreSQL for Rails Book
 - [Walmart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## Ratings
-- [Amazon: 5.0, 3 ratings and reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
-- [Goodreads: 4.77, 13 ratings, 3 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [Amazon: 5.0, 4 ratings and reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
+- [Goodreads: 4.79, 14 ratings, 4 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
 <details>
@@ -48,6 +48,9 @@ title: High Performance PostgreSQL for Rails Book
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://t.co/00jTI6GLBu">https://t.co/00jTI6GLBu</a> by <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a> <br>You will be really good at PostgreSQL and Rails at the same time</p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1810759758053249478?ref_src=twsrc%5Etfw">July 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Praise and Reviews
+> I would recommend this book as a primer on PG performance in the context of Rails deployments as required reading material for most engineering teams.
+<cite>- Simon Chiu</cite>
+
 > The most informative and knowledge dense book I have ever read on understanding database performance, bottlenecks, and solutions.
 <cite>- Sean Szurko</cite>
 
@@ -90,14 +93,7 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 - September 26-27, 2024 - [Rails World 2024](https://rubyonrails.org/world/2024)
 - November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
 
-## Recent Appearances
-- August 1-2, 2024 - [Madison Ruby - 2024 Conference](https://www.madisonruby.com)
-- June 11, 2024 - [POSETTE - 2024 Conference](https://www.citusdata.com/posette/speakers/andrew-atkinson/) - SaaS on Rails on PostgreSQL
-- May 7-9, 2024 - [RailsConf 2024 Conference](https://railsconf.org) - Workshop Presenter
-- April 26, 2024 - [PgDay Chicago 2024 Conference](https://2024.pgdaychicago.org) - Presenter
-- March 21, 22, 2024 - [Sin City Ruby 2024 Conference](https://www.sincityruby.com) - Presenter
-
-## Book Events Timeline
+## Book Events and Past Appearances
 - 2024 August: [Presented at Madison+ Ruby](/blog/2024/08/13/madison-plus-ruby-conference-recap)
 - 2024 July: Shipping from major retailers like Amazon.com, including being the [#1 Best Seller in the Ruby Programming category](https://x.com/andatki/status/1819601510797398046)
 - 2024 June: In Print!
