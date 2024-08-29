@@ -188,10 +188,15 @@ Since the table is not yet "live," we can add the indexes without the `CONCURREN
 
 We can also juice up the resources a bit for adding indexes.
 
-From psql, raise the `maintenance_work_mem` to higher value to temporarily allocate more system memory to this session for index creation.
+From psql, raise the `maintenance_work_mem` to higher value to temporarily allocate more system memory in this session for index creation.
+
+Start *up to* more parallel maintenance workers ([capped](https://postgresqlco.nf/doc/en/param/max_parallel_maintenance_workers/) by max_worker_processes and max_parallel_workers) for Btree index creation.
 ```sql
 -- Speed up index creation, example of increasing it to 1GB of memory
 SET maintenance_work_mem = '1GB';
+
+-- Raise from default of 2, to 4
+SET max_parallel_maintenance_workers = 4;
 ```
 
 Given the table size is smaller now, the index builds will be much faster compared with the same builds on the original table.
