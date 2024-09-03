@@ -84,7 +84,8 @@ That means around 470 million rows could be removed, or in other words, 94% of t
 
 That's a substantial win, so with that context in mind, let's get started.
 
-# Clone the table
+## Step 1: COPY
+### Clone the table
 First, create an intermediate table to copy rows into.
 
 I like to work in psql. Let's create a "testdb" database for this example, so it's separated. We'll create tables in "testdb" to show how this works.
@@ -130,7 +131,7 @@ We'll look at how to grab the index definition statements for "events" later on,
 
 Since we’re copying rows over, we want to defer creating indexes until after row copying has completed, to make the row copying as fast as possible.
 
-## Copy a subset of the rows
+### Copy a subset of the rows
 With the empty table created, we’ll determine how far back to start copying from the events table.
 
 Let's find the first `id` that’s listed for rows with a `created_at` value that’s 30 days old.
@@ -193,7 +194,7 @@ Once the batches are done, the table `events_intermediate` will have approximate
 
 We’re ready to swap the table names so that the new smaller table takes over the purpose of the original table.
 
-## Preparing to swap the tables
+### Preparing to swap the tables
 We’ll create a single transaction that captures any uncopied rows, copies them, then performs two table rename operations. These renames "swap" the new table for the old one.
 
 The original table is renamed with the "retired" suffix, also a naming convention borrowed from pgslice!
@@ -210,7 +211,7 @@ Make sure you’re prepared for that, meaning you've tested this in a pre-produc
 
 Before we're ready to cut over for real, we want the indexes added back support the read queries.
 
-## Adding indexes back
+### Adding indexes back
 We intentionally left out indexes initially, so that row copying went as fast as possible.
 
 Since the table is not yet "live" and offline, we can add the indexes back without using `CONCURRENTLY` when creating them, so they're created faster.
@@ -271,7 +272,7 @@ CREATE UNIQUE INDEX events_pkey1_idx ON events_intermediate (id);
 CREATE INDEX events_data_idx1 ON events_intermediate (data);
 ```
 
-## Primary key using the index
+### Primary key using the index
 One tricky thing here is the primary key constraint isn't fully configured.
 
 It's being enforced, try inserting a duplicate and verifying there's an error. However, the unique constraint doesn't have a supporting index.
@@ -293,7 +294,7 @@ This renames the index. The index name "events_pkey1" was chosen with the rename
 
 At this point, if you compare both tables using "\d", they should be identical.
 
-## Raising sequence values
+### Raising sequence values
 Let's check the current sequence objects in testdb:
 ```sql
 SELECT * FROM pg_sequences;
@@ -312,12 +313,13 @@ The buffer helps when we copy in missed inserts from the original table.
 SELECT setval('events_intermediate_id_seq', nextval('events_id_seq') + 1000);
 ```
 
+## Step 3: SWAP
 ### Ready to swap
 The subset of original tables rows are copied over. The replacement table structure is identical, including columns, data types, constraints, and indexes.
 
 We're ready to swap.
 
-Here's the 
+Here's the transaction:
 ```sql
 BEGIN;
 
@@ -361,7 +363,7 @@ With this design, there could be a brief period where rows aren't available that
 
 Note that the sequence name will continue to be `events_intermediate_id_seq` reflecting the "intermediate" suffix even though we've renamed the table.
 
-## Let's talk about rollback
+### Let's talk about rollback
 If things go wrong, you may want to reverse the steps. Let's look at how to do that.
 
 Optionally, raise the sequence again by 1000, perhaps using the gap as a marker of this activity, and to leave some space again for missed rows.
@@ -403,7 +405,8 @@ ON CONFLICT (id) DO NOTHING;
 
 Ideally you won't have to roll the steps back. However, consider practicing a rollback in advance so that you know how to use it if needed.
 
-## Drop the old table
+## Step 3: DROP
+### Drop the old table
 Let's imagine you didn't need the rollback. New rows are being inserted into the new, smaller table. Queries are accessing the last 30 days of data without errors.
 
 The former table can now be archived, perhaps by using `pg_dump` to select all rows into a data file (or in chunks) for file storage.
@@ -427,7 +430,7 @@ Thank you to Shayon Mukherjee for reading an earlier version of this post.
 
 ## Resources
 
-- Copy-swap-drop on GitHub
+- [Copy-swap-drop on GitHub](https://github.com/andyatkinson/pg_scripts/blob/main/administration/copy-swap-drop.sql)
 
 ## Feedback and Follow-Ups
 
