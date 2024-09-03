@@ -8,21 +8,6 @@ comments: true
 
 PostgreSQL 15 shipped in late 2022 (See [PostgreSQL 15 Release Notes](https://www.postgresql.org/docs/current/release-15.html)), including interesting new features like SQL `MERGE`. I wanted to give them a try. 
 
-## Outline
-
-- Intro
-- Steps
-- Running `pg_upgrade` with `--check`
-- Checksums
-- Errors with extensions
-- Having a cluster install user
-- Errors with extensions
-- Locale provider mismatch
-- Encodings mismatch
-- Final `initdb` command with flags
-- Closing Thoughts
-
-
 On my Mac, I was running PostgreSQL 14.3 and had some significant databases I wanted to preserve but have them running on 15.
 
 To perform the upgrade, I used `pg_upgrade` which ships with PostgreSQL. To initialize, install, and manage the cluster on Mac OS, I use [Postgres.app](https://postgresapp.com).
@@ -43,7 +28,6 @@ $ which pg_upgrade
 If the old version is active, make sure to use `pg_upgrade` from the new PostgreSQL 15 version.
 
 ## Steps
-
 1. Download and install Postgres.app. This is a regular Mac OS app with a `.dmg`.
 1. Choose "Replace" during installation. You are replacing the Mac OS app, not modifying the current PostgreSQL cluster.
 1. Open [Postgres.app](https://postgresapp.com). Choose the "+" icon. Version 15 is now available. Click the plus button to create a new cluster. In PostgreSQL the collection of databases is a "cluster."
@@ -75,8 +59,6 @@ pg_ctl stop \
 ```
 
 ## Running `pg_upgrade` with `--check`
-
-
 Run `pg_upgrade` with the `--check` option to perform a dry run. Provide the data directory and the binaries directory for both clusters.
 
 This means there are 4 arguments to `pg_upgrade` besides `--check`. 
@@ -94,7 +76,6 @@ The full command with the version 15 `pg_upgrade` and all 5 arguments is below.
 
 
 ## Checksums
-
 One issue I ran into was with checksums.
 
 The error was `"the old cluster does not use data checksums but the new one does".`
@@ -111,7 +92,6 @@ To disable checksums I ran the following command.
 
 
 ## Errors with extensions
-
 The next error I had was with `pg_cron`, which is an extension I'd compiled for PostgreSQL 14.
 
 ```sh
@@ -152,7 +132,6 @@ Now I can start PostgreSQL 15 again.
 ```
 
 ## Having a cluster install user
-
 I needed to create a `postgres` superuser for the upgrade.
 
 ```
@@ -163,7 +142,6 @@ I solved this by adding `--username postgres` to the `initdb` command.
 
 
 ## Locale provider mismatch
-
 The next error was a mismatch in the locale providers between the versions.
 
 ```
@@ -174,7 +152,6 @@ I solved this by adding `no-locale` to `initdb`, and running it directly on the 
 
 
 ## Encodings mismatch
-
 The next issue was a mismatch in the encodings between the clusters.
 
 ```
@@ -188,7 +165,6 @@ I added these flags `--lc-collate "en_US.UTF-8"` and `--lc-ctype "en_US.UTF-8"` 
 [`pg_upgrade` Documentation](https://www.postgresql.org/docs/current/pgupgrade.html)
 
 ## Final `initdb` command with flags
-
 The final `initdb` command invocation is as follows.
 
 ```sh
@@ -237,7 +213,6 @@ Following the recommendations, I performed database maintenance operations on th
 ```
 
 ## Closing Thoughts
-
 The `pg_upgrade` helped me upgrade the cluster. I had a new PostgreSQL 15 cluster, running with the data directory from the previous major version.
 
 Being able to perform a non-destructive upgrade while leaving the old version intact is a nice design. Using `--check` to perform a dry run first and work out issues was great.

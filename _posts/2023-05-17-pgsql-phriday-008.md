@@ -12,18 +12,7 @@ Check out my last post [PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s](
 
 In this post I’ll share my experience and recommendations for `pg_stat_statements`, PgHero, and the Query ID.
 
-## Outline
-
-- Intro
-- Setup and Restart
-- Parameters
-- PgHero
-- Computing a Query ID
-- Query ID and 14
-- Wrap Up
-
 ## Intro
-
 `pg_stat_statements` is a PostgreSQL extension that provides query statistics. You can use these statistics to better understand your query workload, including identifying slow queries.
 
 Statistics are collected for normalized forms of queries within a group. With specific query parameters removed, a normalized form with a unique Query ID is stored, and statistics for queries that fall into this group include the total number of calls, the duration, and more.
@@ -41,7 +30,6 @@ Check out this [Postgres.fm episode on `pg_stat_statements`](https://postgres.fm
 Now that you know a little about the PGSS extension, and the Query ID, how can you install and configure this extension to get started?
 
 ## Setup and Restart
-
 You'll want to check out the official docs[^1] if you're self-hosting PostgreSQL or check out docs from your cloud provider.
 
 AWS has a nice video called [How do I implement Postgres extensions in Amazon Relational Database Service for PostgreSQL?](https://www.youtube.com/watch?v=INx8VGGfGGU) that shows how to set up `pg_stat_statements` on AWS RDS.
@@ -57,7 +45,6 @@ While that process works well for individuals that know where to look, and how t
 For that tooling I recommend [PgHero](/blog/2022/10/04/pghero-3). PgHero has a nice presentation of Query Stats that can help your team have a shared view of all queries, including slow queries. This can make collaboration faster and easier.
 
 ## PgHero
-
 With PGSS enabled and PgHero connected to your database, Query Statistics are now visible in the Queries tab.
 
 PgHero is a Rails Engine and is available as a Ruby gem or in a Docker container.
@@ -71,7 +58,6 @@ Where I work, we’re running a fork with a couple of small changes that I felt 
 Next, let’s dive in to the Query ID attribute.
 
 ## Computing a Query ID
-
 Since PostgreSQL 14, enable `compute_query_id` to compute a Query ID.
 
 Set [`compute_query_id`](https://postgresqlco.nf/doc/en/param/compute_query_id/) to `auto` or `on`.
@@ -83,7 +69,6 @@ Configure these tools so that you can connect a PGSS Query ID with a sample from
 How would you set that up?
 
 ## Query ID and 14
-
 In the post [Using Query ID in Postgres 14](https://blog.rustprooflabs.com/2021/10/postgres-14-query-id), the author shows how to connect the Query ID from PGSS to query text logged in the `postgresql.log` .
 
 The query text is the full text of the query including the specific parameters. Any variations of the query with the same structure but different parameters will have the same Query ID.
@@ -106,7 +91,6 @@ Michael from pgMustard pointed out improvements coming to PostgreSQL 16, where `
 This will make it even easier to connect the Query ID from PGSS to samples from the log, and even their execution plans logged automatically with `auto_explain`.
 
 ## Wrap Up
-
 There you have it. Let’s recap.
 
 - `pg_stat_statements` is a useful extension. I recommend enabling it for every database you work with.

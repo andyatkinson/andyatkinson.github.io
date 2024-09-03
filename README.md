@@ -2,6 +2,10 @@
 
 This is the source code for my website, blog, and portfolio at [andyatkinson.com](https://andyatkinson.com) built with Jekyll and hosted on GitHub Pages.
 
+## Plugins
+
+- TOC: <https://github.com/allejo/jekyll-toc>
+
 
 #### Writing Style Tips
 

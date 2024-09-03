@@ -12,19 +12,7 @@ Read on to find out how we improved performance and growth management.
 
 In this post, we’ll look at how PostgreSQL table partitioning helped us solve our operational challenges from rapid data growth.
 
-
-## Outline
-
-* Why did we use table partitioning?
-* How did we roll out this change?
-* How did the process go?
-* Table partitioning and Cost Savings
-* Challenges and Mistakes
-* Future Improvements
-
-
 ## Why
-
 Performance can degrade when working with high growth rate tables. Queries slow down. Modifications like adding indexes or constraints take more time.
 
 One solution is to split up the table into a set of tables. This is the fundamental way that table partitioning works.
@@ -33,13 +21,11 @@ By moving away from a single large table, each smaller table becomes easier to w
 
 
 ## Declarative Partitioning
-
 From version 10 of PostgreSQL, splitting tables is possible with [Declarative Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html). One of the benefits of Declarative Partitioning is that it is easier to introduce compared with how table partitioning was done in the past. In earlier versions of PostgreSQL it was possible to build partitioned table relationships, but it might have involved using table inheritance, trigger functions, and check constraints which is a lot to create and maintain.
 
 Declarative Partitioning makes table partitioning accessible to more users.
 
 ## When should I partition?
-
 Smaller tables are easier to work with, but there is still a question about when to perform a conversion. To answer that, let's briefly discuss the architecture and memory for PostgreSQL, a single writer database. PostgreSQL has a fixed amount of memory available to the server. PostgreSQL recommends migrating a table to a partitioned table when the size of a table [exceeds the amount of system memory](https://www.postgresql.org/docs/current/ddl-partitioning.html).
 
 Since our database server had 384GB of memory and since the table size was nearly 1.5 TB, we felt that it was a good time to perform the conversion. This conversion would help our maintainability and scalability as the table continued to grow in size.
@@ -55,7 +41,6 @@ PostgreSQL routes `INSERT` statements to the current month based on the partitio
 Now that we know a little about why and when to partition, how did we perform it?
 
 ## How
-
 Our main database runs on PostgreSQL 13. Each release of PostgreSQL since version 10 has added improvements to Declarative Partitioning.
 
 We use [Logical Replication](https://www.postgresql.org/docs/current/logical-replication.html) as part of our data pipeline process to copy row modifications into the data warehouse.
@@ -72,7 +57,6 @@ Let's look at more details of the table to be migrated to a partitioned table.
 The conversion process was performed *online*, meaning there was no planned downtime. PostgreSQL kept running serving other requests while this process ran.
 
 ## Conversion with pgslice
-
 [pgslice](https://github.com/ankane/pgslice) is a command line program written in Ruby. The quick version of how it works is as follows.
 
 - You make a clone of your original table, which will serve as a destination for copied rows.
@@ -87,13 +71,11 @@ An important caveat of pgslice is that it’s designed for Append Only tables, m
 Fortunately this table was a "append mostly only" table and we were able to bring forward the small amount of updates with a separate process.
 
 ## Rinse and Repeat
-
 We manage 10 production databases each with their own copy of this table. pgslice can now be a standard tool used for our next table conversion. It’s parameterized and flexible, however we also added a small Ruby helper class to wrap the gem command calls to handle inconsistencies between database schema details.
 
 This helper class also serves as documentation for which arguments we call and what their values are.
 
 ## Test, test, test
-
 Row copying as a conversion technique includes significant trade-offs to be aware of. Significant testing of application code compatibility is needed. A learning was to get the codebase working with CI using a partitioned table as early as possible.
 
 We made the app fully compatible with both types of tables simultaneously so that we could roll forward or backward.
@@ -106,9 +88,7 @@ You will want lots of space capacity to run this as well since you'll be tempora
 
 How did the conversion process go?
 
-
 ## How did it go?
-
 The table partition conversion was successful. We've been running a partitioned table in all environments for several weeks now.
 
 We did have some hiccups and addressed those issues as they arose. In Part 2 of this series,[^part2] we’ll dig into how we solved a gnarly problem related to Primary Keys.
@@ -120,7 +100,6 @@ This also meant we could effectively shrink the total size of the table immediat
 What about cost savings?
 
 ## Cost Savings
-
 With AWS PostgreSQL databases, relocating data out of Aurora PostgreSQL and in to object storage directly lowers costs. Aurora charges in 10 GB increments per month.[^rdspriceguide] Charges go up as you consume more space, but also down[^awsdynamicresize] as you consume less space.
 
 With this project, data may be relocated from the database to AWS S3. S3 stores the same GB-month at 80% less cost compared with Aurora.
@@ -131,7 +110,6 @@ What could have gone better?
 
 
 ## Challenges and Mistakes
-
 We work hard to avoid data loss and minimize errors. Some scenarios are impractical to fully replicate in lower environments though due to time and engineering constraints.
 
 * Copying rows uses a lot of resources. Use batches, throttling, or stop the process if copying harms the application queries.
@@ -146,15 +124,11 @@ SELECT indexdef FROM pg_indexes WHERE indexname = 'index_name';
 ```
 
 ## Wrap Up
-
 PostgreSQL Declarative Partitioning can help you solve operational challenges for a high growth table. A migration to a partitioned table is not trivial, but can be tested well in advance and can be performed online using pgslice.
 
 Thanks to Bharath and Bobby for help on this project and for reviewing earlier versions of this post.
-
-
 
 [^rdspriceguide]: CloudZero RDS Price Guide <https://www.cloudzero.com/blog/rds-pricing>
 [^awsdynamicresize]: Aurora Dynamic Resizing <https://aws.amazon.com/about-aws/whats-new/2020/10/amazon-aurora-enables-dynamic-resizing-database-storage-space/>
 [^logrep]: Partitioned tables can now be replicated <https://amitlan.com/2020/05/14/partition-logical-replication.html>
 [^part2]: [PostgreSQL Table Partitioning Primary Keys — The Reckoning — Part 2 of 2](/blog/2023/07/27/partitioning-primary-keys-reckoning)
-

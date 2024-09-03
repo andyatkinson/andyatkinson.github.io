@@ -9,26 +9,12 @@ image: /assets/img/posts/2024/railsconf-2024-1.jpg
 
 {% include image-caption.html imageurl="/assets/images/posts/2024/railsconf-2024-1.jpg" title="Andrew Atkinson presenting at RailsConf conference 2024" caption="Andrew Atkinson. RailsConf 2024. Photo: <a href='https://www.aliceheartphotography.com'>Alice Heart Photography</a>" %}
 
-## Outline
-
-- Opening
-- Pre-conference activities
-- Arrival
-- Long-time friends and new ones
-- Meet the Authors
-- Workshop
-- Closing Keynote from Irina
-- Book
-- Hamtramck, MI
-- Wrap up — The Long Goodbye
-
 ## Opening
 This post is a look back at the weeks leading up to RailsConf 2024, and significant events from the event! There's a big change coming in 2025. Read on to learn more!
 
 ## Pre-conference activities
 - I gave a local, first run of the workshop content for [High Performance Active Record Apps](http://andyatkinson.com/blog/2024/04/10/workshop-active-record-postgresql-apps-minneapolis) in Minneapolis at Industrious. About 15 attended! This first run helped me realize I had too much content and needed to set up examples to copy and paste.
 - I was a guest on the Ruby for All podcast for episode [RailsConf 2024 Workshop Spotlight — Build High Performance Active Record Apps with Andy Atkinson](https://www.rubyforall.com/s2/67). This provided another opportunity to prepare a bit.
-
 
 ## On the flight, arrival, hotel
 - Quick flight from Minneapolis to Detroit

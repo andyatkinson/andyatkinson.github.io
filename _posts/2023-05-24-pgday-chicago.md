@@ -8,18 +8,6 @@ comments: true
 
 I had the chance to present on Table Partitioning this year at [PGDay Chicago 2023](https://2023.pgdaychicago.org), and had a great time. I wanted to recap my experience.
 
-Outline
-
-* Call For Papers
-* Dry Run with Crunchy Data
-* Pre-conference Activities
-- My presentation experience
-- The Conference and Venue
-- Community and Sessions
-* What could have been better?
-- Session Slides
-- What’s Next
-
 ![Presenting at Pg Day Chicago](/assets/images/pgday-chicago-andrew-atkinson-2023.jpg)
 <small>Andrew Atkinson Presenting at PGDay Chicago 2023</small>
 

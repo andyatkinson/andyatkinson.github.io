@@ -12,14 +12,6 @@ Primarily we talked about my experience over the last year writing a PostgreSQL 
 
 👉 [Episode 27 - Andrew Atkinson](https://podcast.drbragg.dev/episodes/episode-27-andrew-atkinson/)
 
-## Outline
-
-* Book Promotion
-* Writing and Coding
-* Book Writing
-* Balancing Book, Job, Family Commitments
-* Technical Topics (Rails)
-
 I met Drew in person at Sin City Ruby 2022 in Las Vegas where he presented *Who Wants to Be a Ruby Engineer?*. Drew's presentation was filled with Ruby trivia and he used a game show style for it and made it really fun.
 
 For his podcast, Drew does a 3-question format that's familiar to software developers.
@@ -29,7 +21,6 @@ The questions are: What are you currently working on? Do you have any current bl
 Let's dive in.
 
 ## Book Promotion
-
 Part of my goal with the podcast was to promote my upcoming book launch: [High Performance PostgreSQL for Rails](https://pgrailsbook.com).
 
 For one more week I'm sending out summaries of 10 Ruby gems and PostgreSQL extensions mentioned in the book. Subscribers will also get an exclusive discount code from the publisher once the book launches in Beta on August 30, 2023.
@@ -39,7 +30,6 @@ If that interests you, please subscribe at 👉 [pgrailsbook.com](https://pgrail
 Besides the book, we got into a variety of other topics like writing and editing technical books, and similarities between writing code and prose.
 
 ## Writing and Coding
-
 Writing code and writing books have some shared design goals.
 
 * Aim for High cohesion
@@ -56,7 +46,6 @@ When I started writing we talked about how I added a lot of references all over 
 Generally speaking, chapters should stand on their own but also contribute to the overall purpose of the book.
 
 ## Book Writing
-
 Regarding writing the book, we didn't discuss this as much in the podcast, but there are a number of other similarities to software development.
 
 * With Pragmatic Programmers, the book is managed like source code and written in Markdown and XML. Changes are checked in to Subversion version control.
@@ -70,7 +59,6 @@ For PostgreSQL, I might pop into psql and create a table and insert some rows, t
 The book uses the same Rails app and PostgreSQL database throughout for examples and exercises.
 
 ## Balancing Book, Job, Family
-
 Around the 25 minute mark, we dove more into how the book writing has impacted my personal life.
 
 Drew asked about how I managed the book responsibilities, a full-time job, family responsibilities, and my own personal mental and physical health.
@@ -87,7 +75,6 @@ The idea is to more quickly pick up the original state by finishing the easy thi
 
 
 ## Technical Topics
-
 In the last interview question about "something cool", I decided to mention a couple of things from the book I learned that are broadly applicable to Rails developers.
 
 * [Prosopite](https://github.com/charkost/prosopite) - This is a Ruby gem for N+1 detection. Prosopite can be configured to detect the N+1 query pattern. Consider adding this to your Rails app!
@@ -96,5 +83,4 @@ In the last interview question about "something cool", I decided to mention a co
 See: [PGSQL Phriday #001 — Query Stats, Log Tags, and N+1s](/blog/2022/10/07/pgsqlphriday-2-truths-lie) for more details on Strict Loading.
 
 ## Wrap Up
-
 The episode was a lot of fun and I wanted to thank Drew for the opportunity!

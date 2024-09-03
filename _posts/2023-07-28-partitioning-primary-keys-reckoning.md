@@ -10,23 +10,11 @@ In Part 2 of this [2 part PostgreSQL 🐘 Table Partitioning series](/blog/2023/
 
 Read on to learn more.
 
-
 If you haven't already read Part 1 of this series, please first read [PostgreSQL Table Partitioning — Growing the Practice — Part 1 of 2](/blog/2023/07/27/partitioning-growing-practice) which describes why and how this table was converted to a partitioned table.
 
 The context there will help explain the circumstances we were operating from.
 
-
-## Outline
-
-* Write locks and partitioned tables
-* The original Primary Key strategy used
-* The problem with that strategy
-* The SQL Solution
-* Wrap Up
-
-
 ## Original Context: Database and Table
-
 * PostgreSQL 13
 * Declarative partitioning with `RANGE` type
 * Table writes behavior is "Append Mostly"
@@ -39,7 +27,6 @@ The context there will help explain the circumstances we were operating from.
 
 
 ## Partitioned Table Primary Keys
-
 In the original partitioned table design, we set up a `PRIMARY KEY` constraint on each child partition, but none on the parent. This met the needs of the application.
 
 Each child partition Primary Key was on the `id` column only. PostgreSQL allows the child table to have a Primary Key constraint with none defined on the parent, but not the other way around.
@@ -52,9 +39,7 @@ We found out later this was short sighted and in fact we did have a need for a p
 
 So where did this need come from?
 
-
 ## The Reckoning
-
 The need for a parent table primary key came from outside the application. Our data warehouse detects row modifications and copies them to our data warehouse.
 
 An engineer noticed an excessive amount of queries in the data warehouse since we'd partitioned the table.
@@ -64,7 +49,6 @@ The data warehouse was attempting to identify the new and changed rows, but it h
 After the team met, we decided the best course of action was to modify the Primary Key definition so that it existed on the parent. While the solution was clear, applying the change had immediate problems.
 
 ## Lock It Up
-
 In PostgreSQL table partitioning, the parent and child Primary Keys must match. On a partition parent table, the Primary Key *must* include the partition key column. This created an inconsistency with the child and this was a big problem because we couldn't just easily add the primary key to the parent.
 
 What we wanted to achieve was to have a composite Primary Key covering the `id` and `created_at` columns on the parent that would then be copied to all child partitions.
@@ -76,7 +60,6 @@ We didn't want to take planned downtime, we did want to modify the Primary Key d
 How could we solve this problem?
 
 ## Solution and Roll Out
-
 This same table would need to be modified on about 10 production databases, ranging in size from small to large. For the smaller databases we modified the child and parent Primary Keys and could tolerate the lock duration that blocked new writes since it was short.
 
 We removed the existing Primary Key definition on all the child partitions and added the new Primary Key to the parent which propagates to the children.
@@ -86,7 +69,6 @@ However, for the big database we'd need a unique solution. The table would be lo
 We iterated through various approaches, and settled on a series of tricks to achieve on online modification.
 
 ## Placeholder Table and Hidden Table Modification
-
 The strategy we used "hid" the lock period by performing the modification to a hidden table disconnected from concurrent transactions, behind the scenes.
 
 To achieve this, we used a placeholder table that continued to receive writes and answer queries while the original table was being modified in the background.
@@ -134,9 +116,7 @@ In the next section, we'll share some of the SQL used to accomplish this.
 
 
 ## The SQL
-
 In the example below, `tbl` is the name of the table being modified. It has the columns `id` and `created_at`. The table was copied using [`INCLUDING ALL`](https://www.postgresql.org/docs/current/sql-createtable.html) which includes extra objects like indexes but does not include data.
-
 
 ```sql
 -- create an empty placeholder table
@@ -168,9 +148,7 @@ ALTER TABLE tbl_offline RENAME TO tbl;
 COMMIT;
 ```
 
-
 ## Wrap Up
-
 In this post, we discussed a operational problem we encountered, where we determined we'd need to modify the `PRIMARY KEY` constraint on a large partitioned table.
 
 Because this would lock the parent and children partitions, blocking concurrent transactions, we showed how to perform the modification using a placeholder table to handle writes and queries, and perform the modification offline by hiding the table.
@@ -185,6 +163,4 @@ Once the primary key modification was complete, the excessive data warehouse que
 
 Thanks to Sriram Rathinavelu and Alesandro Norton for contributing to this project and for reviewing earlier versions of this post.
 
-
 [^pkdef]: <https://alexey-soshin.medium.com/dealing-with-partitions-in-postgres-11-fa9cc5ecf466>
-
