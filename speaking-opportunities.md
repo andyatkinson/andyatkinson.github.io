@@ -4,6 +4,11 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## StepChange: Scaling Rails & Postgres
+- <cite>2024-08-29</cite>
+- Video interview
+- [🎥 Scaling Rails & Postgres to Millions of Users at Microsoft: Lessons & Takeaways](https://stepchange.work/blog/scaling-rails-postgres-to-millions-of-users-at-microsoft-lessons-takeaways)
+
 ## POSETTE 2024
 - <cite>2024-06-13</cite>
 - Presentation, virtual
