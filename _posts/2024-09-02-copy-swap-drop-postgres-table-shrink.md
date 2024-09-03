@@ -2,7 +2,6 @@
 layout: post
 permalink: /copy-swap-drop-postgres-table-shrink
 title: 'Shrinking Big PostgreSQL tables: Copy-Swap-Drop'
-date: 2024-10-02
 tags: []
 comments: true
 hidden: true

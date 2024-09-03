@@ -52,8 +52,9 @@ I occasionally `rm -rf _site` to remove the generated site completely. Changing 
 
 Set up hidden page initially as follows.
 
-1. Create _posts post with future date, e.g. one month in future
+1. Create _posts post with future date in filename of current date
 1. No tags
+1. No date (will use current date)
 1. Give post a non-date permalink
 1. Set "hidden: true" in front matter
 1. Use "bundle exec jekyll serve --future" to see it
@@ -63,8 +64,8 @@ Note: Date-based filename organizes post but isn't used in permalink.
 
 When ready for general audience and syndicate as follows.
 
-1. Change date from future date to current date.
-1. Add tag to trigger syndication
+1. Change date from future date to current date, e.g. `date: 2024-10-02`
+1. Add tag to trigger syndication (e.g. PostgreSQL)
 1. Remove "hidden: true" from front matter
 1. Run "bundle exec jekyll serve" and confirm visibility
 1. Push it, confirm permalink is same, it's in pagination and tag-feed
