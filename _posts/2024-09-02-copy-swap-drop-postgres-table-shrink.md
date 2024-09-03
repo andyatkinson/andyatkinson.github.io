@@ -35,7 +35,7 @@ Large tables might force a need to scale the database server instance vertically
 
 When the application queries only a portion of the rows, such as recent rows, or rows for active users or customers, there's an opportunity here to move the unneeded rows out of Postgres.
 
-One tactic to do that is to `DELETE` rows, but this is a problem due to the multiversion row design of Postgres. We'll cover this in an more detail in an upcoming post on massive delete operations.
+One tactic to do that is to `DELETE` rows, but this is a problem due to the multiversion row design of Postgres. We'll cover this in more detail in an upcoming post on massive delete operations.
 
 Another option would be to migrate data into partitioned tables.
 
@@ -88,7 +88,7 @@ That's a substantial win, so with that context in mind, let's get started.
 # Clone the table
 First, create an intermediate table to copy rows into.
 
-I like to work in psql. Let's create a "testdb" database for this example, so it's separated. We'll create tables in "tesdb" to show how this works.
+I like to work in psql. Let's create a "testdb" database for this example, so it's separated. We'll create tables in "testdb" to show how this works.
 
 You can run through these examples, then adapt them to your specific database and table names.
 ```
@@ -145,7 +145,7 @@ WHERE created_at > (CURRENT_DATE - INTERVAL '30 days')
 LIMIT 1;
 ```
 
-Imagine the value was id `123456789`. With that `id` in hand, we can begin batched copying from there.
+Imagine the value was id `123456789`. With that `id` in hand, we can begin batch copying from there.
 
 Consider making the batch size as large as possible, balanced against not causing too much CPU or IO operations usage. This means you'll need to closely monitor DB server metrics as you create an initial batch, then increase the batch size from there.
 
@@ -348,7 +348,7 @@ COMMIT;
 
 Alright! The new smaller table has been swapped in. Let's do one more pass to make sure any inserted rows into the former table weren't missed.
 
-This should find close-to-zero rows. There could be rows committed after the transaction started and weren't visibile.
+This should find close-to-zero rows. There could be rows committed after the transaction started and weren't visible.
 
 To do that, this statement copies from the retired table, "events_retired", into the newly renamed "events" table.
 ```sql
@@ -377,7 +377,7 @@ Swap the names again.
 ```sql
 BEGIN;
 -- the new events table should be sent backward
--- to being the "intermediate" table.
+-- to be the "intermediate" table.
 -- The current "retired" table should be promoted to be the main table.
 ALTER TABLE events RENAME TO events_intermediate;
 
@@ -413,4 +413,62 @@ Once optional archival is completed and verified (outside the scope of this post
 
 Dropping the table is the last step in this process
 
+```sql
+-- Warning: Please review everything above.
+DROP TABLE events_retired;
+```
+
 ## Wrapping up
+
+We've reviewed a process to, Copy, Swap, and Drop an "events" table.
+
+Feel free to practice these steps using your own local Postgres instance, and send feedback you have as comments on this post, or on the referenced set of SQL operations on GitHub.
+
+Thank you to Shayon Mukherjee for reading an earlier version of this post.
+
+## Resources
+
+- Copy-swap-drop on GitHub
+
+## Feedback and Follow-Ups
+
+> What about exclusively locking the table during copying?
+
+Shayon Mukherjee read an earlier version of this post, and knows a thing or two about this type of thing, as the author of [pg-osc](https://github.com/shayonj/pg-osc).
+
+What about locking the "events" table with exclusive access while the copy runs? An exclusive table lock could mean that inserts would error (when they couldn't acquire the lock in time, and assuming a lock_timeout was set).
+
+I chose not to lock the table, which means any commits not visibile at transaction start time, given the isolation level of "read committed", meant that we'd do one more pass to find inserts after that transaction started but before it was committed.
+
+This trade-off means there will be a small period where those inserted rows aren't queryable since they haven't yet been copied.
+
+That could produce "not found" types of errors for those rows.
+
+If that trade-off isn't acceptable, then the table could be locked explicitly, with a locking statement like `LOCK TABLE events;` inside the transaction, creating an `AccessExclusiveLock` of the table.
+
+> What about a greater isolation level?
+
+Another option for the name swap and final copy transaction would be to use a [greater isolation level](https://www.postgresql.org/docs/current/transaction-iso.html). `SERIALIZABLE` would be the sensible one if that was the goal.
+
+Using `SERIALIZABLE` for the transaction would mean that any other concurrent insert, update, or delete transactions would need to run after this transaction is committed or rolled back.
+
+> How was 1000 chosen?
+
+1000 was an example of the amount of possible inserts for the last batch. Since we're moving from 30 days ago up to current, then we'd only "miss" the inserts that weren't yet committed for the final batch.
+
+Since the name swap transaction includes one more batch, this reduces the "missed" rows further. If there are expected to be a few hundred while the batched copy and name swap runs, then 1000 makes sense.
+
+Measure how long the batch copy takes and then increase the "gap", e.g. 10,000 or 100,000, if more rows are inserted in your system in the duration of the last batch copy.
+
+> What about Foreign Keys?
+
+Shayon pointed out most significant databases will have foreign key constraints. I left that out of the example for simplicity.
+
+With foreign key constraints, I'd follow a process like this.
+
+1. Copy table as shown earlier. Initially the intermediate table would have the foreign key constraint
+1. Drop the foreign key constraint on the intermediate table, before copying rows.
+1. Once complete, get the constraint definition from the source table.
+1. Recreate the foreign key constraint on the newly swapped table, but initially `NOT VALID`. This acquires a shared lock and can be added initially for new rows.
+
+Then validate the constraint as soon as possible using `VALIDATE CONSTRAINT`. That process also involves a few steps and is beyond the scope of this post, but I'd be happy to write it up if there's interest.
