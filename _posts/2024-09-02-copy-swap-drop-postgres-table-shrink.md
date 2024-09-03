@@ -3,11 +3,12 @@ layout: post
 permalink: /copy-swap-drop-postgres-table-shrink
 title: 'Shrinking Big PostgreSQL tables: Copy-Swap-Drop'
 date: 2024-10-02
-tags: [PostgreSQL]
+tags: []
 comments: true
+hidden: true
 ---
 
-In this post, you'll learn a recipe you can use to effectively "shrink" any large table, when only a portion of the data is queried.
+In this post, you'll learn a recipe you can use to effectively "shrink" any large table. This is a good fit when only a portion of the data is queried, without 
 
 You can use this recipe for tables with billions of rows, and *without* taking Postgres offline. How does it work?
 
@@ -146,14 +147,16 @@ LIMIT 1;
 
 Imagine the value was id `123456789`. With that `id` in hand, we can begin batched copying from there.
 
-Consider making the batch size as large as possible, balanced against not causing too much CPU or IO operations usage that takes away from primary application work. This means you'll want to closely monitor DB server metrics.
+Consider making the batch size as large as possible, balanced against not causing too much CPU or IO operations usage. This means you'll need to closely monitor DB server metrics as you create an initial batch, then increase the batch size from there.
 
-Plan to run these operations during a low activity period for your application, and add pauses in between batches.
+Run these operations during a low activity period for your application, such as after hours, weekends, etc. and add pauses in between batches.
 
 Let's use a batch size of 1000 to start. The query below filters on the primary key, which means it will use the primary key index.
 
+It starts from the id you found earlier and adds 1000 to it. If there are gaps, there won't be a full set of 1000 records.
+
 ```sql
--- Query in batches of 1000 at a time from that point forward, there might be gaps but that's ok.
+-- Query in batches, up to 1000 at a time
 INSERT INTO events_intermediate
 OVERRIDING SYSTEM VALUE
 SELECT * FROM events WHERE id >= 123456789
@@ -161,7 +164,11 @@ ORDER BY id ASC -- the default ordering
 LIMIT 1000;
 ```
 
-Let's imagine you’re manually running batches. The statement below is copyable to perform the next batch copy. The statement gets the max id value from the new `events_intermermediate` table. Using that id, the next copy operation can start from the next id value that’s greater.
+We're not automating this process here, but running it manually.
+
+To make that easier, the statement below is copyable to perform the next batch copy.
+
+The statement gets the max id value from the new `events_intermermediate` table. Using that id, the next copy operation can start from the next id value that’s greater.
 
 ```sql
 WITH t AS (
@@ -177,52 +184,54 @@ ORDER BY id
 LIMIT 1000;
 ```
 
-For brevity of this post, we’ll avoid making this snippet above re-runnable automatically. We could explore that in a future post.
+We'll explore automation in a future post.
 
-Assume you’re running successive batches of this manually for this post. For example, from a psql session, copying and pasting this same command repeatedly, which will select batches of 1000.
+The goal is to fill the intermediate table up with copies from 30 days back to current.
 
-The goal now is to fill forward up to the current rows, from 30 days back up to the current time.
+In the last batch, since it will only know about committed rows, there will still be newer rows created after. We’ll get to those, don’t worry.
 
-Note that in your last batch, there will still be newer rows created outside of the snapshot that your last `INSERT` transaction saw. We’ll get to those though, don’t worry.
+Once the batches are done, the table `events_intermediate` will have approximately 30 days of data, minus a few more rows.
 
-The table `events_intermediate` should now have approximately 30 days of data, minus a few more rows. We’re ready to swap the table names so that the new smaller table takes over the original table name.
+We’re ready to swap the table names so that the new smaller table takes over the purpose of the original table.
 
 ## Preparing to swap the tables
-We’ll create a single transaction that captures any uncopied rows, copies them, then performs two table rename operations. These renames will "swap" the new table in for the old one.
+We’ll create a single transaction that captures any uncopied rows, copies them, then performs two table rename operations. These renames "swap" the new table for the old one.
 
-The original table is renamed to have the "retired" suffix. This is another naming convention borrowed from pgslice!
+The original table is renamed with the "retired" suffix, also a naming convention borrowed from pgslice!
 
-With the original table name "available," rename the intermediate table to be the original table. In other words, drop the "_intermediate" suffix.
+The new table drops the "_intermediate" suffix.
 
-One other part is handling the table sequence. The table uses a sequence object `events_id_seq` to hand out unique integer values.
+One other part is handling the table sequence. The original table used a sequence object `events_id_seq` for unique integer values. When you copied the table earlier, a new sequence was created.
 
-This is optional, but we're deliberately raising the next sequence value by 1000 as a precaution for a possible rollback, which we'll cover shortlty.
+We're adding a step to raise the sequence value by 1000 for the new sequence, to leave some space to copy in "missed" inserts.
 
-Finally, we've arrived to the "exciting" step. The new table will become the replacement table and immediately begin receiving new write operations. Make sure you’re ready for that, meaning you've tested this extensively in a pre-production environment where it's safe to make mistakes.
+The new table will become the replacement table and immediately begin receiving new write operations.
 
-However, before we do that, let's look at adding the indexes back to support our read queries.
+Make sure you’re prepared for that, meaning you've tested this in a pre-production environment where it's safe to make mistakes, experiment, and roll back.
+
+Before we're ready to cut over for real, we want the indexes added back support the read queries.
 
 ## Adding indexes back
-We intentionally wanted to create indexes at the end, compared with creating them in advance adding more latency to each `INSERT`.
+We intentionally left out indexes initially, so that row copying went as fast as possible.
 
-Since the table is not yet "live," we can add the indexes without the `CONCURRENTLY` option, meaning they'll be added as fast as possible.
+Since the table is not yet "live" and offline, we can add the indexes back without using `CONCURRENTLY` when creating them, so they're created faster.
 
-We can also juice up the resources a bit for adding indexes.
+We can also add more resources to help with index creation.
 
-From psql, raise the `maintenance_work_mem` to higher value to temporarily allocate more system memory in this session for index creation.
+From psql, add more memory to `maintenance_work_mem` for your session to help.
 
-Start *up to* more parallel maintenance workers ([capped](https://postgresqlco.nf/doc/en/param/max_parallel_maintenance_workers/) by max_worker_processes and max_parallel_workers) for Btree index creation.
+Additionally, allow Postgres to start more parallel maintenance workers ([capped](https://postgresqlco.nf/doc/en/param/max_parallel_maintenance_workers/) by max_worker_processes and max_parallel_workers) for index creation.
 ```sql
 -- Speed up index creation, example of increasing it to 1GB of memory
 SET maintenance_work_mem = '1GB';
 
--- Raise from default of 2, to 4
+-- Allow for more parallel maintenance workers
 SET max_parallel_maintenance_workers = 4;
 ```
 
-Given the table size is smaller now, the index builds will be much faster compared with the same builds on the original table.
+Given the index creations are on the smaller table, their build times will be much faster compared with being built on the large table.
 
-However, there may be a `statement_timeout` in effect that's too short. Try raising it for this session to something like two hours.
+However, there may be a `statement_timeout` in place that's too short. Try increasing this timeout so there's plenty of time to create indexes.
 
 ```sql
 -- Add time, e.g. 2 hours to provide plenty of time
@@ -251,23 +260,26 @@ With those definitions, adapt them slightly.
 
 We can remove the "public" schema for this example. Use the schema for your database.
 
-Index names need to be unique, so append "1" on or do something else to create a unique index name.
+Index names need to be unique, so append "1" to create a unique index name, or do something else to your preference.
 
-Change the table name to "events_intermediate" since we're creating the indexes there.
+Change the table name from those statements to "events_intermediate".
 
-We can omit "USING btree" since btree is the default type.
+Omit "USING btree" since Btree is the default type.
 
+Run these DDL statements:
 ```sql
 CREATE UNIQUE INDEX events_pkey1_idx ON events_intermediate (id);
 CREATE INDEX events_data_idx1 ON events_intermediate (data);
 ```
 
 ## Primary key using the index
-One tricky thing here is that the primary key constraint is being enforced (try inserting a duplicate) but the unique constraint is not supported with an index at the moment.
+One tricky thing here is the primary key constraint isn't fully configured.
 
-That's now how the table was originally set up, and we want the new one to be equivalent.
+It's being enforced, try inserting a duplicate and verifying there's an error. However, the unique constraint doesn't have a supporting index.
 
-To do that, we have to run one more command:
+Since the original table was set up with a unique constraint and index, we want the new table to be equivalent.
+
+To do that, run this command:
 ```sql
 ALTER TABLE events_intermediate
 ADD CONSTRAINT events_pkey1 PRIMARY KEY
@@ -278,10 +290,9 @@ You should see this:
 ```sql
 NOTICE:  ALTER TABLE / ADD CONSTRAINT USING INDEX will rename index "events_pkey1_idx" to "events_pkey1"
 ```
-This renames the index as well, and the name "events_pkey1" was chosen with the rename in mind.
+This renames the index. The index name "events_pkey1" was chosen with the rename in mind.
 
-At this point, if you compare both tables using "\d", they should be identical in structure.
-
+At this point, if you compare both tables using "\d", they should be identical.
 
 ## Raising sequence values
 Let's check the current sequence objects in testdb:
@@ -293,7 +304,9 @@ We should see:
 - `events_id_seq`
 - `events_intermediate_id_seq`
 
-Let's use the last value from the original table, to raise the value plus some buffer amount for the intermediate table sequence:
+Let's use the last value from the sequence on the original table, plus that buffer of 1000 discussed earlier.
+
+The buffer helps when we copy in missed inserts from the original table.
 
 ```sql
 -- Capture the sequence value plus the raised, as NEW_MINIMUM
@@ -301,9 +314,11 @@ SELECT setval('events_intermediate_id_seq', nextval('events_id_seq') + 1000);
 ```
 
 ### Ready to swap
-We're ready to swap. The subset of data will be in place on the new table structure, with an equivalent definition, including columns, data types, constraints, and indexes.
+The subset of original tables rows are copied over. The replacement table structure is identical, including columns, data types, constraints, and indexes.
 
-Here's the swap transaction:
+We're ready to swap.
+
+Here's the 
 ```sql
 BEGIN;
 
@@ -331,9 +346,11 @@ LIMIT 1000;
 COMMIT;
 ```
 
-Alright! The new smaller table has been swapped in. Let's do one more pass to make sure any inserted rows into the former table weren't missed. Technically, this should find zero rows.
+Alright! The new smaller table has been swapped in. Let's do one more pass to make sure any inserted rows into the former table weren't missed.
 
-This means we’re copying from the retired table, "events_retired", into the new table "events".
+This should find close-to-zero rows. There could be rows committed after the transaction started and weren't visibile.
+
+To do that, this statement copies from the retired table, "events_retired", into the newly renamed "events" table.
 ```sql
 INSERT INTO events
 OVERRIDING SYSTEM VALUE
@@ -341,14 +358,16 @@ SELECT * FROM events_retired
 WHERE id > (SELECT MAX(id) FROM events);
 ```
 
-For new inserts, we should see that their primary key `id` values reflect that gap created earlier, creating a space of 1000 values.
+With this design, there could be a brief period where rows aren't available that are queried. You'll have to determine if this trade-off is ok with your system.
 
-Note that the sequence name will continue to be `events_intermediate_id_seq` even though the table name was changed.
+Note that the sequence name will continue to be `events_intermediate_id_seq` reflecting the "intermediate" suffix even though we've renamed the table.
 
-## Bonus Steps
-If things go wrong, you may want to reverse the steps. Create
+## Let's talk about rollback
+If things go wrong, you may want to reverse the steps. Let's look at how to do that.
 
-Optionally raise the sequence again by 1000, perhaps using the gap as a marker of this activity.
+Optionally, raise the sequence again by 1000, perhaps using the gap as a marker of this activity, and to leave some space again for missed rows.
+
+Remember the sequence is called "events_intermediate_id_seq" if you haven't renamed it.
 
 ```sql
 SELECT setval('events_intermediate_id_seq', nextval('events_intermediate_id_seq') + 1000);
@@ -372,7 +391,7 @@ Now rows are flowing into a new table, but we’ll need to grab any missed ones.
 
 ```sql
 -- Now we'd need to select from rows inserted into "events_intermediate"
--- in the last hour that were missed.
+-- that were missed.
 -- They should be brought back into "events"
 INSERT into events
 OVERRIDING SYSTEM VALUE
@@ -383,9 +402,15 @@ ORDER BY id
 ON CONFLICT (id) DO NOTHING;
 ```
 
+Ideally you won't have to roll the steps back. However, consider practicing a rollback in advance so that you know how to use it if needed.
+
 ## Drop the old table
-Now the new smaller table has all the rows needed from the original table, has indexes to support the read operations and constraints, and is receiving new rows.
+Let's imagine you didn't need the rollback. New rows are being inserted into the new, smaller table. Queries are accessing the last 30 days of data without errors.
 
-The former table can now be archived, perhaps by using `pg_dump` to select all rows into a data file that can be backed up and restored.
+The former table can now be archived, perhaps by using `pg_dump` to select all rows into a data file (or in chunks) for file storage.
 
-Once that's done, the table can be dropped entirely, reclaiming the space from the table data and index data.
+Once optional archival is completed and verified (outside the scope of this post), the original table can be dropped.
+
+Dropping the table is the last step in this process
+
+## Wrapping up

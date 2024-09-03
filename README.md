@@ -47,3 +47,24 @@ Multi-word tags had a whitespace character after the hyphen. Removed that so URL
     bundle exec jekyll serve --incremental
 
 I occasionally `rm -rf _site` to remove the generated site completely. Changing `config.yml` requires restarting the development server.
+
+#### Workflow
+
+Set up hidden page initially as follows.
+
+1. Create _posts post with future date, e.g. one month in future
+1. No tags
+1. Give post a non-date permalink
+1. Set "hidden: true" in front matter
+1. Use "bundle exec jekyll serve --future" to see it
+1. Publish it and reference the permalink. Confirm it's accessible but hidden from pagination and tag-feed.
+
+Note: Date-based filename organizes post but isn't used in permalink.
+
+When ready for general audience and syndicate as follows.
+
+1. Change date from future date to current date.
+1. Add tag to trigger syndication
+1. Remove "hidden: true" from front matter
+1. Run "bundle exec jekyll serve" and confirm visibility
+1. Push it, confirm permalink is same, it's in pagination and tag-feed
