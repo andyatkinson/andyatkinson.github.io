@@ -1,107 +1,128 @@
 ---
 layout: post
+permalink: /copy-swap-drop-postgres-table-shrink
 title: 'Shrinking Big PostgreSQL tables: Copy-Swap-Drop'
-tags: []
-date: 2024-08-22
+date: 2024-10-02
+tags: [PostgreSQL]
 comments: true
 ---
 
-In this post, we’ll look at a strategy that effectively shrinks a large table, when only a portion of the data is needed.
+In this post, you'll learn a recipe you can use to effectively "shrink" any large table, when only a portion of the data is queried.
 
-## Postgres testing details
+You can use this recipe for tables with billions of rows, and *without* taking Postgres offline. How does it work?
+
+## Postgres details
+These steps were tested on:
+
 - PostgreSQL 16
-- Default transaction isolation level `READ COMMITTED`
-- Run steps from the psql command line client
+- Transactions use the default isolation level of `READ COMMITTED`
+- Steps were performed using the psql client
 
 ## A few big tables
-Application databases commonly have a few tables that are much larger in size than all the other tables. These jumbo tables contain that data for data-intensive features, capturing granular information at a high frequency.
+Let's discuss some context.
 
-These tables can grow into the hundreds of gigabytes or even terabytes in size.
+Application databases commonly have a few tables that are much larger in size than the others. These jumbo tables have data for data-intensive features, granular information captured at a high frequency.
 
-While PostgreSQL [supports tables up to 32TB](https://www.postgresql.org/docs/current/limits.html) in size, working with large tables of 500GB or more can be problematic in my experience.
+Because of that, the table row counts can grow into the hundreds of millions, or billions. Depending on the size of rows, the table size can be hundreds of gigabytes or even terabytes in size.
 
-Query performance can be poor, adding indexes or constraints is slow. Backups and restores slow down. Large tables might force a need to scale up a database server instance due to the space it's consuming, but not the compute it needs.
+## Problems with big tables
+While PostgreSQL [supports tables up to 32TB](https://www.postgresql.org/docs/current/limits.html) in size, working with large tables of 500GB or more can be problematic and slow.
 
-For these tables, the application may access only a small portion of the total rows, such as recent rows, or rows based on active users or customers.
+Query performance can be poor, adding indexes or constraints is slow. Backup and restore operations slow down due to these large tables.
 
-When that's the case, this creates an opportunity to remove the majority of the rows from the table since they're not needed by the application. One tactic would be to `DELETE` the rows, but this is a problem and we'll cover this in an upcoming post on massive delete operations.
+Large tables might force a need to scale the database server instance vertically to provision more CPU and memory capacity unnecessarily, when only more storage is needed.
 
-If we can't delete the rows, how can we remove them from the table without bringing Postgres down?
+When the application queries only a portion of the rows, such as recent rows, or rows for active users or customers, there's an opportunity here to move the unneeded rows out of Postgres.
 
-## Making large tables easier to work with
-One option in PostgreSQL when working with large tables, is to migrate the table data into a replacement partitioned table. We aren’t going to cover table partitioning in this post, but for now we’ll assume that there are a set of benefits and trade-offs with partitioned tables.
+One tactic to do that is to `DELETE` rows, but this is a problem due to the multiversion row design of Postgres. We'll cover this in an more detail in an upcoming post on massive delete operations.
 
-Let's look at the challenges of operating partitioned tables. Partitions need to be created in advance. The application code likely needs to change a bit to work with partitioned tables. Partitioned tables typically have a different primary key structure.
+Another option would be to migrate data into partitioned tables.
 
-Given the adoption of partitioned tables for application code changes, and the required data migration, what other options are there?
+We aren’t going to cover table partitioning in this post, but let's assume that option is out as well, primarily because of the unknown impacts to the application working with Postgres.
+
+While a partitioned table is mostly the same as a regular table, there are some differences related to primary keys and other structural elements.
+
+Imagine that we don't want to delete rows, and we don't yet want to migrate to a partitioned replacement table.
+
+Are there other options?
 
 ## Introducing Copy-Swap-Drop
-Without taking Postgres down, without migrating to partitioned tables, one pragmatic tactic is to effectively shrink a table, using a set of steps I'm calling copy, swap, and drop.
+Without taking Postgres down, without migrating to a partitioned table, an approach we'll discuss here effectively shrinks the table, using a set of steps I'm calling "copy, swap, and drop."
 
-Here are the steps:
+Here are the steps in a little more detail:
 
-1. Clone the table structure
-2. Copy a subset of the rows
+1. Clone the original table definition, creating an equivalent table with a new name
+2. Copy a subset of the rows into the new table
 3. Swap the table names
 4. Drop the original table
 
-This pattern is based on the [one-off tasks section of pgslice](https://github.com/ankane/pgslice?tab=readme-ov-file#one-off-tasks), a Ruby gem that provides SQL commands that are part of migrating to partitioned tables. Wee'll focus on the SQL operations and expand a bit further to show rollbacks.
+This pattern is based on the [one-off tasks section of pgslice](https://github.com/ankane/pgslice?tab=readme-ov-file#one-off-tasks), a Ruby gem that helps facilitate partitioned table migration.
 
-## Objections
-This process doesn't shrink the original table in-place. The end result is that the original table is effectively "shrunk" though since we're creating an intermediate table that becomes its replacement.
+We'll focus on the SQL operations though, borrow some conventions, and expand a bit further on the concept including rollback steps.
 
-This also does involve a row data migration. However, no application code changes or primary key definition changes are required, which reduces the risk.
+## Caveats
+This process doesn't shrink the original table in-place. We're creating an intermediate table that becomes the replacement.
+
+This process still involves a table row data migration. However, a benefit over a partitioned table migration is that the replacement table has the exact same structure, so we can avoid any application incompatibilities.
+
+Where do we start?
 
 ## SQL process steps
-Let's use a table called "events". Imagine "events" was set up years ago and currently receives hundreds of thousands or millions of rows, every day. Let’s imagine it’s currently around 500GB in size and has more than 500 million rows.
+Let's use a table called "events". Imagine "events" was set up years ago and currently receives hundreds of thousands, or millions of new rows every day.
 
-When looking into the queries for the application, the application only queries up to 30 days of event data for display.
+Imagine "events" is around 500GB in size and has 500 million rows.
 
-This means event data older than 30 days isn’t reachable by the application, and thus not needed by the application.
+When looking at queries for "events", the application queries access the last 30 days of data. Imagine this is the sole access of the data from the application.
 
-While we may want to archive row data to lower cost file storage, or populate it in a different data store, by pruning unneeded row data from the application database we can avoid some of the pain points associated with jumbo sized tables.
+This means data older than 30 days isn’t reachable, and thus, not needed within Postgres.
+
+While we may want to archive this data to keep it around, we could store it in lower cost file storage, or relocate it to an analytical data store.
 
 If the events table grows at 1 million rows per day, to keep 30 days of data we'd expect to keep around 30 million rows.
 
-That leaves 470 million rows or about 94% of the total that could be removed.
+That means around 470 million rows could be removed, or in other words, 94% of the total row content!
 
-Let's start the process.
+That's a substantial win, so with that context in mind, let's get started.
 
 # Clone the table
-First we'll create an intermediate table to copy the rows we're keeping into.
+First, create an intermediate table to copy rows into.
 
-I like to work in psql, and using a fresh "testdb" that we'll create tables in:
-```sql
-CREATE DATABASE testdb;
+I like to work in psql. Let's create a "testdb" database for this example, so it's separated. We'll create tables in "tesdb" to show how this works.
 
-\c testdb
+You can run through these examples, then adapt them to your specific database and table names.
+```
+psql> CREATE DATABASE testdb;
+
+\c testdb -- connect to "testdb"
 ```
 
-Imaging this simplified original "events" table, with a primary key index, and one user-created index:
+We'll set up "events" to have a primary key which is automatically indexed, and a single user-created index:
 ```sql
 CREATE TABLE events (
 id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-col1 TEXT,
+data TEXT,
 created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX ON events (col1);
+CREATE INDEX ON events (data);
 ```
 
 Example rows:
 ```sql
-INSERT INTO events (col1) VALUES ('data');
-INSERT INTO events (col1) VALUES ('more data');
+INSERT INTO events (data) VALUES ('data');
+INSERT INTO events (data) VALUES ('more data');
 ```
 
 First we’ll clone the events table and give the new table a new name.
 
 Use the naming convention of "_intermediate" as a suffix on the original name.
 
-This is the naming convention in pgslice.
+This naming convention is borrowed from pgslice.
 ```sql
 -- Step 1: Clone the table structure
-CREATE TABLE events_intermediate (LIKE events INCLUDING ALL EXCLUDING INDEXES);
+CREATE TABLE events_intermediate (
+    LIKE events INCLUDING ALL EXCLUDING INDEXES
+);
 ```
 The command above excludes indexes. However, we'll want the primary key index and this form still includes the primary key constraint, but not the index.
 
@@ -223,7 +244,7 @@ Results:
                              indexdef
 -------------------------------------------------------------------
  CREATE UNIQUE INDEX events_pkey ON public.events USING btree (id)
- CREATE INDEX events_col1_idx ON public.events USING btree (col1)
+ CREATE INDEX events_data_idx ON public.events USING btree (data)
 ```
 
 With those definitions, adapt them slightly.
@@ -238,11 +259,11 @@ We can omit "USING btree" since btree is the default type.
 
 ```sql
 CREATE UNIQUE INDEX events_pkey1_idx ON events_intermediate (id);
-CREATE INDEX events_col1_idx1 ON events_intermediate (col1);
+CREATE INDEX events_data_idx1 ON events_intermediate (data);
 ```
 
 ## Primary key using the index
-One more tricky little thing here is that the primary key constraint is being enforced (try inserting a duplicate) but the unique constraint is not supported with an index at the moment.
+One tricky thing here is that the primary key constraint is being enforced (try inserting a duplicate) but the unique constraint is not supported with an index at the moment.
 
 That's now how the table was originally set up, and we want the new one to be equivalent.
 
