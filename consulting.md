@@ -1,11 +1,11 @@
 ---
 layout: page
 permalink: /consulting
-title: PostgreSQL and Rails Independent Consulting
+title: PostgreSQL and Rails Consulting
 ---
 
 ![Andrew Atkinson presenting at PgDay Chicago 2023](/assets/images/pages/andy-pgday-chicago-2023.jpeg)
-<small>Andrew Atkinson presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
+<small>Presenting at PgDay Chicago 2023. Photo by [Hettie D.](https://postgresql.life/post/henrietta_dombrovskaya/)</small>
 
 ## Hi 👋
 I’m **Andrew**, and I'd love to help you with your 🐘 **PostgreSQL** databases and 💎 **Ruby on Rails** web applications.
