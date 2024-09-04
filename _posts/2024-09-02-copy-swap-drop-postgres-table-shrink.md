@@ -440,37 +440,37 @@ Shayon Mukherjee read an earlier version of this post, and knows a thing or two 
 
 What about locking the "events" table with exclusive access while the copy runs? An exclusive table lock could mean that inserts would error (when they couldn't acquire the lock in time, and assuming a lock_timeout was set).
 
-I chose not to lock the table, which means any commits not visibile at transaction start time, given the isolation level of "read committed", meant that we'd do one more pass to find inserts after that transaction started but before it was committed.
+I chose not to lock the table, which meant that any commits not visible at the transaction start time, given the isolation level of "read committed", would be missed. We'd need to do one more pass to find those rows from the now-renamed table.
 
-This trade-off means there will be a small period where those inserted rows aren't queryable since they haven't yet been copied.
+This trade-off meant there was a small period where those inserted rows are "unavailable" for queries, before they're copied.
 
-That could produce "not found" types of errors for those rows.
+That could produce "not found" types of errors for those rows. If that trade-off isn't acceptable, then you've got alternatives. The table could be locked explicitly, with a locking statement like `LOCK TABLE events;` inside the transaction, creating an `AccessExclusiveLock` of the table.
 
-If that trade-off isn't acceptable, then the table could be locked explicitly, with a locking statement like `LOCK TABLE events;` inside the transaction, creating an `AccessExclusiveLock` of the table.
+That lock type prevents new inserts while it's running.
 
-> What about a greater isolation level?
+> What about a more strict isolation level?
 
-Another option for the name swap and final copy transaction would be to use a [greater isolation level](https://www.postgresql.org/docs/current/transaction-iso.html). `SERIALIZABLE` would be the sensible one if that was the goal.
+Another option for the name swap and final copy transaction would be to use a [stricter isolation level](https://www.postgresql.org/docs/current/transaction-iso.html).
 
-Using `SERIALIZABLE` for the transaction would mean that any other concurrent insert, update, or delete transactions would need to run after this transaction is committed or rolled back.
+`SERIALIZABLE` would be sensible if that was the goal.
+
+Using `SERIALIZABLE` for the main swap transaction means other concurrent insert, update, or delete transactions would need to run after this transaction was committed or rolled back.
 
 > How was 1000 chosen?
 
-1000 was an example of the amount of possible inserts for the last batch. Since we're moving from 30 days ago up to current, then we'd only "miss" the inserts that weren't yet committed for the final batch.
+1000 was an example of the amount of possible inserts that could occur while the last batch copy ran. Since we're moving from 30 days ago up to current, then we'd only "miss" the inserts that weren't yet committed for the final batch.
 
-Since the name swap transaction includes one more batch, this reduces the "missed" rows further. If there are expected to be a few hundred while the batched copy and name swap runs, then 1000 makes sense.
+Since the name swap transaction includes one final batch, this reduces the possibility of "missed" rows further. If there are expected to be a few hundred while the batched copy and name swap runs, then 1000 makes sense.
 
-Measure how long the batch copy takes and then increase the "gap", e.g. 10,000 or 100,000, if more rows are inserted in your system in the duration of the last batch copy.
+Measure how long the batch copy takes and then increase the value to cover the "gap", e.g. 10,000 or 100,000, depending on the volume in your system.
 
 > What about Foreign Keys?
 
-Shayon pointed out most significant databases will have foreign key constraints. I left that out of the example for simplicity.
+Shayon pointed out that most significant databases will have foreign key constraints in place, and they're missing in this example. I left them out to keep this example more simple.
 
 With foreign key constraints, I'd follow a process like this.
 
-1. Copy table as shown earlier. Initially the intermediate table would have the foreign key constraint
+1. Copy the table as shown earlier. Initially the intermediate table would have the foreign key constraint.
 1. Drop the foreign key constraint on the intermediate table, before copying rows.
-1. Once complete, get the constraint definition from the source table.
-1. Recreate the foreign key constraint on the newly swapped table, but initially `NOT VALID`. This acquires a shared lock and can be added initially for new rows.
-
-Then validate the constraint as soon as possible using `VALIDATE CONSTRAINT`. That process also involves a few steps and is beyond the scope of this post, but I'd be happy to write it up if there's interest.
+1. Once row copying has completed, get the constraint definition from the source table.
+1. Create the constraints on the intermediate table before the swap. Alternatively, create the constraints after the swap in an initially `NOT VALID` state. That's more complex though and beyond the scope of this post.
