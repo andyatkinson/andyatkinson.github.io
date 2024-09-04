@@ -7,16 +7,16 @@ comments: true
 hidden: true
 ---
 
-In this post, you'll learn a recipe you can use to effectively "shrink" any large table. This is a good fit when only a portion of the data is queried, without 
+In this post, you'll learn a recipe that you can use to "shrink" a large table. This is a good fit when only a portion of the data is accessed, the big table has become unwieldy, and you don't want a heavier solution like table partitioning.
 
-You can use this recipe for tables with billions of rows, and *without* taking Postgres offline. How does it work?
+This recipe has been used on tables with billions of rows, and *without* taking Postgres offline. How does it work?
 
 ## Postgres details
-These steps were tested on:
+These are the details where these steps have been tested:
 
 - PostgreSQL 16
 - Transactions use the default isolation level of `READ COMMITTED`
-- Steps were performed using the psql client
+- Steps were performed using psql
 
 ## A few big tables
 Let's discuss some context.
