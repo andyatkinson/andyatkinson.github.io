@@ -118,7 +118,7 @@ First we’ll clone the events table and give the new table a new name.
 
 Use the naming convention of "_intermediate" as a suffix on the original name.
 
-This naming convention is borrowed from pgslice.
+This naming convention is borrowed from [pgslice](https://github.com/ankane/pgslice).
 ```sql
 -- Step 1: Clone the table structure
 CREATE TABLE events_intermediate (
