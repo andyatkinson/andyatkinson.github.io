@@ -1,14 +1,14 @@
 ---
 layout: page
 permalink: /book-contest
-title: Book Contest
+title: Book Giveaways
 ---
 
 ## Win a signed copy at EuRuKo or Rails World!
 
 Win a signed copy of [High Performance PostgreSQL for Rails](/pgrailsbook) in September. Must be present to win.
 
-🇧🇦 We'll have two signed copies given away at EuRuKo, the European Ruby conference, facilitated by my friend and presenter Karen Jex.
+🇧🇦 We'll have two signed copies given away at EuRuKo, the European Ruby conference, facilitated by my friend and [presenter Karen Jex](https://x.com/andatki/status/1825864383320215784).
 
 🇨🇦 And I'll personally be handing out around 5 copies at Rails World in Toronto, Canada.
 
