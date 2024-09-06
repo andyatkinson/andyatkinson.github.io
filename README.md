@@ -68,7 +68,7 @@ Note: Date-based filename organizes post but isn't used in permalink.
 
 When ready for general audience and syndicate as follows.
 
-1. Change date from future date to current date, e.g. `date: 2024-10-02`
+1. Add date as current date, e.g. `date: 2024-10-02`
 1. Add tag to trigger syndication (e.g. PostgreSQL)
 1. Remove "hidden: true" from front matter
 1. Run "bundle exec jekyll serve" and confirm visibility

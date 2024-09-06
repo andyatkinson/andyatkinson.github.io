@@ -2,17 +2,17 @@
 layout: post
 permalink: /copy-swap-drop-postgres-table-shrink
 title: 'Shrinking Big PostgreSQL tables: Copy-Swap-Drop'
-tags: []
+date: 2024-09-06
+tags: [PostgreSQL]
 comments: true
-hidden: true
 ---
 
 In this post, you'll learn a recipe that you can use to "shrink" a large table. This is a good fit when only a portion of the data is accessed, the big table has become unwieldy, and you don't want a heavier solution like table partitioning.
 
 This recipe has been used on tables with billions of rows, and *without* taking Postgres offline. How does it work?
 
-## Postgres details
-These are the details where these steps have been tested:
+## Postgres testing details
+These are the PostgreSQL instance details where this was tested:
 
 - PostgreSQL 16
 - Transactions use the default isolation level of `READ COMMITTED`
@@ -428,7 +428,7 @@ Feel free to practice these steps using your own local Postgres instance, and se
 
 Thank you to Shayon Mukherjee for reading an earlier version of this post.
 
-## Resources
+## View SQL Commands on GitHub
 
 - [Copy-swap-drop on GitHub](https://github.com/andyatkinson/pg_scripts/blob/main/administration/copy-swap-drop.sql)
 
