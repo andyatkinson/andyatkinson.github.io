@@ -474,3 +474,17 @@ With foreign key constraints, I'd follow a process like this.
 1. Drop the foreign key constraint on the intermediate table, before copying rows.
 1. Once row copying has completed, get the constraint definition from the source table.
 1. Create the constraints on the intermediate table before the swap. Alternatively, create the constraints after the swap in an initially `NOT VALID` state. That's more complex though and beyond the scope of this post.
+
+> What about `UPDATE` or row modifying operations?
+
+They aren't covered here. This assumes the rows copied aren't modified between when the copying batches started and when they finished.
+
+If that is a requirement, adding a trigger function that captures those changes would be best.
+
+> What about pg_repack
+
+This pattern can be used to copy a portion of rows, where only, for example, 5% of the recent rows are accessed.
+
+pg_repack is great when *all* rows are needed, but the layout of table data and index data in pages has become inefficient.
+
+Space can be reclaimed using this approach or using pg_repack. They have different goals are are complementary tactics.
