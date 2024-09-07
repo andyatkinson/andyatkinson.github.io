@@ -222,7 +222,7 @@ From psql, add more memory to `maintenance_work_mem` for your session to help.
 
 Additionally, allow Postgres to start more parallel maintenance workers ([capped](https://postgresqlco.nf/doc/en/param/max_parallel_maintenance_workers/) by max_worker_processes and max_parallel_workers) for index creation.
 ```sql
--- Speed up index creation, example of increasing it to 1GB of memory
+-- Speed up index creation, 1GB of memory is an example value
 SET maintenance_work_mem = '1GB';
 
 -- Allow for more parallel maintenance workers
@@ -240,7 +240,7 @@ SET statement_timeout = '120min';
 
 Next, get the index definitions as `CREATE INDEX` statements from the original table. You'll add all of them, including indexes for primary keys, and any user-created indexes.
 
-This can also be an opportunity to abandon unused indexes from the old table, but not bringing them forward.
+This is an opportunity to abandon unused indexes from the original table by not bringing them forward.
 
 ```sql
 SELECT indexdef
