@@ -4,6 +4,7 @@ permalink: /solid-queue-mission-control-rails-postgresql
 title: 'Trying out Solid Queue and Mission Control with PostgreSQL'
 tags: []
 comments: true
+hidden: true
 ---
 
 ## Why Solid Queue?
