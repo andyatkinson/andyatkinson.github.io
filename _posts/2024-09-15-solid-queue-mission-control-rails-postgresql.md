@@ -7,25 +7,24 @@ comments: true
 ---
 
 ## Why Solid Queue?
-Background jobs are heavily used in Ruby on Rails to perform operations outside of a users request. A classic example is sending an email to a new user. The work of that action like generating the email content, sending it, can all be done in the background.
+Background jobs are used commonly in Ruby on Rails apps to perform any work possible outside of a user request. A classic example is sending an email to a new user, where that doesn't need to happen synchronously within a request. Thus, a background job framework of some kind helps to keep things consistent.
 
-Over the last decade, Sidekiq became the dominant choice for a background processing framework in Ruby on Rails, although others are used as well, typically persisting their job data in Redis or the relational database.
+In the 2010s, Sidekiq seemed to become the most popular choice, usable as a free open source version, or a commercial Pro version. Sidekiq uses Redis to persist the job data.
 
-Ruby on Rails in 4.2+ added a middleware layer Active Job that helped standardized background job processing “back ends”. This meant that Sidekiq or others could be backends. Starting from Rails 8, there will be a new official backend called Solid Queue. What went into its formation?
-
-In PostgreSQL, a great library called GoodJob was created that was called out in the Rails World 2023 presentation as being a great background job framework. However, it only supports PostgreSQL. GoodJob is the system I wrote about and recommended in my book High Performance PostgreSQL for Rails. A Rails developer starting a new app today would be well served by GoodJob. However, given Solid Queue will become the official Active Job backend in Rails 8, it’s worth a look.
+Ruby on Rails added a middleware layer called Active Job back in Rails 4.2, that helped standardized background job using a consistent API. Background job systems then could become “backends” for Active Job. Starting from the upcoming release of [Ruby on Rails 8](https://rubyonrails.org/2024/9/6/this-week-in-rails), there's a new official background job backend called "Solid Queue." How does it work? What's it like with PostgreSQL?
 
 Let’s kick the tires!
 
 ## Adding Solid Queue to a Rails app
-We’ll add Solid Queue to the Rideshare Rails app, currently on 7.1, by adding the solid_queue gem.
+To test it out, we'll [add Solid Queue to Rideshare](https://github.com/andyatkinson/rideshare/pull/209).
 
-In order to see the background job data visually, we’ll add the [Mission Control gem](https://github.com/rails/mission_control-jobs). We’ll generate a background job, process it, and take a look at what we can see in Mission Control.
+To see background job data visually, we’ll add the [Mission Control gem](https://github.com/rails/mission_control-jobs). We’ll generate a background job, process it, and take a look at what information about the job is visible.
+
+Later in the post we'll discuss some considerations for using Postgres for background jobs.
 
 ## Code to try
-Let's give it a try.
-
 ```sh
+# PR: https://github.com/andyatkinson/rideshare/pull/209
 cd rideshare
 bundle add solid_queue
 bundle add mission_control-jobs
@@ -61,7 +60,7 @@ bin/rails console
 SolidQueueHelloWorldJob.set(wait: 1.week).perform_later
 ```
 
-Navigate to `localhost:3000` and mission control, mounted at `localhost:3000/jobs`, the scheduled job tab, and view the scheduled job.
+Navigate to `localhost:3000` and Mission Control, available at `localhost:3000/jobs`. View the scheduled job tab and verify the job is scheduled for a week out like below.
 
 ![Screenshot of Mission Control showing Solid Queue scheduled jobs](/assets/images/posts/2024/mission_control-jobs.png)
 <small>Mission Control view of Solid Queue Scheduled Jobs</small>
@@ -73,24 +72,26 @@ Solid Queue uses a clause when selecting jobs to update called `FOR UPDATE SKIP 
 
 This clause is supported in Postgres. The first part `FOR UPDATE` is a locking statement that creates a row lock. The second part `SKIP LOCKED` means that rows that are already waiting to acquire a lock will be skipped when selected.
 
-With an exclusive row-level lock for rows to be updated, no concurrent updates can run for these rows until this statement finishes and the lock is released.
+With the rows to be updated holding an exclusive lock, no concurrent updates can run while this lock is held and until it's released.
 
-By default in Postgres, the implicit transaction for this update uses the “Read committed” isolation level, which means that the only committed row updates at the time the transaction starts (at the time the statement runs) will be visible to this transaction.
+This `UPDATE` has an implicit transaction which uses the [Read Committed](https://www.postgresql.org/docs/current/transaction-iso.html#XACT-READ-COMMITTED) isolation level by default. This means only "committed" row updates are visible to the transaction at the time it started.
 
-Since lock acquisition is a queue of potential acquirers, by using `SKIP LOCKED`, we’re avoiding a scenario where the UPDATE transaction gets stuck waiting behind other operations, possibly forever if no `lock_timeout`[^1] is set.
+By using the `SKIP LOCKED` clause, update transactions currently holding a lock are skipped. This helps prevent concurrent `UPDATE` transactions from getting queued up waiting to acquire the same locks. Besides that it's also a good idea to set a reasonably low `lock_timeout`[^1] which cancels statements that are waiting too long to acquire a lock.
 
-The trade-off though is that skipped rows aren’t processed, so they’ll need to be process again using some kind of polling or retry mechanism.
+This does mean that the client application skips rows to be processed, or could have statements canceled (when the timeout is set). In both of those cases the job processing should be retried using an automatic mechanism.
 
-Is using PostgreSQL for background jobs a good idea?
+Is PostgreSQL a good choice to run background jobs on?
 
 ## Using PostgreSQL for database backed jobs
-Using PostgreSQL for background jobs and your application database, means that you can leverage transactional consistency that’s not possible when spanning heterogeneous data stores.
+Using PostgreSQL for background jobs is a good choice because you can leverage "transactional consistency" within the same instance that’s not possible when spanning heterogeneous data stores, or multiple instances. This means that transactions can be used to group actions together, like saving a record and enqueueing an email job, that should fail or succeed together, and not get split up.
 
-However, there are also trade-offs to be aware of.
+PostgreSQL is also very reliable and capable of high scale operations. Its a great place to at least start running your background job work.
 
-Updates and deletes create dead row versions, due to the MVCC design in PostgreSQL. For the Solid Queue tables with heavy updates, the Autovacuum resources available for those tables should be increased proportionally. This means Autovacuum will run more frequently and for longer periods of time so that it can perform its work.
+However, along with those benefits there are trade-offs. Update and Delete operations in PostgreSQL create new row versions, leaving old ones behind as part of the [MVCC concurrency control design](https://www.postgresql.org/docs/current/mvcc.html).
 
-For example, we can see updates and deletes for the table “solid_queue_processes” from the Rails log:
+For Solid Queue tables with heavy updates and deletes, the Autovacuum resources for those tables in PostgreSQL should be increased. This means Autovacuum runs more frequently and for longer periods for those tables more so than others that don't have those kinds of operational patterns.
+
+For example, below we see updates and deletes for the table `solid_queue_processes` from the Rails log:
 
 ```
 SolidQueue::Process Update (1.3ms)  UPDATE "solid_queue_processes" SET "last_heartbeat_at" = '2024-09-06 03:42:29.963811' WHERE "solid_queue_processes"."id" = 3 /*application:Rideshare*/
@@ -98,51 +99,51 @@ SolidQueue::Process Update (1.3ms)  UPDATE "solid_queue_processes" SET "last_hea
 DELETE FROM "solid_queue_processes" WHERE "solid_queue_processes"."id" = 1 /*application:Rideshare*/
 ```
 
+An example statement to lower the vacuum scale factor threshold for this table is below. This would lower the value from 20% to 1%, meaning when 1% of the row versions in the table are "dead", a `VACUUM` operation will be triggered. Don't drop this in without testing first on your system. This is only one of several settings related to Autovacuum as well, that's meant to be a generic example.
+```sql
+ALTER TABLE solid_queue_processes SET (autovacuum_vacuum_scale_factor = 0.01);
+```
 
-## Advanced Postgres concepts worth considering for Solid Queue
-
-If performance is a concern and we want to trade-off data loss for job data in the event Postgres crashes, the Solid Queue Postgres tables could be made `UNLOGGED`.[^2] This disables the WAL logging for those tables. This means that if Postgres restarts, on startup those tables are truncated. This trade-off might be acceptable given the insert rate is much higher.
-
-If we wanted job data to be non-transient, kept forever, we might want to make the primary job data capture table be a partitioned table. We could then segment it by time and maintain good operational speed as the row count grows until the hundreds of millions and beyond
-
-Finally, while we’d lose transactional consistency with a single primary instance, we may want to leverage Active Record Multiple Databases and relocate our Solid Queue tables to their own database. This could be a “queue” database that Active Record reads and writes to as background jobs are processed, but when run on a separate server instance, would have separate resources like CPU, memory, and disk to scale independently. 
-
-What are the benefits of background jobs in Postgres?
+What are the benefits of background jobs in Postgres over Redis?
 
 ## Benefits of job data in Postgres over Redis
-
 - We can use a tool we’re familiar with already: `bin/rails dbconsole` (which is psql) to connect and view the persisted data, as opposed to using the Redis CLI
 - We can use SQL to query the job data tables
 - We can leverage our schema knowledge if desired and change the schema for job data. Maybe there’s a constraint we want to add, or maybe we want to calculate some extra statistics about job data. Now we’re able to add additional tables that summarize data, and leverage SQL to do that.
 - We can leverage our knowledge of backups, restores, and scaling database reads and writes we’ve learned from our application database experience, for our background jobs processing
 
-## Drawbacks of background jobs in the database
+## Advanced Postgres concepts worth considering for Solid Queue
+If write performance of job data is a concern, the Solid Queue Postgres tables could be made `UNLOGGED`.[^2] This disables the Write-Ahead Logging (WAL) that happens by default for table rows. In Postgres, unlogged tables are truncated on restart, which means they lose their data. Why do this then? The insert performance can be 10x better, and maybe the job data can be re-created in the unlikely event of a crash.
 
-- Fault isolation risk: By not segregating background job processing, it’s possible the load from background processing would harm the performance and reliability of the application database use cases.
-- Data stores like Redis don’t have the MVCC design of Postgres, which means equivalent data may consume less space and resources
+What other things might we consider in Postgres? When keeping job data forever, we may want to consider holding job data in a partitioned table. If the row counts grew into the hundreds of millions, performance will be better using a partitioned table that's split up into smaller chunks behind the scenes. Solid Queue does not support partitioned tables as of this writing, so it may be a considerable undertaking to fork it and add support. I'm curious if there are any very large installations of Solid Queue processing hundreds of millions of jobs, and holding the job data forever.
+
+Finally, while we’d lose transactional consistency described earlier, we may want to use Active Record Multiple Databases to relocate the Solid Queue tables to their own database. This second database would be where Active Job reads and writes to as background jobs are enqueued and processed. The benefit of a second PostgreSQL server instance is that it would have separate CPU, memory, and disk operations that could be scaled independently. 
+
+
+## Drawbacks of background jobs in the database
+- Fault isolation risk: By not segregating background job processing, it’s possible the load from background processing would harm the performance and reliability of the application database operations
+- Data stores like Redis don’t have the MVCC design of Postgres, which means they may consume less disk space and server resources
 
 ## Features of Solid Queue
+In a future post, we’ll dig more into the features. Here are the basics:
 
-In a future post, we’ll dig into these features more. Here are the features listed on the GitHub repo:
-
-- Delayed jobs, see the example above where we’re delaying job processing by 1 week
-- Concurrency controls: these are extra options like `max_concurrent_executions` that can be set on individual jobs
+- Delayed jobs: see the example above where we’re delaying job processing by 1 week
+- Concurrency controls: options like `max_concurrent_executions` that can be set on individual jobs
 - Pausing queues: This can be useful for planned downtime events to temporarily stop processing
 - Numeric priorities per job: Jobs will have different priorities in terms of their delivery time, with some needing near real-time, and others not
 - Priorities by queue order: Solid Queue supports multiple prioritization schemes
 - Bulk enqueuing: When working with bulk operations upstream, being able to bulk enqueue jobs saves processing time over enqueueing single items at at time
-
 
 ## What’s next
 Rails World 2024 is happening in a couple of weeks, and will include Solid Queue presentations by Rosa Gutierrez, a lead maintainer.
 
 [Rosa was interviewed in #23 of the Rails Changelog](https://www.railschangelog.com/23) and it’s worth a listen!
 
-
 ## More Solid Queue posts
 
 - <https://www.honeybadger.io/blog/deploy-solid-queue-rails>
 - <https://www.bigbinary.com/blog/solid-queue>
+- <https://blog.codeminer42.com/introducing-solid-queue-for-background-jobs/>
 
 [^1]: <https://www.postgresql.org/docs/current/runtime-config-client.html#GUC-LOCK-TIMEOUT>
 [^2]: <https://pgpedia.info/u/unlogged-table.html>
