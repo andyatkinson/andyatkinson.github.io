@@ -5,6 +5,7 @@ title: 'Trying out Solid Queue and Mission Control with PostgreSQL'
 tags: []
 comments: true
 hidden: true
+date: 2024-09-10
 ---
 
 ## Why Solid Queue?
