@@ -137,7 +137,11 @@ In a future post, we’ll dig more into the features. Here are the basics:
 ## What’s next
 Rails World 2024 is happening in a couple of weeks, and will include Solid Queue presentations by Rosa Gutierrez, a lead maintainer.
 
-[Rosa was interviewed in #23 of the Rails Changelog](https://www.railschangelog.com/23) and it’s worth a listen!
+[Rosa was interviewed in Episode #23 of the Rails Changelog](https://www.railschangelog.com/23) and it’s worth a listen!
+
+When Ruby on Rails 8 ships, more Rails developers will likely adopt Solid Queue. It will be interesting to see how adoption ticks up, and what sorts of issues emerge.
+
+Thanks for reading!
 
 ## More Solid Queue posts
 
