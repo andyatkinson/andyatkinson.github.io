@@ -18,13 +18,13 @@ See below for instructions on how to enter.
 
 ## How to enter
 
-1. Subscribe **and click confirm email** at [pgrailsbook.com](https://pgrailsbook.com). This gives me a confirmed way to reach you. I hope you'll stick around as a subscriber, but it's of course optional.
+1. Subscribe **and click confirm email** at [pgrailsbook.com](https://pgrailsbook.com). This gives me a way to reach you. I hope you'll stay as a subscriber, but it's optional.
 
-1. Contact me and let me know. To do that, DM me on social media (links below) or [contact me](/contact) here. Include the email address you subscribed with and your first name.
+1. Contact me and let me know. To do that, DM me on social media (links below) or [contact me here](/contact). Include the email address you subscribed with. *Already subscribed?* Contact me and let me know.
 
-1. I'll reply back to you and confirm I see your info and that you're officially entered.
+1. I'll reply to you confirming you're officially entered.
 
-1. I'll do a drawing of winners at random, and email everyone that participated!
+1. I'll do a drawing of winners at random online (see Loom below) and email winners and all participants!
 
 Good luck!
 
