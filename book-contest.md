@@ -4,9 +4,9 @@ permalink: /book-contest
 title: Book Giveaways
 ---
 
-## Win a signed paperback at Rails World or ebook!
+## Win a paperback at Rails World or an ebook!
 
-Win one a paperback copy of [High Performance PostgreSQL for Rails](/pgrailsbook) in person at Rails World 2024. Must be present to win. Optional: get it signed!
+Win a paperback copy of [High Performance PostgreSQL for Rails](/pgrailsbook) in person at Rails World 2024. Must be present to win. Optional: get it signed!
 
 Can't attend? We'll be giving away 3 ebook copies.
 
