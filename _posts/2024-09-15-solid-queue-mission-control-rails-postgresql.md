@@ -2,10 +2,9 @@
 layout: post
 permalink: /solid-queue-mission-control-rails-postgresql
 title: 'Trying out Solid Queue and Mission Control with PostgreSQL'
-tags: []
+tags: [PostgreSQL, Ruby on Rails]
 comments: true
-hidden: true
-date: 2024-09-10
+date: 2024-09-18
 ---
 
 ## Why Solid Queue?

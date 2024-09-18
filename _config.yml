@@ -55,26 +55,8 @@ navigation:
     url: /rails-tips
   - text: PostgreSQL
     url: /postgresql-tips
-  - text: Elasticsearch
-    url: /elasticsearch
-  - text: Infra
-    url: /infrastructure
-  - text: Open Source
-    url: /open-source
-  - text: Projects
-    url: /projects
-  - text: Writing
-    url: /writing
-  - text: Process
-    url: /software-dev-process
-  - text: Eng Guidelines
-    url: /engineering-guidelines
-  - text: Eng Values
-    url: /values
-  - text: DE & I
-    url: /diversity-equity-inclusion
-  - text: Events
-    url: /events-and-volunteering
+  - text: Extra
+    url: /extra
   - text: Archive
     url: /tag
   - text: Contact Me

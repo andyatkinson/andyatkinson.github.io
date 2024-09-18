@@ -4,6 +4,8 @@ permalink: /rails-tips
 title: Rails Tips
 ---
 
+{% include tag-pages-loop.html tagName='Ruby on Rails' %}
+
 ## App Code Tips
 
 ### Native `pg` gem dependencies
