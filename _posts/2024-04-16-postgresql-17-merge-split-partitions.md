@@ -6,7 +6,17 @@ date: 2024-04-16
 comments: true
 ---
 
-This post looks at some interesting new capabilities managing [Partitioned Tables](https://www.postgresql.org/docs/current/ddl-partitioning.html) coming in PostgreSQL 17, expected for release Fall 2024. The current major version is 16.
+This post looks at interesting new capabilities managing [Partitioned Tables](https://www.postgresql.org/docs/current/ddl-partitioning.html) in the PostgreSQL 17 release candidate, expected for Fall 2024. The current major version is 16.
+
+<!-- Callout box -->
+<section>
+<div style="border-radius:0.8em;background-color:#eee;padding:1em;margin:1em;color:#000;">
+<h2>UPDATE September, 2024</h2>
+<p>Unfortunately Splitting and Merging Partitions were reverted from PostgreSQL 17.</p>
+
+<p><a href="https://www.postgresql.org/message-id/CA%2BTgmobHYix%3DNn8D4RUHa6fhUVPR88KGAMq1pBfnGfOfEjRixA%40mail.gmail.com">See pgsql-hackers thread</a></p>
+</div>
+</section>
 
 ## Current Table Partition Commands
 
