@@ -77,7 +77,7 @@ With the rows to be updated holding an exclusive lock, no concurrent updates can
 
 This `UPDATE` has an implicit transaction which uses the [Read Committed](https://www.postgresql.org/docs/current/transaction-iso.html#XACT-READ-COMMITTED) isolation level by default. This means only "committed" row updates are visible to the transaction at the time it started.
 
-By using the `SKIP LOCKED` clause, update transactions currently holding a lock are skipped. This helps prevent concurrent `UPDATE` transactions from getting queued up waiting to acquire the same locks. Besides that it's also a good idea to set a reasonably low `lock_timeout`[^1] which cancels statements that are waiting too long to acquire a lock.
+By using the `SKIP LOCKED` clause, `UPDATE` transactions currently holding a lock are skipped. This helps prevent concurrent `UPDATE` transactions from getting queued up waiting to acquire the same locks. Besides that it's also a good idea to set a reasonably low `lock_timeout`[^1] which cancels statements that are waiting too long to acquire a lock.
 
 This does mean that the client application skips rows to be processed, or could have statements canceled (when the timeout is set). In both of those cases the job processing should be retried using an automatic mechanism.
 
@@ -100,7 +100,7 @@ SolidQueue::Process Update (1.3ms)  UPDATE "solid_queue_processes" SET "last_hea
 DELETE FROM "solid_queue_processes" WHERE "solid_queue_processes"."id" = 1 /*application:Rideshare*/
 ```
 
-An example statement to lower the vacuum scale factor threshold for this table is below. This would lower the value from 20% to 1%, meaning when 1% of the row versions in the table are "dead", a `VACUUM` operation will be triggered. Don't drop this in without testing first on your system. This is only one of several settings related to Autovacuum as well, that's meant to be a generic example.
+The statement below reduces the vacuum scale factor threshold for `solid_queue_processes` from 20% to 1%, meaning when 1% of the row versions in the table are "dead", a `VACUUM` operation is triggered. This is only one of several settings related to Autovacuum.
 ```sql
 ALTER TABLE solid_queue_processes SET (autovacuum_vacuum_scale_factor = 0.01);
 ```
