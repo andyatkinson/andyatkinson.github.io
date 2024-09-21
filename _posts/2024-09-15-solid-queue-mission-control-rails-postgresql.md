@@ -10,7 +10,7 @@ date: 2024-09-18
 ## Why Solid Queue?
 Background jobs are commonly used in Ruby on Rails apps to perform any work possible outside of an HTTP request. A classic example is sending an email notification. Sending email from a background job places the latency there, outside of processing the request. 
 
-In the 2010s, Sidekiq seemed to become the most popular choice, usable as a free open source version, or a commercial Pro version. Sidekiq uses Redis to persist the job data.
+In the 2010s, Sidekiq became one of the most popular choices for processing background jobs. Sidekiq can be used as free, open source software, or commercially with the Pro version. Sidekiq uses Redis to persist the job data.
 
 Ruby on Rails added a middleware layer called Active Job back in Rails 4.2, that helped standardized background job using a consistent API. Background job systems then could become “backends” for Active Job. Starting from the upcoming release of [Ruby on Rails 8](https://rubyonrails.org/2024/9/6/this-week-in-rails), there's a new official background job backend called "Solid Queue." How does it work? What's it like with PostgreSQL?
 
