@@ -8,7 +8,7 @@ date: 2024-09-18
 ---
 
 ## Why Solid Queue?
-Background jobs are commonly used in Ruby on Rails apps to perform any work possible outside of an HTTP request. A classic example is sending an email notification. Performing that outside of a request reduces the request processing latency. 
+Background jobs are commonly used in Ruby on Rails apps to perform any work possible outside of an HTTP request. A classic example is sending an email notification. Performing that outside of a request avoids adding latency to the request, by separating that work. 
 
 In the 2010s, Sidekiq seemed to become the most popular choice, usable as a free open source version, or a commercial Pro version. Sidekiq uses Redis to persist the job data.
 
