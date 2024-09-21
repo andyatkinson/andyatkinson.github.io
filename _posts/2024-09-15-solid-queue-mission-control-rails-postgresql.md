@@ -108,7 +108,7 @@ ALTER TABLE solid_queue_processes SET (autovacuum_vacuum_scale_factor = 0.01);
 What are the benefits of background jobs in Postgres over Redis?
 
 ## Benefits of job data in Postgres over Redis
-- We can use a tool we’re familiar with already: `bin/rails dbconsole` (which is psql) to connect and view the persisted data, as opposed to using the Redis CLI
+- We can use a tool we’re familiar with: `bin/rails dbconsole` (which is psql) to connect and view job data, as opposed to the Redis CLI
 - We can use SQL to query the job data tables
 - We can leverage our schema knowledge if desired and change the schema for job data. Maybe there’s a constraint we want to add, or maybe we want to calculate some extra statistics about job data. Now we’re able to add additional tables that summarize data, and leverage SQL to do that.
 - We can leverage our knowledge of backups, restores, and scaling database reads and writes we’ve learned from our application database experience, for our background jobs processing
