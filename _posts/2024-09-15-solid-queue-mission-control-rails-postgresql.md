@@ -8,9 +8,9 @@ date: 2024-09-18
 ---
 
 ## Why Solid Queue?
-Background jobs are used commonly in Ruby on Rails apps to perform any work possible outside of a user request. A classic example is sending an email to a new user, where that doesn't need to happen synchronously within a request. Thus, a background job framework of some kind helps to keep things consistent.
+Background jobs are commonly used in Ruby on Rails apps to perform any work possible outside of an HTTP request. A classic example is sending an email notification. Sending email from a background job places the latency there, outside of processing the request. 
 
-In the 2010s, Sidekiq seemed to become the most popular choice, usable as a free open source version, or a commercial Pro version. Sidekiq uses Redis to persist the job data.
+In the 2010s, Sidekiq became one of the most popular choices for processing background jobs. Sidekiq can be used as free, open source software, or commercially with the Pro version. Sidekiq uses Redis to persist job data.
 
 Ruby on Rails added a middleware layer called Active Job back in Rails 4.2, that helped standardized background job using a consistent API. Background job systems then could become “backends” for Active Job. Starting from the upcoming release of [Ruby on Rails 8](https://rubyonrails.org/2024/9/6/this-week-in-rails), there's a new official background job backend called "Solid Queue." How does it work? What's it like with PostgreSQL?
 
@@ -77,7 +77,7 @@ With the rows to be updated holding an exclusive lock, no concurrent updates can
 
 This `UPDATE` has an implicit transaction which uses the [Read Committed](https://www.postgresql.org/docs/current/transaction-iso.html#XACT-READ-COMMITTED) isolation level by default. This means only "committed" row updates are visible to the transaction at the time it started.
 
-By using the `SKIP LOCKED` clause, update transactions currently holding a lock are skipped. This helps prevent concurrent `UPDATE` transactions from getting queued up waiting to acquire the same locks. Besides that it's also a good idea to set a reasonably low `lock_timeout`[^1] which cancels statements that are waiting too long to acquire a lock.
+By using the `SKIP LOCKED` clause, `UPDATE` transactions currently holding a lock are skipped. This helps prevent concurrent `UPDATE` transactions from getting queued up waiting to acquire the same locks. Besides that it's also a good idea to set a reasonably low `lock_timeout`[^1] which cancels statements that are waiting too long to acquire a lock.
 
 This does mean that the client application skips rows to be processed, or could have statements canceled (when the timeout is set). In both of those cases the job processing should be retried using an automatic mechanism.
 
@@ -100,7 +100,7 @@ SolidQueue::Process Update (1.3ms)  UPDATE "solid_queue_processes" SET "last_hea
 DELETE FROM "solid_queue_processes" WHERE "solid_queue_processes"."id" = 1 /*application:Rideshare*/
 ```
 
-An example statement to lower the vacuum scale factor threshold for this table is below. This would lower the value from 20% to 1%, meaning when 1% of the row versions in the table are "dead", a `VACUUM` operation will be triggered. Don't drop this in without testing first on your system. This is only one of several settings related to Autovacuum as well, that's meant to be a generic example.
+The statement below reduces the vacuum scale factor threshold for `solid_queue_processes` from 20% to 1%, meaning when 1% of the row versions in the table are "dead", a `VACUUM` operation is triggered. This is only one of several settings related to Autovacuum.
 ```sql
 ALTER TABLE solid_queue_processes SET (autovacuum_vacuum_scale_factor = 0.01);
 ```
@@ -108,7 +108,7 @@ ALTER TABLE solid_queue_processes SET (autovacuum_vacuum_scale_factor = 0.01);
 What are the benefits of background jobs in Postgres over Redis?
 
 ## Benefits of job data in Postgres over Redis
-- We can use a tool we’re familiar with already: `bin/rails dbconsole` (which is psql) to connect and view the persisted data, as opposed to using the Redis CLI
+- We can use a tool we’re familiar with: `bin/rails dbconsole` (which is psql) to connect and view job data, as opposed to the Redis CLI
 - We can use SQL to query the job data tables
 - We can leverage our schema knowledge if desired and change the schema for job data. Maybe there’s a constraint we want to add, or maybe we want to calculate some extra statistics about job data. Now we’re able to add additional tables that summarize data, and leverage SQL to do that.
 - We can leverage our knowledge of backups, restores, and scaling database reads and writes we’ve learned from our application database experience, for our background jobs processing
@@ -123,7 +123,7 @@ Finally, while we’d lose transactional consistency described earlier, we may w
 
 ## Drawbacks of background jobs in the database
 - Fault isolation risk: By not segregating background job processing, it’s possible the load from background processing would harm the performance and reliability of the application database operations
-- Data stores like Redis don’t have the MVCC design of Postgres, which means they may consume less disk space and server resources
+- Data stores like Redis don’t have the MVCC design of Postgres, which means they may consume less disk space and server resources, achieving a higher processing rate
 
 ## Features of Solid Queue
 In a future post, we’ll dig more into the features. Here are the basics:
