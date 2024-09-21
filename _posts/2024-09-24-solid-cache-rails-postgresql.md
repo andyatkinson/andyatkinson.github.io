@@ -52,8 +52,7 @@ With that covered, let’s dive into Solid Cache.
 ## Trying out Solid Cache
 We’ll use the Rideshare app, which is on GitHub, and used throughout the book High Performance PostgreSQL for Rails. This will be a place to add the gem, kick the tires, and explore some of the features.
 
-After adding the gem, this command was ran to add the migrations.
-
+After adding the gem, run the migrations command below.
 ```sh
 railties:install:migrations FROM=solid_cache
 ```
@@ -161,7 +160,7 @@ Use the [pg_prewarm](https://www.postgresql.org/docs/current/pgprewarm.html) ext
 SELECT pg_prewarm('solid_cache_entries');
 ```
 
-Adjust `random_page_cost` for query planning purposes. The default value was created from the era of “rotating” hard disk not modern fast SSDs. Some folks recommend adjusting random_page_cost to be equal to `seq_page_cost`.
+Adjust `random_page_cost` for query planning purposes. The default value was created in the era of rotating hard disks, not modern fast SSDs. Some folks recommend adjusting random_page_cost to be equal to `seq_page_cost`.
 
 ```sql
 ALTER SYSTEM SET random_page_cost = 1.1;
@@ -180,7 +179,7 @@ Normally a Postgres instance might allocate 25% of the available system memory t
 
 After adjusting `shared_buffers`, increase `effective_cache_size` to keep the planner up to date.
 
-If we’ve disabled Write Ahead Logging, then we wouldn’t have write IO spikes from CHECKPOINT operations. We could disable it entirely, or set the wal_level to `minimal` to get durability guarantees, but not a higher level of logging needed for replication, when we’re not replicating cache content.
+With Write Ahead Logging disabled, write IO spikes from `CHECKPOINT` operations are avoided. Besides disabling it entirely, another option is to set the `wal_level` to `minimal` which provides durability guarantees, but reduces the logging level to one that's too low for replication.
 
 What about transactions? All Postgres operations from Active Record are wrapped in an implicit transaction. Active Record provides a way to explicitly control the transaction, including providing options to the transaction.
 
@@ -250,13 +249,13 @@ Rails.cache.fetch(
 
 Accessing the above entry `Rails.cache.fetch("foo-123456")` more than 10 seconds later returns nil as expected. Since Postgres doesn’t offer any kind of expiring entry, this is implemented by deleting the `cache_entries` record before returning a result. Since there isn’t a separate database field for the duration, the 10 seconds figure above becomes part of the key that’s stored.
 
-
 There are a lot more interesting features in Solid Cache, but we’ll have to save those for another post. Next time we’ll cover how older entries are cycled out when limits are reached, sharding the cache store and the Maglev scheme, and storing and retrieving multiple entries at once.
 
-
 ## Wrapping Up
+We covered background jobs with Ruby on Rails, and why and why not to store their job data in a relational database.
 
-- Why Use a relational DB for a cache store?
-- Why NOT use a relational DB?
-- Trying out Solid Cache
-- Going under the hood
+We tried out the basics of Solid Cache, storing and retrieving cached content, and how to configure cache entries to expire at a certain time.
+
+See an earlier post on [Solid Queue background jobs](/solid-queue-mission-control-rails-postgresql), another new default coming to Ruby on Rails 8.
+
+Thanks for reading!
