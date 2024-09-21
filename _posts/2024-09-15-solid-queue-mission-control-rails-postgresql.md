@@ -123,7 +123,7 @@ Finally, while we’d lose transactional consistency described earlier, we may w
 
 ## Drawbacks of background jobs in the database
 - Fault isolation risk: By not segregating background job processing, it’s possible the load from background processing would harm the performance and reliability of the application database operations
-- Data stores like Redis don’t have the MVCC design of Postgres, which means they may consume less disk space and server resources
+- Data stores like Redis don’t have the MVCC design of Postgres, which means they may consume less disk space and server resources, achieving a higher processing rate
 
 ## Features of Solid Queue
 In a future post, we’ll dig more into the features. Here are the basics:
