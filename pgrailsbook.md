@@ -17,8 +17,8 @@ title: High Performance PostgreSQL for Rails Book
 - [Walmart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## Ratings
-- [Amazon: 4.7, 5 ratings and reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
-- [Goodreads: 4.80, 15 ratings, 4 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [Amazon: 4.8, 7 ratings and reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
+- [Goodreads: 4.81, 16 ratings, 5 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
 <details>
@@ -84,6 +84,7 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 - [Ruby Weekly #711 Mention](https://rubyweekly.com/issues/711)
 
 ## Author Profiles and Interviews
+- [PostgreSQL Person of the Week](https://postgresql.life/post/andrew_atkinson/)
 - [Scaling Rails & Postgres to Millions of Users at Microsoft: Lessons & Takeaways](https://stepchange.work/blog/scaling-rails-postgres-to-millions-of-users-at-microsoft-lessons-takeaways)
 - [A Passion for PostgreSQL Chat with Andrew Atkinson](https://forum.devtalk.com/t/spotlight-andrew-atkinson-author-interview-and-ama/156361)
 - [Mention from University of Minnesota](https://www.linkedin.com/posts/university-of-minnesota-college-of-continuing-and-professional-studies_programming-softwaredevelopment-softwareengineer-activity-7221199488894345216-Ym6-?utm_source=share&utm_medium=member_desktop)
