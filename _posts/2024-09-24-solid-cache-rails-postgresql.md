@@ -5,6 +5,7 @@ title: 'Solid Cache for Rails and PostgreSQL'
 tags: []
 hidden: true
 comments: true
+date: 2024-09-24
 ---
 
 [Solid Cache](https://github.com/rails/solid_cache) is a relatively new caching framework that's available now as a Ruby gem, and becoming a default in the next major version of Ruby on Rails, version 8.
