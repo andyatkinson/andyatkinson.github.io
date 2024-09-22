@@ -40,7 +40,7 @@ WAL logs and the guarantees of ACID, atomic operations, transactional consistenc
 
 The multiple row versions (MVCC) capability is not needed for cache data. Cache entries are typically overwritten, possibly versioned by the application. Even when a user receives a stale cache item, that would be ok in a general sense, as cache data is “stale” by definition.
 
-To mitigate some of these things, we can disable parts of Postgres when appropriate where not needed. For example, we can disable write ahead logging for the cache_entries table. In Postgres that’s done by making a table “unlogged.”
+To mitigate some of these things, we can disable parts of Postgres when appropriate where not needed. For example, we can disable write ahead logging for the cache_entries table. In Postgres that’s done by making a table `UNLOGGED`.
 
 ```sql
 ALTER TABLE cache_entries SET UNLOGGED;
@@ -92,9 +92,9 @@ There are a lot of additional options, so check them out.
 
 
 ## Basic Usage
-Let’s cache something, then look in the `solid_cache_entries` table. We’ll use the style that the Rails Guides refer to as “low level caching”. https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching
+Let’s cache something, then look in the `solid_cache_entries` table. We’ll use the style that the Rails Guides refer to as [low level caching](https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching).
 
-I can use “Fetch” to write a value if it doesn’t exist:
+Use `fetch()` to write a value when it doesn’t exist:
 
 ```rb
 irb(main):001> Rails.cache.fetch("foo-123"){ Trip.first.id }
@@ -134,7 +134,7 @@ What else might we consider looking into with Postgres?
 
 
 ## PostgreSQL Optimizations
-As discussed earlier, we could disable write ahead logging (WAL) for the `cache_entries` table to reduce arguably unnecessary write IO related to cache entries. If Postgers were to restart, this means `cache_entries` will be truncated, so keep that in mind. Keep the table logged if you need to be guaranteed this data will exist following a restart.
+As discussed earlier, we could disable write ahead logging (WAL) for the `solid_cache_entries` table to reduce arguably unnecessary write IO related to cache entries. If Postgers were to restart, this means `solid_cache_entries` will be truncated, so keep that in mind. Keep the table logged if you need to be guaranteed this data will exist following a restart.
 
 ```sql
 ALTER TABLE solid_cache_entries SET UNLOGGED;
@@ -213,7 +213,7 @@ COMMIT;
 
 Active Record supports transaction isolation levels, but does not support read only transactions at this time.
 
-To try this out, let’s add a small patch that overrides the transaction code in Rails at runtime, allowing us to create a read only type of transaction. This should be taken purely as a demonstration. A file lib/patches/active_record_patch.rb was added to the Rideshare PR. It looks like this:
+To try this out, let’s add a small patch that overrides the transaction code in Rails at runtime, allowing us to create a read only type of transaction. This should be taken purely as a demonstration. A file `lib/patches/active_record_patches.rb` was added to [Rideshare PR #213](https://github.com/andyatkinson/rideshare/pull/213). It looks like this:
 
 ```rb
 module Patches::ActiveRecordPatches
@@ -248,7 +248,7 @@ Rails.cache.fetch(
 ){ "bar" }
 ```
 
-Accessing the above entry `Rails.cache.fetch("foo-123456")` more than 10 seconds later returns nil as expected. Since Postgres doesn’t offer any kind of expiring entry, this is implemented by deleting the `cache_entries` record before returning a result. Since there isn’t a separate database field for the duration, the 10 seconds figure above becomes part of the key that’s stored.
+Accessing the above entry `Rails.cache.fetch("foo-123456")` more than 10 seconds later returns nil as expected. Since Postgres doesn’t offer any kind of expiring entry, this is implemented by deleting the `solid_cache_entries` record before returning a result. Since there isn’t a separate database field for the duration, the 10 seconds figure above becomes part of the key that’s stored.
 
 There are a lot more interesting features in Solid Cache, but we’ll have to save those for another post. Next time we’ll cover how older entries are cycled out when limits are reached, sharding the cache store and the Maglev scheme, and storing and retrieving multiple entries at once.
 
