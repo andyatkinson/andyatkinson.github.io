@@ -71,11 +71,11 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 ## Community Links
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
 - [Efficient Database Queries in Rails: A Practical Approach](https://danielabaron.me/blog/rails-query-perf/)
-- [Top Five PostgreSQL Surprises from Rails Developers, Medium, 75 claps](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
+- [Top Five PostgreSQL Surprises from Rails Developers, Medium, 70 claps](https://medium.com/pragmatic-programmers/top-five-postgresql-surprises-from-rails-developers-36d2b8734909)
 - [New This Week: High Performance PostgreSQL for Rails](https://media.pragprog.com/newsletters/2024-06-25.html)
 
 ## Social Media Stats
-- [Print availability announcement Tweet/X 2024 32K views](https://x.com/andatki/status/1806373453361999912)
+- [Print availability announcement Tweet/X 2024 33K views](https://x.com/andatki/status/1806373453361999912)
 - [Beta announcement Tweet/X 2023 40K views](https://x.com/andatki/status/1696933498219569615)
 - [Print unboxing Tweet/X 2024 5K views, 110 faves](https://x.com/andatki/status/1811830289309790449)
 - [LinkedIn Unboxing 2024 23K impressions, 380 reactions](https://www.linkedin.com/feed/update/urn:li:activity:7217598021931270144/)
@@ -86,6 +86,7 @@ See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](
 ## Author Profiles and Interviews
 - [PostgreSQL Person of the Week](https://postgresql.life/post/andrew_atkinson/)
 - [Scaling Rails & Postgres to Millions of Users at Microsoft: Lessons & Takeaways](https://stepchange.work/blog/scaling-rails-postgres-to-millions-of-users-at-microsoft-lessons-takeaways)
+- [Mastering PostgreSQL for Rails: An Interview with Andy Atkinson](https://philsmy.com/mastering-postgresql-for-rails-an-interview-with-andy-atkinson/)
 - [A Passion for PostgreSQL Chat with Andrew Atkinson](https://forum.devtalk.com/t/spotlight-andrew-atkinson-author-interview-and-ama/156361)
 - [Mention from University of Minnesota](https://www.linkedin.com/posts/university-of-minnesota-college-of-continuing-and-professional-studies_programming-softwaredevelopment-softwareengineer-activity-7221199488894345216-Ym6-?utm_source=share&utm_medium=member_desktop)
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
