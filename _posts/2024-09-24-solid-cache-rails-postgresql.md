@@ -134,7 +134,7 @@ What else might we consider looking into with Postgres?
 
 
 ## PostgreSQL Optimizations
-As discussed earlier, we could disable write ahead logging (WAL) for the `solid_cache_entries` table to reduce arguably unnecessary write IO related to cache entries. If Postgers were to restart, this means `solid_cache_entries` will be truncated, so keep that in mind. Keep the table logged if you need to be guaranteed this data will exist following a restart.
+As discussed earlier, we could disable write ahead logging (WAL) for the `solid_cache_entries` table to reduce arguably unnecessary write IO related to cache entries. If Postgres were to restart, this means `solid_cache_entries` will be truncated, so keep that in mind. Keep the table logged if you need to be guaranteed this data will exist following a restart.
 
 ```sql
 ALTER TABLE solid_cache_entries SET UNLOGGED;
