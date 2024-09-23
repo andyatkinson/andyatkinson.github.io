@@ -1,4 +1,4 @@
----
+no---
 layout: post
 permalink: /solid-cache-rails-postgresql
 title: 'Solid Cache for Rails and PostgreSQL'
@@ -161,8 +161,9 @@ Use the [pg_prewarm](https://www.postgresql.org/docs/current/pgprewarm.html) ext
 SELECT pg_prewarm('solid_cache_entries');
 ```
 
-Adjust `random_page_cost` for query planning purposes. The default value was created in the era of rotating hard disks, not modern fast SSDs. Some folks recommend adjusting random_page_cost to be equal to `seq_page_cost`.
+Adjust `random_page_cost` for query planning purposes. The default value was created in the era of rotating hard disks, not modern fast SSDs. Some folks recommend adjusting the value to be equal to `seq_page_cost`.
 
+Note that this is a database wide value. The goal is to increase the proportion of index scans.
 ```sql
 ALTER SYSTEM SET random_page_cost = 1.1;
 ```
