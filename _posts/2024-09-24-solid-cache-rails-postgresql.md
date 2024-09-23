@@ -170,7 +170,7 @@ ALTER SYSTEM SET random_page_cost = 1.1;
 
 Over time, if `solid_cache_entries` reaches more than 100 gigabytes, for example if you’ve greatly increased the max size of cache data, and perhaps are running a dedicated cache server, it may be worth exploring migrating the row data into a partitioned table with an equivalent structure.
 
-To minimize changes to the application code, a HASH partition type could be used and calculated based on the bigint primary key. This would help distribute read and write operations into more tables. This could be 4, 8, 16 or some number of buckets/partitions in the structure. For write operations, there could be reduced contention as cache entries are inserted as they’re distributed to multiple tables, and contention for index maintenance write operations as each partition has its own index. 
+To minimize changes to the application code, a HASH partition type could be used and calculated based on the bigint primary key. This would help distribute read and write operations into more tables. This could be 4, 8, 16 or some number of buckets/partitions in the structure. For write operations, there could be reduced contention as cache entries are inserted amongst multiple tables, and contention for index maintenance write operations as each partition has its own index. 
 
 The benefit to read operations, as long as [partition_pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING) is enabled. Postgres can then access only the specific partition where the row is located. Each partition has its own index. 
 
