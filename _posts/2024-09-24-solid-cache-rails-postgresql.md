@@ -2,15 +2,14 @@
 layout: post
 permalink: /solid-cache-rails-postgresql
 title: 'Solid Cache for Rails and PostgreSQL'
-tags: []
-hidden: true
+tags: [PostgreSQL, Ruby on Rails]
 comments: true
-date: 2024-09-22
+date: 2024-09-23
 ---
 
-[Solid Cache](https://github.com/rails/solid_cache) is a relatively new caching framework that's available now as a Ruby gem, and becoming a default in the next major version of Ruby on Rails, version 8.
+[Solid Cache](https://github.com/rails/solid_cache) is a relatively new caching framework that's available now as a Ruby gem. In the next major version of Ruby on Rails, version 8, it's becoming the default cache backend.
 
-Solid Cache has a noteworthy difference from popular alternatives in that it stores cache entries in a relational database and not a memory-based data store like Redis.
+Solid Cache has a noteworthy difference from alternatives in that it stores cache entries in a relational database and not a memory-based data store like Redis.
 
 In this post, we’ll set up Solid Cache, explore the schema, operations, and discuss some Postgres optimizations to consider.
 
