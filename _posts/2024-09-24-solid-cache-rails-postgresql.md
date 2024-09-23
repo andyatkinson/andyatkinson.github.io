@@ -1,4 +1,4 @@
-no---
+---
 layout: post
 permalink: /solid-cache-rails-postgresql
 title: 'Solid Cache for Rails and PostgreSQL'
