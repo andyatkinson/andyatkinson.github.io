@@ -7,50 +7,50 @@ comments: true
 date: 2024-09-23
 ---
 
-[Solid Cache](https://github.com/rails/solid_cache) is a relatively new caching framework that's available now as a Ruby gem. In the next major version of Ruby on Rails, version 8, it's becoming the default cache backend.
+[Solid Cache](https://github.com/rails/solid_cache) is a relatively new cache framework that's available as a Ruby gem for Ruby on Rails. In the next major version of Rails, version 8, it's becoming the default cache backend.
 
-Solid Cache has a noteworthy difference from alternatives in that it stores cache entries in a relational database and not a memory-based data store like Redis.
+Solid Cache uses a relational database to store cache data, a noteworthy difference from alternatives that tend to use memory-based solutions like Redis. Why is that? What are the trade-offs?
 
-In this post, we’ll set up Solid Cache, explore the schema, operations, and discuss some Postgres optimizations to consider.
+In this post, we’ll set up Solid Cache, explore the schema, data, operations, discuss Postgres optimizations, and explore this solution.
 
-Before we do that, let's discuss caching in relational vs. non-relational stores.
+Before we do that, let's discuss caching in relational vs. non-relational stores in general.
 
 ## Why use a relational DB for caching?
-A big change in the last decade is that there are now fast SSD disk drives that have huge capacities at low price points.
+A big change in the last decade is that there are now fast SSD drives with huge capacities at low price points.
 
-SSDs attached locally to an instance, not over the network, offer very fast read and write access. This configuration is available whether self-hosting or using cloud providers.
+SSDs attached locally to an instance, not over the network, offer very fast read and write access.
 
-Besides the hardware gains, PostgreSQL itself has improved its efficiency across many releases in the last decade. Features like index deduplication cut down on index sizes, offering faster writes and reads.
+Besides the hardware gains, PostgreSQL itself has improved its efficiency across many releases over the last decade since memory-stores have been popular.
 
-Developers can optimize reads for their application by leveraging things like database indexes, materialized views, and denormalization. These tactics all consume more space and can add latency to write operations, but can greatly improve read access speeds. With Solid Cache, we’ll primarily look at a single `solid_cache_entries` table, and how it’s indexed. The indexes themselves will contain all cache entry data, and when they’re small enough based on available system memory, can fit entirely into the fast memory buffer cache.
+Features like index deduplication cut down on index sizes, offering faster writes and reads.
 
-With faster hardware, abundant storage capacities, and optimized indexes, keeping cache data in the relational database is starting to make more sense. Being able to reduce dependencies on multiple data stores can simplify operations and reduce costs.
+Developers can optimize reads for their application by leveraging things like database indexes, materialized views, and denormalization. These tactics consume more space and add latency to write operations, but can greatly improve read access.
 
-Now that we’ve covered a bit about why to consider a relational store for cache, let’s flip it around. Why would we not want to?
+With Solid Cache, we’ll look at its single table `solid_cache_entries` and how it’s indexed. The indexes themselves contain cache entry data, and when they’re small enough to fit in available memory, offer very fast access via Postgres' internal buffer cache.
+
+To recap: with faster hardware, abundant storage, and optimized indexes, cache data in relational databases is starting to make sense. Besides that, being able to reduce application dependencies on multiple data stores simplies operations and may reduce costs.
+
+With all of that said, why might we not want to adopt a relational database backed cache store?
 
 ## Why to NOT use a relational DB?
-A relational DB does have more features than are needed for secondary cache data. These features are critical for non-cache primary data, but add some amount of latency.
+A relational DB has more features than are needed for safely storing cache data. These features are critical for non-cache primary data, but add latency.
 
-What are some examples? Postgres uses write ahead logging ([WAL](https://www.postgresql.org/docs/current/wal-intro.html)), offers ACID guarantees, and has concurrency guarantees using the multiversion concurrency control ([MVCC](https://www.postgresql.org/docs/current/mvcc.html)) system, that are all a bit overkill for secondary cache data.
+What are some examples? Postgres uses write ahead logging ([WAL](https://www.postgresql.org/docs/current/wal-intro.html)), offers ACID guarantees, and has concurrency guarantees using multiversion concurrency control ([MVCC](https://www.postgresql.org/docs/current/mvcc.html)), that are all a bit overkill for cache data.
 
-This is because cache data can usually be lost entirely and repopulated, affecting response times, but not resulting in permanent data loss.
+This is because cache data can usually be lost entirely and repopulated, which impacts response times until the cache data is repopulated, but doesn't result in permanent data loss.
 
-WAL logs and the guarantees of ACID, atomic operations, transactional consistency, isolated transactions, and durable storage, are all arguably unnecessary for secondary cache data.
+WAL logs and ACID guarantees, atomic operations, transactional consistency, isolated transactions, and durable storage, are all arguably unnecessary here.
 
-The multiple row versions (MVCC) capability is not needed for cache data. Cache entries are typically overwritten, possibly versioned by the application. Even when a user receives a stale cache item, that would be ok in a general sense, as cache data is “stale” by definition.
+Even when a user receives a stale cache item, that would be ok in a general sense, as cache data is “stale” by definition.
 
-To mitigate some of these things, we can disable parts of Postgres when appropriate where not needed. For example, we can disable write ahead logging for the cache_entries table. In Postgres that’s done by making a table `UNLOGGED`.
+To mitigate latency from some of these features that aren't really needed, we can disable parts of Postgres for specific tables or transactions.
 
-```sql
-ALTER TABLE cache_entries SET UNLOGGED;
-```
+We'll dive into those in a later section.
 
-For other items discussed above, while not helpful for cache data, we’d accept their extra latency in exchange for possibly being able to operate one less database. Remember that each database has a distinct process around maintenance, upgrades, logging, and scaling.
-
-With that covered, let’s dive into Solid Cache.
+Before we do that, let’s dive into Solid Cache.
 
 ## Trying out Solid Cache
-We’ll use the Rideshare app, which is on GitHub, and used throughout the book High Performance PostgreSQL for Rails. This will be a place to add the gem, kick the tires, and explore some of the features.
+We’ll use the [Rideshare app](https://github.com/andyatkinson/rideshare) on GitHub, and used throughout the book [High Performance PostgreSQL for Rails](https://andyatkinson.com/pgrailsbook). This will be a place to add the gem, kick the tires, and explore some of the features.
 
 After adding the gem, run the migrations command below.
 ```sh
@@ -133,18 +133,43 @@ What else might we consider looking into with Postgres?
 
 
 ## PostgreSQL Optimizations
-As discussed earlier, we could disable write ahead logging (WAL) for the `solid_cache_entries` table to reduce arguably unnecessary write IO related to cache entries. If Postgres were to restart, this means `solid_cache_entries` will be truncated, so keep that in mind. Keep the table logged if you need to be guaranteed this data will exist following a restart.
+As discussed earlier, we could disable write ahead logging (WAL) for the `solid_cache_entries` table to reduce write IO operations. If Postgres were to crash or have an "unclean shutdown", and `solid_cache_entries` was unlogged, the table [will be truncated](https://www.postgresql.org/docs/current/sql-createtable.html) on startup. If that's not acceptable, keep the table "logged," which is the default.
 
+With that said, to change the table from the default of "logged" to unlogged, run:
 ```sql
 ALTER TABLE solid_cache_entries SET UNLOGGED;
 ```
 
-Another consideration is Autovacuum for the `solid_cache_entries` table. In Postgres, if you’re updating and deleting from the `solid_cache_entries` table heavily, you’ll want to add more resources to Autovacuum for this table.
+In addition to that and WAL related, Postgres uses the WAL to guarantee durability of the data. However, there are levels. If we accept less guarantees on durability, we can reduce write IO.
 
-First, over time, take a look at the operation types. On a per table basis, we can see the number of read and write operations.
+We can do that by changing the default value for `synchronous_commit` at a transaction level. Review the [synchronous_commit Modes](https://postgresqlco.nf/doc/en/param/synchronous_commit/) table to see all the options. The default value is `on`.
 
-For heavy updates and deletes, consider reducing the autovacuum scale factor so that vacuum is triggered earlier, to perform its work.
+If we change the value to `local`, we're still guaranteed local durability, but aren't guaranteed commits to the table will make it all the way through replication, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use.
 
+At the transaction level, changing `synchronous_commit` would look like this:
+
+```sql
+BEGIN;
+
+SET LOCAL synchronous_commit TO 'local';
+
+INSERT INTO "solid_cache_entries" ("key","value","key_hash","byte_size","created_at")
+VALUES ('\x646576656c6f706d656e743a666f6f2d313233', '\x001101000000000000f0bfffffffff04086907',
+4421380845266846514, 178, CURRENT_TIMESTAMP)
+ON CONFLICT ("key_hash")
+DO UPDATE SET "key"=excluded."key","value"=excluded."value",
+"byte_size"=excluded."byte_size" RETURNING "id";
+
+COMMIT;
+```
+
+PostgreSQL runs the Checkpoint process every 5 minutes by default. We're not recommending changing that here since it's server-wide, and can't be scoped to the `solid_cache_entries` table or specific transactions. However, checkpoints can be performed manually using the `CHECKPOINT` command.
+
+Another optimization area besides WAL is Autovacuum for `solid_cache_entries`. In Postgres, since `solid_cache_entries` will have updates and deletes, we may want to make more Autovacuum resources available for this table.
+
+Consider reducing the autovacuum scale factor so that vacuum is triggered earlier.
+
+To do that, run the following statement in psql:
 ```sql
 ALTER TABLE solid_cache_entries SET (
     autovacuum_vacuum_scale_factor = 0.01,
@@ -171,7 +196,7 @@ Over time, if `solid_cache_entries` reaches more than 100 gigabytes, for example
 
 To minimize changes to the application code, a HASH partition type could be used and calculated based on the bigint primary key. This would help distribute read and write operations into more tables. This could be 4, 8, 16 or some number of buckets/partitions in the structure. For write operations, there could be reduced contention as cache entries are inserted amongst multiple tables, and contention for index maintenance write operations as each partition has its own index. 
 
-The benefit to read operations, as long as [partition_pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING) is enabled, is that Postgres can more efficiently access only the specific partition for the row. Each partition has its own index. 
+The benefit to read operations, as long as [partition_pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING) is enabled, means Postgres knows how to access *only* the specific partition for the row. Further, each partition has its own copies of indexes.
 
 ## Faster reads on a dedicated server instance
 If we run Solid Cache and the `solid_cache_entries` on a dedicated server instance, we can tune even more things.
@@ -260,3 +285,5 @@ We tried out the basics of Solid Cache, storing and retrieving cached content, a
 See an earlier post on [Solid Queue background jobs](/solid-queue-mission-control-rails-postgresql), another new default coming to Ruby on Rails 8.
 
 Thanks for reading!
+
+- Updates: Thanks [@PikachuEXE](https://github.com/PikachuEXE) for clarifications and additions.
