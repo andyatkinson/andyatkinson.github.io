@@ -196,7 +196,7 @@ Over time, if `solid_cache_entries` reaches more than 100 gigabytes, for example
 
 To minimize changes to the application code, a HASH partition type could be used and calculated based on the bigint primary key. This would help distribute read and write operations into more tables. This could be 4, 8, 16 or some number of partitions in the structure. For write operations, there could be reduced contention as cache entries are inserted into multiple tables, and for index page writes as each partition has its own indexes. 
 
-The benefit to read operations, as long as [partition_pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING) is enabled, means Postgres knows how to access *only* the specific partition for the row. Further, each partition has its own copies of indexes.
+The benefit to read operations with [partition_pruning](https://www.postgresql.org/docs/current/ddl-partitioning.html#DDL-PARTITION-PRUNING) enabled is that Postgres has enough information to access only specific, needed partitions.
 
 ## Faster reads on a dedicated server instance
 If we run Solid Cache and the `solid_cache_entries` on a dedicated server instance, we can tune even more things.
