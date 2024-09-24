@@ -103,7 +103,7 @@ irb(main):001> Rails.cache.fetch("foo-123"){ Trip.first.id }
 => 2
 ```
 
-It just works! If you’re familiar with the Rails cache API, using Solid Cache to create a cache entry was straightforward.
+It just works! If you’re familiar with the Rails cache API, then using Solid Cache to create a cache entry is straightforward.
 
 Here’s how to read the key that was just set:
 
@@ -113,9 +113,9 @@ irb(main):002> Rails.cache.fetch("foo-123")
 => 2
 ```
 
-Let’s pop back over to SQL land and `EXPLAIN` the query. Since we’re running Postgres 16, we can use the `GENERIC_PLAN` option with `EXPLAIN` to get a generic query plan. A generic query plan does not require specific parameters for the numbered parameters.
+Let’s pop back over to SQL and use `EXPLAIN` to get a query plan. Since we’re running Postgres 16, we can use the `GENERIC_PLAN` option with `EXPLAIN`, which does not require specific parameter values for the numbered parameters.
 
-With the generic plan and even accessing a single row, we can see the query planner chose an index scan using the multicolumn index `index_solid_cache_entries_on_key_hash_and_byte_size` index.
+With the generic plan and when accessing even a single row, we can see the query planner chose an index scan using the multicolumn index `index_solid_cache_entries_on_key_hash_and_byte_size` index.
 
 This makes sense because the SELECT query we see above matches the index definition columns exactly. This should result in an efficient index scan or index only scan, keeping latency as low as possible.
 
