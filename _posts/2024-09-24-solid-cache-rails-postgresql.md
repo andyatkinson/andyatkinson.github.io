@@ -144,7 +144,7 @@ In addition to that and WAL related, Postgres uses the WAL to guarantee durabili
 
 We can do that by changing the default value for `synchronous_commit` at a transaction level. Review the [synchronous_commit Modes](https://postgresqlco.nf/doc/en/param/synchronous_commit/) table to see all the options. The default value is `on`.
 
-If we change the value to `local`, we're still guaranteed local durability, but aren't guaranteed commits to the table will make it all the way through replication, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use, when a replica is in use.
+If we change the value to `local`, we're still guaranteed local durability, but aren't guaranteed commits to the table will make it all the way through replication (when replication is enabled).
 
 At the transaction level, changing `synchronous_commit` would look like this:
 
