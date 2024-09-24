@@ -179,7 +179,7 @@ ALTER TABLE solid_cache_entries SET (
 ```
 
 ## Faster reads and writes, same database server instance
-Use the [pg_prewarm](https://www.postgresql.org/docs/current/pgprewarm.html) extension to load the entire content of `solid_cache_entries` into the buffer cache. However, we’d still keep the buffer cache at 25-40% of system memory following guidelines. Buffer cache consumes limited server instance memory.
+Use the [pg_prewarm](https://www.postgresql.org/docs/current/pgprewarm.html) extension to load the entire contents of `solid_cache_entries` into the buffer cache. However, we’d still keep the buffer cache at 25-40% of system memory following guidelines. Buffer cache consumes limited server instance memory.
 
 ```sql
 SELECT pg_prewarm('solid_cache_entries');
