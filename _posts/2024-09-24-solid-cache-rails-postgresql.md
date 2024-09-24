@@ -205,7 +205,7 @@ Normally a Postgres instance might allocate 25% of the available system memory t
 
 After adjusting `shared_buffers`, increase `effective_cache_size` to keep the planner up to date.
 
-With Write Ahead Logging disabled, write IO spikes from `CHECKPOINT` operations are avoided. Besides disabling it entirely, another option is to set the `wal_level` to `minimal` which provides durability guarantees, but reduces the logging level to one that's too low for replication.
+With Write Ahead Logging disabled, write IO spikes from `CHECKPOINT` operations are avoided. Besides disabling it entirely, another option is to reduce the `wal_level` to `minimal` which still provides durability guarantees, but with less IO, albeit losing the ability to perform replication.
 
 What about transactions? All Postgres operations from Active Record are wrapped in an implicit transaction. Active Record provides a way to explicitly control the transaction, including providing options to the transaction.
 
