@@ -209,7 +209,9 @@ With Write Ahead Logging disabled, write IO spikes from `CHECKPOINT` operations 
 
 What about transactions? All Postgres operations from Active Record are wrapped in an implicit transaction. Active Record provides a way to explicitly control the transaction, including providing options to the transaction.
 
-One option would be to use a lower transaction isolation level than the default of “read committed”. That level means that only committed data is read. The lower level means data that’s not yet committed can be read. This is unlikely to be much of an improvement, and reading uncommitted data may cause surprising results. However, it’s possible to achieve a higher level of transactions per second (TPS) throughput by reading uncommitted data. If you’re exploring this level of optimization, hopefully you’re using [pgbench](https://www.postgresql.org/docs/current/pgbench.html) to conduct some benchmarks.
+One option is a lower transaction isolation level than the default of “read committed”. That level means that only committed data is read. The lower level means data that’s not yet committed can be read. This is unlikely to be much of an improvement, and reading uncommitted data may cause surprising results. However, it’s possible to achieve a higher level of transactions per second (TPS) throughput by reading uncommitted data.
+
+If you’re exploring this, hopefully you’re using [pgbench](https://www.postgresql.org/docs/current/pgbench.html) to conduct some benchmarks.
 
 ```rb
 irb(main):009> ActiveRecord::Base.transaction(isolation: :read_uncommitted){ Trip.first }
@@ -227,7 +229,7 @@ irb(main):009> ActiveRecord::Base.transaction(isolation: :read_uncommitted){ Tri
  updated_at: Wed, 31 Jul 2024 23:55:59.297526000 CDT -05:00>
 ```
 
-Another transaction option is a read only transaction, which again is fairly uncommon, and does not seem to be supported by Active Record. The idea would be that a real only transaction allows Postgres to avoid overhead associated with locking resources, so a theoretically higher level of TPS is possible. This should again be benchmarked using [pgbench](https://www.postgresql.org/docs/current/pgbench.html).
+Another transaction option is a read only transaction, which is fairly uncommon, and does not seem to be supported by Active Record. The idea would be that a read only transaction allows Postgres to avoid overhead associated with locking resources, so a theoretically higher level of TPS is possible. This should again be benchmarked using [pgbench](https://www.postgresql.org/docs/current/pgbench.html).
 
 In SQL, a read only transaction is created like this: 
 ```sql
