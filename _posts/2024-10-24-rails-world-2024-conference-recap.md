@@ -130,6 +130,7 @@ I'd like to share some links from this year, and I'd be thrilled if you checked 
 - [Top Five PostgreSQL Surprises from Rails Devs](/blog/2024/05/28/top-5-postgresql-surprises-from-rails-developers)
 - [🎙️ Ship It! Podcast — PostgreSQL with Andrew Atkinson](/blog/2024/05/21/shipit-podcast-changelog-andrew-atkinson)
 - [RailsConf 2024 Conference — The Long Goodbye](/blog/2024/05/17/railsconf-conference-2024-detroit)
+- [Mastering PostgreSQL for Rails: An Interview with Andy Atkinson](/blog/2024/07/01/mastering-postgresql-phil-smy-andrew-atkinson)
 - [Sin City Ruby 2024](/blog/2024/03/25/sin-city-ruby-2024)
 - [Rails + Postgres Postgres.FM 086 — Extended blog post edition! 🎙️](/blog/2024/03/07/postgresfm-podcast-rails-plus-postgres)
 - [Maintainable Podcast — Maintainable…Databases? 🎙️](/blog/2024/02/19/maintainable-podcast-robby-russell-andrew-atkinson-maintainable-databases)
