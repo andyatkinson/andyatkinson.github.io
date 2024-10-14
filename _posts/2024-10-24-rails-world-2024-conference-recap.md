@@ -4,6 +4,8 @@ permalink: /rails-world-2024-conference-recap
 title: 'Rails World 2024 Conference Recap'
 tags: []
 comments: true
+hidden: true
+date: 2024-10-14
 ---
 
 This is Part 1 of my Rails World 2024 Recap, describing some sessions in Day 1, and non-session activities outside of that! I'm planning a Part 2 post where I'll cover more of the sessions I missed, once the recordings are published and I've watched them.
