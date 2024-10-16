@@ -4,20 +4,22 @@ permalink: /postgresql-17-json-table-merge-returning-updatable-views
 title: 'PostgreSQL 17: JSON_TABLE(), MERGE with RETURNING, and Updatable Views'
 tags: []
 comments: true
-date: 2024-10-15
+hidden: true
+date: 2024-10-16
 ---
 
-PostgreSQL 17 released a few weeks ago! As a mature database system with decades of innovation, bear in mind that new features must defer to reliability and backwards compatibility despite how cool they are.
+PostgreSQL 17 released a few weeks ago! As a mature database system with decades of innovation, new features are usually scoped narrowly, given reliability, stability, and backwards compatibility takes priority in Postgres, a good thing!
 
-Even promising enhancements like [Splitting and Merging Partitions](/blog/2024/04/16/postgresql-17-merge-split-partitions) (previous blog post) will be reverted when the core team identifies issues.
+That means even promising enhancements like [Splitting and Merging Partitions](/blog/2024/04/16/postgresql-17-merge-split-partitions) will be reverted during the development cycle when the core team feels a new feature isn't ready.
 
-With that in mind, the release notes still describe lots of small things to take a look at, some of which you may be able to put into practice in SQL you write going forward.
+The [Postgres 17 release notes](https://www.postgresql.org/docs/release/17.0/) cover a lot of small items worth taking a look at.
+
+This post picks out three, and provides some commands that can be copied and pasted into a Postgres 17 instance.
 
 Let's dive in!
 
 ## PostgreSQL 17 via Docker
-To try out PostgreSQL 17, we can grab an instance via Docker.
-
+To easily try out PostgreSQL 17, let's use Docker.
 ```sh
 docker pull postgres:17
 
@@ -26,14 +28,12 @@ docker run --name my-postgres-container -e POSTGRES_PASSWORD=mysecretpassword -d
 docker exec -it my-postgres-container psql -U postgres
 ```
 
-Alternatively, if you're on macOS and prefer to use the built-in [pg_upgrade](https://www.postgresql.org/docs/current/pgupgrade.html) tool, please see a past post walking through an [in-place upgrade from Postgres 14 to 15](https://andyatkinson.com/blog/2022/12/12/upgrading-postgresql-15-mac-os).
+As an aside: for macOS, if you're interested in using [pg_upgrade](https://www.postgresql.org/docs/current/pgupgrade.html), please see the post [in-place upgrade from Postgres 14 to 15](https://andyatkinson.com/blog/2022/12/12/upgrading-postgresql-15-mac-os) as an example upgrade.
 
-If you're on macOS, note that Homebrew is still providing Postgres 14 as of this writing. For new installations I recommend [Postgres.app](https://postgresapp.com), which was updated and provides 17.
-
-Whether you've upgraded your local instance, or are running 17 via Docker, we'll assume you've connected to a 17 instance and are ready to test these new capabilities.
+We'll assume you're now connected to a 17 instance and ready to try out these commands.
 
 ## SQL/JSON and JSON_TABLE
-Postgres supports SQL/JSON, which is like an selector style expressional language, that provides methods to extract data from JSON formatted text.
+Postgres supports SQL/JSON, which is like a selector style expressional language, that provides methods to extract data from JSON formatted text.
 
 > SQL/JSON path expressions specify item(s) to be retrieved from a JSON value, similarly to XPath expressions used for access to XML content.
 
