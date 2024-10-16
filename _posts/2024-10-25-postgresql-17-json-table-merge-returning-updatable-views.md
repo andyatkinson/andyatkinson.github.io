@@ -4,7 +4,6 @@ permalink: /postgresql-17-json-table-merge-returning-updatable-views
 title: 'PostgreSQL 17: JSON_TABLE(), MERGE with RETURNING, and Updatable Views'
 tags: []
 comments: true
-hidden: true
 date: 2024-10-15
 ---
 
@@ -46,7 +45,9 @@ Let's take a look at an example!
 
 Each of these examples will be on this [PostgreSQL 17 branch of my pg_scripts](https://github.com/andyatkinson/pg_scripts/pull/9) repo.
 
-Let's create a table called "books" and insert some books into it. We'll have a "data" column with the jsonb data type. We'll use the `json_build_object()` function to more easily prepare JSON compatible attribute data for storage.
+Create a table "books" and insert a row into it. We can use the default database here. Mainly we just want to be on 17 so that these functions are available.
+
+The books table has a "data" column using the "jsonb" data type.
 
 Create the table:
 ```sql
@@ -56,6 +57,8 @@ CREATE TABLE IF NOT EXISTS books (
     data jsonb
 );
 ```
+
+The books table has a "data" column using the "jsonb" data type. Use the `json_build_object()` function to prepare JSON compatible attribute data for storage.
 
 Insert a data row with json data:
 ```sql
@@ -69,9 +72,10 @@ INSERT INTO books (id, name, data)
         'author','Andrew Atkinson'));
 ```
 
-Now comes the cool part. We can use the `JSON_TABLE` function as below to pull out the publisher, isbn, and author info, and when structured in this way, the result appears as if this row came from a regular table.
+Now comes the cool part. Use the new `JSON_TABLE` function as shown below to pull out the publisher, isbn, and author info from within the JSON stored in the data column.
 ```sql
 SELECT
+    id,
     isbn,
     publisher,
     author
@@ -84,34 +88,67 @@ FROM
     )) AS jt;
 ```
 
+The query result shows the attributes as if they were traditional columns in a regular table, even though they were stored within a jsonb field. Nice!
+```sql
+ id |      isbn      |                    publisher                     |     author
+ ----+----------------+--------------------------------------------------+-----------------
+   1 | 979-8888650387 | Pragmatic Bookshelf; 1st edition (July 23, 2024) | Andrew Atkinson
+```
+
+Read more about JSON_TABLE:
 - <https://medium.com/@atarax/finally-json-table-is-here-postgres-17-a9b5245649bd>
 
+There's even more JSON related functionality in the [PostgreSQL 17 Release Notes](https://www.postgresql.org/docs/release/17.0/), like  SQL/JSON constructors (JSON, JSON_SCALAR, JSON_SERIALIZE) and query functions (JSON_EXISTS, JSON_QUERY, JSON_VALUE).
 
-The release notes describe even more:
-
-"There's more support for SQL/JSON constructors (JSON, JSON_SCALAR, JSON_SERIALIZE) and query functions (JSON_EXISTS, JSON_QUERY, JSON_VALUE), giving developers other ways of interfacing with their JSON data."
-
+What's next?
 
 ## MERGE with RETURNING
 
-Let's make two tables, people and employees.
+Although the `MERGE` keyword was added in Postgres 15, it was enhanced in 17. Let's try it out.
+
+Make two tables, "people" and "employees".
 ```sql
 -- MERGE in Postgres 15
-create table people (id int, name text);
-create table employees (id int, name text);
+CREATE TABLE people (
+    id int,
+    name text
+);
+
+CREATE TABLE employees (
+    id int,
+    name text
+);
 ```
 
 Insert a person:
 ```sql
-insert into people (id, name) VALUES (1, 'Andy');
+INSERT INTO people (id, name)
+    VALUES (1, 'Andy');
 ```
 
-Now we can use the MERGE keyword for an "Upsert" operation. MERGE was added in PostgreSQL 15 but enhanced in 17. What was added?
+We can use the `MERGE` keyword to perform an "upsert" operation, meaning data is inserted when it doesn't exist, or updated when it does.
 
-MERGE gained support for the RETURNING clause. What's that? The RETURNING clause provides one or more fields back from the INSERT or UPDATE that was performed.
+`MERGE` gained support for the `RETURNING` clause in PostgreSQL 17. What's the RETURNING clause?
 
-This is helpful because it saves having to run a second query to get back the values. MERGE can keep the code clean for Upserts when you aren't sure what data exists.
+The RETURNING clause can be used to provide one or more fields in the result of an INSERT or UPDATE statement that was performed. It works with INSERT and UPDATE, and now MERGE as well. These are all categorized as Data Manipulation Language (DML) statements.
 
+RETURNING is helpful because it avoids the need for a second query to get back the inserted or updated values.
+
+MERGE helps make upsert operations more declarative, and is based on a SQL standard with implementations in other database systems.
+
+Let's try out MERGE first without RETURNING:
+```sql
+MERGE INTO employees e
+USING people p ON e.id = p.id
+WHEN MATCHED THEN
+    UPDATE SET
+        name = p.name
+WHEN NOT MATCHED THEN
+    INSERT (id, name)
+        VALUES (p.id, p.name);
+```
+
+Now we can try it with RETURNING, and include the result:
 ```sql
 MERGE INTO employees e
 USING people p
@@ -121,43 +158,123 @@ WHEN MATCHED THEN
 WHEN NOT MATCHED THEN
     INSERT (id, name)
     VALUES (p.id, p.name)
-;
--- RETURNING *; 
+RETURNING *; -- <<<<<RETURNING CLAUSE HERE, returning all fields with "*"
 
---  id | name | id | name
--- ----+------+----+------
---   1 | Andy |  1 | Andy
--- (1 row)
+ id | name | id | name
+----+------+----+------
+  1 | Andy |  1 | Andy
+(1 row)
 ```
 
 
 ## Updatable Views
+Database views gained some enhancements in Postgres 17.
+
 Let's briefly recap database views. There are two types: regular views and materialized views.
 
-Regular views encapsulate a SQL query. The view becomes the query interface, then the SQL query within the view is executed. Since the query within the view definition is executed, there's no performance advantage to database views.
+Regular views encapsulate a SQL query. The view definition becomes the queried item, instead of an underlying table.
 
-They do have security benefits though which we'll cover. The other type, materialized views, execute the query when they're defined and store the result. The result is stored until the materialized view is refreshed. Materialized views are super cool, but we'll stick with regular views here.
+When a view is queried, the underlying SQL query in the view definition runs, meaning there's no storage of results internally and thus no performance benefit for repeated access.
 
-Regular views can be "updated" which is interesting. What does that mean? Well, besides being able to SELECT from a view, we can issue an UPDATE statement for a view, even though it's not a real table.
+Materialized views are different. When they're called, they store their results. We'll focus on regular views though for this section.
+
+Besides being defined and queried via SELECT, views can be "updated" (using an UPDATE statement). What does that mean?
 
 Simple views are automatically updatable: the system will allow INSERT, UPDATE, DELETE, and MERGE statements to be used on the view in the same way as on a regular table.
 
-- Security barrier
-- Leak proof
+Let's create an employees table where some employees are "admins" but most aren't. Admins can access all employee rows, while non-admins can access only non-admins.
+```sql
+DROP TABLE IF EXISTS employees;
+CREATE TABLE employees (
+    id int,
+    name text,
+    is_admin boolean
+);
+INSERT INTO employees (id, name, is_admin)
+    VALUES (1, 'Andy', TRUE);
+
+INSERT INTO employees (id, name, is_admin)
+    VALUES (2, 'Jane', FALSE);
+
+INSERT INTO employees (id, name, is_admin)
+    VALUES (3, 'Jared', FALSE);
+```
+
+Let's create a view for non-admins:
+```sql
+CREATE VIEW non_admins AS
+SELECT
+    *
+FROM
+    employees
+WHERE
+    is_admin = FALSE;
+```
+
+What's new? Besides being updatable by INSERT, UPDATE, or DELETE, views can also be updated by triggers.
+
+Let's create an `update_employee()` function that's called from a trigger.
+
+Function:
+```sql
+CREATE OR REPLACE FUNCTION update_employee ()
+    RETURNS TRIGGER
+    AS $$
+BEGIN
+    UPDATE
+        employees
+    SET
+        is_admin = NEW.is_admin
+    WHERE
+        id = OLD.id;
+    RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+```
+
+Now a trigger that calls the function:
+```sql
+CREATE TRIGGER trigger_update_non_admins
+INSTEAD OF UPDATE ON non_admins
+FOR EACH ROW
+EXECUTE FUNCTION update_employee();
+```
+
+Run it:
+```
+SELECT * FROM non_admins;
+```
+
+Finally, we can run an UPDATE on non-admins (the view), and verify the trigger calls the function, and the underlying "employees" table is updated.
+
+We can even add on the RETURNING clause to see the result. After this update, querying the non_admins view again no longer includes the user below, since they were changed to be an admin.
+```sql
+UPDATE non_admins SET is_admin = true where id = 2 RETURNING *;
+```
+
+There's a whole bunch of additional database view related concepts to check out, some new and some enhanced.
+
+- Security barriers
+- "Leak proof" views
 - Security invoker
-- Recursive view using union
+- Recursive views using UNION
+
+That wraps up the hands-on items. What are some other noteworthy enhancements?
 
 ## Performance Improvements for IN clauses
+A big one that's practical for Ruby on Rails apps, is internal improvements that will reduce latency for queries that use an IN clause, and a large list of values.
 
-Internal performance improvement for queries with an IN list of values, no changes needed
+Internally, the Postgres core team was able to eliminate repeated scans, which has the effect of reducing query processing latency, improving performance.
 
+The cool thing about this one is that no code changes are required for Postgres users.
+
+Check out these blog posts:
 - <https://dev.to/lifen/as-rails-developers-why-we-are-excited-about-postgresql-17-27nj>
 - <https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans>
 
 ## Better Autovacuum
 PostgreSQL 17 introduces a new internal memory structure for vacuum that consumes up to 20x less memory.
-
-## BRIN indexes parallel builds
 
 ## Resources
 - [Postgres.fm PostgreSQL 17 episode](https://postgres.fm/episodes/postgres-17)
