@@ -9,13 +9,13 @@ date: 2024-10-15
 
 PostgreSQL 17 released a few weeks ago! As a mature database system with decades of innovation, bear in mind that new features must defer to reliability and backwards compatibility despite how cool they are.
 
-Even promising enhancements like Splitting and Merging Partitions (previous blog post) will be reverted when the core team identifies issues.
+Even promising enhancements like [Splitting and Merging Partitions](/blog/2024/04/16/postgresql-17-merge-split-partitions) (previous blog post) will be reverted when the core team identifies issues.
 
 With that in mind, the release notes still describe lots of small things to take a look at, some of which you may be able to put into practice in SQL you write going forward.
 
 Let's dive in!
 
-## Running PostgreSQL 17
+## PostgreSQL 17 via Docker
 To try out PostgreSQL 17, we can grab an instance via Docker.
 
 ```sh
@@ -32,12 +32,12 @@ If you're on macOS, note that Homebrew is still providing Postgres 14 as of this
 
 Whether you've upgraded your local instance, or are running 17 via Docker, we'll assume you've connected to a 17 instance and are ready to test these new capabilities.
 
-### SQL/JSON and JSON_TABLE
+## SQL/JSON and JSON_TABLE
 Postgres supports SQL/JSON, which is like an selector style expressional language, that provides methods to extract data from JSON formatted text.
 
 > SQL/JSON path expressions specify item(s) to be retrieved from a JSON value, similarly to XPath expressions used for access to XML content.
 
-I didn't write much XPath, but I did write CSS selectors back in my full-stack developer era, and SQL/JSON reminds of that a bit.
+I didn't write much XPath, but the SQL/JSON syntax did remind me a bit of writing CSS selectors.
 
 When we combine SQL/JSON expressions with a new function JSON_TABLE(), we can do powerful transformations of JSON text data into query results that match what you'd get from a traditional table.
 
@@ -102,8 +102,7 @@ There's even more JSON related functionality in the [PostgreSQL 17 Release Notes
 
 What's next?
 
-## MERGE with RETURNING
-
+## MERGE Command Basics
 Although the `MERGE` keyword was added in Postgres 15, it was enhanced in 17. Let's try it out.
 
 Make two tables, "people" and "employees".
@@ -128,15 +127,16 @@ INSERT INTO people (id, name)
 
 We can use the `MERGE` keyword to perform an "upsert" operation, meaning data is inserted when it doesn't exist, or updated when it does.
 
-`MERGE` gained support for the `RETURNING` clause in PostgreSQL 17. What's the RETURNING clause?
+`MERGE` gained support for the `RETURNING` clause in PostgreSQL 17. What's the `RETURNING` clause?
 
-The RETURNING clause can be used to provide one or more fields in the result of an INSERT or UPDATE statement that was performed. It works with INSERT and UPDATE, and now MERGE as well. These are all categorized as Data Manipulation Language (DML) statements.
+The `RETURNING` clause can be used to provide one or more fields in the result of an INSERT or UPDATE statement that was performed. It works with INSERT and UPDATE, and now MERGE as well. These are all categorized as Data Manipulation Language (DML) statements.
 
-RETURNING is helpful because it avoids the need for a second query to get back the inserted or updated values.
+`RETURNING` is helpful because it avoids the need for a second query to get back the inserted or updated values.
 
 MERGE helps make upsert operations more declarative, and is based on a SQL standard with implementations in other database systems.
 
-Let's try out MERGE first without RETURNING:
+## MERGE with RETURNING
+Let's try out MERGE first without `RETURNING`:
 ```sql
 MERGE INTO employees e
 USING people p ON e.id = p.id
@@ -148,7 +148,7 @@ WHEN NOT MATCHED THEN
         VALUES (p.id, p.name);
 ```
 
-Now we can try it with RETURNING, and include the result:
+Now we can try it with `RETURNING`, and include the result:
 ```sql
 MERGE INTO employees e
 USING people p
@@ -166,8 +166,7 @@ RETURNING *; -- <<<<<RETURNING CLAUSE HERE, returning all fields with "*"
 (1 row)
 ```
 
-
-## Updatable Views
+## Database Views and Materialized Views
 Database views gained some enhancements in Postgres 17.
 
 Let's briefly recap database views. There are two types: regular views and materialized views.
@@ -213,6 +212,7 @@ WHERE
 
 What's new? Besides being updatable by INSERT, UPDATE, or DELETE, views can also be updated by triggers.
 
+## Trigger-Updatable Views
 Let's create an `update_employee()` function that's called from a trigger.
 
 Function:
@@ -246,24 +246,17 @@ Run it:
 SELECT * FROM non_admins;
 ```
 
-Finally, we can run an UPDATE on non-admins (the view), and verify the trigger calls the function, and the underlying "employees" table is updated.
+Finally, we can run an `UPDATE` on non-admins (updating the view), and verify that the trigger calls the function, updating the underlying "employees" table.
 
-We can even add on the RETURNING clause to see the result. After this update, querying the non_admins view again no longer includes the user below, since they were changed to be an admin.
+We can even add on the `RETURNING` clause to see the result. After this update, querying non_admins no longer includes the user below, since it was updated to be an admin.
 ```sql
 UPDATE non_admins SET is_admin = true where id = 2 RETURNING *;
 ```
 
-There's a whole bunch of additional database view related concepts to check out, some new and some enhanced.
-
-- Security barriers
-- "Leak proof" views
-- Security invoker
-- Recursive views using UNION
-
 That wraps up the hands-on items. What are some other noteworthy enhancements?
 
 ## Performance Improvements for IN clauses
-A big one that's practical for Ruby on Rails apps, is internal improvements that will reduce latency for queries that use an IN clause, and a large list of values.
+A big one that's practical for Ruby on Rails apps, is internal improvements that will reduce latency for queries that use an `IN` clause, and a large list of values.
 
 Internally, the Postgres core team was able to eliminate repeated scans, which has the effect of reducing query processing latency, improving performance.
 
@@ -273,8 +266,10 @@ Check out these blog posts:
 - <https://dev.to/lifen/as-rails-developers-why-we-are-excited-about-postgresql-17-27nj>
 - <https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans>
 
-## Better Autovacuum
-PostgreSQL 17 introduces a new internal memory structure for vacuum that consumes up to 20x less memory.
+## Lower memory consumption for VACUUM
+The release notes state that PostgreSQL 17 introduces a new internal memory structure for vacuum that consumes up to 20x less memory.
+
+This is great as it makes more server instance memory available for other operations.
 
 ## Resources
 - [Postgres.fm PostgreSQL 17 episode](https://postgres.fm/episodes/postgres-17)
