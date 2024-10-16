@@ -1,9 +1,10 @@
 ---
 layout: post
 title: '📚 Readers get their copies of "High Performance PostgreSQL for Rails"'
-tags: []
+tags: [Ruby on Rails]
 date: 2024-07-23
 comments: true
+image: assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg
 ---
 
 Readers are sharing that they've received their copies of the book on social media. I love to see these.
