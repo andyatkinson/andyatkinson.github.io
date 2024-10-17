@@ -8,9 +8,9 @@ date: 2024-10-17
 image: assets/images/rw2024/rw-10.jpeg
 ---
 
-This is Part 1 of my Rails World 2024 Conference Recap, a phrenetic two-day event in Toronto, Canada in September 2024.
+This is Part 1 of my recap of Rails World 2024, a phrenetic two-day conference in Toronto, Canada, September 2024, with 1000+ attendees.
 
-In this post, I'll describe some sessions from Day 1, and non-session activities outside of that! In Part 2, I'll cover more of the sessions I missed once I've watched the recordings!
+In this post, I'll describe some sessions, but mostly they're saved for part 2, once I watch all the sessions I missed now that the full [Rails World 2024 Playlist is on YouTube](https://www.youtube.com/watch?v=-cEn_83zRFw&list=PLHFP2OPUpCeb182aDN5cKZTuyjn3Tdbqx).
 
 As a book author and consultant, the focus for Rails World for me was on meeting people, raising awareness about my book, and generally chatting about how people are using Postgres and Rails. As a long-time Ruby community member, it was great to catch up with a lot of industry friends.
 
@@ -18,7 +18,7 @@ As a first time Rails World visitor, I was really impressed with the energy and 
 
 Let's get into it.
 
-## Arrival - Wednesday
+## Arrival: Wednesday
 
 🇨🇦 I Landed in Toronto after a short two hour flight from Minneapolis. I was feeling excited to promote my book, meet attendees, and give away 8 copies over the next few days. I was feeling grateful!
 
@@ -40,7 +40,7 @@ Afterwards, most of the group walked over to the Shopify pre-registration event 
 ![Rails World Conference 2024](/assets/images/rw2024/rw-7.jpeg)
 <small>Pre-registration party by Shopify, with John and Jesper</small>
 
-## Conference Day 1 - Thursday
+## Conference Day 1: Thursday
 
 In the kick-off, I appreciated the overview of the Rails Foundation activities, and was excited to see my GitHub handle up on screen briefly along with some friends! In the last year, I made some contributions to the Rails Guides, particularly in the Active Record area. It was a nice surprise to be mentioned!
 
@@ -71,12 +71,13 @@ Mostafa covered the [Makara gem](https://github.com/instacart/makara), and brief
 
 This was interesting to see. I knew Matz didn't normally attend Ruby on Rails conferences, so it was exciting to see him attending. I should have taken the opportunity to ask for a picture, but did see plenty of others walking around getting pictures with Matz. Great for the community to see the heroes in person!
 
-
 ## Event: Rails Startups With Evil Martians and Whop
 
-This was a fun event! I appreciated being invited by Irina. I had the chance to meet Jack from [Whop](https://whop.com). Met a lot of other folks in person like [Kir](https://kirshatrov.com), Miles, Yaroslov from [SupeRails](https://superails.com), hung out more with [John](https://www.johnnunemaker.com). Great vibes!
+Whop and Evil Martians sponsored a social event called Rails Startups. This was a fun event!
 
-## Conference Day 2 - Friday
+I appreciated being invited by Irina and had the chance to meet Jack from [Whop](https://whop.com) and a bunch of other Ruby community folks like [Kir](https://kirshatrov.com), Miles, Yaroslov from [SupeRails](https://superails.com), and [John](https://www.johnnunemaker.com).
+
+## Conference Day 2: Friday
 
 On Day 2, the highlight and emphasis for me was Book Signing, handing out books, and talking Postgres + Rails!
 
