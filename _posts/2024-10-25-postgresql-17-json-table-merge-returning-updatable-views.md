@@ -37,7 +37,7 @@ Postgres supports SQL/JSON, which is like a selector style expressional language
 
 > SQL/JSON path expressions specify item(s) to be retrieved from a JSON value, similarly to XPath expressions used for access to XML content.
 
-I didn't write much XPath, but the SQL/JSON syntax did remind me a bit of writing CSS selectors.
+I didn't write much XPath in the past, but the SQL/JSON syntax did remind me of writing CSS selectors.
 
 When we combine SQL/JSON expressions with a new function JSON_TABLE(), we can do powerful transformations of JSON text data into query results that match what you'd get from a traditional table.
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS books (
 );
 ```
 
-The books table has a "data" column using the "jsonb" data type. Use the `json_build_object()` function to prepare JSON compatible attribute data for storage.
+Use the `json_build_object()` function to prepare JSON compatible attribute data for storage.
 
 Insert a data row with json data:
 ```sql
