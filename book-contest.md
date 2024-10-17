@@ -4,13 +4,11 @@ permalink: /book-contest
 title: Book Giveaways
 ---
 
-## Win a paperback at Rails World or an ebook!
+## Watch, Subscribe, and Win
 
-Win a paperback copy of [High Performance PostgreSQL for Rails](/pgrailsbook) in person at Rails World 2024. Must be present to win. Optional: get it signed!
+We've got 3 codes for free ebook copies of [High Performance PostgreSQL for Rails](/pgrailsbook) to give away, and wanted to run a contest for a couple of weeks to generate some buzz.
 
-Can't attend? We'll be giving away 3 ebook copies.
-
-See below for instructions on how to enter.
+Who's this for? This contest is meant for people that weren't able to attend Rails World 2024, but are interested in watching recorded sessions that are now available, and are generally interested in the book.
 
 <div style="float:right;width:250px;border:1px solid;box-shadow:5px 5px 5px #ccc;margin:0 0 0 50px;">
 <img src="/assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg"/>
@@ -18,15 +16,22 @@ See below for instructions on how to enter.
 
 ## How to enter
 
-1. Subscribe **and click confirm email** at [pgrailsbook.com](https://pgrailsbook.com). This gives me a way to reach you. I hope you'll stay as a subscriber, but it's optional.
+1. Watch one or more of the [Rails World 2024 recorded sessions](https://www.youtube.com/watch?v=-cEn_83zRFw&list=PLHFP2OPUpCeb182aDN5cKZTuyjn3Tdbqx). Take note of something you liked.
 
-1. Contact me and let me know. To do that, DM me on social media (links below) or [contact me here](/contact). Include the email address you subscribed with. *Already subscribed?* Contact me and let me know.
+1. Subscribe **and make sure to confirm** at [pgrailsbook.com](https://pgrailsbook.com), which is a newsletter I send out about once per month, with Postgres and Rails content. I hope you'll stay as a subscriber, but technically you just need to be subscribed as part of your contest entry.
 
-1. I'll reply to you confirming you're officially entered.
+1. Once you've subscribed and confirmed, send me a message with your favorite session, or what you liked, and let me know you'd like to be entered. Mention your email address you used to subscribe. [Contact me via this form](/contact), on social media DMs, or by email at contact@pgrailsbook.com.
 
-1. I'll do a drawing of winners at random online (see Loom below) and email winners and all participants!
+Once you've done that:
 
-Good luck!
+1. Look for a reply from me confirming that you're entered.
+1. I'll do draw three winners and email their codes on November 1st.
+
+You've got until October 31st to enter.
+
+Good luck and thanks for participating!
+
+P.S. If you can't wait, there's also a 40% off discount code `RailsWorld2024` for any Rails book over at [pragprog.com](https://pragprog.com).
 
 ### Social Media
 
@@ -48,5 +53,6 @@ Good luck!
 
 We gave away three copies in person at [Madison+ Ruby in August 2024](/blog/2024/08/13/madison-plus-ruby-conference-recap)!
 
+- Paperback books at Rails World 2024
 - Ebooks at PGDay Chicago 2024
 - Ebooks at RailsConf 2024
