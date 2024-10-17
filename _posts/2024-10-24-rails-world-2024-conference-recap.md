@@ -5,6 +5,7 @@ title: 'Rails World 2024 Conference Recap'
 tags: [Ruby on Rails, Ruby, PostgreSQL, Conferences]
 comments: true
 date: 2024-10-17
+image: assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg
 ---
 
 This is Part 1 of my Rails World 2024 Conference Recap, a phrenetic two-day event in Toronto, Canada in September 2024.
