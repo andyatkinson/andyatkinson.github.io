@@ -128,7 +128,7 @@ We can use the `MERGE` keyword to perform an "upsert" operation, meaning data is
 
 `MERGE` gained support for the `RETURNING` clause in PostgreSQL 17. What's the `RETURNING` clause?
 
-The `RETURNING` clause can be used to provide one or more fields in the result of an INSERT or UPDATE statement that was performed. It works with INSERT and UPDATE, and now MERGE as well. These are all categorized as Data Manipulation Language (DML) statements.
+The `RETURNING` clause provides one or more fields in the result of DML statements: INSERT, UPDATE, DELETE, and now MERGE. These are all Data Manipulation Language (DML) statements.
 
 `RETURNING` is helpful because it avoids the need for a second query to get back the inserted or updated values.
 
