@@ -157,7 +157,7 @@ WHEN MATCHED THEN
 WHEN NOT MATCHED THEN
     INSERT (id, name)
     VALUES (p.id, p.name)
-RETURNING *; -- <<<<<RETURNING CLAUSE HERE, returning all fields with "*"
+RETURNING *; -- RETURNING CLAUSE HERE, returning all fields with "*"
 
  id | name | id | name
 ----+------+----+------
@@ -240,14 +240,11 @@ FOR EACH ROW
 EXECUTE FUNCTION update_employee();
 ```
 
-Run it:
-```
-SELECT * FROM non_admins;
-```
+Now we can run an `UPDATE` on non-admins (updating the view), and verify that the trigger calls the function, updating the underlying "employees" table.
 
-Finally, we can run an `UPDATE` on non-admins (updating the view), and verify that the trigger calls the function, updating the underlying "employees" table.
+We can even add on the `RETURNING` clause to see the result.
 
-We can even add on the `RETURNING` clause to see the result. After this update, querying non_admins no longer includes the user below, since it was updated to be an admin.
+After this update, querying non_admins no longer includes the user below, since they were turned into an admin.
 ```sql
 UPDATE non_admins SET is_admin = true where id = 2 RETURNING *;
 ```
