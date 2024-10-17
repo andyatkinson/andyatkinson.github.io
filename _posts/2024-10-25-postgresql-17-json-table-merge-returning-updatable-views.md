@@ -1,4 +1,4 @@
----
+lo---
 layout: post
 permalink: /postgresql-17-json-table-merge-returning-updatable-views
 title: 'PostgreSQL 17: JSON_TABLE(), MERGE with RETURNING, and Updatable Views'
@@ -107,7 +107,6 @@ Although the `MERGE` keyword was added in Postgres 15, it was enhanced in 17. Le
 
 Make two tables, "people" and "employees".
 ```sql
--- MERGE in Postgres 15
 CREATE TABLE people (
     id int,
     name text
