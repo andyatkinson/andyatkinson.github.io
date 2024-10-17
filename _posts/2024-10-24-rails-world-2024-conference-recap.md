@@ -2,15 +2,18 @@
 layout: post
 permalink: /rails-world-2024-conference-recap
 title: 'Rails World 2024 Conference Recap'
-tags: []
+tags: [Ruby on Rails, Ruby, PostgreSQL, Conferences]
 comments: true
-hidden: true
-date: 2024-10-14
+date: 2024-10-17
 ---
 
-This is Part 1 of my Rails World 2024 Recap, describing some sessions in Day 1, and non-session activities outside of that! I'm planning a Part 2 post where I'll cover more of the sessions I missed, once the recordings are published and I've watched them.
+This is Part 1 of my Rails World 2024 Conference Recap, a phrenetic two-day event in Toronto, Canada in September 2024.
 
-Rails World for me was all about meeting people, promoting my new book, and generally chatting about how people are using Postgres and Rails.
+In this post, I'll describe some sessions from Day 1, and non-session activities outside of that! In Part 2, I'll cover more of the sessions I missed once I've watched the recordings!
+
+As a book author and consultant, the focus for Rails World for me was on meeting people, raising awareness about my book, and generally chatting about how people are using Postgres and Rails. As a long-time Ruby community member, it was great to catch up with a lot of industry friends.
+
+As a first time Rails World visitor, I was really impressed with the energy and vibes.
 
 Let's get into it.
 
@@ -22,7 +25,7 @@ Let's get into it.
 <small>Landed in Toronto, let's go!</small>
 
 To celebrate my book launch and successfully striking out on my own as an independent Postgres and Rails consultant,
-I hosted a happy hour gathering of [Postgres Fans](https://lu.ma/0f7ly7g5). We had a good turnout, conversations, and new and strengthened connections. A success! 🙌
+I hosted a happy hour gathering of [Postgres Fans](https://lu.ma/0f7ly7g5). We had a good turnout, conversations, and new and strengthened connections. We didn't talk about Postgres much, but the event was a success! 🙌
 
 ![Rails World Conference 2024](/assets/images/rw2024/rw-2.jpeg)
 <small>Party time, Postgres fans Happy Hour at The Queen & Beaver Public House</small>
@@ -116,15 +119,15 @@ While waiting for a car to the airport, I had a serendipitous opportunity to joi
 ![Rails World Conference 2024](/assets/images/rw2024/rw-13.jpeg)
 <small>With Craig</small>
 
-Rails World 2024 was a blast. Thank you to everyone involved in putting this event on. If we met at Rails World, I hope I've reached out to you on social media by now, but if not, please drop me a line. Let's stay in touch. Looking forward to the next Rails community event!
+Rails World 2024 was a blast. Thank you to everyone involved in putting this event on. If we met at Rails World, I hope I've reached out to you on social media by now, but if not, please drop me a line. Let's stay in touch.
 
 ## Capping off Ruby events in 2024
 
-I've been privileged to attend a lot of Ruby events and be a guest on podcasts this year, to promote my consulting services and my book. Rails World sort of capped it off for me, as I don't have plans for any more Ruby events in 2024.
-
-I'd like to share some links from this year, and I'd be thrilled if you checked any of them out below, and shared your feedback.
+I've been privileged to attend a lot of Ruby events and be a guest on podcasts this year, to promote my consulting services and my book. Rails World sort of capped it off for me, as I don't have plans for any more Ruby events in 2024. I'm thinking about 2025 though!
 
 2024 was my first year striking out on my own as an independent consultant. Thank you to all the clients, colleagues, and friends that have helped me make it work. I've got a lot to be thankful for, and I'm excited to keep it going in 2025!
+
+I'd like to briefly look back at the year by sharing some links to past podcasts, conferences, and other content. Thanks for taking a look.
 
 - [Madison+ Ruby 2024 Conference Recap](/blog/2024/08/13/madison-plus-ruby-conference-recap)
 - [SaaS on Rails on PostgreSQL — POSETTE 2024](/blog/2024/07/13/SaaS-on-Rails-on-PostgreSQL-POSETTE-2024-andrew-atkinson)
