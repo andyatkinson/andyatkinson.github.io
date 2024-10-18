@@ -1,4 +1,4 @@
----
+lo---
 layout: page
 permalink: /book-contest
 title: Book Giveaways
@@ -25,7 +25,7 @@ Who's this for? This contest is meant for people that weren't able to attend Rai
 Once you've done that:
 
 1. Look for a reply from me confirming that you're entered.
-1. I'll do draw three winners and email their codes on November 1st.
+1. I'll draw three winners and email their codes on November 1st.
 
 You've got until October 31st to enter.
 
