@@ -2,7 +2,7 @@
 layout: post
 permalink: /postgresql-17-json-table-merge-returning-updatable-views
 title: 'PostgreSQL 17: JSON_TABLE(), MERGE with RETURNING, and Updatable Views'
-tags: []
+tags: [PostgreSQL]
 comments: true
 date: 2024-10-17
 ---
