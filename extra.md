@@ -16,9 +16,6 @@ title: Extra
 ## Projects
 [Projects](/projects)
 
-## Writing
-[Writing](/writing)
-
 ## Software Dev Process
 [Software Development Process](/software-dev-process)
 

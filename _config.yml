@@ -51,6 +51,8 @@ navigation:
     url: /pgrailsbook
   - text: Speaking
     url: /speaking-opportunities
+  - text: Writing
+    url: /writing
   - text: Ruby on Rails
     url: /rails-tips
   - text: PostgreSQL

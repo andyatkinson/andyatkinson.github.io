@@ -11,3 +11,4 @@ title: Social Media
 - [Bluesky: andatki](https://bsky.app/profile/andatki.bsky.social)
 - [Website: andyatkinson.com](https://andyatkinson.com)
 - [Newsletter: pgrailsbook.com](https://pgrailsbook.com)
+- [Medium](https://medium.com/@andyatkinson_37196/followers)
