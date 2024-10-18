@@ -1,4 +1,4 @@
-lo---
+---
 layout: page
 permalink: /book-contest
 title: Book Giveaways
