@@ -22,7 +22,7 @@ You'll find examples of paid writing, volunteering, or writing for myself on thi
 ## This Week In Rails
 I was a contributing editor ✍️ for [This Week in Rails](https://rails-weekly.ongoodbits.com), summarizing new developments in the Ruby on Rails framework.
 
-This newsletter eventually became part of the official [Ruby on Rails weblog](https://weblog.rubyonrails.org/)!
+This newsletter eventually became part of the official [Ruby on Rails weblog](https://rubyonrails.org/blog/).
 
 [Learn More](/blog/2017/04/21/this-week-in-rails)
 
