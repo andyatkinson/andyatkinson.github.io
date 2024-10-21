@@ -8,7 +8,7 @@ title: Social Media
 - [LinkedIn: in/andyatkinson](https://www.linkedin.com/in/andyatkinson/)
 - [GitHub: andyatkinson](https://github.com/andyatkinson/)
 - [Mastodon: https://mastodon.social/@andatki](https://mastodon.social/@andatki)
-- [Bluesky: andatki](https://bsky.app/profile/andatki.bsky.social)
+- [Bluesky: @andyatkinson.com](https://bsky.app/profile/andyatkinson.com)
 - [Website: andyatkinson.com](https://andyatkinson.com)
 - [Newsletter: pgrailsbook.com](https://pgrailsbook.com)
 - [Medium](https://medium.com/@andyatkinson_37196/followers)
