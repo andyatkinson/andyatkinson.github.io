@@ -8,7 +8,7 @@ title: High Performance PostgreSQL for Rails Book
 <img src="/assets/images/pages/high-performance-postgresql-for-rails-book-cover.jpg"/>
 </div>
 
-## Ebook and Paperback
+## 🛒 Ebook and Paperback
 - [Pragmatic Programmers](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails)
 - [Bookshop.org](https://bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/21240568?ean=9798888650387)
 - [Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
@@ -16,10 +16,13 @@ title: High Performance PostgreSQL for Rails Book
 - [Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
 - [Walmart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
-## Ratings
-- [Amazon: 4.8, 7 ratings and reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
-- [Goodreads: 4.81, 16 ratings, 5 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+## ⭐⭐⭐⭐⭐ Ratings
+- [Amazon: 4.8, 8 ratings, 7 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
+- [Goodreads: 4.82, 17 ratings, 5 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
+
+## 📷 Reader photos
+[📚 Readers get their copies of "High Performance PostgreSQL for Rails"](/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
 
 <details>
 <summary>Sellers outside the USA</summary>
@@ -62,8 +65,6 @@ title: High Performance PostgreSQL for Rails Book
 
 > If you are a Rails engineer who always wanted to understand how to have a greater impact on your work through taking command of your database, this is the book for you!
 <cite>- Daniel Kaczmarczyk</cite>
-
-See: [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
 
 ## Stay Informed!
 [Sign up for my Newsletter](https://pgrailsbook.com) covering book topics, consulting, and more. Around 1x/email per month.
