@@ -51,6 +51,9 @@ title: High Performance PostgreSQL for Rails Book
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://t.co/00jTI6GLBu">https://t.co/00jTI6GLBu</a> by <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a> <br>You will be really good at PostgreSQL and Rails at the same time</p>&mdash; Franck Pachot (@FranckPachot) <a href="https://twitter.com/FranckPachot/status/1810759758053249478?ref_src=twsrc%5Etfw">July 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Praise and Reviews
+> We're about 1/3 through this in our engineering book club, and the team is really liking it. Great pacing and accessible for folks at different levels of PostgreSQL experience.
+<cite>- Mike Leone, VP of Engineering at Wealthbox</cite>
+
 > I would recommend this book as a primer on PG performance in the context of Rails deployments as required reading material for most engineering teams.
 <cite>- Simon Chiu</cite>
 
@@ -94,10 +97,10 @@ title: High Performance PostgreSQL for Rails Book
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
 ## Upcoming Appearances
-- September 26-27, 2024 - [Rails World 2024](https://rubyonrails.org/world/2024)
 - November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
 
 ## Book Events and Past Appearances
+- September 26-27, 2024 - [Rails World 2024](https://rubyonrails.org/world/2024)
 - 2024 August: [Presented at Madison+ Ruby](/blog/2024/08/13/madison-plus-ruby-conference-recap)
 - 2024 July: Shipping from major retailers like Amazon.com, including being the [#1 Best Seller in the Ruby Programming category](https://x.com/andatki/status/1819601510797398046)
 - 2024 June: In Print!
