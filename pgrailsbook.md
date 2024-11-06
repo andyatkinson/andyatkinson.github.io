@@ -17,7 +17,7 @@ title: High Performance PostgreSQL for Rails Book
 - [Walmart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## ⭐⭐⭐⭐⭐ Ratings
-- [Amazon: 4.8, 8 ratings, 7 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
+- [Amazon: 4.8, 8 ratings, 9 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
 - [Goodreads: 4.82, 17 ratings, 5 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
 - [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
