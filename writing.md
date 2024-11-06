@@ -8,12 +8,15 @@ You'll find examples of paid writing, volunteering, or writing for myself on thi
 
 [Contact Me](/contact) to discuss paid writing, which is typically on topics related to PostgreSQL, web applications, or database performance.
 
+## AppSignal
+- [What's Coming in Ruby on Rails 7.2: Database Features in Active Record](https://blog.appsignal.com/2024/07/24/whats-coming-in-ruby-on-rails-7-2-database-features-in-active-record.html)
+
+## RoRvsWild
+- Technical reviewer of post: [Speed Up Compound Full-Text Searches in PostgreSQL by 300x](https://www.rorvswild.com/blog/2024/speed-up-compound-full-text-searches-in-postgresql-by-300x)
+
 ## StepChange.work
 - [Exploring the limits of Postgres: when does it break?](https://stepchange.work/blog/exploring-the-limits-of-postgres-when-does-it-break)
 - [Beyond the APM: Gaining Postgres insights for Rails Developers](https://stepchange.work/blog/beyond-the-apm-gaining-postgres-insights-for-rails-developers)
-
-## AppSignal
-- [What's Coming in Ruby on Rails 7.2: Database Features in Active Record](https://blog.appsignal.com/2024/07/24/whats-coming-in-ruby-on-rails-7-2-database-features-in-active-record.html)
 
 ## Medium
 ([Pragmatic Bookshelf](https://pragprog.com) provided edits)
