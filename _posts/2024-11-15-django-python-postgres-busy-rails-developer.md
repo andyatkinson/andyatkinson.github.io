@@ -54,15 +54,22 @@ In Rails and Django, SQLite is the default database, however I wanted to use Pos
 
 In Ruby, we have the [pg gem](https://github.com/ged/ruby-pg) which connects the application to Postgres as a driver. This does work at a lower level than the application like sending TCP requests, mapping Postgres query result responses into Ruby data types, and much more.
 
-In Python, we used the [psycopg2 library](https://pypi.org/project/psycopg2/) and I found it pretty easy to use. Besides being used by the framework ORM, I created a wrapped class around psychopg2 to issue arbitrary SQL queries, such as inspecting schema elements of a database, which was one part of one of the features of the product.
+In Python, we used the [psycopg2 library](https://pypi.org/project/psycopg2/) and I found it pretty easy to use.
 
-## Running migrations
+Besides being used by the framework ORM, I created a wrapper class using psycopg2 to use for sending SQL queries outside of models.
+
+For example, we inspected Postgres system catalog views to capture certain data as part of the product features.
+
+## Migrations in Rails
 Both Ruby on Rails and Django have the concept of [Migrations](https://guides.rubyonrails.org/active_record_migrations.html), which are Ruby or Python code files that describe a database structure change, and have a version.
 
-These Ruby or Python code files will generate SQL DDL statements.
+These are Ruby or Python code files will generate SQL DDL statements.
 
-For example, adding a table in Rails uses the `create_table` Ruby method helper. Adding or dropping an index or modifying a column type are other types of DDL statements to put into production using the migrations mechanism.
+For example, to add a table in Rails typically there will be a migration file using the `create_table` Ruby helper.
 
+Adding or dropping an index or modifying a column type are other types of DDL statements that typically are deployed via migrations.
+
+## Migrations in Django
 The Django approach has noteworthy differences and a slightly different workflow that I enjoyed more in some ways.
 
 For example, changes are started in a `models.py` file, which contains all the application models (multiple models in a single file), and the database layer details about each model attribute.
@@ -119,11 +126,6 @@ In models, add `unique=True` to a field definition. After running `makemigration
 
 In Active Record we might generate the migration file first, then fill in the create statement for a unique index.
 
-In both cases, we don’t really see the generated SQL DDL command though.
-
-## Active Record vs. Django ORM
-Between the Ruby on Rails ORM - Active Record, and the Django ORM, there are some interesting similarities and differences. As a developer, a lot of time is spent describing the model objects, how they’re related to the database persistence layer, writing data into the database and reading it back out.
-
 ## Django models
 When querying a model like Book, we’d use `objects`, which returns a QuerySet object with one or more books.
 
@@ -144,9 +146,9 @@ Thing.models.create(
 )
 ```
 
-## Issues I see
-SQL is hidden by default. This includes DDL that’s useful for devs like create index statements.
+## Previewing DDL
+The generated SQL DDL isn't displayed when running `migrate` by default.
 
-However, unlike Rails, Django provides a mechanism to preview the DDL.
+However, unlike Rails, Django provides a mechanism to preview it.
 
-Run the `sqlmigrate` command instead of migrate, which prints out only the SQL DDL commands.
+To do that, run the `sqlmigrate` command instead of `migrate`.
