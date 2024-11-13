@@ -4,6 +4,7 @@ permalink: /django-python-postgres-busy-rails-developer
 title: 'Django and Postgres for the Busy Rails Developer'
 comments: true
 hidden: true
+date: 2024-11-13
 ---
 
 Recently I had the chance to work with a team writing Python, building a new app using the Django Python framework.
