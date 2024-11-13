@@ -9,7 +9,7 @@ hidden: true
 
 Recently I had the chance to work with a team writing Python, building a new app using the Django Python framework.
 
-The team was experienced with Django so I was curious about which libraries they'd chose, code patterns and structure.
+The team was experienced with Django so I was curious to learn from them about popular libraries, code conventions and patterns.
 
 In this post, I'll briefly introduce the database related parts of Django, using Postgres of course, highlight some of the library choices, and compare things to Ruby on Rails.
 
@@ -19,7 +19,9 @@ Ruby and Python are both general purpose programming languages. On the similarit
 In local development, it felt like the execution of Python was perhaps faster than Ruby, however I've noticed that new apps are always fast to work with, given how little code is being loaded and executed.
 
 ## Language runtime management
-As a developer we typically need to run multiple version of Ruby, Python, Node, and other runtimes. In Ruby I use [rbenv](https://github.com/rbenv/rbenv) to manage multiple versions of Ruby, and to avoid using the version of Ruby that was installed by macOS, which is usually outdated compared with the version I want for a new app.
+As a developer we typically need to run multiple versions of Ruby, Python, Node, and other runtimes, to support different codebases, and to avoid modifying our system installation.
+
+In Ruby I use [rbenv](https://github.com/rbenv/rbenv) to manage multiple versions of Ruby, and to avoid using the version of Ruby that was installed by macOS, which is usually outdated compared with the version I want for a new app.
 
 In Python, I used [pyenv](https://github.com/pyenv/pyenv) to accomplish the same thing, which seemed quite similar in use.
 
@@ -45,9 +47,9 @@ For the Django app, the team selected [ruff](https://github.com/astral-sh/ruff),
 
 I found ruff fast and easy to use and genuinely helpful.
 
-For example, sometimes I'd fire up a Django shell and find issues at runtime that ruff would have caught had I ran it.
+For example, sometimes I'd fire up a Django shell, skipping ruff, only to realize there are issues it would have caught.
 
-On this small codebase, ruff ran nearly instantly, so it was a no brainer to bake into the regular workflow or into the code editor.
+On this small codebase, ruff ran instantly, so it was a no-brainer to run regularly, or even include in my code editor.
 
 ## Postgres adapter
 In Rails and Django, SQLite is the default database, however I wanted to use Postgres.
@@ -63,11 +65,11 @@ For example, we inspected Postgres system catalog views to capture certain data 
 ## Migrations in Rails
 Both Ruby on Rails and Django have the concept of [Migrations](https://guides.rubyonrails.org/active_record_migrations.html), which are Ruby or Python code files that describe a database structure change, and have a version.
 
-These are Ruby or Python code files will generate SQL DDL statements.
+From the Ruby or Python code files, SQL DDL (or DML) statements are generated which are run against the configured database.
 
-For example, to add a table in Rails typically there will be a migration file using the `create_table` Ruby helper.
+For example, to add a table in Rails typically a developer uses the `create_table` Ruby helper as opposed to writing a `CREATE TABLE` SQL statement.
 
-Adding or dropping an index or modifying a column type are other types of DDL statements that typically are deployed via migrations.
+Adding or dropping an index or modifying a column type are other types of DDL statements that typically are performed via migrations.
 
 ## Migrations in Django
 The Django approach has noteworthy differences and a slightly different workflow that I enjoyed more in some ways.
@@ -112,11 +114,14 @@ In Django, projects and applications are separate concepts.
 
 In my experimental project, I made a "booksproject" project and a "books" app.
 
+Check out the [booksproject repo](<https://github.com/andyatkinson/booksproject>).
+
 ## Postgres details
 The books app models are Author, Publisher, and Books.
-The tables for those models are contained in a custom schema `booksapp`.
 
-The application connects to Postgres as the user `booksapp`, and local dev database is `books_dev`.
+The tables for those models are contained in a custom schema `booksapp`, and Django is configured to access it.
+
+The application connects to Postgres as the `booksapp` user and the dev database is called `books_dev`.
 
 ## No migration safety concept
 No concept of safety, adding indexes (blocking writes) doesn’t use concurrently by default.
@@ -152,3 +157,15 @@ The generated SQL DDL isn't displayed when running `migrate` by default.
 However, unlike Rails, Django provides a mechanism to preview it.
 
 To do that, run the `sqlmigrate` command instead of `migrate`.
+
+## Resources
+For the basics of an Author, Publisher, and Books models, or Postgres configuration including a custom schema and user, check out "booksproject" below.
+- <https://github.com/andyatkinson/booksproject>
+
+To collect random Django tips, I've created a [django-tips](/django-tips) page, to be used in a similar way as my [rails-tips](/rails-tips) and [postgresql-tips](/postgresql-tips) pages, mostly as a reference for myself, and possibly useful for others.
+
+
+## Wrap Up
+Do you have any similarities and differences between Django and Rails to share? I'd love to hear from you.
+
+Thanks for reading.
