@@ -7,11 +7,15 @@ hidden: true
 date: 2024-11-13
 ---
 
-Recently I had the chance to work with a team writing Python, building a new app using the Django Python framework.
+About 10 years ago I wrote a post [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer), as part of switching from MySQL to Postgres for my personal and professional projects, wherever I could.
 
-The team was experienced with Django so I was curious to learn from them about popular libraries, code conventions and patterns.
+Recently I had the chance to work with Python, Django, and Postgres together, as a long-time and busy Rails developer.
 
-In this post, I'll briefly introduce the database related parts of Django, using Postgres of course, highlight some of the library choices, and compare things to Ruby on Rails.
+There were some things I thought were really nice. So am I switching?
+
+The team I worked with was experienced with Django, so I was curious to learn from them about popular libraries, idiomatic code, and tooling.
+
+In this post, I'll briefly cover the database parts of Django using Postgres of course, highlight some libraries and tools, and compare things to Ruby on Rails. You'll find a small Django repo towards the end as well.
 
 ## Ruby versus Python
 Ruby and Python are both general purpose programming languages. On the similarity side, they can both be used to write script style code, or organize code into classes using object oriented paradigms.
@@ -178,5 +182,7 @@ To collect random Django tips, I've created a [django-tips](/django-tips) page, 
 
 ## Wrap Up
 Do you have any similarities and differences between Django and Rails to share? I'd love to hear from you.
+
+😅 And no, I'm not "switching" from Rails and Ruby, but I did enjoy working with Python and Django.
 
 Thanks for reading.
