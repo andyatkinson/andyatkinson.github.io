@@ -28,3 +28,6 @@ title: Extra
 
 ## Events & Volunteering
 [Events](/events-and-volunteering)
+
+## Django
+[Django](/django-tips)

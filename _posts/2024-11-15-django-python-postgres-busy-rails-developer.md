@@ -7,31 +7,51 @@ date: 2024-11-15
 hidden: true
 ---
 
-Recently I had the chance to work with Python helping build a Django-framework backed app. The team was experienced with Django, so I was curious about the libraries they’d add, code patterns, and how to structure the app.
+Recently I had the chance to work with a team writing Python, building a new app using the Django Python framework.
 
-For this post, I thought it would be interesting to briefly overview Django for the Rails developer, and briefly compare similarities and differences.
+The team was experienced with Django so I was curious about which libraries they'd chose, code patterns and structure.
+
+In this post, I'll briefly introduce the database related parts of Django, using Postgres of course, highlight some of the library choices, and compare things to Ruby on Rails.
 
 ## Ruby versus Python
-Ruby and Python are both general purpose programming languages. On the similarity side, they can both be used to write script style code, or organize code into classes using object oriented paradigms. In local development, it felt like the execution of Python was perhaps faster than Ruby, but any time I’m creating a new small app, the performance is always very good as there is not a lot of code being loaded up.
+Ruby and Python are both general purpose programming languages. On the similarity side, they can both be used to write script style code, or organize code into classes using object oriented paradigms.
 
-## Language runtime version management
-As a developer we typically need to run multiple version of Ruby, Python, Node, and other runtimes. In Ruby I typically use [rbenv](https://github.com/rbenv/rbenv) to manage multiple versions of Ruby and avoid using the version of Ruby installed by macOS, and adding libraries there, which can be problematic.
+In local development, it felt like the execution of Python was perhaps faster than Ruby, however I've noticed that new apps are always fast to work with, given how little code is being loaded and executed.
 
-In python, I used [pyenv](https://github.com/pyenv/pyenv), which seems quite similar. They both have concepts of a local and global version, and roughly similar commands to install new versions.
+## Language runtime management
+As a developer we typically need to run multiple version of Ruby, Python, Node, and other runtimes. In Ruby I use [rbenv](https://github.com/rbenv/rbenv) to manage multiple versions of Ruby, and to avoid using the version of Ruby that was installed by macOS, which is usually outdated compared with the version I want for a new app.
+
+In Python, I used [pyenv](https://github.com/pyenv/pyenv) to accomplish the same thing, which seemed quite similar in use.
+
+Both have concepts of a local and global version, and roughly similar commands to install and change versions.
 
 ## Library management
 In Ruby on Rails, [Bundler](https://bundler.io) has been the de facto standard forever, as a way to pull in Ruby library code and make sure it’s loaded and accessible in the Rails application.
 
-In Python, the team selected the [poetry dependency management](https://python-poetry.org) tool.
+In Python, the team selected the [poetry](https://python-poetry.org) dependency management tool.
 
-Commands are similar to bundler commands, for example `poetry install` is about the same as `bundle install`.
+Commands are similar to Bundler commands, for example `poetry install` is about the same as `bundle install`.
+
+Dependencies can be expressed in a `pyproject.toml` file and poetry creates a lock file with specific library versions. [TOML](https://toml.io/en/) and YAML are similar.
 
 ## Linting and formatting
-In Ruby on Rails, although I personally resisted rule detection etc. for years, Rubocop has become probably the de facto option, with configurable rules that can automatically reformat code or lint code for issues. Formatters are catching on as well like the Ruby [standard](https://github.com/standardrb/standard) format.
+In Ruby on Rails, although I personally resisted rule detection etc. for years, [Rubocop](https://github.com/rubocop/rubocop) has become the standard, even being built in to the most recent Rails version 8.
 
-For this app, the team selected [ruff](https://github.com/astral-sh/ruff), which offers both formatting of code, and checks for issues like missing imports. I found ruff fast and easy to use, and genuinely helpful. For example, sometimes I’d fire up a Django shell and find issues, and realize that ruff would have caught them first. Since it runs nearly instantly on this small codebase, it’s a no brainer to run all the time, even automatically within your editor.
+Rubocop has configurable rules that can automatically reformat code or lint code for issues.
+
+Formatters like [standardrb](https://github.com/standardrb/standard) are commonly used as well.
+
+For the Django app, the team selected [ruff](https://github.com/astral-sh/ruff), which performed formatting of code and also linted for issues like missing imports.
+
+I found ruff fast and easy to use and genuinely helpful.
+
+For example, sometimes I'd fire up a Django shell and find issues at runtime that ruff would have caught had I ran it.
+
+On this small codebase, ruff ran nearly instantly, so it was a no brainer to bake into the regular workflow or into the code editor.
 
 ## Postgres adapter
+In Rails and Django, SQLite is the default database, however I wanted to use Postgres.
+
 In Ruby, we have the [pg gem](https://github.com/ged/ruby-pg) which connects the application to Postgres as a driver. This does work at a lower level than the application like sending TCP requests, mapping Postgres query result responses into Ruby data types, and much more.
 
 In Python, we used the [psycopg2 library](https://pypi.org/project/psycopg2/) and I found it pretty easy to use. Besides being used by the framework ORM, I created a wrapped class around psychopg2 to issue arbitrary SQL queries, such as inspecting schema elements of a database, which was one part of one of the features of the product.
@@ -43,22 +63,22 @@ These Ruby or Python code files will generate SQL DDL statements.
 
 For example, adding a table in Rails uses the `create_table` Ruby method helper. Adding or dropping an index or modifying a column type are other types of DDL statements to put into production using the migrations mechanism.
 
-The Django approach has noteworthy differences and a slightly different workflow, that I enjoyed more in some ways.
+The Django approach has noteworthy differences and a slightly different workflow that I enjoyed more in some ways.
 
-For example, changes are usually started in a models file, which is where all the application objects are, but is focused on the persistence details.
+For example, changes are started in a `models.py` file, which contains all the application models (multiple models in a single file), and the database layer details about each model attribute.
 
-This means this file has database data types for columns, unique constraints, indexes, etc.
+This means that we specify database data types for columns, whether fields are unique, indexed, and more in the models file.
 
-The interesting difference compared with Rails is that after making model file changes, the Django developer runs the `makemigrations` command which *generates* the Python migration files.
+The interesting difference compared with Rails is that the next step in Django is to run `makemigrations`, which *generates* Python migration files.
 
-In Rails, a developer would generate the migration file first, although it's often empty to start, then fill it in.
+This is different from Rails, where Rails developers would first generate a migration file to place changes into.
 
-In Django, the generated migration file can be inspected and then run using a second command `migrate`, which is nearly identical to the Rails command `db:migrate`.
+In Django, the generated migration file can be inspected or simply applied using the `migrate` command. This command is nearly identical to the Rails equivalent command `db:migrate`.
 
-For a new project where we were rapidly iterating on the model, I felt this approach of driving changes from the model files, where I generated migrations then applied them, to be faster and enjoyable.
+For a new project where we were rapidly iterating on the models and their attributes, I preferred the way Django works here to how Rails works.
 
 ## Command line vibes
-Here are some commands like running poetry, or running manage.py commands like `shell`, `makemigrations`, etc.
+Here are some commands like running `poetry install`, or running `manage.py` commands like `shell` or `makemigrations`, to give you a flavor.
 ```python
 poetry install
 poetry run python manage.py dbshell   # psql in postgres
@@ -68,45 +88,48 @@ Poetry run python manage.py migrate # runs them. Doesn’t show SQL by default.
 ```
 
 ## Interactive console (REPL)
-Fortunately both Django and Rails use interpreted languages, Python and Ruby, that both suppoert interactive console environment.
+Both Django and Rails use interpreted languages, Python and Ruby respectively, that each support an interactive execution environment.
 
-This interactive environment is called a Read, eval, print loop or REPL for short.
+This environment is called a *read, eval, print loop* or REPL for short.
 
-In Rails, the Ruby REPL "irb" is launched and the Rails source code is loaded by running [rails console](https://guides.rubyonrails.org/command_line.html). Code is auto-loaded.
+In Rails, the Ruby REPL "irb" is launched and Rails application code is loaded automatically when running the [rails console](https://guides.rubyonrails.org/command_line.html) command.
 
-In Django, the equivalent command is running [shell](https://docs.djangoproject.com/en/5.1/ref/django-admin/#shell), however application code will need to be imported before it can be used, using a series of `import` statements.
+In Django, the equivalent command is running [shell](https://docs.djangoproject.com/en/5.1/ref/django-admin/#shell), however application code needs to be imported before it can be used, using `import` statements.
 
-Both frameworks also support opening a database command line client, by running `dbconsole` in Rails or `dbshell` in Django, both opening psql when Postgres is configured as the application database.
+Both frameworks also support opening a database client, by running `dbconsole` in Rails or `dbshell` in Django.
 
-## Inspecting objects in the console
-Rails:
-```rb
-object.inspect
-```
+When Postgres is configured, these both open a psql session.
 
-Django:
-```python
-Object.__dict__
-```
+## Projects and Apps
+In Django, projects and applications are separate concepts.
+
+In my experimental project, I made a "booksproject" project and a "books" app.
+
+## Postgres details
+The books app models are Author, Publisher, and Books.
+The tables for those models are contained in a custom schema `booksapp`.
+
+The application connects to Postgres as the user `booksapp`, and local dev database is `books_dev`.
+
+## No migration safety concept
+No concept of safety, adding indexes (blocking writes) doesn’t use concurrently by default.
 
 ## Adding a constraint
-In models, add unique=True to a field definition. After running makemigrations a migration for a unique index will be created.
+In models, add `unique=True` to a field definition. After running `makemigrations` a migration for a unique index will be created.
 
 In Active Record we might generate the migration file first, then fill in the create statement for a unique index.
 
 In both cases, we don’t really see the generated SQL DDL command though.
 
-
 ## Active Record vs. Django ORM
 Between the Ruby on Rails ORM - Active Record, and the Django ORM, there are some interesting similarities and differences. As a developer, a lot of time is spent describing the model objects, how they’re related to the database persistence layer, writing data into the database and reading it back out.
 
 ## Django models
-In Django, model definitions are kept in a “models.py” file, with each named model. For example, Book, Author, etc.
+When querying a model like Book, we’d use `objects`, which returns a QuerySet object with one or more books.
 
-When querying a model like Book, we’d use “objects”, which returns a QuerySet object with one or more books. There are also methods like “filter()” or “all()” which would generate a WHERE clause to filter down the rows, or reads all rows for the backing table.
+The `filter()` method will generate a SQL query with a `WHERE` clause to filter down the rows, or all rows can be accessed using `all()`.
 
-These look like this:
-
+For example:
 ```python
 Model.objects.filter()
 Model.objects.first()
@@ -114,55 +137,16 @@ Model.objects.all()
 ```
 
 Since Python is a whitespace and indentation sensitive language, we’d need to space our attributes below into a “create” statement 4 spaces, but this is what a create looks like:
-
-```python
+```py
 Thing.models.create(
-    attr1=val
+    attr1=val,
     attr2=val
 )
 ```
 
-
-For filtering, I found the attribute filtering syntax a bit odd. The use of underscores here is significant. 
-
-Attribute_
-
-
-Maintain in models files
-
-
 ## Issues I see
 SQL is hidden by default. This includes DDL that’s useful for devs like create index statements.
 
+However, unlike Rails, Django provides a mechanism to preview the DDL.
 
-## Doesn’t use concurrent index creation by default
-No concept of safety, adding indexes (blocking writes) doesn’t use concurrently by default.
-
-
-## ViewSet
-
-## QuerySet
-
-
-## Celery
-Tasks  Use annotations like @task
-Signals  (triggering mechanisms)
-
-
-## Testing 
-Pytest
-Testing tools like mocks, factories built in
-Poetry run pytest 
-
-Annotation to mark tests that access DB  @pytest.mark.django_db
-@patch("psycopg2.connect")
-
-
-## Apps
-Can have applications within the application
-
-## Debugging
-```python
-import pdb
-pdb.set_trace()
-```
+Run the `sqlmigrate` command instead of migrate, which prints out only the SQL DDL commands.
