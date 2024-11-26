@@ -13,6 +13,11 @@ I'd love to add your post here. Please snap a picture and tag me or send it to m
 
 Thank you!
 
+
+![Claire holding a copy of High Performance PostgreSQL for Rails](/assets/images/pgrailsbook-claire.jpeg)
+<br/><small>Claire Giordano gets her copy!</small>
+
+
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">My library of modern Ruby paperbacks is growing! Thanks <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a> and <a href="https://twitter.com/hashtag/RailsWorld?src=hash&amp;ref_src=twsrc%5Etfw">#RailsWorld</a> <a href="https://t.co/cSnI0v4wYz">pic.twitter.com/cSnI0v4wYz</a></p>&mdash; Vladimir Dementyev (@palkan_tula) <a href="https://twitter.com/palkan_tula/status/1840079689140031751?ref_src=twsrc%5Etfw">September 28, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">My copy of <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a>’s High Performance PostgreSQL for Rails just arrived. Excited to dig in and see what I can add to my Postgres tool belt. <a href="https://t.co/Dz0QvXHPg4">pic.twitter.com/Dz0QvXHPg4</a></p>&mdash; ✨ Josh Branchaud 🎄 (@jbrancha) <a href="https://twitter.com/jbrancha/status/1836848751471718471?ref_src=twsrc%5Etfw">September 19, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Mail call! Thanks <a href="https://twitter.com/andatki?ref_src=twsrc%5Etfw">@andatki</a>! I&#39;ve been excited to get my hands on this since I had Andrew on the show. Check out the episode here: <a href="https://t.co/PA2d7PdaNF">https://t.co/PA2d7PdaNF</a> <a href="https://t.co/tlt5fXFsWG">pic.twitter.com/tlt5fXFsWG</a></p>&mdash; Drew Bragg (@DRBragg) <a href="https://twitter.com/DRBragg/status/1826984450867012063?ref_src=twsrc%5Etfw">August 23, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
