@@ -128,7 +128,11 @@ The tables for those models are contained in a custom schema `booksapp`, and Dja
 The application connects to Postgres as the `booksapp` user and the dev database is called `books_dev`.
 
 ## No migration safety concept
-No concept of safety, adding indexes (blocking writes) doesn’t use concurrently by default.
+There's no concept of what I'd call "safety" for migrations for either framework out of the box.
+
+Operations like adding indexes in Poatgres don't use the concurrently keyword by default for example.
+
+We can add safety using additional libraries. At a smaller scale of data and query volume, even unsafe operations will be fine, but I think some visibility into blocking operations would still be helpful earlier.
 
 ## Adding a constraint
 In models, add `unique=True` to a field definition. After running `makemigrations` a migration for a unique index will be created.
