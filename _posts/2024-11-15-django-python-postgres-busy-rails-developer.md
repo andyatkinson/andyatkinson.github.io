@@ -182,7 +182,7 @@ COMMIT;
 ## Resources
 For the basics of an Author, Publisher, and Books models, or Postgres configuration including a custom schema and user, check out [booksproject](https://github.com/andyatkinson/booksproject) repo.
 
-To collect random Django tips, I've created a [django-tips](/django-tips) page, to be used in a similar way as my [rails-tips](/rails-tips) and [postgresql-tips](/postgresql-tips) pages, mostly as a reference for myself, and possibly useful for others.
+To collect random Django tips, I've created a [django-tips](/django-tips) page, to be used in a similar way as my [rails-tips](/rails-tips) and [postgresql-tips](/postgresql-tips) pages, mostly as a reference for myself, and possibly as a useful resource for others.
 
 ## Wrap Up
 Do you have any similarities and differences between Django and Rails to share? I'd love to hear from you.
