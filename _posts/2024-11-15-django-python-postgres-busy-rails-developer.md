@@ -130,7 +130,7 @@ The application connects to Postgres as the `booksapp` user and the dev database
 ## No migration safety concept
 There's no concept of what I'd call "safety" for migrations for either framework out of the box.
 
-Operations like adding indexes in Poatgres don't use the concurrently keyword by default for example.
+Operations like adding indexes in Postgres don't use the concurrently keyword by default for example.
 
 We can add safety using additional libraries. At a smaller scale of data and query volume, even unsafe operations will be fine, but I think some visibility into blocking operations would still be helpful earlier.
 
