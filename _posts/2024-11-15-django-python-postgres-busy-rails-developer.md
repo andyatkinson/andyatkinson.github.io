@@ -3,8 +3,8 @@ layout: post
 permalink: /django-python-postgres-busy-rails-developer
 title: 'Django and Postgres for the Busy Rails Developer'
 comments: true
-hidden: true
-date: 2024-11-13
+date: 2024-12-10
+tags: [Python, Django, PostgreSQL]
 ---
 
 About 10 years ago I wrote a post [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer), as part of switching from MySQL to Postgres for my personal and professional projects, wherever I could.
