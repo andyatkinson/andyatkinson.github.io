@@ -7,15 +7,15 @@ date: 2024-12-10
 tags: [Python, Django, PostgreSQL]
 ---
 
-About 10 years ago I wrote a post [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer), as part of switching from MySQL to Postgres for my personal and professional projects, wherever I could.
+About 10 years ago I wrote a post [PostgreSQL for the Busy MySQL Developer](/blog/2014/01/02/postgres-for-the-busy-mysql-developer), as part of switching from MySQL to Postgres for my personal and professional projects wherever I could.
 
-Recently I had the chance to work with Python, Django, and Postgres together, as a long-time and busy Rails developer.
+Recently I had the chance to work with Python, Django, and Postgres as a long-time and busy Rails developer.
 
 There were some things I thought were really nice. So am I switching?
 
-The team I worked with was experienced with Django, so I was curious to learn from them about popular libraries, idiomatic code, and tooling.
+The team I worked with was experienced with Django so I was curious to learn from them which libraries and tools are popular, and how how to write idiomatic code.
 
-In this post, I'll briefly cover the database parts of Django using Postgres of course, highlight some libraries and tools, and compare things to Ruby on Rails. You'll find a small Django repo towards the end as well.
+In this post I'll briefly cover the database parts of Django using Postgres (of course!), highlight libraries and tools, and compare aspects to the Ruby on Rails framework. You'll find a small Django repo towards the end as well.
 
 ## Ruby versus Python
 Ruby and Python are both general purpose programming languages. On the similarity side, they can both be used to write script style code, or organize code into classes using object oriented paradigms.
@@ -47,11 +47,11 @@ Rubocop has configurable rules that can automatically reformat code or lint code
 
 Formatters like [standardrb](https://github.com/standardrb/standard) are commonly used as well.
 
-For the Django app, the team selected [ruff](https://github.com/astral-sh/ruff), which performed formatting of code and also linted for issues like missing imports.
+For the Django app the team selected [ruff](https://github.com/astral-sh/ruff), which performed formatting of code and linting for issues like missing imports.
 
 I found ruff fast and easy to use and genuinely helpful.
 
-For example, sometimes I'd fire up a Django shell, skipping ruff, only to realize there are issues it would have caught.
+For example, sometimes I'd fire up a Django shell, having skipped running ruff, only to realize there are issues it would have caught.
 
 On this small codebase, ruff ran instantly, so it was a no-brainer to run regularly, or even include in my code editor.
 
@@ -86,18 +86,18 @@ The interesting difference compared with Rails is that the next step in Django i
 
 This is different from Rails, where Rails developers would first generate a migration file to place changes into.
 
-In Django, the generated migration file can be inspected or simply applied using the `migrate` command. This command is nearly identical to the Rails equivalent command `db:migrate`.
+In Django the generated migration file can be inspected or simply applied using the `migrate` command. This command is nearly identical to the Rails equivalent command `db:migrate`.
 
-For a new project where we were rapidly iterating on the models and their attributes, I preferred the way Django works here to how Rails works.
+For a new project where we were rapidly iterating on the models and their attributes, I preferred the way Django worked to how Rails works, or found it at least as productive.
 
 ## Command line vibes
 Here are some commands like running `poetry install`, or running `manage.py` commands like `shell` or `makemigrations`, to give you a flavor.
 ```python
 poetry install
-poetry run python manage.py dbshell   # psql in postgres
-poetry run python manage.py shell # Django shell
-Poetry run python manage.py makemigrations   # Generates Python migration files, can be customized
-Poetry run python manage.py migrate # runs them. Doesn’t show SQL by default.
+python manage.py dbshell # psql in postgres
+python manage.py shell   # Django shell
+python manage.py makemigrations  # Generates Python migration files
+python manage.py migrate # Runs migration files
 ```
 
 ## Interactive console (REPL)
@@ -107,16 +107,16 @@ This environment is called a *read, eval, print loop* or REPL for short.
 
 In Rails, the Ruby REPL "irb" is launched and Rails application code is loaded automatically when running the [rails console](https://guides.rubyonrails.org/command_line.html) command.
 
-In Django, the equivalent command is running [shell](https://docs.djangoproject.com/en/5.1/ref/django-admin/#shell), however application code needs to be imported before it can be used, using `import` statements.
+In Django the equivalent command is running [shell](https://docs.djangoproject.com/en/5.1/ref/django-admin/#shell), however application code needs to be imported before it can be used, using `import` statements.
 
 Both frameworks also support opening a database client, by running `dbconsole` in Rails or `dbshell` in Django.
 
 When Postgres is configured, these both open a psql session.
 
 ## Projects and Apps
-In Django, projects and applications are separate concepts.
+In Django projects and applications are separate concepts.
 
-In my experimental project, I made a "booksproject" project and a "books" app.
+In my experimental project I made a "booksproject" project and a "books" app.
 
 Check out the [booksproject repo](<https://github.com/andyatkinson/booksproject>).
 
@@ -132,17 +132,19 @@ There's no concept of what I'd call "safety" for migrations for either framework
 
 Operations like adding indexes in Postgres don't use the concurrently keyword by default for example.
 
-We can add safety using additional libraries. At a smaller scale of data and query volume, even unsafe operations will be fine, but I think some visibility into blocking operations would still be helpful earlier.
+We can add safety using additional libraries like [Strong Migrations](https://github.com/ankane/strong_migrations) in Ruby.
+
+At a smaller scale of data and query volume, even unsafe operations will be fine. With that said, I think some visibility into blocking database operations, and how to perform them using safe alternatives is valuable.
 
 ## Adding a constraint
-In models, add `unique=True` to a field definition. After running `makemigrations` a migration for a unique index will be created.
+In models add `unique=True` to a field definition to add a unique constraint (via a unique index). After running `makemigrations` a migration for a unique index will be created.
 
-In Active Record we might generate the migration file first, then fill in the create statement for a unique index.
+In Active Record we'd generate the migration file first, then fill in the create statement adding a unique index.
 
 ## Django models
-When querying a model like Book, we’d use `objects`, which returns a QuerySet object with one or more books.
+When querying a model like Book we’d use `objects` which returns a QuerySet object with one or more books.
 
-The `filter()` method will generate a SQL query with a `WHERE` clause to filter down the rows, or all rows can be accessed using `all()`.
+The `filter()` method will generate a SQL query with a `WHERE` clause to filter down the rows or all rows can be accessed using `all()`.
 
 For example:
 ```python
@@ -151,7 +153,7 @@ Model.objects.first()
 Model.objects.all()
 ```
 
-Since Python is a whitespace and indentation sensitive language, we’d indent the attributes within `create()` by 4 spaces, as shown below:
+Statements in Python are whitespace sensitive so we'd indent the attributes in `create()` below by 4 spaces:
 ```python
 Thing.models.create(
     attr1=val,
@@ -162,9 +164,9 @@ Thing.models.create(
 ## Previewing DDL
 The generated SQL DDL isn't displayed when running `migrate` by default.
 
-However, unlike Rails, Django provides a mechanism to preview it.
+Unlike Rails, Django provides a mechanism to preview it.
 
-To do that, run the `sqlmigrate` command instead of `migrate`.
+To do that run the `sqlmigrate` command instead of `migrate`.
 
 For example, to print the 0001 migration DDL:
 ```sh
@@ -179,16 +181,16 @@ CREATE TABLE "books_author" ("id" bigint NOT NULL PRIMARY KEY GENERATED BY DEFAU
 COMMIT;
 ```
 
-Note that Django uses an identity column for the primary key, and as of Rails 8 Active Record does not. 
+Note that Django uses an identity column for the primary key, and as of Rails 8 Active Record does not.
 
 ## Resources
 For the basics of an Author, Publisher, and Books models, or Postgres configuration including a custom schema and user, check out [booksproject](https://github.com/andyatkinson/booksproject) repo.
 
-To collect random Django tips, I've created a [django-tips](/django-tips) page, to be used in a similar way as my [rails-tips](/rails-tips) and [postgresql-tips](/postgresql-tips) pages, mostly as a reference for myself, and possibly as a useful resource for others.
+To collect random Django tips I've created a [django-tips](/django-tips) page. This page can be used in a similar way as my [rails-tips](/rails-tips) and [postgresql-tips](/postgresql-tips) pages, mostly as a reference for myself and possibly as a useful resource for others.
 
 ## Wrap Up
 Do you have any similarities and differences between Django and Rails to share? I'd love to hear from you.
 
-😅 And no, I'm not "switching" from Rails and Ruby, but I did enjoy working with Python and Django.
+😅 And no, I'm not "switching" from Rails and Ruby, but I did enjoy working with Python, Django, and Postgres!
 
 Thanks for reading.
