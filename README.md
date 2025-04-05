@@ -1,14 +1,10 @@
 ## Hello!
-
 This is the source code for my website, blog, and portfolio at [andyatkinson.com](https://andyatkinson.com) built with Jekyll and hosted on GitHub Pages.
 
 ## Plugins
-
 - TOC: <https://github.com/allejo/jekyll-toc>
 
-
 #### Writing Style Tips
-
 Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale)
 
 - Code screenshots: <https://www.marclittlemore.com/create-pretty-code-screenshots/>
@@ -31,7 +27,6 @@ Use [Vale](https://vale.sh)! [How I use it](/blog/2023/05/26/better-writing-vale
 - For Tags, use uppercased and pluralized words, when they're a category like "Podcasts"
 
 #### Theme Bugs and Issues
-
 ~~The `include` for the social link icons does not work on Heroku but worked locally. The `icons` folder is nested one layer deeper and it may just be that the relative filepath is not working.~~
 This was worked around for now by inlining the contents of the `include`.
 
@@ -40,7 +35,6 @@ Multi-word tags had a whitespace character after the hyphen. Removed that so URL
 `site.baseurl` did not have a leading slash in `_layouts/post.html` and did elsewhere, so this was breaking links. For now I manually inserted the leading slash in that file.
 
 #### More Resources
-
  * [Setting up Namecheap DNS with GitHub Pages](https://www.namecheap.com/support/knowledgebase/article.aspx/9645/2208/how-do-i-link-my-domain-to-github-pages)
  * [Setting up GitHub Pages Custom Domains](https://github.blog/2018-05-01-github-pages-custom-domains-https/)
  * [Setting up a Newsletter with Mailchimp](https://mailchimp.com/help/share-your-blog-posts-with-mailchimp/)
@@ -53,7 +47,6 @@ Multi-word tags had a whitespace character after the hyphen. Removed that so URL
 I occasionally `rm -rf _site` to remove the generated site completely. Changing `config.yml` requires restarting the development server.
 
 #### Workflow
-
 Set up hidden page initially as follows.
 
 1. Create _posts post with future date (date doesn't matter here)

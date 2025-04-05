@@ -10,14 +10,13 @@ I joined [Julie](https://www.rubyforall.com/people/julie-j) and [Andrew](https:/
 
 I answered some questions and shared my enthusiasm for PostgreSQL and Ruby on Rails. We discussed PostgreSQL, PostgreSQL vs. MySQL, transactions, locking, PgBouncer, and data modeling.
 
-Check out the episode here:👉[The Database Wizard with Andrew Atkinson](https://www.rubyforall.com/episodes/the-database-wizard-with-andrew-atkinson) January 19, 2023 · 28:38
+Check out the episode here: 👉 [The Database Wizard with Andrew Atkinson](https://www.rubyforall.com/episodes/the-database-wizard-with-andrew-atkinson) January 19, 2023 · 28:38
 
 Prior to the episode, Julie sent questions that we used to kick off discussions. I prepared answers in advance, and in this post I'll expand on what was discussed in the episode with those answers.
 
 Let's get into it!
 
 ## Is MySQL faster than PostgreSQL? 🐘
-
 Short answer: I don't really know. I'd tell someone "they’re roughly the same." Performance probably isn't the main reason to choose one over the other.
 
 To understand performance, benchmark testing is needed comparing identical workloads running on identical servers. An equivalent set of `INSERT`, `UPDATE`, and `DELETE` statements (`DML`) could be grouped up, and sent to the database.
@@ -48,9 +47,7 @@ From [Choosing a database Twitter thread](https://twitter.com/DBPadawan/status/1
 
 Cloud hosted databases are making this easier, but in PostgreSQL, major version upgrades can be a challenge. When it comes to near zero downtime upgrades, MySQL may have an advantage. Although this is possible with PostgreSQL.
 
-
 ## Why choose PostgreSQL over MySQL?
-
 Short answer: Besides Performance, consider Reliability, Scalability, Consistency, Availability on Cloud providers, and Maturity. Consider the broader Ecosystem including the Community resources (Docs, Forums, Email lists, Conferences, Meetups, Books, Videos, and Podcasts).
 
 I learned a lot from working with it where it served 100s of thousands of requests/minute, and experienced some of the challenges from higher scale operations.
@@ -58,7 +55,6 @@ I learned a lot from working with it where it served 100s of thousands of reques
 The experience there formed the basis of [How We Made PostgreSQL Fitter, Happier, More Productive](https://speakerdeck.com/andyatkinson/how-we-made-postgresql-fitter-happier-more-productive). A single writer PostgreSQL and a single read replica are very capable, given enough memory, CPUs, and fast disks.
 
 ## PostgreSQL Exclusive Features
-
 This list is from [SQL For Devs](https://sqlfordevs.com) written by [Tobias Petry](https://twitter.com/tobias_petry), a great site! Below, I selected the features listed that are available only in PostgreSQL.
 
 - `DISTINCT ON` keyword
@@ -84,7 +80,6 @@ Some additional PostgreSQL capabilities are below.
 
 
 ## Should I be using `JOIN`s vs. an Array column with values?
-
 > Either one works. They have different trade-offs.
 
 PostgreSQL supports nesting values in an array column, and unnesting them if needed. Nesting is a form of *denormalization*.
@@ -103,7 +98,6 @@ With Active Record, since this is now a database object, database enums are dump
 
 
 ## Example From the Show On Modeling a "Friendship" Relationship
-
 Julie used an example of storing "friends" and a "friendship" between two friends, either as an Array of id values in a column, or as a join table. Trade-offs were discussed.
 
 Normalization is similar to `DRY` (Don't repeat yourself) in a sense, which is a philosophy of Ruby and Rails. Normalization attempts to eliminate duplication in how data is stored.
@@ -114,7 +108,6 @@ If the friendship was stored as integers in an Array column, because it's a colu
 
 
 ## Locking
-
 Rails supports Optimistic locking using a database Advisory Lock.
 
 Pessimistic locking is also supported. In PostgreSQL, Active Record uses the Row Locking mechanism `FOR UPDATE`. See: [ActiveRecord::Locking::Pessimistic](https://api.rubyonrails.org/classes/ActiveRecord/Locking/Pessimistic.html). `NOWAIT` or `SKIP LOCKED` [PostgreSQL Docs](https://www.postgresql.org/docs/current/sql-select.html) can be used to report an error when a lock cannot be obtained or skip rows that are locked.
@@ -123,7 +116,6 @@ Locking capabilities provided by Ruby on Rails, and database locks, are another 
 
 
 ## Wrap Up
-
 I enjoyed chatting with Julie and Andrew about PostgreSQL and Ruby on Rails.
 
 Julie and Andrew are doing a great job with Ruby for All, and I think it's a great podcast for the Ruby programming community.

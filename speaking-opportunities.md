@@ -4,6 +4,11 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+## Talking Postgres
+- <cite>2024-11-15</cite>
+- Podcast (audio)
+- [🎙️ Helping Rails developers learn Postgres with Andrew Atkinson](https://talkingpostgres.com/episodes/helping-rails-developers-learn-postgres-with-andrew-atkinson/transcript)
+
 ## StepChange: Scaling Rails & Postgres
 - <cite>2024-08-29</cite>
 - Video interview
