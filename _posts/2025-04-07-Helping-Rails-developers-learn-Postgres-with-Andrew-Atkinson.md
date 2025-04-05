@@ -46,3 +46,4 @@ Back in November I met with Claire Giordano, host of the Talking Postgres podcas
 It was a real honor to be a guest on this podcast. Thank you for the opportunity!
 
 Check out more episodes of [Talking Postgres](https://talkingpostgres.com)!
+
