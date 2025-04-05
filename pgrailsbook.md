@@ -13,7 +13,6 @@ title: High Performance PostgreSQL for Rails Book
 - [Bookshop.org](https://bookshop.org/p/books/high-performance-postgresql-for-rails-reliable-scalable-maintainable-database-applications-andrew-atkinson/21240568?ean=9798888650387)
 - [Amazon](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=39E0Y543M5I8O&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXefJIkfSMMDYXfHY0GArIQIHGe8UKSpfjfQsN0nsNV5Va3OaTp6tBqUd4cYsRpGimTA.neEaYsaVDOt1Ep0EaBzzJwKguDh_LBjub4wDvfvPypQ&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1710558280&sprefix=high+performance+postgre%2Caps%2C98&sr=8-1)
 - [B&N](https://www.barnesandnoble.com/w/high-performance-postgresql-for-rails-andrew-atkinson/1145026967?ean=9798888650387)
-- [Target](https://www.target.com/p/high-performance-postgresql-for-rails-by-andrew-atkinson-paperback/-/A-91501939#lnk=sametab)
 - [Walmart](https://www.walmart.com/ip/High-Performance-PostgreSQL-for-Rails-Reliable-Scalable-Maintainable-Database-Applications-Paperback-9798888650387/5340278249)
 
 ## ⭐⭐⭐⭐⭐ Ratings
