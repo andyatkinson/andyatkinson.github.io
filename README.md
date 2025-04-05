@@ -49,10 +49,10 @@ I occasionally `rm -rf _site` to remove the generated site completely. Changing 
 #### Workflow
 Set up hidden page initially as follows.
 
-1. Create _posts post with future date (date doesn't matter here)
+1. Create _posts with post date of today (will override in front matter later)
 1. No tags
+1. No date in front matter
 1. Set "hidden: true" in front matter
-1. Date of today, or in future using "--future" in local preview
 1. Give post a non-date permalink, this is key
 1. Publish it and reference the permalink. Confirm it's accessible but hidden from pagination and tag-feed.
 
