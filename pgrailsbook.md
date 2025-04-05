@@ -97,9 +97,10 @@ title: High Performance PostgreSQL for Rails Book
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
 ## Upcoming Appearances
-- November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
+- July 8-10, 2025 - [RailsConf 2025](https://railsconf.org)
 
 ## Book Events and Past Appearances
+- November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
 - September 26-27, 2024 - [Rails World 2024](https://rubyonrails.org/world/2024)
 - 2024 August: [Presented at Madison+ Ruby](/blog/2024/08/13/madison-plus-ruby-conference-recap)
 - 2024 July: Shipping from major retailers like Amazon.com, including being the [#1 Best Seller in the Ruby Programming category](https://x.com/andatki/status/1819601510797398046)
