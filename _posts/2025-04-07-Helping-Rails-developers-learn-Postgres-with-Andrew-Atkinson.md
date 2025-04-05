@@ -1,6 +1,6 @@
 ---
 layout: post
-permalink: /Helping-Rails-developers-learn-Postgres-with-Andrew-Atkinson
+permalink: /helping-rails-developers-learn-postgres-with-andrew-atkinson
 title: '🎙️ Talking Postgres Podcast: Helping Rails developers learn Postgres with Andrew Atkinson'
 comments: true
 date: 2025-04-07
