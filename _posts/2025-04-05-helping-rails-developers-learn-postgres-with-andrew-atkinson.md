@@ -3,7 +3,8 @@ layout: post
 permalink: /helping-rails-developers-learn-postgres-with-andrew-atkinson
 title: '🎙️ Talking Postgres Podcast: Helping Rails developers learn Postgres with Andrew Atkinson'
 comments: true
-hidden: true
+tags: [Podcasts, PostgreSQL, Ruby on Rails]
+date: 2025-04-07
 ---
 
 Back in November, I met with Claire Giordano, host of the Talking Postgres podcast, who asked a ton of great questions about my experience writing a Postgres book aimed at Ruby on Rails web developers.
