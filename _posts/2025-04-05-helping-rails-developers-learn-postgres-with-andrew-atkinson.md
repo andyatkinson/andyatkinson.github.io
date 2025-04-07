@@ -26,7 +26,7 @@ Claire also brought up a lot of fun points and reactions. Here's a sample:
 - Did I have a party when the book was fully complete?
 - I talked about "little parties" with Rails developer communities at events like Rails World and Sin City Ruby
 - What was my experience like in working with other publishers
-- I shared my deep appreciation for the efforts of the amazing from book technical reviewers!
+- I shared my deep appreciation for the efforts of the technical reviewers of the book!
 - We talked about cheese! 🧀 (stories and connections with Postgres icons David Rowley and Melanie Plageman)
 - What was my favorite chapter?
 - Is there a frequently asked question I get about databases from Rails developers?
@@ -46,6 +46,6 @@ Claire also brought up a lot of fun points and reactions. Here's a sample:
 </div>
 </section>
 
-It was a real honor to be a guest on this prestigious podcast. I'm lucky to call Claire a friend as well! Thank you for the Claire, Aaron, and team!
+It was a real honor to be a guest on this prestigious podcast. I'm lucky to call Claire a friend as well! Thank you for the opportunity Claire, Aaron, and team!
 
 Check out more episodes of [Talking Postgres](https://talkingpostgres.com)!
