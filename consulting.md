@@ -80,5 +80,4 @@ I'm looking forward to learning how I can help, and thanks for taking a look!
 Andrew Atkinson\
 5123 W 98th St #1325\
 Minneapolis, MN 55437\
-+1 (612) 234-7574\
 [refinedpages.com](https://refinedpages.com)
