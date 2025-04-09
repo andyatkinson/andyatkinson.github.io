@@ -1,13 +1,43 @@
+// // Fonts
+// $font-primary: 'Karla', sans-serif;
+// $font-secondary: 'Crimson Text', serif;
+//
+// // Colors
+// $color-accent: #d4a259; //Default accent color
+// //$color-accent: #2b3f5d; Blue from shirt
+// $gray-darkest: #1d1d1d;
+// $gray-dark: #333;
+// $gray: #666;
+// $gray-light: #aaa;
+// $gray-lighter: #eee;
+// $yellow: #fffac4;
+
 // Fonts
-$font-primary: 'Karla', sans-serif;
-$font-secondary: 'Crimson Text', serif;
+$font-primary: 'Inter', sans-serif; // clean, modern, high-legibility
+$font-secondary: 'Merriweather', serif; // refined, classic for body text or headings
+// Fonts
+// $font-primary: 'Source Sans Pro', sans-serif; // clean, humanist sans-serif — excellent for screens
+// $font-secondary: 'IBM Plex Serif', serif;     // sharp and readable serif with great x-height
+// $font-primary: 'Work Sans', sans-serif;
+// $font-secondary: 'Source Sans Pro', sans-serif; // fallback for secondary, if needed
+// Fonts
+// $font-primary: 'Nunito', sans-serif;
+// $font-secondary: 'Lora', serif;
+
+// Fonts
+// $font-primary: 'Cormorant Garamond', serif;
+// $font-secondary: 'Work Sans', sans-serif;
+
+
+
+
 
 // Colors
-$color-accent: #d4a259; //Default accent color
-//$color-accent: #2b3f5d; Blue from shirt
-$gray-darkest: #1d1d1d;
-$gray-dark: #333;
-$gray: #666;
-$gray-light: #aaa;
-$gray-lighter: #eee;
-$yellow: #fffac4;
+$color-accent: #5e81ac; // cool steel blue, calming and modern
+$gray-darkest: #1b1f23; // slightly blue-black
+$gray-dark: #2c3137;     // modern dark gray
+
+$gray: #4f5a67;          // slightly bluish mid-gray
+$gray-light: #a6b0bb;    // cool light gray
+$gray-lighter: #edf1f5;  // almost white with a hint of blue
+$yellow: #fff3b0;        // softer, warmer yellow to keep some warmth
