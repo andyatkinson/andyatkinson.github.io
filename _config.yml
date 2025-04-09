@@ -15,9 +15,7 @@ favicon: 'assets/images/favicon.ico'
 baseurl:
 url: https://andyatkinson.com
 production_url: https://andyatkinson.com
-disqus: 'andyatkinson'
 mailchimp_url: 'https://gmail.us3.list-manage.com/subscribe/post?u=e41bf915471ba36d210444e0d&amp;id=d5e090a16c'
-# Add your GA Tracking Id
 ga_analytics: UA-8656956-2
 
 
@@ -36,8 +34,8 @@ social:
 github: 'andyatkinson'
 linkedin: 'andyatkinson'
 stackoverflow: '126688/andy-atkinson?tab=profile'
-twitter:
-  username: andatki
+bluesky:
+  username: andyatkinson.com
 
 # Navigation
 navigation:
