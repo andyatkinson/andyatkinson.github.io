@@ -12,8 +12,7 @@ Hello. I [recently tweeted](https://twitter.com/andatki/status/16012924702054440
 
 This tweet was more popular than I expected and got a lot of interesting replies. I appreciated the responses! I've summarized them below.
 
-### Summarized Topics and Tweets
-
+## Summarized Topics and Tweets
 * DB types, network types, `cidr` , time based, interval, `tsrange`, `timestamptz` [@allizad](https://twitter.com/allizad/status/1601632620919463936), [@gordysc](https://twitter.com/gordysc/status/1601647517435064321)
 * JSON querying, JSON operators [@BijanRahnema](https://twitter.com/BijanRahnema/status/1601535710452154368), [@nstajio](https://twitter.com/nstajio/status/1601593160517681152) [@42s_video](https://twitter.com/42s_video/status/1601481503245971456)
 * The "right" indexes, indexing topics [@dorianmariefr](https://twitter.com/dorianmariefr/status/1601548000543010817), [@godfoca](https://twitter.com/godfoca/status/1601681808675901441)
@@ -34,6 +33,5 @@ This tweet was more popular than I expected and got a lot of interesting replies
 * Connection pooling [@fredngo](https://twitter.com/fredngo/status/1601595824315969536)
 
 
-### Links From Tweets
-
+## Links From Tweets
 * [Safe Ecto Migrations · Fly](https://fly.io/phoenix-files/safe-ecto-migrations/)

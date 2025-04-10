@@ -8,45 +8,36 @@ tags: [Tips, Ruby, Rails, Tools]
 
 Rails content management system options:
 
-#### [Radiant CMS](http://radiantcms.org/)
+## [Radiant CMS](http://radiantcms.org/)
+- Clean administrative UI
+- Active development (September 2009)
+- A volunteer group I was part of built [americas.org](http://americas.org) with Radiant. Building HTML/CSS templates outside of Radiant first is highly recommended. We noticed varying levels of Radiant plugin quality/maintenance. Radiant seems to be flexible enough and has a usable UI, though it could be fairly heavyweight for a small project or team. It is under active development.
 
- - Clean administrative UI
- - Active development (September 2009)
- - A volunteer group I was part of built [americas.org](http://americas.org) with Radiant. Building HTML/CSS templates outside of Radiant first is highly recommended. We noticed varying levels of Radiant plugin quality/maintenance. Radiant seems to be flexible enough and has a usable UI, though it could be fairly heavyweight for a small project or team. It is under active development.
+## [Adva CMS](http://adva-cms.org/)
+- Seems promising, documentation lacking (August 2009)
+- The Rails engines approach is interesting. UI is nice.
 
-#### [Adva CMS](http://adva-cms.org/)
+## [Browser CMS](http://www.browsercms.com/)
+- Workflow features, would be overly complicated for our team.
+- Has the most impressive way of editing content visually.
 
- - Seems promising, documentation lacking (August 2009)
- - The Rails engines approach is interesting. UI is nice.
+## [Refinery Content Manager](http://refinerycms.com/)
+- Simple UI
+- Refinery code is within a Rails app as a plugin
 
-#### [Browser CMS](http://www.browsercms.com/)
-
- - Workflow features, would be overly complicated for our team.
- - Has the most impressive way of editing content visually.
-
-#### [Refinery Content Manager](http://refinerycms.com/)
-
- - Simple UI
- - Refinery code is within a Rails app as a plugin
-
-#### [RubyFlow](http://github.com/Sutto/rubyflow)
-
- - The source code behind RubyFlow and other sites by Peter Cooper, could be useful for a news site but probably not a general CMS.
-
+## [RubyFlow](http://github.com/Sutto/rubyflow)
+- The source code behind RubyFlow and other sites by Peter Cooper, could be useful for a news site but probably not a general CMS.
 
 More choices, didn't try these out though:
 
-#### [Zena](http://zenadmin.org/)
+## [Zena](http://zenadmin.org/)
+- Multilingual may be useful for you. Originally developed in Rails 1.2 timeframe.
 
- - Multilingual may be useful for you. Originally developed in Rails 1.2 timeframe.
+## [Seed](http://github.com/desaperados/seed) CMS
+- Good out of the box styling
 
-#### [Seed](http://github.com/desaperados/seed) CMS
-
- - Good out of the box styling
-
-#### [Railfrog CMS](http://www.railfrog.com/)
-#### [Comatose](http://comatose.rubyforge.org/)
-
+## [Railfrog CMS](http://www.railfrog.com/)
+## [Comatose](http://comatose.rubyforge.org/)
 If very minimal editing is necessary, [Static](http://github.com/trevorturk/static) may work. Made for easy deployment on Heroku, which does not offer local file storage (outside of `/tmp`), so configuration of an Amazon S3 account is necessary to store uploads. Simple code, zero UI, a starter app.
 
 If editing on the web is not necessary at all, [Marley](http://github.com/karmi/marley) may be an option.

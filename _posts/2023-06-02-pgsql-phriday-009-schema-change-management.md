@@ -20,11 +20,9 @@ Here are my past posts in the PGSQL Phriday series.
 On with the show! 🪄
 
 ## Database Change Management
-
 This time I'll use the questions from the [invitation](https://www.pgsqlphriday.com/2023/05/pgsql-phriday-009/) as the content for this post.
 
-#### How does a change make it into production?
-
+## How does a change make it into production?
 A little background context. I work on a team of Rails developers that are constantly modifying a monolithic Rails application. These applications use PostgreSQL and changes often include both application code and schema modifications.
 
 In Rails schema changes are made by developers. There has always been a built-in mechanism to do this as a core part of the Rails framework.
@@ -71,15 +69,12 @@ Here is the normal workflow.
 
 The deployment process takes care of restarting application instances since they'd need to know about schema changes. Rails keeps a cache of the schema so that cache must be invalidated or application instances must be restarted.
 
-#### Do you have a dev-QA-staging or similar series of environments it must pass through first?
-
+## Do you have a dev-QA-staging or similar series of environments it must pass through first?
 Developers test their changes including schema modifications on their local development machines. Each Pull Request has a CI build associated with it with a separate database and builds must pass before merge. Each Pull Request must receive at least one review.
 
 Developers may test their changes in a couple of pre-production test environments where they apply their schema modifications and deploy their code changes. This is not required but is a good practice.
 
-
-#### Who reviews changes and what are they looking for?
-
+## Who reviews changes and what are they looking for?
 Team members review all Pull Requests. A Databases group is tagged when a Pull Request includes Migrations.
 
 I'm in this group and I mainly look for modifications that might cause long lived locks and block queries. See: [PostgreSQL rocks, except when it blocks: Understanding locks](https://www.citusdata.com/blog/2018/02/15/when-postgresql-blocks/)
@@ -88,8 +83,7 @@ I use what I know about row counts and query patterns when reviewing Pull Reques
 
 Our team does not have a easy way to test the effect of long duration locks in pre-production.
 
-#### What’s different about modifying huge tables with many millions or billions of rows?
-
+## What’s different about modifying huge tables with many millions or billions of rows?
 We do modify tables with billions of rows, but ideally we've partitioned the table before it reaches that point!
 
 Schema changes can be more difficult on tables that size. As a SaaS B2B app, customers rely on our app to help run their businesses.
@@ -102,24 +96,19 @@ We’d create the SQL for the modification  and test it locally and on  a lower 
 
 If a change is made manually, we then backfill a Rails migration to prevent schema "drift", keeping everything in sync.
 
-#### How does Postgres make certain kinds of change easier or more difficult compared to other databases?
-
+## How does Postgres make certain kinds of change easier or more difficult compared to other databases?
 The [Transactional DDL feature](https://wiki.postgresql.org/wiki/Transactional_DDL_in_PostgreSQL:_A_Competitive_Analysis) is a nice feature to experiment a bit with schema modifications and know that they’re rolled back. For Rails Migrations that fail to apply due to exceeding a lock timeout or for another reason, it’s nice to know the modification will be rolled back cleanly.
 
 Rarely there can be a consistency problem between the Rails application and PostgreSQL. I covered this in the post [Manually Fixing a Rails Migration](/blog/2021/08/30/manual-migration-fix).
 
-
-#### Do you believe that "rolling back" a schema change is a useful and/or meaningful concept? When and why, or why not?
-
+## Do you believe that "rolling back" a schema change is a useful and/or meaningful concept? When and why, or why not?
 I don’t normally roll back a schema change. We’d do a lot of pre-release testing in local development, CI, lower environments, and among multiple developers. However rolling back a transaction that contained a DDL modification is a nice safeguard.
 
 What is a normal process in the evolution of a schema is that columns are no longer needed because they related to a feature that has been retired or relocated. This could even be entire tables or collections of tables.
 
 In those cases it’s nice to remove the columns and tables entirely. This can have some risk as well and there are safeguards we use.
 
-
-#### How do you validate a successful schema change? Do you have any useful processes, automated or manual, that have helped you track down problems with rollout, replication, data quality or corruption, and the like?
-
+## How do you validate a successful schema change? Do you have any useful processes, automated or manual, that have helped you track down problems with rollout, replication, data quality or corruption, and the like?
 When Rails manages a database it gets a `schema_version` table. The schema version for a Migration (a number) is inserted into this table when it's applied.
 
 We can confirm the schema change was applied by querying the table. We can view the table fields or indexes with `\d tablename` and similar commands.
@@ -138,16 +127,12 @@ We also have a copy of rows and modifications in a data warehouse.
 
 [Postgres.fm covered Corruption](https://postgres.fm/episodes/corruption) in a recent episode!
 
-#### What schema evolution or migration tools have you used? What did you like about them, what do you wish they did better or (not) at all?
-
+## What schema evolution or migration tools have you used? What did you like about them, what do you wish they did better or (not) at all?
 Active Record (Ruby on Rails) Migrations in Ruby.
 
 Flyway with Java. See: [Building Microservices at Groupon](/blog/2019/11/04/building-java-microservices).
 
-
 ## Wrap Up
-
 Thanks for reading!
-
 
 [^proscons]: Pros and Cons of Using structure.sql in Your Ruby on Rails Application <https://blog.appsignal.com/2020/01/15/the-pros-and-cons-of-using-structure-sql-in-your-ruby-on-rails-application.html>

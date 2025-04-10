@@ -16,8 +16,7 @@ Using an Unlogged table for primary data that's not stored elsewhere, is not rec
 
 What does that look like?
 
-### `RETURNING` Clause
-
+## `RETURNING` Clause
 Before jumping into that, let's look at the RETURNING clause, to put together an example with an unlogged table.
 
 The [`RETURNING` clause](https://www.postgresql.org/docs/current/dml-returning.html) returns an explicit list of field data following an Insert, Update, or Delete, or all fields using `RETURNING *`.
@@ -47,8 +46,7 @@ INSERT INTO temp.tbl (col) VALUES (GENERATE_SERIES(1,10000000));
 
 This ran considerably faster, completing in under 2 seconds.
 
-### Inserting In Bulk
-
+## Inserting In Bulk
 We know that inserting multiple rows at once is faster compared with single row Inserts, because there isn't a transaction per insert.
 
 Using these techniques, we could design a system to store rows in an `UNLOGGED` table as a staging area, then move them to a logged table as bulk Insert statements at some point later.
@@ -83,6 +81,5 @@ This could be done in batches of rows at a time by using ranges of values, or a 
 
 The purpose here was to show the basics of performing higher speed copies or moves of data between tables.
 
-### Summary
-
+## Summary
 In this post we covered `UNLOGGED` tables, the `RETURNING ` clause, and how to use a transactional copying bulk insert operation.

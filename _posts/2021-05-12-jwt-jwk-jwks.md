@@ -20,8 +20,7 @@ The last two are sort of the same thing, a set of JWK structures is a JSON Web K
 
 The JWT (JSON Web Token) is passed around in an encoded form.
 
-#### What is JWT?
-
+## What is JWT?
 JSON Web Token (RFC 7519) is an open standard, useful for Authorization and Information Exchange. JWTs represent "claims". JWTs are signed using a secret or a public/private key pair.
 
 [Introduction to JWTs](https://jwt.io/introduction/)
@@ -44,19 +43,15 @@ Typically the JWT encoded form is used in the `Authorization` HTTP request heade
 
 `Authorization: Bearer <encoded JWT>` 
 
-
-#### What is JWK?
-
+## What is JWK?
 A JSON Web Key (JWK), an IETF standard (RFC 7517), is a JSON data structure that represents a cryptographic key.
 
 > JSON Web Key (JWK) provides a mechanism to distribute the public keys that can be used to verify JWTs. [^ruleoftech]
 
-#### What is JWKS?
-
+## What is JWKS?
 JSON Web Key Set (JWKS), an IETF standard, is a set of keys containing the public keys used to verify any JSON Web Token (JWT). A JSON Web Key Set is composed of 1 or more JSON Web Keys (JWK). Each JWK represents a cryptographic public key that can be used to validate the signature of a signed JSON Web Token (JWT).
 
-#### JWKS example
-
+## JWKS example
 In our app we generate a JWKS pair for each service, which includes a `.pem` file and a `.json` file.
 
 The JSON file has the following keys:
@@ -66,39 +61,30 @@ The JSON file has the following keys:
 - `n`: the modulus for a pem file
 - `e`: the exponent for a pem file
 
-
-#### What are they used for?
-
+## What are they used for?
 To securely transmit information between services.
 
-
-#### Why are they important?
-
+## Why are they important?
 JWT and JWKS are important because they are an open, IETF, industry standard.
 
 The signature for a JWT is calculated using the header and the payload, which means the content can be verified as having originated from the sender, and not having been tampered with.
 
 Is this better than a browser cookie? JWT doesn't have the Cross-Origin Resource Sharing (CORS) limitation cookies do when the token is sent in the `Authorization` header.
 
-### Tooling
-
+## Tooling
 Depending on what you are doing, you may need to generate some cryptographic pair files or a SSH key. Here are some things I ran across in researching this.
 
-#### PKCS12
-
+## PKCS12
 Archive file format.
 
-#### keytool
-
+## keytool
 `keytool` is a Key and Certificate Management Tool.
 
 Keytool can be used to generate a private and public key pair.
 
 `ssh-keygen` is a tool that can be used to generate an SSH key.
 
-
-### The JWT gem in ruby
-
+## The JWT gem in ruby
 In a Ruby on Rails application using JWTs for secure requests, the jwt gem may be useful. It is something we are using at work.
 
 The flow around secure requests looks like this:
@@ -120,6 +106,5 @@ References:
 * [Ruby JWT gem](https://github.com/jwt/ruby-jwt)
 * [Akamai blog post on rotating JWTs utilizing JWKS](https://blogs.akamai.com/2019/10/verify-jwt-with-json-web-key-set-jwks-in-api-gateway.html)
 * [JWTs? JWKs? ‘kid’s? ‘x5t’s? Oh my!](https://redthunder.blog/2017/06/08/jwts-jwks-kids-x5ts-oh-my/)
-
 
 NOTE TO READER: This Post is in progress and being edited for technical accuracy. If you see errors please contact me.

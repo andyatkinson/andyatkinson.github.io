@@ -12,42 +12,30 @@ Generally I have found that most coworking places offer great opportunities to m
 
 Here are some of the aspects of a great coworking places for me as a programmer.
 
-
-#### Dedicated Quiet Area
-
+## Dedicated Quiet Area
 What I liked at the Workbar Central Square [^1] location was that it had a dedicated quiet area among several work areas in the building. The rules for the quiet area were no phone calls and conversations, and this was explained in the orientation for new members.
 
 The physical space also minimized noise. The floor was carpeted, there were ceiling tiles, and an entrance was from one side only as a hallway. Adjacent to this space was a common area for lunch and coffee where conversations could be held.
 
 Since it was very convenient to take calls or have conversations in the adjacent common space, the work area remained quiet throughout the day. When I was ready for a break, I could easily move to that area to have coffee or lunch with others.
 
-
-#### Available Common Spaces for Calls
-
+## Available Common Spaces for Calls
 Phone Booth Rooms or unreserved common space areas are ideal places to take calls. I would work in the quiet area and then move my laptop to one of those areas for calls. Ideally the calling area is well illuminated for video calls as Phone Booth rooms are often small and dark.
 
-
-#### Ergonomics
-
+## Ergonomics
 As a software developer, having a large high-resolution monitor makes the job easier, to have space for an editor, a terminal, various GUIs, a web browser and more. Ideally the coworking space offers a large monitor I can connect to with an Apple laptop (possibly an extra charge). In practice I usually use my laptop monitor and a stand only though.
 
 Programmers tend to be opinionated about chairs and stand-up desks. As far as ergonomics, usually I try to avoid wrist, neck, and shoulder pain. A chair where I can sit upright with a 90 degree bend of my arms helps reduce shoulder pain, which usually requires adjustable arms and dropping those down low. A lot of chairs at coworking places are not adjustable and not well suited to be in for hours at a time.
 
 Standing desks are another way to change things up. Varidesk can be added [^vari] on top of a traditional desk and may be a less expensive retrofit option. At home I use a standing desk, a MultiTable [^multi] that can be manually cranked up. IKEA offers a sit/stand desk as well [^ikea].
 
-
-#### Neighborhood Amenities Accessible On Foot
-
+## Neighborhood Amenities Accessible On Foot
 All coworking facilities seem to be offer very fast Internet connections and high quality coffee. Most are located in areas with coffee shops and restaurants within a short walking distance.
 
-
-#### Part-Time Member Option
-
+## Part-Time Member Option
 As a solo remote-based programmer, I never ended up needing conference rooms, or printing services. I understand that a coworking space needs to operate profitably, but there are usually services included that I am paying for with my membership, that I can't exclude. Some places do not offer a part-time option at all.
 
-
-#### Summary
-
+## Summary
 My ideal facility as described above, a quiet work area, affordable prices even for part-time members, adjustable chairs and desks, big monitors, good coffee and lunch places in walking distance, and public transit access, is frankly a unicorn that I have yet to find.
 
 Lately I have been working from home exclusively, being fortunate to live in a walkable neighborhood, and being able to spend even more time with my family.
@@ -55,7 +43,6 @@ Lately I have been working from home exclusively, being fortunate to live in a w
 Despite some non-ideal conditions, coworking spaces are popular and are something I will continue to use. They have been a great way for me to meet new people, make some new friends and participate in my local community. And even get some work done 😎.
 
 What are your favorite coworking places and why?
-
 
 [^1]: [Workbar, Cambridge Mass. Central Square](https://www.workbar.com/location/cambridge/)
 [^vari]: [Varidesk](https://www.varidesk.com)

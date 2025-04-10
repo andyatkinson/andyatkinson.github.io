@@ -12,12 +12,11 @@ With tmux I can have windows and panes dedicated to code, log files, and console
 
 We used the following steps to set up a remote user on OS X to connect to my tmux session:
 
- * Install tmux and wemux.
- * add a "pair" user in OS X, using the control panel. I gave the user an easy password.
- * in the "sharing" control panel, enable remote access for user "pair". I disabled access when we were no longer pairing.
+* Install tmux and wemux.
+* add a "pair" user in OS X, using the control panel. I gave the user an easy password.
+* in the "sharing" control panel, enable remote access for user "pair". I disabled access when we were no longer pairing.
 
 At this point I was able to share my external IP address with a co-worker who was able to connect to my tmux session.
 
-#### Conclusion
-
+## Conclusion
 Wemux has a lot of features I hope to try out. If you're interested in pairing on some open source code, let me know!

@@ -12,8 +12,7 @@ One of the technical challenges they have faced with apps around the world is tr
 
 Users in China have been a big part of their growth, after the app was translated to Mandarin.
 
-#### Techniques on the devices
-
+## Techniques on the devices
 One thing they discussed was their use case for geo coordinates was to show users the coordinates in the app on a map, but they didn't need to index that information. So they could push updates to their API and store that information in a less costly way than writes into a database.
 
 The solution they came up with was to queue up and then write coordinates into rows of a file (rows encoded as JSON) and push the files in to S3. JSON encoded rows on S3 gives consumers of the file structured data to work with that is very high performance. They can also control access to the files on S3 using AWS security controls.
@@ -22,11 +21,11 @@ In order to keep the app performing well locally, they have implemented queues a
 
 The talk was filled with recommendations for various services that have worked well for them. Here are some of those services:
 
-   * [SmokePing](http://oss.oetiker.ch/smokeping/)
-   * [Vessel.io](https://www.vessel.io/) -- a/b testing
-   * [Beta by Crashlytics](http://try.crashlytics.com/beta/) -- beta distributions for iOS and Android.
-   * [Applause](http://www.applause.com/) -- QA, app testing, distributed external manual testing services. Very highly recommended.
-   * [Smartling](http://www.smartling.com/) -- Translation services, highly recommended.
-   * [GM Voices](http://www.gmvoices.com/) -- voice prompts, IVR.
+* [SmokePing](http://oss.oetiker.ch/smokeping/)
+* [Vessel.io](https://www.vessel.io/) -- a/b testing
+* [Beta by Crashlytics](http://try.crashlytics.com/beta/) -- beta distributions for iOS and Android.
+* [Applause](http://www.applause.com/) -- QA, app testing, distributed external manual testing services. Very highly recommended.
+* [Smartling](http://www.smartling.com/) -- Translation services, highly recommended.
+* [GM Voices](http://www.gmvoices.com/) -- voice prompts, IVR.
 
 HubSpot will be presenting at the January Stack Dive, check it out!

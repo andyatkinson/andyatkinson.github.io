@@ -12,21 +12,20 @@ In this post, we're going to pick up with the same Rails 6 API app. We're going 
 
 Combining these two features can reduce the number of HTTP requests a client needs to make and reduce the size of the response payload.
 
-#### Compound Documents
-
+## Compound Documents
 Using the [JSON:API Compound Documents](https://jsonapi.org/format/#document-compound-documents), we're able to reduce the number of API calls a client would need to make, by adding related resources to the response.
 
 This app serves Trip data, where a Trip is defined as something that a rider has taken, and was provided by a driver. When fetching trip details, the client may have the need to include some Driver details when presenting the Trip, so that is what we're going to add.
 
 The following curl request would include the default serialization for the Driver in the response. Currently the serialized Driver response includes two fields, `display_name` and `average_rating`.
 
-```
+```sh
 curl "localhost:3000/api/trips/199/details?include=driver"
 ```
 
 We can see below that the response includes linkage information between the resources.
 
-```
+```sh
 {
   "data": {
     "id": "199",
@@ -57,19 +56,18 @@ We can see below that the response includes linkage information between the reso
 }
 ```
 
-#### Combining Compound Documents and Sparse Fieldsets
-
+## Combining Compound Documents and Sparse Fieldsets
 Sparse Fieldsets can be used with the related resource, to limit the fields on the related resource.
 
 For example, if we wanted to return *only* the `average_rating` for the Driver, that curl request would look like this:
 
-```
+```sh
 curl "localhost:3000/api/trips/199/details?include=driver&fields[driver]=average_rating"
 ```
 
 Looking at the `included` portion of the response here, we can see that the driver fields are limited to the `average_rating`, and `display_name` has been excluded.
 
-```
+```sh
 ...
 "included": [
     {
@@ -83,9 +81,7 @@ Looking at the `included` portion of the response here, we can see that the driv
 ...
 ```
 
-
-#### Wrap-up
-
+## Wrap-up
 Using Compound Documents and Sparse Fieldsets, the client is able to specify the data it needs, reducing the number of HTTP requests and the size and time involved in generating the response.
 
 Because this functionality is specified by the JSON:API, we're able to build this into our server application in a consistent way for clients, improving the API experience through consistency and performance.

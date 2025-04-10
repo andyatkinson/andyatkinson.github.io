@@ -10,8 +10,7 @@ For a recent project I had the opportunity to research how we might encrypt a fe
 
 In this example we'll represent some fields of data about a person as a Ruby Hash that maps the name of the data to the value. Let's say we are storing their name, email, and the date they were created.
 
-#### Encrypt
-
+## Encrypt
 Before storing encrypted data, we'll do some transformations to make it easier to work with. We'll convert the data to JSON for easier serialization and deserialization, URL encode it to handle tricky characters in the strings like name, and base64 encode it to shrink it down.
 
 In the example below, a random key and initial value are generated and assigned, and the same variables are assumed to be accessible in the decryption process. This would be the case in a Ruby IRB session for example, but in a real world scenario the values would be stored elsewhere.
@@ -35,9 +34,7 @@ encoded = URI::encode(Base64.encode64(encrypted))</code></pre>
 
 Now we have an encoded and encrypted representation to store.
 
-
-#### Decrypt
-
+## Decrypt
 This part sets up the decryption, passing in the key and initial value we used above to encrypt the data.
 
 ```ruby

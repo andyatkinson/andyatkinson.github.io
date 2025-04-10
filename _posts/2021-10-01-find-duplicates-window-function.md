@@ -12,16 +12,12 @@ In this post, you'll find and delete the rows in a single query. The query will 
 
 Recently I found a SQL solution to this problem that uses the `ROW_NUMBER` window function.
 
-
-#### How Duplicates Happen
-
+## How Duplicates Happen
 Duplicate rows happen occasionally due to application bugs. 2 threads may create the same item at the same time. Without a database unique constraint these rows are created.
 
 Typically after removing duplicates, we'd add the constraint to ensure it doesn't happen again.
 
-
-#### Duplicate Web Links
-
+## Duplicate Web Links
 Create a links table that tracks a `url` and a `name`. Give it an integer primary key. Having a primary key is important because it is used to identify rows for deletion.
 
 Insert some rows, deliberately inserting duplicate rows for the `google` entry with a duplicate URL. This table was meant to have unique URLs, but the creator didn't add a unique constraint to enforce that.
@@ -101,8 +97,7 @@ HAVING COUNT(*) > 1
 ON a.url = b.url;
 ```
 
-#### Deleting Duplicates
-
+## Deleting Duplicates
 Now you can put it all together.
 
 Using the row number, for any numbers > 1, the primary key id values for those rows can be passed into a DELETE statement.
@@ -112,7 +107,6 @@ Putting that all together looks like below. The below query modifies the query a
 All of that is wrapped in a DELETE statement that deletes by id.
 
 ```sql
-
 DELETE FROM links WHERE id IN (
 
 -- select only the ids to delete (will return 2 items)
@@ -150,8 +144,6 @@ Adding a unique constraint to the `url` column to prevent this from happening ag
 ALTER TABLE links ADD CONSTRAINT unique_url UNIQUE (url);
 ```
 
-
-#### Version History
-
+## Version History
 * 2022-11-19: Overhaul, fixed problems, simplified the post
 * 2021-10-01: Original publish date

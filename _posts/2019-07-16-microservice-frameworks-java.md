@@ -9,7 +9,6 @@ comments: true
 A quick look at two Microservice Frameworks for Java.
 
 ## Dropwizard
-
 [Dropwizard](https://www.dropwizard.io) is a lightweight (for Java) [^1] framework to build microservice back-ends with Java.
 
 > Dropwizard is a Java framework for developing ops-friendly, high-performance, RESTful web services. <cite>dropwizard.io</cite>
@@ -20,7 +19,6 @@ I made a [Hello World Dropwizard App](https://github.com/andyatkinson/dropwizard
 
 
 ## Javalin
-
 [Javalin](https://javalin.io/) is described as:
 
 > A simple web framework for Java and Kotlin
@@ -29,10 +27,8 @@ I made a [Hello World App with Javalin](https://github.com/andyatkinson/javalin-
 
 I found it easy to use, and having even less code and setup compared with Dropwizard. For a very small API, if I was using Java, I'd consider implementing it with Javalin. If I was starting from scratch, I'd probably choose Kotlin over Java as well!
 
-#### Wrapping Up
-
+## Wrapping Up
 There are loads more Java microservice frameworks out there. What is your favorite one and why?
-
 
 [^1]: Ruby frameworks like Sinatra are much lighter/less lines of code to get going
 [^2]: [Dropping Rails for Dropwizard](https://speakerdeck.com/bmorton/dropping-rails-for-dropwizard-from-abril-pro-ruby-2014?slide=2)

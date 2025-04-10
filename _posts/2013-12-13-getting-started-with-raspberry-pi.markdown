@@ -12,8 +12,7 @@ Raspberry Pi expects a keyboard and mouse on first boot. From the NOOBS screen, 
 
 Customizing NOOBS by removing all the operating systems, except one to install, is supposed to automatically install the one left on the card, however this didn't work for me.
 
-#### Flashing the SD card with Raspbian
-
+## Flashing the SD card with Raspbian
 Flashing the SD card with the Raspbian OS worked on my Macbook Pro with a built-in SD card slot, but the flashing process seemed quite slow while it was happening (around 30 minutes).
 
 Once the SD card was ready, booting up the Raspberry Pi with Raspbian started `sshd` so I was able to SSH to the Pi on my home LAN. I checked my router DHCP clients table to figure out the internal IP address, and used the default login information. 

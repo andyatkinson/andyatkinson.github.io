@@ -13,7 +13,6 @@ Indexes have other purposes like sorting or Constraint enforcement, but this pos
 When unfamiliar with Indexes, there can be a tendency to "over index". This means that you might create Indexes that aren't needed. Is that a problem?
 
 ## Indexes Aren't "Free"
-
 Indexes aren't "free" in that they trade-off space consumption for fast retrieval, and add some write time latency.
 
 Indexes need to be maintained for all writes (Inserts, Updates, Deletes) and can consume a lot of space on disk. This trade-off is completely worth it when an Index is used. When an Index is not used though, it's just taking up space!
@@ -29,7 +28,6 @@ Unnecessary Indexes can take several forms.
 * Invalid indexes that failed during creation CONCURRENTLY
 
 ## Causes of Unnecessary Indexes
-
 Over indexing can occur for some of the following reasons.
 
 * Adding an index before it's used that never becomes used
@@ -41,8 +39,7 @@ Over indexing can occur for some of the following reasons.
 
 How can we identify Unused Indexes?
 
-### Unused Indexes
-
+## Unused Indexes
 Fortunately, PostgreSQL tracks all index scans. Using the Index Scan information, we can identify unused indexes.
 
 The system catalog `pg_catalog.pg_stat_user_indexes` tracks `idx_scan` and it will be zero when there are no Index Scans from queries.
@@ -69,7 +66,6 @@ ORDER BY pg_relation_size(s.indexrelid) DESC;
 ```
 
 ## Removal Process
-
 Where I worked on a long lived monolithic codebase with lots of churn, we found loads of Unused Indexes that could be removed.
 
 We gradually removed all of them, reducing space consumption by more than 300 GB for a > 1 TB database (a significant proportion!).
@@ -81,7 +77,6 @@ We added [PgHero](https://github.com/ankane/pghero) which helps make unused inde
 Can Indexes become bloated?
 
 ## Bloated Indexes
-
 In [MVCC](https://www.postgresql.org/docs/current/mvcc.html) when a row is updated, a new row version (called a *tuple*) is created behind the scenes.
 
 The former row version becomes a "dead tuple" when no transactions reference it. This is part of the concurrency design of PostgreSQL. Tables always consist of "live" and dead tuples.
@@ -97,7 +92,6 @@ This is a disruptive operation though for queries using the index so make sure t
 On newer versions of PostgreSQL do that by using `REINDEX` with `CONCURRENTLY`.
 
 ## Bloat management with pg_repack
-
 On older versions (<11) of PostgreSQL, use a third-party tool like [pg_repack](https://reorg.github.io/pg_repack/) to rebuild your indexes online.
 
 Another index bloat query to use is [Database Soup: New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html) which displays a great variety of Index information.
@@ -114,25 +108,19 @@ The end result was a much cleaner set of indexes that more accurately reflected 
 
 Reference [Installing pg_repack on RDS](https://theituniversecom.wordpress.com/install-pg_repack-on-amazon-ec2-for-rds-postgresql-instances/) and install the appropriate version for the database.
 
-
 ## Summary of Rebuilds
-
 Using pg_repack, I rebuilt 27 indexes on our primary database reclaiming over 230 GB of space.
 
 In the most extreme cases with an estimated 90% bloat, the resulting rebuilt index was around 10% of the original size.
 
-
 ## PostgreSQL Unused Indexes
-
 This was a presentation I gave internally on the team on Unused Indexes Maintenance in January 2021.
 
 <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/6644d7dd7380413ea19dce1955f41269" title="PostgreSQL Unused Indexes" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background-color: rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; -webkit-background-clip: padding-box; -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
 I covered bloat and how we addressed it in a talk given at [PGConf NYC 2021 Conference](/blog/2021/12/06/pgconf-nyc-2021).
 
-
 ## Summary of Index Removals
-
 * Find and removed unnecessary Indexes like unused, duplicate, or overlapping
 * Remove and rebuild `INVALID` Indexes
 * Remove index bloat by rebuilding Indexes Concurrently or by using `pg_repack`

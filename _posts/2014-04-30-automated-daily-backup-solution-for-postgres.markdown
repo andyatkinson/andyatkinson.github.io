@@ -12,7 +12,7 @@ The gist of what safe does is run `pg_dump` to create a backup file, encrypt it,
 
 We also use the [whenever](https://github.com/javan/whenever) gem to generate our crontab file. Our configuration is below, see GitHub for the complete set of options. Encryption via gpg can use public and private keys, or a simple passphrase.
 
-``` ruby
+```rb
 safe do
   local :path => "/tmp/backups/:kind/:id"
 
@@ -44,24 +44,22 @@ end
 
 The variables like `s3` in our configuration are coming from config files in the app. The database config could be loaded like this:
 
-``` ruby
+```rb
 require "yaml"
 db = YAML.load_file(File.join(Dir.getwd, 'config', 'database.yml'))[environment]
 ```
 
-#### Deployment
-
+## Deployment
 Once the safe configuration file is specified, the `astrails-safe` executable can be run. We use cron to run this once a day. The whenever gem supplies a `config/schedule.rb` for crontab entries. The `whenever` command can be run to see what will be generated. Whenever also provides Capistrano tasks to update the crontab file on every deploy.
 
 We used the `job_template` option to so that the command was run from the app directory and is run with `bundle exec`.
 
-``` ruby
+```rb
 every 1.day, :at => '4:30 am' do
   set :job_template, "cd :path && RAILS_ENV=production :task"
   command "bundle exec astrails-safe -v config/database_backup.rb >/dev/null 2>&1"
 end
 ```
 
-#### Conclusion
-
+## Conclusion
 This script has been running for a few days so far and is meeting our needs.

@@ -6,8 +6,7 @@ comments: true
 tags: [Scripts, Vim, Tips, Git, Productivity]
 ---
 
-#### fugitive.vim
-
+## fugitive.vim
 The fugitive.vim plugin [^plugin] for Vim has a nice feature to open a file in GitHub. It is even possible to have a range or line highlighted from a visual selection!
 
 From the README:
@@ -30,16 +29,14 @@ To keep this private URL out of my public Vim configuration [^vim_config], I mad
 let g:fugitive_github_domains = ['http://secret_github_enterprise_url']
 ```
 
-#### Opening Files
-
+## Opening Files
 In a new Vim instance or after reloading the main Vim config, `:Gbrowse` opens the current file at the correct URL in GitHub enterprise! This is a nice time saver when sharing links to code with colleagues. 
 
 To have one or more lines automatically highlighted on the opened page, type `Gbrowse` after making a range selection (e.g. `Shift-v j/k`), which should look like this`:'<,'>Gbrowse`, then press return.
 
 Another nice tip [^tip] to copy the path to the clipboard without opening the browser, is `:Gbrowse! -`.
 
-#### Conclusion
-
+## Conclusion
 Have any other time savers in your workflow to share?
 
 [^plugin]: [fugitive.vim plugin](https://github.com/tpope/vim-fugitive)
