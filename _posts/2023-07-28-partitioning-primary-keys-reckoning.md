@@ -8,8 +8,6 @@ comments: true
 
 In Part 2 of this [2 part PostgreSQL 🐘 Table Partitioning series](/blog/2023/07/27/partitioning-growing-practice), we'll focus on how we modified the Primary Key *online* for a large partitioned table. This is a disruptive operation so we had to use some tricks to pull this off.
 
-Read on to learn more.
-
 If you haven't already read Part 1 of this series, please first read [PostgreSQL Table Partitioning — Growing the Practice — Part 1 of 2](/blog/2023/07/27/partitioning-growing-practice) which describes why and how this table was converted to a partitioned table.
 
 The context there will help explain the circumstances we were operating from.

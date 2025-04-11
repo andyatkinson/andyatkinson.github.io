@@ -6,22 +6,23 @@ date: 2023-07-27
 comments: true
 ---
 
-We recently faced a challenge working with a large table where query performance had worsened. This table is high growth tracking activity as applicants move through a hiring process.
+Hello! We recently faced challenges in working with a large table, performing operations, and query performance had worsened a lot.
 
-Read on to find out how we improved performance and growth management.
+This table has records that represent application activities as they move through a hiring process, and it grows very fast.
 
-In this post, we’ll look at how PostgreSQL table partitioning helped us solve our operational challenges from rapid data growth.
+In this post, we’ll look at how we leveraged PostgreSQL's native table partitioning capability to help solve operational challenges and improve query performance, despite the rapid data growth.
 
-## Why
-Performance can degrade when working with high growth rate tables. Queries slow down. Modifications like adding indexes or constraints take more time.
+## Why Use Table Partitioning?
+Performance can degrade when working with high growth rate tables. Queries slow down. Table changes like adding indexes or constraints take a lot more time!
 
-One solution is to split up the table into a set of tables. This is the fundamental way that table partitioning works.
+One solution to this problem is to split up the single table into a set of tables. This is how table partitioning works--we split up the table. Postgres has a native capability to help us do that.
 
-By moving away from a single large table, each smaller table becomes easier to work with.
-
+By moving away from the single large table and by adding some more information into our application-generated queries, we can work with smaller partitions of the table that are easier to work with and have better performance.
 
 ## Declarative Partitioning
-From version 10 of PostgreSQL, splitting tables is possible with [Declarative Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html). One of the benefits of Declarative Partitioning is that it is easier to introduce compared with how table partitioning was done in the past. In earlier versions of PostgreSQL it was possible to build partitioned table relationships, but it might have involved using table inheritance, trigger functions, and check constraints which is a lot to create and maintain.
+From version 10 of PostgreSQL, splitting up big tables is possible using the feature called [Declarative Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html).
+
+One of the benefits of Declarative Partitioning is that it is easier to introduce compared with how table partitioning was done in the past. In earlier versions of PostgreSQL it was possible to build partitioned table relationships, but it might have involved using table inheritance, trigger functions, and check constraints which is a lot to create and maintain.
 
 Declarative Partitioning makes table partitioning accessible to more users.
 
@@ -120,7 +121,12 @@ We work hard to avoid data loss and minimize errors. Some scenarios are impracti
 This query lists how the indexes were created.
 
 ```sql
-SELECT indexdef FROM pg_indexes WHERE indexname = 'index_name';
+SELECT
+    indexdef
+FROM
+    pg_indexes
+WHERE
+    indexname = 'index_name';
 ```
 
 ## Wrap Up
@@ -131,4 +137,4 @@ Thanks to Bharath and Bobby for help on this project and for reviewing earlier v
 [^rdspriceguide]: CloudZero RDS Price Guide <https://www.cloudzero.com/blog/rds-pricing>
 [^awsdynamicresize]: Aurora Dynamic Resizing <https://aws.amazon.com/about-aws/whats-new/2020/10/amazon-aurora-enables-dynamic-resizing-database-storage-space/>
 [^logrep]: Partitioned tables can now be replicated <https://amitlan.com/2020/05/14/partition-logical-replication.html>
-[^part2]: [PostgreSQL Table Partitioning Primary Keys — The Reckoning — Part 2 of 2](/blog/2023/07/27/partitioning-primary-keys-reckoning)
+[^part2]: [PostgreSQL Table Partitioning Primary Keys — The Reckoning — Part 2 of 2](/blog/2023/07/28/partitioning-primary-keys-reckoning)
