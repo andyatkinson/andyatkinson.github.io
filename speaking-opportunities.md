@@ -4,6 +4,8 @@ permalink: /speaking-opportunities
 title: Speaking Opportunities
 ---
 
+Explore all speaking engagements below or jump to [Ruby Events](https://www.rubyevents.org/speakers/andrew-atkinson).
+
 ## Talking Postgres
 - <cite>2024-11-15</cite>
 - Podcast (audio)

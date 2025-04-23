@@ -2,10 +2,10 @@ exclude: [config.ru, Gemfile, Gemfile.lock, Procfile, Rakefile, README.md, vendo
 
 # Site settings
 name: 'Andrew Atkinson'
-title: 'Andrew Atkinson - Software Engineer, Author, High Performance PostgreSQL for Rails'
+title: 'Software Engineer, Author, High Performance PostgreSQL for Rails'
+tagline: "Andrew Atkinson's site about PostgreSQL, Ruby on Rails, Elasticsearch, Kubernetes, and Vim. Andrew is the Author of High Performance PostgreSQL for Rails"
 description: 'Software Engineer, Author, Consultant'
 meta_description: 'Personal Site Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails Pragmatic Programmers'
-tagline: 'Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails Pragmatic Programmers'
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
@@ -17,7 +17,7 @@ url: https://andyatkinson.com
 production_url: https://andyatkinson.com
 mailchimp_url: 'https://gmail.us3.list-manage.com/subscribe/post?u=e41bf915471ba36d210444e0d&amp;id=d5e090a16c'
 ga_analytics: UA-8656956-2
-
+works_for: Refined Pages, LLC
 
 # Contact form setings
 email: andyatkinson@gmail.com
@@ -28,7 +28,6 @@ thankyou_page_description: "Thanks for your message."
 social:
   name: Andrew Atkinson
   links:
-    - https://x.com/andatki
     - https://www.linkedin.com/in/andyatkinson
     - https://github.com/andyatkinson
 github: 'andyatkinson'

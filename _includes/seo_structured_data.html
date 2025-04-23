@@ -1,0 +1,22 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ site.name }}",
+  "url": "{{ site.url }}",
+  "image": "/assets/images/{{ site.author.image }}",
+  "sameAs": [
+    "https://www.linkedin.com/in/{{ site.linkedin }}",
+    "https://github.com/{{ site.github }}",
+    "https://stackoverflow.com/users/{{ site.stackoverflow }}",
+    "https://bsky.app/profile/{{ site.bluesky.username }}"
+  ],
+  "jobTitle": "{{ site.description }}",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "{{ site.works_for }}"
+  }
+}
+</script>
+
+<meta property="og:description" content="{{ site.meta_description }}" />
