@@ -52,16 +52,13 @@ Set up hidden page initially as follows.
 1. Create _posts with post date of today (will override in front matter later)
 1. No tags
 1. No date in front matter
-1. Set "hidden: true" in front matter
-1. Give post a non-date permalink, this is key
+1. Create permalink without date, this is key
 1. Publish it and reference the permalink. Confirm it's accessible but hidden from pagination and tag-feed.
 
 Note: Date-based filename organizes post but isn't used in permalink.
 
 When ready for general audience and syndicate as follows.
 
-1. Remove "hidden: true" from front matter
 1. Add date as current date for publishing purposes, e.g. `date: 2024-10-02`
 1. Add tag to trigger syndication (e.g. PostgreSQL)
-1. Run "bundle exec jekyll serve" and confirm visibility
 1. Push it, confirm permalink is same, it's in pagination and tag-feed
