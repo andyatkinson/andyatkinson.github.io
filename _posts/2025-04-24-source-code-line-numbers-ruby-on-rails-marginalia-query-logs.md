@@ -2,6 +2,7 @@
 layout: post
 permalink: /source-code-line-numbers-ruby-on-rails-marginalia-query-logs
 title: 'Source code line numbers for database queries in Ruby on Rails with Marginalia and Query Logs'
+hidden: true
 ---
 
 Back in 2022, we covered how to log database query information using the `pg_stat_statements` extension for Postgres.
