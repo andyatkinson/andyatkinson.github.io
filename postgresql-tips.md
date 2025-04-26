@@ -4,14 +4,17 @@ permalink: /postgresql-tips
 title: PostgreSQL Tips, Tricks, and Tuning
 ---
 
-Hello! This page is a semi-organized mess of notes while learning PostgreSQL.
+This page has blog posts and learning resources related to the PostgreSQL database.
 
-Below are PostgreSQL-tagged blog posts:
+This page isn't maintained frequently was was created mostly from 2018-2022. Some of this content made it into my Postgres book, where it is more accurate and organized. Please consider purchasing a copy, which helps support my future writing endeavors on Postgres!
+
+{% include promo-box-book.html %}
+
+This page has blog posts and learning resources related to the PostgreSQL database.
 
 {% include tag-pages-loop.html tagName='PostgreSQL' %}
 
 ## Recommended Learning Resources
-
 * <https://postgres.fm>
 * <https://www.pgcasts.com>
 * <https://www.youtube.com/c/ScalingPostgres>
@@ -20,14 +23,11 @@ Below are PostgreSQL-tagged blog posts:
 * [Optimizing Postgres for write heavy workloads](https://www.youtube.com/watch?v=t8rAOgDdH1U)
 * Book: [PostgreSQL Query Optimization](https://www.amazon.com/PostgreSQL-Query-Optimization-Ultimate-Efficient-dp-B0CK5GWWQ1/dp/B0CK5GWWQ1/ref=dp_ob_title_bk)
 * Book: [PostgreSQL 9.0 High Performance](https://www.amazon.com/PostgreSQL-High-Performance-Gregory-Smith-ebook/dp/B0057G9RUG/ref=sr_1_1?crid=1C6XE1MTS5P6Z&dib=eyJ2IjoiMSJ9.gz1V_nruxTv9KBz3395J6C5BjwpiYbZy1KqA0QYls4rGjHj071QN20LucGBJIEps._-fSBXPcduiX88TW4ntB06kJSSm9dnK0j-4FGVj7iOs&dib_tag=se&keywords=high+performance+postgresql+9.0&qid=1720582394&s=books&sprefix=high+performance+postgresql+9.0%2Cstripbooks%2C90&sr=1-1)
-* Book: [PostgreSQL 14 Internals](https://postgrespro.com/community/books/internals)
 
 ## Queries
-
 I keep queries in a GitHub repository: [pg_scripts](https://github.com/andyatkinson/pg_scripts)
 
 ## Query: Approximate Count
-
 Since a `COUNT(*)` query can be slow, try an approximate count:
 
 ```sql
@@ -36,7 +36,6 @@ FROM pg_class WHERE relname = 'table_name';
 ```
 
 ## Query: Get Table Stats
-
 ```sql
 SELECT
     attname,
@@ -50,7 +49,6 @@ WHERE tablename = 'table';
 Consider cardinality for columns, and selectivity for indexes and queries, when designing indexes.
 
 ## Cancel or Kill by Process ID
-
 Get a PID with `SELECT * FROM pg_stat_activity;`
 
 Try to cancel the query first, otherwise terminate the backend:
@@ -61,7 +59,6 @@ SELECT pg_terminate_backend(pid);
 ```
 
 ## Tuning Autovacuum
-
 PostgreSQL runs a scheduler Autovacuum process when PostgreSQL starts up. This process looks at configurable thresholds for all tables and determines whether a `VACUUM` worker should run, per table.
 
 Thresholds can be configured per table. A good starting place for tables that have a large amount of UPDATE and DELETE queries, is to perform that per-table tuning.
@@ -82,24 +79,21 @@ ALTER TABLE bigtable SET (autovacuum_vacuum_scale_factor = 0.1);
 ```
 
 Can be reset:
-
 ```sql
 ALTER TABLE bigtable RESET (autovacuum_vacuum_threshold);
 ```
 
 ## Autovacuum Tuning
-
-* Set `log_autovacuum_min_duration` to `0` to log all Autovacuum. A logged AV run includes a lot of information.
-* [pganalyze: Visualizing & Tuning Postgres Autovacuum](https://pganalyze.com/blog/visualizing-and-tuning-postgres-autovacuum)
+- Set `log_autovacuum_min_duration` to `0` to log all Autovacuum. A logged AV run includes a lot of information.
+- [pganalyze: Visualizing & Tuning Postgres Autovacuum](https://pganalyze.com/blog/visualizing-and-tuning-postgres-autovacuum)
 - `autovacuum_max_workers`
 - `autovacuum_max_freeze_age`
 - `maintenance_work_memory`
 
 ## Specialized Index Types
+The most common type is B-Tree. Specialized index types and strategies include:
 
-The most common type is B-Tree. Specialized index types are:
-
-* Multicolumn
+* Multicolumn design (also called "composite" or compound indexes in other databases)
 * Covering (Multicolumn or newer `INCLUDES` style)
 * Partial
 * GIN
@@ -110,8 +104,7 @@ The most common type is B-Tree. Specialized index types are:
 * Hash
 
 ## Removing Unused Indexes
-
-Ensure these are set to `on`
+Ensure these are set to `on` so scans are tracked:
 
 ```sql
 SHOW track_activities;
@@ -120,16 +113,11 @@ SHOW track_counts;
 
 <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/6644d7dd7380413ea19dce1955f41269" title="PostgreSQL Unused Indexes" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" style="border: 0px; background-color: rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; -webkit-background-clip: padding-box; -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 560px; height: 314px;" data-ratio="1.78343949044586"></iframe>
 
-Cybertec blog post with SQL query to discover unused indexes: [Get Rid of Your Unused Indexes!](https://www.cybertec-postgresql.com/en/get-rid-of-your-unused-indexes/)
-
-
 ## Remove Duplicate and Overlapping Indexes
-
 <https://wiki.postgresql.org/wiki/Index_Maintenance>
 
 
 ## Remove Seldom Used Indexes on High Write Tables
-
 [New Finding Unused Indexes Query](http://www.databasesoup.com/2014/05/new-finding-unused-indexes-query.html)
 
 This is a great guideline.
@@ -139,16 +127,13 @@ This is a great guideline.
 In our system on our highest write table we had 10 total indexes defined and 6 were classified as Low Scans, High Writes. These indexes may not be worth keeping.
 
 ## Partial Indexes
-
 [How Partial Indexes Affect UPDATE Performance in PostgreSQL](https://medium.com/@samokhvalov/how-partial-indexes-affect-update-performance-in-postgres-d05e0052abc)
 
 ## Timeout Tuning
-
 - `statement_timeout`: The maximum time a statement is allowed to run before being canceled
 - `lock_timeout`
 
 ## Connections Management
-
 [A connection forks the OS process (creates a new process)](https://azure.microsoft.com/en-us/blog/performance-best-practices-for-using-azure-database-for-postgresql-connection-pooling/) and is thus expensive.
 
 Use a connection pooler to reduce overhead from connection establishment
@@ -177,25 +162,21 @@ For Rails with Puma and Sidekiq, carefully manage the connection pool size and t
 [The Ruby on Rails database connection pool](https://maxencemalbois.medium.com/the-ruby-on-rails-database-connections-pool-4ce1099a9e9f). We also use a proxy in between the application and PG.
 
 ## PgBouncer
-
 * [PostgreSQL Connection Pooling With PgBouncer](https://dzone.com/articles/postgresql-connection-pooling-with-pgbouncer)
 
 Install PgBouncer on macOS with `brew install pgbouncer`. Create the `.ini` config file as the article mentions, point it to a database, accept connections, and track the connection count.
 
-
 ## Heap Only Tuple (HOT) Updates
-
 HOT ("heap only tuple") updates, are updates to tuples not referenced from outside the table block.
 
 [HOT updates in PostgreSQL for better performance](https://www.cybertec-postgresql.com/en/hot-updates-in-postgresql-for-better-performance/)
 
 2 requirements:
 
-- there must be enough space in the block containing the updated row
-- there is no index defined on any column whose value is modified (big one)
+- Enough space in the block (page) to contain the updated row
+- No index for the column being modified (very common to have high cardinality columns indexed!)
 
-## `fillfactor`
-
+## The `fillfactor`
 [What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
 
 - Percentage between 10 and 100, default is 100 ("fully packed")
@@ -224,7 +205,6 @@ pg_repack --no-order --table foo
 Note: use `-k, --no-superuser-check`
 
 ## Locks Management
-
 [Lock Monitoring](https://wiki.postgresql.org/wiki/Lock_Monitoring)
 
 - `log_lock_waits`
@@ -233,19 +213,13 @@ Note: use `-k, --no-superuser-check`
 > "Then slow lock acquisition will appear in the database logs for later analysis."
 
 ## Lock Types
-
-Exclusive locks, and shared locks.
+Exclusive locks and shared locks.
 
 `AccessExclusiveLock` - Locks the table, queries are not allowed.
 
 Table locks and row locks.
 
-## Tools
-
-## Tools: Query Planning
-
 ## EXPLAIN (ANALYZE, BUFFERS)
-
 This article [5 Things I wish my grandfather told me about ActiveRecord and PostgreSQL](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANLAYZE output written more in plain English.
 
 ## [pgMustard](https://www.pgmustard.com/)
@@ -258,9 +232,7 @@ Format `EXPLAIN` output with JSON, and specify additional options.
 EXPLAIN (ANALYZE, BUFFERS, VERBOSE, FORMAT text) --<sql-query>
 ```
 
-
 ## Using pgbench
-
 Repeatable method of determining a transactions per second (TPS) rate.
 
 Useful for determining impact of parameter tuning. Configurable with custom SQL queries.
@@ -282,47 +254,37 @@ pgbench -c 10 -j 2 -t 10000 example`
 I created [PR #5388 adding pgbench to tldr](https://github.com/tldr-pages/tldr/pull/5388)!
 
 ## pgtune
+PGTune is a website that tries to suggest values for PG parameters. This is a good place to start to learn about tunable parameters.
 
-PGTune is a website that tries to suggest values for PG parameters.
-
-<https://pgtune.leopard.in.ua/#/>
+<https://pgtune.leopard.in.ua>
 
 ## PgHero
+PgHero brings Postgres operational issues and opportunities into web dashboard. Built as a Rails engine for easy deployment.
 
-PgHero brings operational concerns into a web dashboard. Built as a Rails engine.
-
-We’re running it in production and saw immediate value in identifying unused and duplicate indexes to remove.
-
-[Fix Typo PR #384](https://github.com/ankane/pghero/pull/384)
+We’re running it in production and saw immediate value in identifying unused and duplicate indexes we could remove.
 
 <https://github.com/ankane/pghero>
 
 ## pgmonitor
-
 <https://github.com/CrunchyData/pgmonitor>
 
 ## postgresqltuner
-
 Perl script to analyze a database. Has some insights like the shared buffer hit rate, index analysis, configuration advice, and extension recommendations.
 
 <https://github.com/jfcoz/postgresqltuner>
 
 ## pg_test_fsync
-
 [pg_test_fsync](https://www.postgresql.org/docs/10/pgtestfsync.html)
 
 ## pgmetrics
-
 [pgmetrics](https://pgmetrics.io/)
 
 ## pgcli
-
 `brew install pgcli`
 
 An alternative to `psql` with syntax highlighting, autocomplete and more.
 
 ## Write Ahead Log (WAL) Tuning
-
 Can cause a significant I/O load
 
 * `checkpoint_timeout` - in seconds, default checkpointing every 5 minutes
@@ -337,16 +299,13 @@ General Recommendation (not mine)
 
 > "On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints."
 
-Parameters
+Parameters:
 
 * `commit_delay` (0 by default)
 * `wal_sync_method`
 * `wal_debug`
 
-## Extensions and Modules
-
 ## Foreign Data Wrapper (FDW)
-
 Native Foreign Data Wrapper (FDW) functionality in PostgreSQL allows connecting to remote sources
 
 The table structure may be specified when establishing the foreign table
@@ -356,17 +315,17 @@ We were able to avoid the need for any intermediary data dump files.
 We used a `temp` schema to isolate temporary tables away from the main schema (`public`).
 
 The process is:
-
-  1. Create a server
-  1. Create a user mapping
-  1. Create a foreign table (optionally importing the schema)
+1. Create a server
+1. Create a user mapping
+1. Create a foreign table (optionally importing the schema)
 
 Let's say we had 2 services, one for managing inventory items for sale, and one for managing authentication.
 
-Connect as a superuser
+Connect as a superuser.
 
+Example:
 ```sql
-create EXTENSION postgres_fdw;
+CREATE EXTENSION postgres_fdw;
 
 CREATE SCHEMA temp;
 
@@ -383,14 +342,11 @@ IMPORT FOREIGN SCHEMA public LIMIT TO (customers)
 ```
 
 ## `uuid-ossp`
-
 Generate universally unique identifiers (UUIDs) in PostgreSQL.
 
 [Documentation link](https://www.postgresql.org/docs/current/uuid-ossp.html)
 
-
 ## `pg_stat_statements`
-
 Tracks execution stats for all statements. Stats made available from view. Requires reboot (static param) on RDS on PG 10 although `pg_stat_statements` is available by default in `shared_preload_libraries` in PG 12.
 
 ```sql
@@ -400,56 +356,42 @@ CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
 <https://www.virtual-dba.com/blog/postgresql-performance-enabling-pg-stat-statements/>
 
 ## `pgstattuple`
-
 > The pgstattuple module provides various functions to obtain tuple-level statistics.
-
 <https://www.postgresql.org/docs/current/pgstattuple.html>
 
 ## `citext`
-
 Case insensitive column type
 
 [citext](https://www.postgresql.org/docs/9.3/citext.html)
 
 ## `pg_cron`
-
 Available on PG 12.5+ on RDS, pg_cron is an extension that can be useful to schedule maintenance tasks, like manual vacuum jobs.
 
 See: [Scheduling maintenance with the PostgreSQL pg_cron extension](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/PostgreSQL_pg_cron.html)
 
 ## `pg_timetable`
-
 [pg_timetable: Advanced scheduling for PostgreSQL](https://github.com/cybertec-postgresql/pg_timetable)
 
 ## `pg_squeeze`
-
 [pg_squeeze](https://www.cybertec-postgresql.com/en/products/pg_squeeze/)
 
 Replacement for pg_repack, automated, without needing to run a CLI tool.
 
 ## `auto_explain`
-
 [PG 10 auto_explain](https://www.postgresql.org/docs/10/auto-explain.html)
 
 Adds explain plans to the PostgreSQL log.
 
 ## Percona pg_stat_monitor
-
 [pg_stat_monitor: A cool extension for better monitoring using PMM - Percona Live Online 2020](https://www.percona.com/resources/videos/pgstatmonitor-cool-extension-better-monitoring-using-pmm-percona-live-online-2020)
 
 ## pganalyze Index Advisor
-
 [A better way to index your PostgreSQL database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
 
 ## pgbadger
-
 `brew install pgbadger`
 
-
-## Bloat
-
-## Overview
-
+## Bloat Overview
 How does bloat (table bloat, index bloat) affect performance?
 
 * "When a table is bloated, PostgreSQL's `ANALYZE` tool calculates poor or inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
@@ -459,12 +401,12 @@ How does bloat (table bloat, index bloat) affect performance?
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 * [Dealing with significant PostgreSQL database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
 
-## Upgrades
+## Postgres Upgrades
+This was written when Postgres 10 was used, which was new in around 2018.
 
 This is also a really cool [Version Upgrade Comparison Tool: 10 to 12](https://why-upgrade.depesz.com/show?from=10.17&to=12.7&keywords=)
 
 ## PG 11
-
 October 2018
 
 * Improves parallel query performance and parallelism of B-tree index creation
@@ -473,56 +415,47 @@ October 2018
 * Adds "covering" indexes with `INCLUDE` keyword. Adds "payload columns" to indexes. Docs: [Index only scans and Covering indexes](https://www.postgresql.org/docs/11/indexes-index-only-scans.html)
 
 ## PG 12
-
 [Release announcement](https://www.postgresql.org/about/news/postgresql-12-released-1976/). Released October 2019.
 
 * Partitioning performance improvements
 * `REINDEX` gains support for `CONCURRENTLY`. This is very helpful for online index rebuilds, to remove "bloat" from index entries.
 
 ## PG 13
-
 Released September 2020
 
 * Parallel vacuum
 
 ## PG 14
-
 * More support for [`query_id`](https://blog.rustprooflabs.com/2021/10/postgres-14-query-id)
 * [Multi-range types](https://www.crunchydata.com/blog/better-range-types-in-postgres-14-turning-100-lines-of-sql-into-3)
 
 ## PG 15
-
 - SQL `MERGE` command for Upserts!
 
 ## PG 16
-
 Released September 2023
 
 - `pg_stat_io` System View
 - Replication running from a standby as a source
 - Bi-directional or "active-active" Logical Replication. This is cool! <https://www.crunchydata.com/blog/active-active-postgres-16>
 
-## RDS
-
+## Amazon RDS
 Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-writer primary instance model for PostgreSQL.
 
-## Aurora PostgreSQL
-
+## AWS Aurora PostgreSQL
 - Separates storage and compute
 - "Fast clones"
 - Regional offering (single region) and Global offering (multi-region)
 - Can create multi-region replication natively, or without the need for VPC Peering
 
 ## AWS RDS Parameter Groups
-
 [Working with RDS Parameter Groups](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithParamGroups.html)
 
 * Try out parameter changes on a test database prior to making the change. Create a snapshot before making the change.
 * Parameter groups can be restored to their defaults (or they can be copied to create an experimental group). Groups can be compared with each other to determine differences.
 * Parameter values can process a formula. RDS provides some formulas that use the instance class CPU or memory available to calculate a value.
 
-## Database Constraints
-
+## Postgres Database Constraints
 [Blog: A Look at PostgreSQL Foreign Key Constraints](/blog/2018/08/22/postgresql-foreign-key-constraints)
 
 * `CHECK`
@@ -532,15 +465,12 @@ Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-write
 * `FOREIGN KEY`
 * `EXCLUSION`
 
-## Native Replication
-
+## Postgres Native Replication
 - Physical Replication
 - Logical Replication using PUBLICATION and SUBSCRIPTION objects.
 - PostgreSQL 16 gained bi-directional logical replication for the same table, on two separate instances!
 
-
 ## PostgreSQL Logical Replication
-
 [Crunchydata Logical Replication in PostgreSQL](https://learn.crunchydata.com/pg-administration/courses/postgresql-features/logical-replication/)
 
 * Create a `PUBLICATION`, counterpart `SUBSCRIPTION`.
@@ -552,6 +482,7 @@ Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-write
 * Unlike normal replication, writes are still possible to the subscriber. Conflicts can occur if data is written that would conflict with logical replication.
 
 ## Declarative Partitioning
+Built-in table partitioning.
 
 * `RANGE`(time-based)
 * `LIST`
@@ -563,17 +494,14 @@ Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-write
 - [pg_party](https://github.com/rkrage/pg_party)
 
 ## Partition Pruning
-
 Default is `on` or `SET enable_partition_pruning = off;` to turn it off.
 
 <https://www.postgresql.org/docs/13/ddl-partitioning.html#DDL-PARTITION-PRUNING>
 
 ## Uncategorized Content
-
 * Use `NULL`s instead of default values when possible, cheaper to store and query. Source: [Timescale DB blog](https://blog.timescale.com/blog/13-tips-to-improve-postgresql-insert-performance/)
 
 ## Stored Procedures
-
 Stored Procedures are User Defined Functions (UDF).
 
 Using PL/pgSQL, functions can be added to the database directly. Procedures and functions can be written in other languages.
@@ -583,12 +511,10 @@ Using PL/pgSQL, functions can be added to the database directly. Procedures and 
 To manage these functions in a Ruby app, use the [fx gem](https://github.com/teoljungberg/fx) (versioned database functions)!
 
 ## PostgreSQL Monitoring
-
 * `pg_top` On Mac OS
 * `brew install pg_top` and run it `pg_top`
 
 ## Uncategorized Resources
-
 * [The Unexpected Find That Freed 20GB of Unused Index Space](https://hakibenita.com/postgresql-unused-index-size)
 * [Some SQL Tricks of an Application DBA](https://hakibenita.com/sql-tricks-application-dba)
 
@@ -607,13 +533,10 @@ This is an amazing article full of nuggets.
 * [PostgreSQL Connection Pooling: Part 1 – Pros & Cons](http://highscalability.com/blog/2019/10/18/postgresql-connection-pooling-part-1-pros-cons.html)
 
 ## PostgreSQL Presentations
-
 * [PostgreSQL Indexing : How, why, and when.](https://2018.pycon-au.org/talks/42913-postgresql-indexing-how-why-and-when)
 * [Tuning PostgreSQL for High Write Workloads](https://www.youtube.com/watch?v=xrMbzHdPLKM)
 
-
 ## PostgreSQL Tuning
-
 [Annotated.conf](https://github.com/jberkus/annotated.conf)
 
 `shared_buffers`. RDS default is around 25% of system memory. Recommendations say up to 40% of system memory could be allocated, at which point there may be diminishing returns beyond that.
@@ -639,33 +562,27 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 
 
 ## PostgreSQL Backups
-
 * <https://torsion.org/borgmatic/>
 * <https://restic.net/>
 
 ## Sequences
-
 * `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://brianchildress.co/reset-auto-increment-in-postgres/>
 * `ALTER SEQUENCE <seq-name> RESTART WITH 1;` (e.g. `users_id_seq`)
 * Serial and BigSerial are special types that use Sequences
 * Logical Replication restrictions: "Sequence data is not replicated" (as of PG 16) <https://www.postgresql.org/docs/current/logical-replication-restrictions.html>
 
 ## Identity Columns
-
 * Identity columns are recommended for primary keys, over using Sequences (with Serial or BigSerial)
 
 ## Scaling Web Applications
-
 - [My GOTO Postgres Configuration for Web Services](https://tightlycoupled.io/my-goto-postgres-configuration-for-web-services/)
 
 ## Full Text Search (FTS)
-
 - [Postgres full-text search is Good Enough!](http://rachbelaid.com/postgres-full-text-search-is-good-enough/)
 - [Postgres Full Text Search vs the rest](https://supabase.com/blog/postgres-full-text-search-vs-the-rest)
 - [Full Text Search in Milliseconds with Rails and PostgreSQL](https://pganalyze.com/blog/full-text-search-ruby-rails-postgres)
 
 ## Engineering blog posts
-
 Big companies use PostgreSQL and Ruby on Rails.
 
 Sharding and Scaling
