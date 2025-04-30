@@ -1,11 +1,12 @@
 ---
 layout: post
 permalink: /source-code-line-numbers-ruby-on-rails-marginalia-query-logs
-title: 'Source code line numbers for database queries in Ruby on Rails with Marginalia and Query Logs'
+title: 'Source code locations for database queries in Rails with Marginalia and Query Logs'
 tags: [Ruby on Rails, Ruby, PostgreSQL]
 date: 2025-04-29
 ---
 
+## Intro
 Back in 2022, we covered how to log database query generation information from a web app using `pg_stat_statements` for Postgres.
 <https://andyatkinson.com/blog/2022/10/07/pgsqlphriday-2-truths-lie>
 
@@ -14,7 +15,6 @@ The application context annotations can look like this. They've been re-formatte
 ```
 application=Rideshare
 controller=trip_requests
-source_location=app/services/trip_creator.rb:26:in `best_available_driver'
 action=create
 ```
 
@@ -32,6 +32,16 @@ For Ruby on Rails, we've used the [Marginalia](https://github.com/basecamp/margi
 Besides the context above, a super useful option is the `:line` option which captures the source code file and line number.
 
 Given how dynamic Ruby code can be, including changes that can happen at runtime, the `:line` level logging takes these annotations from "nice to have" to "critical" to find opportunities for improvements.
+
+That looks like this:
+<pre><code>
+application=Rideshare
+controller=trip_requests
+➡️ <strong>source_location=app/services/trip_creator.rb:26:<br/>in `best_available_driver'</strong>
+action=create
+</code></pre>
+
+Nice, now we've got the class name, line number, and Ruby method. In this example, we can get to work optimizing the `best_available_driver` method.
 
 What's more, is that besides Marginalia, we now have a second option that's built-in to Ruby on Rails.
 
