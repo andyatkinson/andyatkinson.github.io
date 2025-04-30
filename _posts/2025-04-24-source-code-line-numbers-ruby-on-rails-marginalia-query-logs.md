@@ -33,16 +33,6 @@ Besides the context above, a super useful option is the `:line` option which cap
 
 Given how dynamic Ruby code can be, including changes that can happen at runtime, the `:line` level logging takes these annotations from "nice to have" to "critical" to find opportunities for improvements.
 
-That looks like this:
-<pre><code>
-application=Rideshare
-controller=trip_requests
-➡️ <strong>source_location=app/services/trip_creator.rb:26:<br/>in `best_available_driver'</strong>
-action=create
-</code></pre>
-
-Nice, now we've got the class name, line number, and Ruby method. In this example, we can get to work optimizing the `best_available_driver` method.
-
 What's more, is that besides Marginalia, we now have a second option that's built-in to Ruby on Rails.
 
 ## What's been added since then?
@@ -55,16 +45,25 @@ That changed in the last year! Starting from PR 50969 to Rails linked below, for
 PR: Support `:source_location` tag option for query log tags by [fatkodima](https://github.com/fatkodima)
 <https://github.com/rails/rails/pull/50969#issuecomment-2797357558>
 
-Dima described how the Marginalia `:line` configuration option was costly to enable in production and even improved on that.
+An example of `:source_location` in action looks like this:
 
-Dima managed to lessen the overhead associated with line-level logging for Query Logs in the scope of this PR. Nice!
+<pre><code>
+application=Rideshare
+controller=trip_requests
+➡️ <strong>source_location=app/services/trip_creator.rb:26:<br/>in `best_available_driver'</strong>
+action=create
+</code></pre>
+
+Nice, now we've got the class name, line number, and Ruby method. In this example, we can get to work optimizing the `best_available_driver` method.
+
+Dima described how the Marginalia `:line` option was costly in production and even managed to improve that with the Query Logs change.
 
 ## Safe Logging Locally or in Production
-A great place to start with this is to use this logging only in local development.
+If you're unsure about source code line logging in production, but want to get started using it, a great place to start is using it in your local development enrivonment.
 
-In the examples below, we're showing how an environment variable can be used to enable line level logging in some environments, while not enabling it globally.
+To avoid enabling the option for all environments, we'll use an environment variable that's enabled only for local development.
 
-For Marginalia, that would look like this:
+Here's a real example I use for Marginalia:
 `MARGINALIA_LINE_NUMBER_ENABLED=true`
 
 In `config/initializers/marginalia.rb`:
@@ -80,9 +79,7 @@ if ENV['MARGINALIA_LINE_NUMBER_ENABLED']
 end
 ```
 
-For Query Logs, that could look as follows.
-
-In `config/application.rb` (adjust to be for the environments you prefer):
+For Query Logs, in `config/application.rb` (adjust to be for the environments you prefer), the equivalent could look like this:
 ```rb
 config.active_record.query_log_tags_enabled = true
 config.active_record.query_log_tags = [
@@ -93,14 +90,14 @@ config.active_record.query_log_tags = [
 ]
 ```
 
-The configuration above was tested with Rails 7.2.2. The same conditional enablement of the `:source_location` option could be achieved with an environment variable.
+The configuration above was tested with Rails 7.2.2.
 
 If your team uses Query Logs `:source_location` in development or production, I'd love to know!
 
 ## Wrap Up
-Having source code line level logging for aggregated query statistics is critical for backend engineers debugging database performance issues.
+Having source code line-level logging for query statistics is critical information that allows backend engineers to quickly zero in on where to fix database performance issues.
 
-Equipped with that info, engineers can identify heavy queries then go backwards into the source code to redesign, refactor, or restructure (and in some cases--eliminate) the query.
+With this combo of information, engineers can identify the most heavy queries, then go backwards into the source code to know where to redesign, refactor, or restructure, or even remove costly queries.
 
 ## What's next?
 The `pg_stat_statements` extension is critical for this workflow, but it's not without opportunities for improvement.
