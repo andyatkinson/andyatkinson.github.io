@@ -27,14 +27,17 @@ This type of identifier could be used in a variety of ways. For example, identif
 
 In database design, we have natural keys and surrogate keys as options to identify our rows.
 
-Here we're using a surrogate `integer` type key, we'll call it `id`. Our identifier called `public_id` is then generated based on the `id` primary key, for display in an app. For that reason we'll store it as `text`.
+Here we're using a surrogate `integer` type key, we'll call it `id`. We'll call this additinal identifier `public_id`, intended more for humans, and still use the `id` `integer` primary key internally, for example for connecting it to foreign key columns on other tables.
 
-The `public_id` is meant to be short both to minimize space consumption and speed up data access, but more for ease of use in reading and sharing the value by users.
+The `public_id` is short both to minimize space and speed up access, but more so for ease of use by people to read and share the value.
+
+With that said, the space target goal here was to be fewer bytes than a 16-byte UUID.
 
 ## Design Properties
 Here are other properties that are part of the design:
 
 - A fixed size, 5 characters in length, regardless of the size of the input integer (and within the range of the `integer` data type)
+- Fewer bytes of space than a `uuid` data type
 - An obfuscated value, pseudorandom, not easily guessable. While not easily guessable, this is not meant to be "secure."
 - Reversability back into the original integer
 - Only native Postgres capabilities, no extensions, client web app language can be anything as it's within Postgres.
