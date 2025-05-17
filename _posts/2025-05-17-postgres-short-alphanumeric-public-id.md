@@ -3,10 +3,25 @@ layout: post
 permalink: /generating-short-alphanumeric-public-id-postgres
 title: 'Short alphanumeric pseudorandom identifiers in Postgres'
 comments: true
+hidden: true
 ---
 
 ## Introduction
 In this post, we'll cover a way to generate short, alphanumeric, pseudorandom identifiers using native Postgres tactics.
+
+Here are three example values:
+```sql
+SELECT public_id
+FROM transactions
+ORDER BY random()
+LIMIT 3;
+
+ public_id
+-----------
+ 0359Y
+ 08nAS
+ 096WV
+```
 
 This type of identifier could be used in a variety of ways. For example, identifying transactions or reservations in a system, where having short identifiers helps users read and share them.
 
@@ -95,11 +110,12 @@ Let's query the data, and also make sure it's reversed properly:
 ```sql
 SELECT id, public_id, deobfuscate_id(public_id) AS reversed_id, description
 FROM transactions;
---  id | public_id | reversed_id |    description
--- ----+-----------+-------------+--------------------
---   1 | 01Y9I     |           1 | First transaction
---   2 | 01Y9L     |           2 | Second transaction
---   3 | 01Y9K     |           3 | Third transaction
+
+ id | public_id | reversed_id |    description
+----+-----------+-------------+--------------------
+  1 | 01Y9I     |           1 | First transaction
+  2 | 01Y9L     |           2 | Second transaction
+  3 | 01Y9K     |           3 | Third transaction
 ```
 
 ## Additional time spent on inserts
