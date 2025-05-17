@@ -102,6 +102,16 @@ FROM transactions;
 --   3 | 01Y9K     |           3 | Third transaction
 ```
 
+## Additional time spent on inserts
+Let's compare the time spent inserting 1 million rows into an equivalent `transactions` table without the `public_id` column or value generation.
+
+That took average of 2037.906 milliseconds, or around 2 seconds on my machine.
+
+Inserting 1 million rows with the `public_id` took an average of 6954.070 or around 7 seconds, or about 3.41x slower. Note that these times were with the indexes and constraints in place on the `transactions` table.
+
+## Performance
+Compared with random values, the pseudorandom `public_id` remains orderable, which means that lookups for individual rows or ranges of rows can use the index and run fast and reliably even as the row count grows.
+
 
 ## Source Code
 <https://github.com/andyatkinson/pg_scripts/pull/15>
