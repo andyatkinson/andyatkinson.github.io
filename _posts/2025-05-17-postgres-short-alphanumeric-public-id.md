@@ -1,13 +1,13 @@
 ---
 layout: post
 permalink: /generating-short-alphanumeric-public-id-postgres
-title: 'Short alphanumeric pseudorandom identifiers in Postgres'
+title: 'Short alphanumeric pseudo random identifiers in Postgres'
 comments: true
 hidden: true
 ---
 
 ## Introduction
-In this post, we'll cover a way to generate short, alphanumeric, pseudorandom identifiers using native Postgres tactics.
+In this post, we'll cover a way to generate short, alphanumeric, pseudo random identifiers using native Postgres tactics.
 
 Here are three example values:
 ```sql
@@ -27,7 +27,7 @@ This type of identifier could be used in a variety of ways. For example, identif
 
 In database design, we have natural keys and surrogate keys as options to identify our rows.
 
-Here we're using a surrogate `integer` type key, we'll call it `id`. We'll call this additinal identifier `public_id`, intended more for humans, and still use the `id` `integer` primary key internally, for example for connecting it to foreign key columns on other tables.
+Here we're using a surrogate `integer` type key, we'll call it `id`. We'll call this additional identifier `public_id`, intended more for humans, and still use the `id` `integer` primary key internally, for example for connecting it to foreign key columns on other tables.
 
 The `public_id` is short both to minimize space and speed up access, but more so for ease of use by people to read and share the value.
 
@@ -39,7 +39,7 @@ Here are other properties that are part of the design:
 - A fixed size, 5 characters in length, regardless of the size of the input integer (and within the range of the `integer` data type)
 - Fewer bytes of space than a `uuid` data type
 - An obfuscated value, pseudorandom, not easily guessable. While not easily guessable, this is not meant to be "secure."
-- Reversability back into the original integer
+- Reversibility back into the original integer
 - Only native Postgres capabilities, no extensions, client web app language can be anything as it's within Postgres.
 - Non math-heavy implementation.
 
@@ -124,7 +124,7 @@ FROM transactions;
 ## Additional time spent on inserts
 Let's compare the time spent inserting 1 million rows into an equivalent `transactions` table without the `public_id` column or value generation.
 
-That took average of 2037.906 milliseconds, or around 2 seconds on my machine.
+That took an average of 2037.906 milliseconds, or around 2 seconds on my machine.
 
 Inserting 1 million rows with the `public_id` took an average of 6954.070 or around 7 seconds, or about 3.41x slower. Note that these times were with the indexes and constraints in place on the `transactions` table.
 
