@@ -9,7 +9,7 @@ hidden: true
 ## Introduction
 In this post, we'll cover a way to generate short, alphanumeric, pseudo random identifiers using native Postgres tactics.
 
-Here are three example values:
+We'll store this in a column called `public_id`. Here's a query that shows three example values:
 ```sql
 SELECT public_id
 FROM transactions
@@ -23,11 +23,11 @@ LIMIT 3;
  096WV
 ```
 
-This type of identifier could be used in a variety of ways. For example, identifying transactions or reservations in a system, where having short identifiers helps users read and share them.
+This type of identifier could be used in a variety of ways. For example, a short identifier for transactions or reservations that are unique, help users read and share them in verbal and written communications more easily compared with values in a UUID or GUID format.
 
 In database design, we have natural keys and surrogate keys as options to identify our rows.
 
-Here we're using a surrogate `integer` type key, we'll call it `id`. We'll call this additional identifier `public_id`, intended more for humans, and still use the `id` `integer` primary key internally, for example for connecting it to foreign key columns on other tables.
+For this identifier, we will start from standard surrogate `integer` primary keys, we'll call it `id`. The `id` `integer` primary key can still be used internally for example for foreign key columns on other tables.
 
 The `public_id` is short both to minimize space and speed up access, but more so for ease of use by people to read and share the value.
 
