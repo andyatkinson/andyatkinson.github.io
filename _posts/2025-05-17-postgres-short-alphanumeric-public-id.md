@@ -133,7 +133,7 @@ Inserting 1 million rows with the `public_id` took an average of 6954.070 or aro
 Summary: Creating this identifier may make write operations 3x slower for tables that use it.
 
 ## Performance
-Compared with random values, the pseudorandom `public_id` remains orderable, which means that lookups for individual rows or ranges of rows can use the index and run fast and reliably even as the row count grows.
+Compared with random values, the pseudorandom `public_id` remains orderable, which means that lookups for individual rows or ranges of rows can use indexes, running fast and reliably even as row counts grow.
 
 ## PL/pgSQL Source Code
 <https://github.com/andyatkinson/pg_scripts/pull/15>
