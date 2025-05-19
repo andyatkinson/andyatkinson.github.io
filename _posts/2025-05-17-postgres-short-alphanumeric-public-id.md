@@ -23,18 +23,20 @@ LIMIT 3;
  096WV
 ```
 
-This type of identifier could be used in a variety of ways. For example, a short identifier for transactions or reservations that are unique, help users read and share them in verbal and written communications more easily compared with values in a UUID or GUID format.
+This type of identifier could be used in a variety of ways, such as identifying transactions or reservations in a system, helping users more easily read and share these values verbally and in written communications.
 
 In database design, we have natural keys and surrogate keys as options to identify our rows.
 
-For this identifier, we will start from standard surrogate `integer` primary keys, we'll call it `id`. The `id` `integer` primary key can still be used internally for example for foreign key columns on other tables.
+For this identifier, we will start from standard surrogate `integer` primary key, we'll call it `id`. The `id` `integer` primary key can still be used internally for example for foreign key columns on other tables.
 
-The `public_id` is short both to minimize space and speed up access, but more so for ease of use by people to read and share the value.
+The `public_id` is short both to minimize space and speed up access, but more so for user experience reasons, being easier to read and share.
 
-With that said, the space target goal here was to be fewer bytes than a 16-byte UUID.
+With that said, the space target goal here was to be fewer bytes than a 16-byte UUID, which can be achieved with `integer` primary keys and a short fixed-length identifier, with the trade-off of multiple columns.
+
+Let's get into the design details.
 
 ## Design Properties
-Here are other properties that are part of the design:
+Here were desired properties of the design:
 
 - A fixed size, 5 characters in length, regardless of the size of the input integer (and within the range of the `integer` data type)
 - Fewer bytes of space than a `uuid` data type
@@ -128,9 +130,18 @@ That took an average of 2037.906 milliseconds, or around 2 seconds on my machine
 
 Inserting 1 million rows with the `public_id` took an average of 6954.070 or around 7 seconds, or about 3.41x slower. Note that these times were with the indexes and constraints in place on the `transactions` table.
 
+Summary: Creating this identifier may make write operations 3x slower for tables that use it.
+
 ## Performance
 Compared with random values, the pseudorandom `public_id` remains orderable, which means that lookups for individual rows or ranges of rows can use the index and run fast and reliably even as the row count grows.
 
-
-## Source Code
+## PL/pgSQL Source Code
 <https://github.com/andyatkinson/pg_scripts/pull/15>
+
+## Feedback
+Feedback on this is welcomed! Please contact me. Future developers could include writing unit tests for the functions, or packaging them into an extension.
+
+## Alternatives
+- [Base32 Crockford](https://www.crockford.com/base32.html) - An emphasis ease of use for humans: removing similar looking characters, case insensitivity.
+- [ULID](https://blog.lawrencejones.dev/ulid/) - Also 128 bits/8 bytes like UUIDs, so I had ruled these out as primary keys or for the "human cosumption" use cases
+- [NanoIDs at PlanetScale](https://planetscale.com/blog/why-we-chose-nanoids-for-planetscales-api) - I like aspects of NanoID. This is random generation though like UUID vs. encoding a unique integer.
