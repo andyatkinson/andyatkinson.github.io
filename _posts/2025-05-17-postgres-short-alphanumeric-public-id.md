@@ -74,7 +74,7 @@ This is "base 62" with the 26 upper and lower case characters, and 10 numbers (0
 - `to_base62_fixed(val BIGINT, width INT DEFAULT 5)`
 
 Reverses the `public_id` back into the original integer.
-- `deobfuscate_id(public_id CHAR(5))`
+- `deobfuscate_id(public_id TEXT)`
 
 Used within `deobfuscate_id()`:
 - `from_base62_fixed(str TEXT)`
@@ -124,14 +124,14 @@ INSERT INTO transactions (amount, description) VALUES
   (0.25, 'Third transaction');
 ```
 
-Let's query the data, and also make sure it's reversed properly:
+Let's query the data, and also make sure it's reversed (using the `deobfuscate_id(public_id TEXT)` function) properly:
 
 ## Access the rows
 ```sql
 SELECT
     id,
     public_id,
-    deobfuscate_id (public_id) AS reversed_id,
+    deobfuscate_id(public_id) AS reversed_id,
     description
 FROM
     transactions;
