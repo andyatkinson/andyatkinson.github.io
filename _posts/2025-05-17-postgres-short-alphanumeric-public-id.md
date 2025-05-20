@@ -86,7 +86,7 @@ For use cases requiring more values, by storing 6 characters for `public_id` the
 ## Table Design
 Let's create a sample `transactions` table with an `integer` primary key with a generated identity column.
 
-Besides the use in the identity column, we'll again use the `GENERATED` keyword again to create a `STORED` column for the `public_id`.
+Besides the use in the identity column, we'll again use the `GENERATED` keyword to create a `STORED` column for the `public_id`.
 
 The `public_id` column uses the `id` column as input, obfuscates it, encodes it to base 62, producing a 5 character value.
 ```sql
