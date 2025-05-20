@@ -26,7 +26,7 @@ LIMIT 3;
 ```
 
 ## Natural and Surrogate Keys
-In database design, we have design our schema to use natural and surrogate keys to identify rows.
+In database design, we can use natural or surrogate keys to identify rows. We won't cover the differences here as that's out of scope.
 
 For our `public_id` identifier, we're going to generate it from a conventional surrogate `integer` primary key called `id`. We aren't using natural keys here.
 
