@@ -3,7 +3,7 @@ layout: post
 permalink: /generating-short-alphanumeric-public-id-postgres
 title: 'Short alphanumeric pseudo random identifiers in Postgres'
 tags: [PostgreSQL]
-date: 2025-05-20
+date: 2025-05-20 16:00:00
 ---
 
 ## Introduction
