@@ -52,8 +52,10 @@ Additional details:
 - `public_id` is stored using `text` not not `char(5)`, following recommendations for best practices
 - PL/PgSQL functions, native Postgres data types and constraints are used, like UNIQUE, NOT NULL, and CHECK, and a stored generated column.
 - Converts integers to bits, uses exclusive-or (XOR) bitwise operation and modulo operations.
-- Didn't work on case insensitivity, future enhancement possibility
-- Didn't try to exclude similar-looking characters, future enhancement possibility
+
+## Limitations
+- Did not set out to support case insensitivity now, possible future enhancement
+- Did not try to exclude similar-looking characters (see: [Base32 Crockford](https://www.crockford.com/base32.html) below), possible future enhancement
 
 ## PL/PgSQL Functions
 Here are the functions used:
