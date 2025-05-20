@@ -43,7 +43,7 @@ Here were the desired design properties:
 
 - A fixed size, 5 characters in length, regardless of the size of the input integer (and within the range of the `integer` data type)
 - Fewer bytes of space than a `uuid` data type
-- An obfuscated value, pseudorandom, not easily guessable. While not easily guessable, this is not meant to be "secure"
+- An obfuscated value, pseudo random, not easily guessable. While not easily guessable, this is not meant to be "secure"
 - Reversibility back into the original integer
 - Only native Postgres capabilities, no extensions, client web app language can be anything as it's within Postgres
 - Non math-heavy implementation
@@ -152,7 +152,7 @@ Inserting 1 million rows with the `public_id` took an average of 6954.070 or aro
 Summary: Creating this identifier made the write operations 3.4x slower for me locally, which was an acceptable amount of overhead for the intended use case.
 
 ## Performance
-Compared with random values, the pseudorandom `public_id` remains orderable, which means that lookups for individual rows or ranges of rows can use indexes, running fast and reliably even as row counts grow.
+Compared with random values, the pseudo random `public_id` remains orderable, which means that lookups for individual rows or ranges of rows can use indexes, running fast and reliably even as row counts grow.
 
 We can add a unique index on the `public_id` column like this:
 ```sql
