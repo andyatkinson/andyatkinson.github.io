@@ -60,6 +60,6 @@ Note: Date-based filename organizes post but isn't used in permalink.
 When ready for general audience and syndicate as follows.
 
 1. Remove `hidden: true` front matter
-1. Add date as current date for publishing purposes, e.g. `date: 2024-10-02`
+1. Add date as current date for publishing purposes, e.g. `date: 2024-10-02 16:00:00`, set a future time (date and time of day, 24 hour time) in UTC, so it will be picked up
 1. Add tag to trigger syndication (e.g. PostgreSQL)
 1. Push it, confirm permalink is same, it's in pagination and tag-feed
