@@ -5,23 +5,20 @@ title: 'Big Problems From Big IN Clauses with Ruby on Rails and PostgreSQL'
 ---
 
 ## Introduction
-If you’ve created Ruby on Rails web applications with databases, or have used other similar monolithic frameworks with ORMs, you’ve likely had the kind of problematic query pattern we’re going to discuss in this post. Or maybe you didn’t realize you had the problem, have a name for it, or have a way to track down instances of it.
+If you’ve created Ruby on Rails web applications with a database before, or have used other similar frameworks ORMs, you’ve likely had the kind of problematic query pattern we’re discussing in this post.
 
-The pattern we’ll look at is SQL queries that have an IN clause with a list of values, where the list is “big”, with dozens, hundreds, or even thousands of values.
+The pattern we’re looking at is where SQL queries that IN clauses to perform some filtering, but the list of values is huge. This means there could be dozens, hundreds, or even thousands of values, filtering among a large set.
 
-The technical definition of the values is:
-> "The right-hand side is a parenthesized list of scalar expressions."
+These kinds of queries can be very slow!
 
-They are a "parenthesized list of scalar expressions." And they’re a query pattern that can cause big performance problems!
+The technical term for the right-hand size list of values is *parenthesized list of scalar expressions*.
+
+In the example below it's the clause `author_id IN (1,2,3)`.
 
 Example:
 ```sql
-SELECT
-    *
-FROM
-    books
-WHERE
-    author_id IN (1, 2, 3); -- except replace (1,2,3) with hundreds or thousands of values
+SELECT * FROM books
+WHERE author_id IN (1, 2, 3);
 ```
 
 How does it happen?
