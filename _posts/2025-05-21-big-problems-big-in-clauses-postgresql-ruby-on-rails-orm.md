@@ -7,199 +7,190 @@ title: 'Big Problems From Big IN Clauses with Ruby on Rails and PostgreSQL'
 ## Introduction
 If you’ve created Ruby on Rails web applications with a database before, or have used other similar frameworks ORMs, you’ve likely had the kind of problematic query pattern we’re discussing in this post.
 
-The pattern we’re looking at is where SQL queries that IN clauses to perform some filtering, but the list of values is huge. This means there could be dozens, hundreds, or even thousands of values, filtering among a large set.
-
-These kinds of queries can be very slow!
+This pattern is IN clauses in SQL queries that perform filtering, and have a huge list of values. It's not unheard of to have dozens, hundreds, or even thousands of values for large databases with millions of records. These lists are used to filter within a even larger set.
 
 The technical term for the right-hand size list of values is *parenthesized list of scalar expressions*.
 
-In the example below it's the clause `author_id IN (1,2,3)`.
-
-Example:
+In the SQL query below, an example IN clause is `author_id IN (1,2,3)` and the list of scalar expressions is `(1,2,3)`.
 ```sql
 SELECT * FROM books
 WHERE author_id IN (1, 2, 3);
 ```
 
-How does it happen?
+When looking at a query execution plan, we'll see something like this in PostgreSQL (note the `ANY` keyword discussed later on):
+```sql
+Filter: (author_id = ANY ('{1,2,3}'::integer[]))
+```
+
+Imagine you're working with a new codebase. How do you find instances of these types of queries?
 
 ## How does it happen?
-A straightforward way is when using the `pluck` method in Active Method to select only the primary key values for a particular object.
+In Active Record, the Ruby on Rails ORM, this type of query pattern could be created explicitly by using the `pluck()` method. This method is used to select specific fields for a model, for example only the `id` primary key values.
 
-This produces a list of values for the `id` column, typically a list of integers. The typical use is to feed the list into another query.
-
-Here’s an example of getting author primary key ids with `pluck`:
+Here’s an example of getting those and assigning them to an `author_ids` variable:
 ```sql
 author_ids = Author.where("created_at >= ?", 1.year.ago).pluck(:id)
 ```
 
-Then they can be fed in to query books:
+Then the values are supplied as input to query for `books` and filter them down to matching authors:
 ```sql
 Book.where(author_id: author_ids)
 ```
 
-Perhaps the application started out with a few authors, but has grown to thousands.
-
-Image that even with the authors query filtering to authors created in the last year, you're still left with thousands of values.
-
-This means the second query for books will have a big list of values for the `IN` clause, and this type of filtering has been a known class of performance problem.
-
-Since you're in direct control of the query here, you could restructure it to filter down the authors further.
-
-However, what about indirect instances of big IN lists coming from ORM queries. How do those happen?
+Besides explicitly creating this pattern, this pattern can be created implicitly by ORM methods. What do those look like?
 
 ## How does it happen in Active Record ORM?
-One way is by using Eager loading using the `includes` or `preload` methods.
+One way for this query pattern to emerge is to use using Eager Loading methods in Ruby on Rails like `includes` or `preload`.
 
-This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) covers ORM methods like `includes` and `preload` that produce IN clause SQL queries.
+This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) mentions how eager loading methods produce large IN clause SQL queries.
 
-The post links to the [Eager Loading Associations documentation](https://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations) for Ruby on Rails.
+The post links to the [Eager Loading Associations documentation](https://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations) for Ruby on Rails where we can see examples in Active Record and the resulting SQL.
 
-Let's take a look.
+## Fixing N+1s
+Let's study the examples here. Here's some Active Record for books and authors:
 ```rb
-books = Book.includes(:author).limit(10)
+# N+1
+books = Book.limit(10)
 
 books.each do |book|
-  puts book.author.last_name
+   puts book.author.last_name
 end
 ```
 
-```sql
-SELECT books.* FROM books LIMIT 10;
+The issue above is that there's an N+1 query pattern, where the authors are repeatedly queried while books are looped through.
 
+To fix the N+1, we could use `includes(:author)` to bulk load them.
+
+<pre><code>
+books = Book.<strong>includes(:author)</strong>.limit(10)
+
+books.each do |book|
+   puts book.author.last_name
+end
+</code></pre>
+
+## Eager loading with includes or preload
+What we may not realize is that the `includes(:author)` fix for the N+1 ends up using an IN clause in the resulting SQL query.
+
+Here's the example from the documentation:
+```sql
+SELECT books.* FROM books LIMIT 10
 SELECT authors.* FROM authors
-  WHERE authors.id IN (1,2,3,4,5,6,7,8,9,10);
+  WHERE authors.id IN (1,2,3,4,5,6,7,8,9,10)
 ```
 
-The key detail above is that the `includes(:author)` portion while possibly fixing an N+1, loading all the authors for a book instead of repeatedly querying the authors table for one row in the loop, still has downsides.
+With 10 values in the IN clause, the performance will be fine. However, we'll start to run into problems when we have thousands of values.
 
-The `includes` ends up generating an IN clause SQL query . While Active Record uses an `IN()` clause here, you may also see the use of `ANY()`, which is a variation that still has the same performance challenges.
+How else can these emerge?
 
-## Eager loading with eager_load
-Unlike `includes` or `preload` which produce IN clause queries as a second query, `eager_load` produces a single query that uses a `LEFT OUTER JOIN`.
+## Eager loading using eager_load
+Unlike `includes` or `preload` which produce IN clause SQL queries as a second query, `eager_load` produces a single query that uses a `LEFT OUTER JOIN`.
 
-Examples from Active Record documentation:
-```sql
+Active Record documentation example:
+```rb
 books = Book.eager_load(:author).limit(10)
 
 books.each do |book|
   puts book.author.last_name
 end
+```
 
+This produces the following single SQL query:
+```sql
 SELECT "books"."id" AS t0_r0, "books"."title" AS t0_r1, ... FROM "books"
   LEFT OUTER JOIN "authors" ON "authors"."id" = "books"."author_id"
   LIMIT 10
 ```
 
-Instead of `authors` being queried by their primary key “id” column using the IN clause list, query results here are picked when they match either side of the relationship, either the `authors.id` primary key column or the `books.author_id` foreign key column.
+Instead of `authors` being found by their `id` in the IN clause, query results here are produced by joining the two tables when they match either side of the relationship.
 
-As a `LEFT OUTER JOIN`, a result row is produced whether both sides have a match or not. In this case, we could possibly use an `INNER JOIN` instead, which would only include result rows when there are matches between the primary and foreign keys. When we try this, the query results are different, they are ordered differently.
+A result is included for matches of the `authors.id` primary key or the `books.author_id` foreign key.
 
-Postgres may choose a different query execution plan, which would affect the join algorithm picked, and the join order of the resulting rows. Postgres does not guarantee an ordering without an explicit `ORDER BY` clause.
+As a `LEFT OUTER JOIN`, a result row is produced whether both sides have a match or not.
 
-When we change the query to include an IN clause and an author id value, then the ordering of the output rows becomes the same.
+We could instead try an `INNER JOIN` , but in this case that produces results that are ordered differently.
+
+Postgres does not guarantee an ordering without an explicit `ORDER BY` clause which we're not using here.
+
 
 What are our options then to improve performance?
 
-## Alternatives approaches by adding JOINs
-Could be an inner join or outer join like above, depending on how the database is designed.
-
-```sql
-SELECT
-    *
-FROM
-    transactions t
-    JOIN organizations o ON t.organization_id = o.id
-WHERE
-    o.id = ('1','2','3'...); -- and so on
-```
-
-Does this result in a different query execution plan?
-
 ## Alternative approaches using ANY or SOME
-Crunchy Data's post [Postgres Query Boost: Using ANY Instead of IN](https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in).
+Crunchy Data's post [Postgres Query Boost: Using ANY Instead of IN](https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in) describes how `IN` is more restrictive on the input.
 
-A nice post showing how to bind an array of values using `ANY` instead of `IN`, which requires an equivalent sized list to the number of parameters.
-<https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in>
+A more usable alternative can be `ANY` or `SOME` in place of `IN`, given it's flexibility in handling the list of input values.
 
-What about the query performance of ANY over IN in an equivalent scenario?
+However, that's not the type of query that Active Record eager loading will generate.
 
-For the tested scenario the equivalent performance and query execution plans are identical. In particular, they both rely on an index only scan for the primary key index for authors, which makes sense.
+One option would be to reach for the [ActiveRecordExtended](https://github.com/GeorgeKaraszi/ActiveRecordExtended) gem to generate that type of query.
 
-IN requires only the `=` operator, and we can't use `>` or `<`, but we can with `ANY`.
+Besides usability, is the performance of ANY / SOME any better than IN?
 
-Handling NULL values
+Both leverage index only scans for the primary key index for authors, which makes sense, making their performance about the same.
 
-Since Active Record generates IN clause queries, to generate ANY() queries while sticking with Active Record, consider using the [ActiveRecordExtended](https://github.com/GeorgeKaraszi/ActiveRecordExtended) gem.
+The IN clause only works with the `=` operator, meaning we can't use the greater than (`>`) or less than (`<`) operators with it, but we can use those operators with `ANY`.
 
-## Query restructuring, working in smaller sets
-If we're working with thousands or tens of thousands of values, we likely want to limit the set further that’s loaded. With an IN list of scalar expressions, a smaller set will provide better query performance.
-
-We could look to restructure the query. We could write it ourselves, or use the Active Record form above that uses `eager_load` to generate a `LEFT OUTER JOIN` query.
-
-With the outer join single query, we can then add limitations like additional filtering, or a LIMIT clause.
-
-While this approach might perform multiple queries, by reducing the working set, we can improve performance for each iteration and even try to keep it consistent in resource usage.
-
-Join clause with `=` or `IN` (equivalent here):
 ```sql
+EXPLAIN (ANALYZE, BUFFERS, COSTS OFF)
+WITH author_ids AS (
 SELECT
-    *
+    id
 FROM
-    transactions t
-    JOIN organizations o ON t.organization_id = o.id
-WHERE
-    o.id = ('1','2'...); -- etc.
+    authors
+)
+select title from books
+where author_id < ANY(select id from author_ids where id <= 10); -- <- ANY
 ```
 
-Left outer join variation using `ANY`:
-```sql
-SELECT
-    books.id,
-    books.title,
-    authors.name
-FROM
-    "books"
-    LEFT OUTER JOIN "authors" ON "authors"."id" = "books"."author_id"
-WHERE
-    authors.id = ANY (
-        SELECT
-            id
-        FROM
-            authors
-        WHERE
-            id <= 500)
-LIMIT 10;
-```
+## Query performance improvement by working in smaller sets
+Our general approach should be to work with smaller sets of data, to avoid having IO intensive queries.
+
+We may achieve that by using the `eager_load` eager loading method which uses multiple queries and a `LEFT OUTER JOIN`, or we may achieve that by replacing `IN` with `ANY` or `SOME`.
+
+With more direct SQL query control, we can add more where clause filters or a `LIMIT` clause to work with batches, and filter on indexed columns for predictable performance.
+
 
 ## Improvements in Postgres 17
-When we can’t or don’t want to restructure the SQL query, for Postgres, there’s some good news on newer versions. From Postgres 17, the Postgres developers made internal improvements to more efficiently use the scalar expressions and compare then to an index, with fewer scans.
+For Postgres, there’s some good news on this problematic query pattern.
 
-This improves query performance by reducing the index scans, IO, and associated latency.
+As part of the PostgreSQL 17 release in 2024, the developers made internal improvements to more efficiently use the scalar expressions and compare then to an index, with fewer re-scans.
 
-The difference can be noteworthy!
+This improved query performance by reducing the index scans, IO, and associated latency, for all Postgres users, without requiring any changes to their SQL queries!
 
-<https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans>
+To find out if this will benefit your application, check your `pg_stat_statements` results, querying the `query` field for instances of the `IN` clause pattern discussed in this post.
 
-To find out if this will benefit your application, check your collection query stats using `pg_stat_statements`.
+While it would be nice if these were all grouped up, unfortunately there can be duplicates or near duplidates that don't group well, so you may have lots of PGSS result rows to sift through.
 
-Search within the query field using a regular expression, and find queries that have an IN clause.
+Here's a basic query filtering on the `query` field and looking for `'%IN \(%'`:
+```sql
+SELECT
+    query
+FROM
+    pg_stat_statements
+WHERE
+    query LIKE '%IN \(%';
+
+                   query
+------------------------------------------------------
+select * from trips where id IN ($1,$2)
+```
+
 
 ## Identifying problematic query groups using pg_stat_statements
-Problem is it doesn’t collapse entries with different numbers of scalar array expressions, IN (‘1’) will be duplicated with IN (‘1’,’2’)
+One problem is that similar groupable entries aren't collapsed with different numbers of scalar array expressions, e.g. `IN ('1')` will not be grouped with `IN ('1','2')`.
 
-Rails generates these queries. Sean Linsley working on a fix for Rails by replacing the usage of IN with ANY https://github.com/rails/rails/pull/49388#issuecomment-2680362607
+Rails generates these queries. Sean Linsley is working on a fix for Rails by replacing the use of `IN` with `ANY` in part for better grouping.
 
-## Postgres 18 - VALUES within IN
-Vlad and Sean point out Convert 'x IN (VALUES ...)' to 'x = ANY ...' then appropriate
+Pull Request: <https://github.com/rails/rails/pull/49388#issuecomment-2680362607>
 
-Note the VALUES clause within the IN clause
+## Postgres 18: VALUES within IN
+Vlad and Sean point the benefits of converting `x IN (VALUES ...)` to `x = ANY ...`.
 
+Note the `VALUES` clause within the `IN` clause. See commit:
 <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=c0962a113d1f2f94cb7222a7ca025a67e9ce3860>
 
-## Postgres 18 - VALUES within IN
-Squash query list jumbling
+Commit: Squash query list jumbling
 <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=62d712ecfd940f60e68bde5b6972b6859937c412>
 
-Remove query_id_squash_values GUC
+Commit: Remove query_id_squash_values GUC
 <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=9fbd53dea5d513a78ca04834101ca1aa73b63e59>
