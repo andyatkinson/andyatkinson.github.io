@@ -1,6 +1,6 @@
 ---
 layout: post
-permalink: /generating-short-alphanumeric-public-id-postgres
+permalink: /big-problems-big-in-clauses-postgresql-ruby-on-rails
 title: 'Big Problems From Big IN Clauses with Ruby on Rails and PostgreSQL'
 hidden: true
 ---
