@@ -6,26 +6,28 @@ hidden: true
 ---
 
 ## Introduction
-If you’ve created Ruby on Rails web applications with a database before, or have used other similar frameworks ORMs, you’ve likely had the kind of problematic query pattern we’re discussing in this post.
+If you’ve created Ruby on Rails web applications with a database, or similar ORMs, you’ve probably had the problem we'll be looking at in this post.
 
-This pattern is IN clauses in SQL queries that perform filtering, and have a huge list of values. It's not unheard of to have dozens, hundreds, or even thousands of values for large databases with millions of records. These lists are used to filter within a even larger set.
+This problem is bad performance for SQL queries with "IN clauses," that have a big list of values. By big, we're talking about dozens, hundreds, or even thousands of values. This clause performs filtering among an even larger set of rows, so without care, it can result in slow sequential scans of the whole table.
 
-The technical term for the right-hand size list of values is *parenthesized list of scalar expressions*.
+The technical term for the right-hand side of values is *parenthesized list of scalar expressions*.
 
-In the SQL query below, an example IN clause is `author_id IN (1,2,3)` and the list of scalar expressions is `(1,2,3)`.
+In the SQL query below, the IN clause is `author_id IN (1,2,3)` and the list of scalar expressions is `(1,2,3)`.
 ```sql
 SELECT * FROM books
 WHERE author_id IN (1, 2, 3);
 ```
 
-When looking at a query execution plan, we'll see something like this in PostgreSQL (note the `ANY` keyword discussed later on):
+When looking at a query execution plan in Postgres for this type of IN clause, we'll see something like this (note the `ANY` keyword which is discussed later on):
 ```sql
 Filter: (author_id = ANY ('{1,2,3}'::integer[]))
 ```
 
-Imagine you're working with a new codebase. How do you find instances of these types of queries?
+Imagine you're working with a new codebase and discover you've got bad performance from these types of queries.
 
-## How does it happen?
+How do you find instances of where they're happening and why are they happening?
+
+## Creating this pattern explicitly
 In Active Record, the Ruby on Rails ORM, this type of query pattern could be created explicitly by using the `pluck()` method. This method is used to select specific fields for a model, for example only the `id` primary key values.
 
 Here’s an example of getting those and assigning them to an `author_ids` variable:
@@ -41,8 +43,8 @@ Book.where(author_id: author_ids)
 
 Besides explicitly creating this pattern, this pattern can be created implicitly by ORM methods. What do those look like?
 
-## How does it happen in Active Record ORM?
-One way for this query pattern to emerge is to use using Eager Loading methods in Ruby on Rails like `includes` or `preload`.
+## Active Record ORM creating this pattern implicitly
+One way for this query pattern to emerge is by using eager loading methods in Ruby on Rails like `includes` or `preload`.
 
 This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) mentions how eager loading methods produce large IN clause SQL queries.
 
@@ -159,13 +161,13 @@ With more direct SQL query control, we can add more where clause filters or a `L
 ## Improvements in Postgres 17
 For Postgres, there’s some good news on this problematic query pattern.
 
-As part of the PostgreSQL 17 release in 2024, the developers made internal improvements to more efficiently use the scalar expressions and compare then to an index, with fewer re-scans.
+As part of the PostgreSQL 17 release in 2024, the developers made internal improvements to more efficiently work with scalar expressions and indexes with fewer re-scans.
 
-This improved query performance by reducing the index scans, IO, and associated latency, for all Postgres users, without requiring any changes to their SQL queries!
+This improved query performance by reducing latency, IO, and benefits all Postgres users who don't even need to change their SQL queries or ORM code!
 
 To find out if this will benefit your application, check your `pg_stat_statements` results, querying the `query` field for instances of the `IN` clause pattern discussed in this post.
 
-While it would be nice if these were all grouped up, unfortunately there can be duplicates or near duplidates that don't group well, so you may have lots of PGSS result rows to sift through.
+While it would be nice if these were all grouped up, unfortunately there can be duplicates or near duplicates that don't group well, so you may have lots of PGSS result rows to sift through.
 
 Here's a basic query filtering on the `query` field and looking for `'%IN \(%'`:
 ```sql
@@ -187,9 +189,9 @@ Rails generates these queries. Sean Linsley is working on a fix for Rails by rep
 Pull Request: <https://github.com/rails/rails/pull/49388#issuecomment-2680362607>
 
 ## Postgres 18: VALUES within IN
-Vlad and Sean point the benefits of converting `x IN (VALUES ...)` to `x = ANY ...`.
+Vlad and Sean pointed out converting `x IN (VALUES ...)` to `x = ANY ...` in the comments for the PR above.
 
-Note the `VALUES` clause within the `IN` clause. See commit:
+Let's look at the Postgres commits. Here's one. Note the `VALUES` clause within the `IN` clause:
 <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=c0962a113d1f2f94cb7222a7ca025a67e9ce3860>
 
 Commit: Squash query list jumbling
