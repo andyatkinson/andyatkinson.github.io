@@ -30,7 +30,8 @@ In Active Record, the Ruby on Rails ORM, this type of query pattern could be cre
 
 Here’s an example of getting those and assigning them to an `author_ids` variable:
 ```sql
-author_ids = Author.where("created_at >= ?", 1.year.ago).pluck(:id)
+author_ids = Author.
+  where("created_at >= ?", 1.year.ago).pluck(:id)
 ```
 
 Then the values are supplied as input to query for `books` and filter them down to matching authors:
@@ -63,7 +64,7 @@ The issue above is that there's an N+1 query pattern, where the authors are repe
 To fix the N+1, we could use `includes(:author)` to bulk load them.
 
 <pre><code>
-books = Book.<strong>includes(:author)</strong>.limit(10)
+books = Book.<strong style="background-color:yellow;">includes(:author)</strong>.limit(10) 👈
 
 books.each do |book|
    puts book.author.last_name
@@ -98,9 +99,13 @@ end
 
 This produces the following single SQL query:
 ```sql
-SELECT "books"."id" AS t0_r0, "books"."title" AS t0_r1, ... FROM "books"
-  LEFT OUTER JOIN "authors" ON "authors"."id" = "books"."author_id"
-  LIMIT 10
+SELECT
+    "books"."id" AS t0_r0,
+    "books"."title" AS t0_r1
+FROM
+    "books" LEFT OUTER JOIN "authors"
+    ON "authors"."id" = "books"."author_id"
+LIMIT 10;
 ```
 
 Instead of `authors` being found by their `id` in the IN clause, query results here are produced by joining the two tables when they match either side of the relationship.
@@ -171,11 +176,8 @@ FROM
 WHERE
     query LIKE '%IN \(%';
 
-                   query
-------------------------------------------------------
-select * from trips where id IN ($1,$2)
 ```
-
+See the [linked PR](https://github.com/andyatkinson/pg_scripts/pull/16) for a full reproduction with SQL for books, authors, and PGSS.
 
 ## Identifying problematic query groups using pg_stat_statements
 One problem is that similar groupable entries aren't collapsed with different numbers of scalar array expressions, e.g. `IN ('1')` will not be grouped with `IN ('1','2')`.
