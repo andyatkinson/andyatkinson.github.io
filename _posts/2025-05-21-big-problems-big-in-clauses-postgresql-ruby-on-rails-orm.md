@@ -191,6 +191,7 @@ WHERE author_id IN (
 
 This is better because the `IN` list is a big list of scalar expressions, where the `VALUES` clause is treated like a relation (or table). This can help with join strategy selection.
 
+## A temporary table of ids
 Yet another option for big lists of values is to put these into a temporary table for the session. The temporary table can even index the ids.
 ```sql
 CREATE TEMP TABLE temp_ids (author_id int);
@@ -202,6 +203,7 @@ FROM books b
 JOIN temp_ids t ON t.author_id = b.author_id;
 ```
 
+## Using `ANY` and an `ARRAY` of values
 Another form is using `ANY` with an ARRAY:
 ```sql
 SELECT title
