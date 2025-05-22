@@ -1,21 +1,23 @@
 ---
 layout: post
 permalink: /big-problems-big-in-clauses-postgresql-ruby-on-rails
-title: 'Big Problems From Big IN Clauses with Ruby on Rails and PostgreSQL'
+title: 'Big Problems From Big IN lists with Ruby on Rails and PostgreSQL'
 hidden: true
 ---
 
 ## Introduction
-If you’ve created database-backed Ruby on Rails web applications or have used similar ORMs, you’ve probably ran across the performance problem we're covering in this post.
+If you’ve created web applications with relational databases before, using ORMs like Active Record, part of Ruby on Rails, you've likely dealt with performance problems in your database layer once you've reached a certain size of data and query volume.
 
-In this post we're looking at a category of poorly performing SQL queries. Queries with "IN clauses" that have a big list of values tend to scale poorly, resulting in suboptimal planning choices, and causing trouble for users.
+In this post, we're going to look at a specific type of problematic query pattern.
 
-We'll dig into the reasons why, how you might be creating them via your ORM, and how you can find and fix them.
+For queries with "IN clauses", as data sizes grow, and their list of values gets big, these queries tend to perform very poorly, causing user experience problems or even partial outages in extreme cases.
 
-## IN clauses with a big list of values
+We'll dig into the specific details of how these are constructed and why, how you might be creating them now, and how you can fix them.
+
+## `IN` clauses with a big list of values
 The technical term for values are a *parenthesized list of scalar expressions*.
 
-For example in the SQL query below, the IN clause portion is `WHERE author_id IN (1,2,3)` and the list of scalar expressions is `(1,2,3)`.
+For example in the SQL query below, the `IN` clause portion is `WHERE author_id IN (1,2,3)` and the list of scalar expressions is `(1,2,3)`.
 ```sql
 SELECT * FROM books
 WHERE author_id IN (1, 2, 3);
@@ -59,7 +61,7 @@ Another scenario is when this pattern is created implicitly by ORM methods. What
 ## Active Record ORM creating this pattern implicitly
 This query pattern can happen when using eager loading methods like `includes` or `preload`.
 
-This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) mentions how eager loading methods produce IN clause SQL queries.
+This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) mentions how eager loading methods produce `IN` clause SQL queries.
 
 The post links to the [Eager Loading Associations documentation](https://guides.rubyonrails.org/active_record_querying.html#eager-loading-associations) which has examples in Active Record and the resulting SQL that we'll use here.
 
@@ -92,7 +94,7 @@ end
 We've now eliminated the N+1 queries, but we've opened ourselves up to a new possible problem.
 
 ## Eager loading with includes or preload
-While the `includes(:author)` fixed the N+1 queries, Active Record is now creating two queries, with the second one having an IN clause.
+While the `includes(:author)` fixed the N+1 queries, Active Record is now creating two queries, with the second one having an `IN` clause.
 
 Here's the example from above as SQL:
 ```sql
@@ -102,14 +104,14 @@ SELECT authors.* FROM authors
   WHERE authors.id IN (1,2,3,4,5,6,7,8,9,10);
 ```
 
-Here we only have 10 values for the IN clause, so performance will be fine. However, once we've got hundreds or thousands of values, we will run into the problems described above.
+Here we only have 10 values for the `IN` clause, so performance will be fine. However, once we've got hundreds or thousands of values, we will run into the problems described above.
 
 Performance will tank if the `authors.id` primary key index isn't used for this filtering operation.
 
-Where else do these IN clause queries come from?
+Where else do these `IN` clause queries come from?
 
 ## Eager loading using eager_load
-Besides `includes()` and `preload()` which create two queries with the second having an IN clause, there's another way to do eager loading in Active Record.
+Besides `includes()` and `preload()` which create two queries with the second having an `IN` clause, there's another way to do eager loading in Active Record.
 
 An alternative method `eager_load` works a little bit differently. It produces a single SQL query that uses a `LEFT OUTER JOIN`.
 
@@ -122,7 +124,7 @@ books.each do |book|
 end
 ```
 
-The following single SQL query is produced. Note that it has no IN clause.
+The following single SQL query is produced. Note that it has no `IN` clause.
 ```sql
 SELECT
     "books"."id" AS t0_r0,
@@ -133,20 +135,20 @@ FROM
 LIMIT 10;
 ```
 
-Since we're now using a JOIN operation, we've got statistics available from both tables. This makes it much more likely PostgreSQL can correctly estimate selectivity and cardinality.
+Since we're now using a join operation, we've got statistics available from both tables. This makes it much more likely PostgreSQL can correctly estimate selectivity and cardinality.
 
 The planner also isn't needing to parse and store a large list of constant values.
 
-While IN clauses might perform fine with smaller inputs, e.g. 100 values or fewer,[^1], for large lists we should try to move those queries to be JOIN operations.
+While `IN` clauses might perform fine with smaller inputs, e.g. 100 values or fewer,[^1], for large lists we should try and restructure the query to use a join operation instead.
 
-Besides restructuring the queries into JOINS, do we have any other options?
+Besides restructuring the queries into joins, are there other alternatives?
 
-## Alternative approaches using ANY or SOME
+## Alternative approaches using `ANY` or `SOME`
 Crunchy Data's post [Postgres Query Boost: Using ANY Instead of IN](https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in) describes how `IN` is more restrictive on the input.
 
-A more usable to IN can be using `ANY` or `SOME`, which has more flexibility in handling the list of values.
+A more usable to `IN` can be using `ANY` or `SOME`, which has more flexibility in handling the list of values.
 
-Here's A CTE example using ANY:
+Here's A CTE example using `ANY`:
 ```sql
 WITH author_ids AS (
   SELECT id FROM authors
@@ -158,14 +160,14 @@ WHERE author_id = ANY (
       FROM author_ids);
 ```
 
-However, ANY is not generated by Active Record. What if we want to generate these queries using Active Record?
+However, `ANY` is not generated by Active Record. What if we want to generate these queries using Active Record?
 
 One option is to use the `any` method provided by the [ActiveRecordExtended](https://github.com/GeorgeKaraszi/ActiveRecordExtended) gem.
 
 Let's talk at another alternative approach using a `VALUES` clause.
 
 ## A VALUES clause
-In the comments in the PR above, Vlad and Sean discussed an alternative for IN using a VALUES clause.
+In the comments in the PR above, Vlad and Sean discussed an alternative for `IN` using a VALUES clause.
 
 Let's look at an example with a CTE and VALUES clause:
 ```sql
@@ -187,23 +189,33 @@ WHERE author_id IN (
 );
 ```
 
-Another form is using ANY with an ARRAY:
+Another form is using `ANY` with an ARRAY:
 ```sql
 SELECT title
 FROM books
 WHERE author_id = ANY (ARRAY[1, 2, 3]);
 ```
 
-Related improvements are coming to PostgreSQL 18 for 2025.
+The `ANY` form can perform better. With an `IN` list, the values are parsed like a chain of OR operations, with the planner handling one branch at a time.
 
-"Convert 'x IN (VALUES ...)' to 'x = ANY ...' then appropriate. This commit implements the automatic conversion of 'x IN (VALUES ...)' into
-ScalarArrayOpExpr."
-<https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=c0962a113d1f2f94cb7222a7ca025a67e9ce3860>
+`ANY` is treated like a single functional expression.
 
-How do we find whether our system has these problematic IN queries?
+This form also supports prepared statements. With prepared statements, the statement is parsed and planned once and then can be reused.
 
-## Finding IN clause queries in pg_stat_statements
-To find out if your query stats include the problematic IN queries, let's search the results of `pg_stat_statements` by querying the `query` field.
+Here's an example of fetching books by author:
+```sql
+PREPARE get_books_by_author(int[]) AS
+SELECT title
+FROM books
+WHERE author_id = ANY ($1);
+
+EXECUTE get_books_by_author(ARRAY[1,2,3,4,5]);
+```
+
+How do we find whether our system has these problematic `IN` queries?
+
+## Finding `IN` clause queries in pg_stat_statements
+To find out if your query stats include the problematic `IN` queries, let's search the results of `pg_stat_statements` by querying the `query` field.
 
 Unfortunately these don't always group up well, so there can be duplicates or near-duplicates. You may have lots of PGSS results to sift through.
 
@@ -226,32 +238,46 @@ As part of the PostgreSQL 17 release in 2024, the developers made improvements t
 This reduced latency by reducing IO, and the benefits are available to all Postgres users without the need to change their SQL queries or ORM code!
 
 ## Grouping similar query groups in pg_stat_statements
-There are more usability improvements coming for Postgres users, pg_stat_statements, an IN clause queries.
+There are more usability improvements coming for Postgres users, pg_stat_statements, an `IN` clause queries.
 
 One problem with these has been that similar entries aren't collapsed together when they have a different numbers of scalar array expressions.
 
 For example `IN ('1')` was not grouped with `IN ('1','2')`. Having the statistics for nearly identical entries split across multiple results makes them less useful.
 
-## Better PGSS grouping
 Fortunately, fixes are coming. On the Ruby on Rails side, Sean Linsley is working on a fix by replacing the use of `IN` with `ANY` which solves the grouping problem.
 
 Here's the PR: <https://github.com/rails/rails/pull/49388#issuecomment-2680362607>
 
 On the PostgreSQL side, there are fixes coming for PostgreSQL 18.
-Check out this commit. "Squash query list jumbling" from Álvaro Herrera.
 
-Álvaro says:
-"pg_stat_statements produces multiple entries for queries like SELECT something FROM table WHERE col IN (1, 2, 3, ...)
-depending on the number of parameters, because every element of
-ArrayExpr is individually jumbled.  Most of the time that's undesirable,
-especially if the list becomes too large."
-<https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=62d712ecfd940f60e68bde5b6972b6859937c412>
+## Improvements in PostgreSQL 18
+Related improvements are coming to PostgreSQL 18 for 2025.
 
-This was originally available with a GUC query_id_squash_values, but that was removed in favor of making this the default behavior.
-<https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=9fbd53dea5d513a78ca04834101ca1aa73b63e59>
+This commit[^1] implements the automatic conversion of `x IN (VALUES ...)` into ScalarArrayOpExpr.
+
+Another noteworthy commit is: "Squash query list jumbling" from Álvaro Herrera.[^2]
+
+pg_stat_statements produces multiple entries for queries like `SELECT something FROM table WHERE col IN (1, 2, 3, ...)` depending on the number of parameters, because every element of ArrayExpr is individually jumbled.
+Most of the time that's undesirable, especially if the list becomes too large.
+
+This commit[^3] mentions the original design was for a GUC query_id_squash_values, but that was removed in favor of making this the default behavior.
 
 ## Conclusion
+We looked at a problematic query pattern, giant `IN` lists. We looked at why these are slow: they take more resources to parse and plan. There are fewer indexing options compared with joins. Compared with an equivalent join operation which provides two sets of table statistics, the big list of constants can't be compared with pre-collected data distribution statistics.
 
+We looked at how these queries can be created directly using multiple queries in a common application code pattern, or indirectly by using eager loading methods in the Active Record ORM.
+
+Fortunately improvements are coming in newer versions of both Ruby on Rails and PostgreSQL.
+
+We learned how to find these using pg_stat_statements for PostgreSQL. Once we've found these problematic queries, we looked at several possible alternative solutions that can be parsed, planned, and executed more efficiently.
+
+Our main tactics are to convert these to joins when possible. Outside of that, we could consider using the `ANY` operator and a prepared statement.
+
+Hopefully the next time you see giant IN lists causing database performance problems, you're more prepared to tackle them!
+
+Please share any tips or tracks you have by reaching out through my contact form.
 
 
 [^1]: <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=c0962a113d1f2f94cb7222a7ca025a67e9ce3860>
+[^2]: <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=62d712ecfd940f60e68bde5b6972b6859937c412>
+[^3]: <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=9fbd53dea5d513a78ca04834101ca1aa73b63e59>
