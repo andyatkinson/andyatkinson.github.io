@@ -290,7 +290,7 @@ Most of the time that's undesirable, especially if the list becomes too large.
 This commit[^3] mentions the original design was for a GUC query_id_squash_values, but that was removed in favor of making this the default behavior.
 
 ## Conclusion
-In this post, we looked at a problematic query pattern, giant `IN` lists. You may have instances of this pattern in your codebase from direct means or from using some ORM methods.
+In this post, we looked at a problematic query pattern, big `IN` lists. You may have instances of this pattern in your codebase from direct means or from using some ORM methods.
 
 This type of query performs poorly for big lists of values, as they take more resources to parse, plan, and execute. There are fewer indexing options compared with an alternative structured as a join operation. Join queries provide two sets of table statistics from both tables being joined, that help with query planning.
 
@@ -298,7 +298,7 @@ We learned how to find instances of these using pg_stat_statements for PostgreSQ
 
 Our main tactics are to convert these queries to joins when possible. Outside of that, we could consider using the `ANY` operator with an array of values, a `VALUES` clause, and consider using a prepared statement.
 
-The next time you see giant `IN` lists causing database performance problems, hopefully you feel more prepared to restructure and optimize them!
+The next time you see big `IN` lists causing database performance problems, hopefully you feel more prepared to restructure and optimize them!
 
 Thanks for reading this post. I'd love to hear about any tips or tricks you have for these types of queries!
 
