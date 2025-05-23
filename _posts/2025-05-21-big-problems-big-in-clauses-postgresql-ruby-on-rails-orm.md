@@ -2,7 +2,8 @@
 layout: post
 permalink: /big-problems-big-in-clauses-postgresql-ruby-on-rails
 title: 'Big Problems From Big IN lists with Ruby on Rails and PostgreSQL'
-hidden: true
+tags: [PostgreSQL, Ruby on Rails]
+date: 2025-05-23 15:00:00
 ---
 
 ## Introduction
