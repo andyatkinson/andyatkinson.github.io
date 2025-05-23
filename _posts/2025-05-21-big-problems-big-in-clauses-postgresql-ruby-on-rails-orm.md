@@ -6,13 +6,13 @@ hidden: true
 ---
 
 ## Introduction
-If you’ve created web applications with relational databases before, using ORMs like Active Record, part of Ruby on Rails, you've likely dealt with performance problems in your database layer once you've reached a certain size of data and query volume.
+If you’ve created web apps with relational databases and ORMs like Active Record (part of Ruby on Rails), you've probably experienced database performance problems after a certain size of data and query volume.
 
-In this post, we're going to look at a specific type of problematic query pattern.
+In this post, we're going to look at a specific type of problematic query pattern that's somewhat common.
 
-For queries with "IN clauses", as data sizes grow, and their list of values gets big, these queries tend to perform very poorly, causing user experience problems or even partial outages in extreme cases.
+This pattern includes "IN clauses" with big list of values. As data grows, the length of the list of values will grow. These queries tend to perform poorly for big lists, causing user experience problems or even partial outages.
 
-We'll dig into the specific details of how these are constructed and why, how you might be creating them now, and how you can fix them.
+We'll dig into how this pattern is constructed, why the performance of it is poor, and explore some alternatives that you can use in your projects.
 
 ## `IN` clauses with a big list of values
 The technical term for values are a *parenthesized list of scalar expressions*.
@@ -227,7 +227,16 @@ WHERE author_id = ANY ($1);
 EXECUTE get_books_by_author(ARRAY[1,2,3,4,5]);
 ```
 
-How do we find whether our system has these problematic `IN` queries?
+## Testing the alternative query structures
+Unfortunately generic guidelines here won't guarantee success in your specific database. Row counts, data distributions, cardinality, or correlation are just some of the factors that affect query execution.
+
+My recommended process is to test on production-like data, work in the SQL layer, then try out restructured queries using these tactics, and study their query execution plans collected using `EXPLAIN (ANALYZE, BUFFERS)`.
+
+Query plan collection and analysis is outside the scope of this post, but in brief, you'll want to compare the plans and look to access fewer buffers, at lower costs, with fewer rows evaluated, fewer loops, for more efficient execution.
+
+If you're working in Active Record, you'd then translate your SQL back into the Active Record source code location where the queries were generated.
+
+How do we find problematic `IN` queries that ran earlier in Postgres?
 
 ## Finding `IN` clause queries in pg_stat_statements
 To find out if your query stats include the problematic `IN` queries, let's search the results of `pg_stat_statements` by querying the `query` field.
@@ -250,7 +259,7 @@ While you can find and restructure your queries towards more efficient patterns,
 ## Improvements in Postgres 17
 As part of the PostgreSQL 17 release in 2024, the developers made improvements to more efficiently work with scalar expressions and indexes, resulting in fewer repeated scans, and thus faster execution.
 
-This reduced latency by reducing IO, and the benefits are available to all Postgres users without the need to change their SQL queries or ORM code!
+This reduces latency by reducing IO, and the benefits are available to all Postgres users without the need to change their SQL queries or ORM code!
 
 ## Grouping similar query groups in pg_stat_statements
 There are more usability improvements coming for Postgres users, pg_stat_statements, an `IN` clause queries.
