@@ -2,7 +2,6 @@
 layout: post
 permalink: /big-problems-big-in-clauses-postgresql-ruby-on-rails
 title: 'Big Problems From Big IN lists with Ruby on Rails and PostgreSQL'
-hidden: true
 ---
 
 ## Introduction
@@ -10,11 +9,11 @@ If you’ve created web apps with relational databases and ORMs like Active Reco
 
 In this post, we're going to look at a specific type of problematic query pattern that's somewhat common.
 
-This pattern includes "IN clauses" with big list of values. As data grows, the length of the list of values will grow. These queries tend to perform poorly for big lists, causing user experience problems or even partial outages.
+We'll refer to this pattern as "Big `IN`s," which are queries with an `IN` clause that has a big list of values. As data grows, the length of the list of values will grow. These queries tend to perform poorly for big lists, causing user experience problems or even partial outages.
 
-We'll dig into how this pattern is constructed, why the performance of it is poor, and explore some alternatives that you can use in your projects.
+We'll dig into the origins of this pattern, why the performance of it is poor, and explore some alternatives that you can use in your projects.
 
-## `IN` clauses with a big list of values
+## IN clauses with a big list of values
 The technical term for values are a *parenthesized list of scalar expressions*.
 
 For example in the SQL query below, the `IN` clause portion is `WHERE author_id IN (1,2,3)` and the list of scalar expressions is `(1,2,3)`.
@@ -28,7 +27,9 @@ The purpose of this clause is to perform filtering. Looking at a query execution
 Filter: (author_id = ANY ('{1,2,3}'::integer[]))
 ```
 
-Why are these slow?
+This of course filters the full set of books down to ones that match on `author_id`.
+
+Filtering is a typical database operation. Why are these slow?
 
 ## Parsing, planning, and executing
 Remember that our queries are parsed, planned, and executed. A big list of values are treated like constants, and don't have associated statistics.
@@ -143,7 +144,7 @@ While `IN` clauses might perform fine with smaller inputs, e.g. 100 values or fe
 
 Besides restructuring the queries into joins, are there other alternatives?
 
-## Alternative approaches using `ANY` or `SOME`
+## Alternative approaches using ANY or SOME
 Crunchy Data's post [Postgres Query Boost: Using ANY Instead of IN](https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in) describes how `IN` is more restrictive on the input.
 
 A more usable to `IN` can be using `ANY` or `SOME`, which has more flexibility in handling the list of values.
@@ -203,7 +204,7 @@ FROM books b
 JOIN temp_ids t ON t.author_id = b.author_id;
 ```
 
-## Using `ANY` and an `ARRAY` of values
+## Using ANY and an ARRAY of values
 Another form is using `ANY` with an ARRAY:
 ```sql
 SELECT title
@@ -238,7 +239,7 @@ If you're working in Active Record, you'd then translate your SQL back into the 
 
 How do we find problematic `IN` queries that ran earlier in Postgres?
 
-## Finding `IN` clause queries in pg_stat_statements
+## Finding IN clause queries in pg_stat_statements
 To find out if your query stats include the problematic `IN` queries, let's search the results of `pg_stat_statements` by querying the `query` field.
 
 Unfortunately these don't always group up well, so there can be duplicates or near-duplicates. You may have lots of PGSS results to sift through.
