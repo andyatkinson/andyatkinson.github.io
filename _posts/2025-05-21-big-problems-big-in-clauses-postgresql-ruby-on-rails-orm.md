@@ -167,9 +167,9 @@ One option is to use the `any` method provided by the [ActiveRecordExtended](htt
 Let's talk at another alternative approach using a `VALUES` clause.
 
 ## A VALUES clause
-In the comments in the PR above, Vlad and Sean discussed an alternative for `IN` using a VALUES clause.
+In the comments in the PR above, Vlad and Sean discussed an alternative for `IN` using a `VALUES` clause.
 
-Let's look at an example with a CTE and VALUES clause:
+Let's look at an example with a CTE and `VALUES` clause:
 ```sql
 WITH ids(author_id) AS (
   VALUES(1),(2),(3)
@@ -278,19 +278,17 @@ Most of the time that's undesirable, especially if the list becomes too large.
 This commit[^3] mentions the original design was for a GUC query_id_squash_values, but that was removed in favor of making this the default behavior.
 
 ## Conclusion
-We looked at a problematic query pattern, giant `IN` lists. We looked at why these are slow: they take more resources to parse and plan. There are fewer indexing options compared with joins. Compared with an equivalent join operation which provides two sets of table statistics, the big list of constants can't be compared with pre-collected data distribution statistics.
+In this post, we looked at a problematic query pattern, giant `IN` lists. You may have instances of this pattern in your codebase from direct means or from using some ORM methods.
 
-We looked at how these queries can be created directly using multiple queries in a common application code pattern, or indirectly by using eager loading methods in the Active Record ORM.
+This type of query performs poorly for big lists of values, as they take more resources to parse, plan, and execute. There are fewer indexing options compared with an alternative structured as a join operation. Join queries provide two sets of table statistics from both tables being joined, that help with query planning.
 
-Fortunately improvements are coming in newer versions of both Ruby on Rails and PostgreSQL.
+We learned how to find instances of these using pg_stat_statements for PostgreSQL. The post then considers several alternatives.
 
-We learned how to find these using pg_stat_statements for PostgreSQL. Once we've found these problematic queries, we looked at several possible alternative solutions that can be parsed, planned, and executed more efficiently.
+Our main tactics are to convert these queries to joins when possible. Outside of that, we could consider using the `ANY` operator with an array of values, a `VALUES` clause, and consider using a prepared statement.
 
-Our main tactics are to convert these to joins when possible. Outside of that, we could consider using the `ANY` operator and a prepared statement.
+The next time you see giant `IN` lists causing database performance problems, hopefully you feel more prepared to restructure and optimize them!
 
-Hopefully the next time you see giant IN lists causing database performance problems, you're more prepared to tackle them!
-
-Please share any tips or tracks you have by reaching out through my contact form.
+Thanks for reading this post. I'd love to hear about any tips or tricks you have for these types of queries!
 
 
 [^1]: <https://git.postgresql.org/gitweb/?p=postgresql.git;a=commit;h=c0962a113d1f2f94cb7222a7ca025a67e9ce3860>
