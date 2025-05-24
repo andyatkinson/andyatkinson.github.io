@@ -142,7 +142,7 @@ Since we're now using a join operation, we've got statistics available from both
 
 The planner also isn't needing to parse and store a large list of constant values.
 
-While `IN` clauses might perform fine with smaller inputs, e.g. 100 values or fewer,[^1], for large lists we should try and restructure the query to use a join operation instead.
+While `IN` clauses might perform fine with smaller inputs, e.g. 100 values or fewer,[^1] for large lists we should try and restructure the query to use a join operation instead.
 
 Besides restructuring the queries into joins, are there other alternatives?
 
