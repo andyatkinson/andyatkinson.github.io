@@ -5,7 +5,7 @@ title: 'Tip: Put your Rails app on a SQL Query diet'
 featured_image: /assets/images/image-diet.jpg
 featured_image_caption: "Vegetables and measuring tape symbolizing healthy eating and dieting, cutting calories or cutting SQL queries!"
 tags: [Ruby on Rails, PostgreSQL]
-date: 2025-05-29 17:30:00
+date: 2025-05-29 17:29:00
 ---
 
 ## Introduction
