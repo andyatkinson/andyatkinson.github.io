@@ -1,11 +1,15 @@
 ---
 layout: post
 permalink: /tip-track-sql-queries-quantity-ruby-rails-postgresql
-title: 'Tip: Reduce the SQL Queries for Ruby on Rails apps'
+title: 'Tip: Put your Rails app on a SQL Query diet'
+featured_image: /assets/images/image-diet.jpg
+featured_image_caption: "Vegetables and measuring tape symbolizing healthy eating and dieting, cutting calories or cutting SQL queries!"
+tags: [Ruby on Rails, PostgreSQL]
+date: 2025-05-29 17:30:00
 ---
 
 ## Introduction
-A big proportion of the time taken processing an HTTP request is often time spent on SQL queries. To minimize that, we want to avoid unnecessary or duplicate queries, and generally keep the quantity of queries as low as possible.
+Much of the time taken processing HTTP requests in web apps is processing SQL queries. To minimize that, we want to avoid unnecessary or duplicate queries, and generally perform as few queries as possible.
 
 Think of the work that needs to happen for *every* query. The database engine parses it, creates a query execution plan, executes it, and then sends the response to the client.
 
@@ -65,7 +69,7 @@ Book Load (0.5ms) …
 Book Load (2.3ms) …
 ```
 
-If you see that sort of pattern, track down the source locations, and eliminate any repeated loads. Let's assume this is not a N+1, but repeated access to the same data from different source code locations.
+If you see that sort of pattern, track down the source locations, and eliminate any repeated loads. Let's assume this is not a [N + 1 queries problem](https://guides.rubyonrails.org/active_record_querying.html#n-1-queries-problem), but repeated access to the same data from different source code locations.
 
 You may be able to factor out and consolidate a data load. You may be able to use an existing loaded collection for an existence check, or use memoization to use previously calculated results.
 

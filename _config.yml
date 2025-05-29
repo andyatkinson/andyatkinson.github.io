@@ -9,10 +9,10 @@ meta_description: 'Personal Site Andrew Atkinson. PostgreSQL. Ruby on Rails, Ela
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
-  image: 'authorimagenew.jpg'
+  image: '/assets/images/authorimagenew.jpg'
   greetings: 'Hi! My name is Andy and this is my website, blog and portfolio. Please take a look around and thanks for stopping by!'
-favicon: 'assets/images/favicon.ico'
-baseurl:
+  name: 'Andrew Atkinson'
+favicon: '/assets/images/favicon.ico'
 url: https://andyatkinson.com
 production_url: https://andyatkinson.com
 mailchimp_url: 'https://gmail.us3.list-manage.com/subscribe/post?u=e41bf915471ba36d210444e0d&amp;id=d5e090a16c'

@@ -4,7 +4,7 @@
   "@type": "Person",
   "name": "{{ site.name }}",
   "url": "{{ site.url }}",
-  "image": "{{ site.url }}/assets/images/{{ site.author.image }}",
+  "image": "{{ site.url }}/{{ site.author.image }}",
   "sameAs": [
     "https://www.linkedin.com/in/{{ site.linkedin }}",
     "https://github.com/{{ site.github }}",
@@ -20,4 +20,4 @@
 </script>
 
 <meta property="og:description" content="{{ site.meta_description }}" />
-<meta property="og:image" content="{{ site.url }}/assets/images/{{ site.author.image }}" />
+<meta property="og:image" content="{{ site.url }}{{ page.featured_image | default: site.author.image }}" alt="{{ page.featured_image_caption | default: page.title }}" />
