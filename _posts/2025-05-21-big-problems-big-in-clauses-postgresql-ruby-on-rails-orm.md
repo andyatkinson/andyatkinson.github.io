@@ -62,7 +62,7 @@ Book.where(author_id: author_ids)
 Another scenario is when this query is created from ORM methods. What does that look like?
 
 ## Active Record ORM methods that create this pattern
-This query pattern can happen when using eager loading methods like `includes` or `preload`.
+This query pattern can happen when using eager loading methods like `includes()` or `preload()`.
 
 This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) mentions how eager loading methods produce `IN` clause SQL queries.
 
@@ -111,7 +111,7 @@ Here we only have 10 values for the `IN` clause, so performance will be fine. Ho
 
 Performance will tank if the `authors.id` primary key index isn't used for this filtering operation.
 
-Where else do these `IN` clause queries come from?
+Are there alternatives for eager loading?
 
 ## Eager loading using eager_load
 Besides `includes()` and `preload()` which create two queries with the second having an `IN` clause, there's another way to do eager loading in Active Record.
