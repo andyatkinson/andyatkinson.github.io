@@ -64,7 +64,7 @@ Buffers are 8kb in size by default. How do we translate this into a more familia
 
 Interpreting the number of pages accessed as " megabytes moved" makes the data movement a little more tangible, especially if we know the MB/s speeds of our hard drives or SSDs.
 
-For example, for a query that accesses 10,000 pages, using an 8kb page size, we known  approximately 80MB of data is being accessed or "moved." To keep things simple, imagine our disk access speed is 10MB/second. This means it would be at least 8 seconds to access the data for our query.
+For example, for a query that accesses 10,000 pages, using an 8kb page size, approximately 80MB of data is being accessed or "moved." To keep things simple, imagine our disk access speed is 10MB/second. This means it would be at least 8 seconds to access the data for our query.
 
 Fortunately modern drives are much faster than 10MB/second. However, the takeaway here is to translate pages accessed into megabytes/second, to help understand storage access latency. Remember that we want to access as few pages as possible!
 
