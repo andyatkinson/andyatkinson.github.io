@@ -45,9 +45,9 @@ This can mean the planner chooses a sequential scan over an index scan, causing 
 How do we create this pattern?
 
 ## Creating this pattern directly
-In Active Record, a developer might create this query pattern by using `pluck()` to collect some ids in a list, then passing that list as an argument to another query.
+In Active Record, a developer might create this query pattern by using `pluck(:id)` to collect some ids in a list, then pass that list as an argument to another query.
 
-Here’s an example of that getting ids and assigning them to `author_ids`:
+Here’s an example of that:
 ```sql
 author_ids = Author.
   where("created_at >= ?", 1.year.ago).
