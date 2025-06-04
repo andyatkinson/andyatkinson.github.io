@@ -62,4 +62,5 @@ There's lots more to evolving a database design, but these are a few principles 
 
 Did you notice anything missing you think should be added? Do you have any feedback on these principles or this acronym? Please contact me with your thoughts.
 
-Thanks!
+## Thank You
+Much credit goes to learning I've gained from [Postgres.fm](https://postgres.fm) hosts [Nikolay](https://postgres.ai) and [Michael](https://www.pgmustard.com), as well as [Lukas](https://pganalyze.com) and [Franck](https://dev.to/franckpachot). I'm grateful for the content they've shared with the community from their deep knowledge and experience. Thank you!
