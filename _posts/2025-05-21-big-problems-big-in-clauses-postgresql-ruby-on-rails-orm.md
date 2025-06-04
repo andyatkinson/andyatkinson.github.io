@@ -59,9 +59,9 @@ The `author_ids` are supplied as the argument querying `books` by `author_id` fo
 Book.where(author_id: author_ids)
 ```
 
-Another scenario is when this pattern is created implicitly by ORM methods. What does that look like?
+Another scenario is when this query is created from ORM methods. What does that look like?
 
-## Active Record ORM creating this pattern implicitly
+## Active Record ORM methods that create this pattern
 This query pattern can happen when using eager loading methods like `includes` or `preload`.
 
 This [Crunchy Data post](https://www.crunchydata.com/blog/real-world-performance-gains-with-postgres-17-btree-bulk-scans) mentions how eager loading methods produce `IN` clause SQL queries.
