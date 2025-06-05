@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /tip-track-sql-queries-quantity-ruby-rails-postgresql
-title: 'Tip: Put your Rails app on a SQL Query diet'
+title: 'Tip: Put your Rails app on a SQL query diet'
 featured_image: /assets/images/image-diet.jpg
 featured_image_caption: "Vegetables and measuring tape symbolizing healthy eating and dieting, cutting calories or cutting SQL queries!"
 tags: [Ruby on Rails, PostgreSQL]
