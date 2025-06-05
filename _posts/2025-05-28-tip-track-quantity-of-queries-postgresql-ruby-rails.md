@@ -9,7 +9,7 @@ date: 2025-05-29 17:29:00
 ---
 
 ## Introduction
-Much of the time taken processing HTTP requests in web apps is processing SQL queries. To minimize that, we want to avoid unnecessary or duplicate queries, and generally perform as few queries as possible.
+Much of the time taken processing HTTP requests in web apps is SQL queries. To minimize that, we want to avoid unnecessary and duplicate queries, and generally perform as few queries as possible.
 
 Think of the work that needs to happen for *every* query. The database engine parses it, creates a query execution plan, executes it, and then sends the response to the client.
 
