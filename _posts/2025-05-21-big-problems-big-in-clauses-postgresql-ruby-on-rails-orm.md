@@ -265,7 +265,7 @@ As part of the PostgreSQL 17 release in 2024, the developers made improvements t
 This reduces latency by reducing IO, and the benefits are available to all Postgres users without the need to change their SQL queries or ORM code!
 
 ## Grouping similar query groups in pg_stat_statements
-There are more usability improvements coming for Postgres users, pg_stat_statements, an `IN` clause queries.
+There are more usability improvements coming for Postgres users, pg_stat_statements, and `IN` clause queries.
 
 One problem with these has been that similar entries aren't collapsed together when they have a different numbers of scalar array expressions.
 
