@@ -1,4 +1,4 @@
-mi---
+---
 layout: post
 permalink: /big-problems-big-in-clauses-postgresql-ruby-on-rails
 title: 'Big Problems From Big IN lists with Ruby on Rails and PostgreSQL'
@@ -149,7 +149,7 @@ Besides restructuring the queries into joins, are there other alternatives?
 ## Alternative approaches using ANY or SOME
 Crunchy Data's post [Postgres Query Boost: Using ANY Instead of IN](https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in) describes how `IN` is more restrictive on the input.
 
-A more usable to `IN` can be using `ANY` or `SOME`, which has more flexibility in handling the list of values.
+A more usable alternative to `IN` can be using `ANY` or `SOME`, which has more flexibility in handling the list of values.
 
 Here's A CTE example using `ANY`:
 ```sql
