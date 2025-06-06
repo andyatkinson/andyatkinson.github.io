@@ -1,4 +1,4 @@
----
+mi---
 layout: post
 permalink: /big-problems-big-in-clauses-postgresql-ruby-on-rails
 title: 'Big Problems From Big IN lists with Ruby on Rails and PostgreSQL'
@@ -81,7 +81,7 @@ books.each do |book|
 end
 ```
 
-The issue above is the undesirable N+1 query pattern, where a table is repeatedly queried in a loop, instead of bulk loading a set of rows.
+The issue above is the undesirable N+1 query pattern, where a table is repeatedly queried in a loop, instead of bulk loading all of the desired authors.
 
 To fix the N+1, we'll add the `includes(:author)` eager loading method to the code above.
 
