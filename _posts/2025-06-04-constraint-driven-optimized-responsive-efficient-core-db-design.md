@@ -39,9 +39,9 @@ When our use cases are not known at the outset, plan to iterate on the design, c
 
 This applies to tables, columns, constraints, indexes, parameters, queries, and anything that can be optimized to better support real use cases.
 
-Queries are restructured and indexes are added to reduce data access. Pursue high selectivity accessing data with high cardinality to reduce latency.
+Queries are restructured and indexes are added to reduce data access. Pursue highly selective access, a small proportion of rows, on high cardinality (uniqueness) data, to reduce latency.
 
-Critical background processes like [VACUUM](https://www.postgresql.org/docs/current/sql-vacuum.html) gets more resources to support use cases.
+Critical background processes like [VACUUM](https://www.postgresql.org/docs/current/sql-vacuum.html) get optimized too. Resources (workers, memory, parallelization) are increased to support use cases.
 
 ## Responsive
 When problems emerge like column or row level unexpected data, missing referential integrity, or query performance problems, engineers inspect logs, catalog statistics, and parameters, from the core engine and third party extensions, to diagnose issues.
@@ -53,9 +53,11 @@ DDL changes are in a source code file, reviewed, tracked, and a copy of the sche
 Parameter (GUC) tuning (Postgres: `work_mem`, etc.) happens in a trackable way. Parameters are tuned online when possible, and scoped narrowly, to optimize their values for real queries and use cases.
 
 ## Efficient
-Data that's stored is queried later, otherwise it's archived out of the database.
+It's costly to store data in the database! The data consumes space and accessing data unnecessarily adds latency.
 
-Unneeded tables, columns, constraints, and indexes are removed as a continual maintenance practice, to minimize space consumption and latency, and reduce system complexity.
+Data that's stored is queried later or it's archived. There's a continual process to consider use cases, and archive any unneeded data.
+
+To minimize space consumption and latency, tables, columns, constraints, and indexes are removed continually by default, when they no longer are required, to reduce system complexity.
 
 Server software is upgraded at least annually so that performance and security benefits can be leveraged.
 
