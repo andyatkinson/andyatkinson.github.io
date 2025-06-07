@@ -69,8 +69,8 @@ There's lots more to evolving a database schema design, but these principles are
 Did you notice anything missing? Do you have other feedback? Please [contact me](/contact) with your thoughts.
 
 ## Thank You
-Over the years, I've learned a lot from [Postgres.fm](https://postgres.fm) hosts [Nikolay](https://postgres.ai) and [Michael](https://www.pgmustard.com), [Lukas](https://pganalyze.com) and [Franck](https://dev.to/franckpachot), as a few leaders that influenced my schema design recommendations.
+Over the years, I've learned a lot from [Postgres.fm](https://postgres.fm) hosts [Nikolay](https://postgres.ai) and [Michael](https://www.pgmustard.com), and other community leaders like [Lukas](https://pganalyze.com) and [Franck](https://dev.to/franckpachot), as they've shaped my database design choices.
 
-I'm grateful to them for sharing their deep knowledge and experience with the community.
+I'm grateful to them for sharing their knowledge and experience with the community.
 
 Thanks for reading!
