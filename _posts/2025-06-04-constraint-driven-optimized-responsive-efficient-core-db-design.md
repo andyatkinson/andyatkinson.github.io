@@ -1,66 +1,74 @@
 ---
 layout: post
 permalink: /constraint-driven-optimized-responsive-efficient-core-db-design
-title: "Introducing CORE Database Design: Constraint-driven, Optimized, Responsive, and Efficient"
-hidden: true
+title: "CORE Database Schema Design: Constraint-driven, Optimized, Responsive, and Efficient"
+date: 2025-06-07
 ---
 
 ## Introduction
-In this post, we'll coverage some database design principles and package them up into a catchy mnemonic acronym.
+In this post, we'll cover some database design principles and package them up into a catchy mnemonic acronym.
 
-Software engineering is loaded with acronyms like this. For example, [SOLID principles](https://en.wikipedia.org/wiki/SOLID) describe 5 principles (Single responsibility, open-closed, Liskov substitution, Interface segregation, Dependency inversion) for good object-oriented design.
+Software engineering is loaded with acronyms like this. For example, [SOLID principles](https://en.wikipedia.org/wiki/SOLID) describe 5 principles, Single responsibility, Open-closed, Liskov substitution, Interface segregation and Dependency inversion, that promote good object-oriented design.
 
-Another example is DRY standing for "don’t repeat yourself," describing the process of factoring out common pieces to avoid duplication.
+Databases are loaded with acronyms, for example "ACID" for the properties of a transaction, but I wasn't familiar with one the schema designer could keep in mind while they're working.
 
-Database design has acronyms like ACID that refer to the properties of a transaction, but I wasn't familiar with an acronym the schema designer can keep in mind.
+Thus, the motivation for this acronym was to help the schema designer, by packaging up some principles of good design practices for database schema design. It's not based in research or academia though, so don't take this too seriously. That said, I'd love your feedback!
 
-This acronym encapsulates the rationale and some goals I keep in mind for database schema designs and recommendations. It's not based in research or academia, so don't take it too seriously!
+Let's get into it.
 
 ## Picking a mnemonic acronym
-Some goals were to keep it short, have each letter describe a word that's useful, practical, and grounded in real world experience. I preferred a real word for memorability!
+In picking an acronym, I wanted it to be short and have each letter describe a word that's useful, practical, and grounded in experience. I preferred a real word for memorability!
 
-The result was "**CORE**." Let’s break down each word the letters represent in the context of database design.
+The result was "**CORE**." Let’s explore each letter and the word behind it.
 
 ## Constraint-Driven
-The first word (technically two) is "constraint-driven." Relational databases offer both rigid structures, but the ability to be flexible, evolving the structure through [DDL](https://en.wikipedia.org/wiki/Data_definition_language). They use [data types](https://www.postgresql.org/docs/current/datatype.html) and [constraints](https://www.postgresql.org/docs/current/ddl-constraints.html) to encode rules about the data and the relationships.
+The first word (technically two) is "constraint-driven." Relational databases offer rigid structures, but the ability to be changed while online, a form of flexibility in their evolution. We evolve their structure through [DDL](https://en.wikipedia.org/wiki/Data_definition_language). They use [data types](https://www.postgresql.org/docs/current/datatype.html) and [constraints](https://www.postgresql.org/docs/current/ddl-constraints.html) changes, as new entities and relationships are added.
 
-Constraint-driven refers to the constraint objects offered and making full use of them, but also more generally to apply constraints and restrictions in designs to increase consistency and quality.
+Constraint-driven refers to leveraging all the constraint objects available, designing for our needs today, but also in a more general sense to apply restrictions to designs in the pursue of data consistency and quality.
 
-For example, choosing the appropriate data types, like a numeric data type and not a character data type when storing a number. Using `NOT NULL` and Foreign Key constraints by default, validating inputs with Check constraints.
+Let's look at some examples. Choose the appropriate data types, like a numeric data type and not a character data type when storing a number. Use `NOT NULL` for columns by default. Create foreign key constraints for table relationships by default.
 
-The mindset is to prefer more rigidity initially, then add flexibility later, as opposed to the other way around.
+Validate expected data inputs using check constraints. For small databases, use `integer` primary keys. If you get huge later, we can migrate the structure and data.
+
+The mindset is to prefer rigidity, design for today, then leverage the ability to evolve flexibly later, as opposed to designing for a hypothetical future state.
 
 ## Optimized
-Databases present loads of optimization opportunities. Relational data is initially stored in a normalized form to eliminate duplication, but later may be partially *denormalized* when the importances of read access is more important. This optimization process adjusts the structural design to support how the database is used ("use cases").
+Databases present loads of optimization opportunities. Relational data is initially stored in a normalized form to eliminate duplication, but later *denormalizations* can be performed when read access is more important than eliminating duplication.
 
-Besides tables and columns, indexes can be optimized depending on the query patterns table by table, whether they're write or read centric, and which operations are most common. Query execution plans are continually monitored for opportunities to improve efficiency.
+When our use cases are not known at the outset, plan to iterate on the design, changing the structure to better support the use cases that have become better known over time. This will mean evolving the schema design through DDL changes.
 
-Queries are restructured and indexes are added to optimize data access by reducing it, with highly selective filtering to reduce latency.
+This applies to tables, columns, constraints, indexes, parameters, queries, and anything that can be optimized to better support real use cases.
 
-Filtering is performed on high cardinality columns. Critical background work like [VACUUM](https://www.postgresql.org/docs/current/sql-vacuum.html) is given more resources over time, to work well while not impacting foreground client application queries.
+Queries are restructured and indexes are added to reduce data access. Pursue high selectivity accessing data with high cardinality to reduce latency.
+
+Critical background processes like [VACUUM](https://www.postgresql.org/docs/current/sql-vacuum.html) gets more resources to support use cases.
 
 ## Responsive
-When problems emerge like column or row level unexpected data, missing referential integrity, or query performance problems, engineers have added logging, statistics, extensions, and tuned metrics so they're able to inspect the database and collect enough information to diagnose the issue.
+When problems emerge like column or row level unexpected data, missing referential integrity, or query performance problems, engineers inspect logs, catalog statistics, and parameters, from the core engine and third party extensions, to diagnose issues.
 
-When DDL changes are ready to make, the engineer applies them in a non-blocking way, in multiple steps when needed, so all operations can be performed on the database while it's running ("online" operations).
+When DDL changes are ready, the engineer applies them in a non-blocking way, in multiple steps as needed. Operations are performed "online" by default when practical.
 
-DDL changes being applied were created earlier and reviewed and tracked, keeping the schema design in sync across multiple instances of the database.
+DDL changes are in a source code file, reviewed, tracked, and a copy of the schema design is kept in sync across environments.
 
-Parameter (GUC) tuning (Postgres: `work_mem`, etc.), happens in a trackable way and prefers parameters that can be tuned without restarting the database, to iterate on improvements.
+Parameter (GUC) tuning (Postgres: `work_mem`, etc.) happens in a trackable way. Parameters are tuned online when possible, and scoped narrowly, to optimize their values for real queries and use cases.
 
 ## Efficient
-Data that's stored is queried later, otherwise it's archived out of the database into low cost file storage.
+Data that's stored is queried later, otherwise it's archived out of the database.
 
-Unneeded tables, columns, constraints, and indexes are removed continually as the design evolves.
+Unneeded tables, columns, constraints, and indexes are removed as a continual maintenance practice, to minimize space consumption and latency, and reduce system complexity.
 
-Server software is upgraded at least annually so that the core software and extensions benefit from performance improvements and bug fixes.
+Server software is upgraded at least annually so that performance and security benefits can be leveraged.
 
-Huge tables are split into smaller tables using native capabilities (table partitioning) for more predictable administration.
+Huge tables are split into smaller tables using table partitioning for more predictable administration.
 
 ## CORE Database Design
-There's lots more to evolving a database design, but these are a few principles that came to mind for me.
+There's lots more to evolving a database schema design, but these principles are a few I keep in mind.
 
-Did you notice anything missing you think should be added? Do you have any feedback on these principles or this acronym? Please contact me with your thoughts.
+Did you notice anything missing? Do you have other feedback? Please [contact me](/contact) with your thoughts.
 
 ## Thank You
-Much credit goes to learning I've gained from [Postgres.fm](https://postgres.fm) hosts [Nikolay](https://postgres.ai) and [Michael](https://www.pgmustard.com), as well as [Lukas](https://pganalyze.com) and [Franck](https://dev.to/franckpachot). I'm grateful for the content they've shared with the community from their deep knowledge and experience. Thank you!
+Over the years, I've learned a lot from [Postgres.fm](https://postgres.fm) hosts [Nikolay](https://postgres.ai) and [Michael](https://www.pgmustard.com), [Lukas](https://pganalyze.com) and [Franck](https://dev.to/franckpachot), as a few leaders that influenced my schema design recommendations.
+
+I'm grateful to them for sharing their deep knowledge and experience with the community.
+
+Thanks for reading!
