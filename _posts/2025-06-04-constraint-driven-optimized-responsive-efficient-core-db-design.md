@@ -2,7 +2,8 @@
 layout: post
 permalink: /constraint-driven-optimized-responsive-efficient-core-db-design
 title: "CORE Database Schema Design: Constraint-driven, Optimized, Responsive, and Efficient"
-date: 2025-06-07
+date: 2025-06-09
+tags: [PostgreSQL, Databases]
 ---
 
 ## Introduction
