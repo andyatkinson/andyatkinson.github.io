@@ -1,10 +1,22 @@
 ---
 layout: page
 permalink: /10-mistakes
-title: 10 Costly Database Performance Mistakes
+title: 10 Mistakes
 ---
 
+# 10 Costly Database Performance Mistakes
 ## (And How to Fix Them)
+Slides: <https://github.com/andyatkinson/presentations>
+
+## Book Giveaway
+1. Sign up for my newsletter on Postgres and Rails at <https://pgrailsbook.com> and confirm
+1. Once confirmed, reply to the email with "enter me into the book contest"
+
+That's it! I'll reply back to you and if you win, I'll find you at RailsConf to give you your book copy!
+
+See other readers who got their copies 👉 <br/>
+[📚 Readers get their copies of "High Performance PostgreSQL for Rails"](https://andyatkinson.com/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
+
 
 ## Bonus Content
 ## RailsConf 2025: The Past, the Present, and the Future of Rails
