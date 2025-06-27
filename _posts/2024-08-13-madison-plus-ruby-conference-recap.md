@@ -100,4 +100,5 @@ Thank you to Jim, Jen, Joyce, and all the staff that put the event on. It was a 
 
 If Madison+ Ruby comes back for 2025, I recommend it!
 
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">A wonderful few days at <a href="https://twitter.com/MadisonRuby?ref_src=twsrc%5Etfw">@MadisonRuby</a>. What a great community.</p>&mdash; Joshua Wood (@heyjoshwood) <a href="https://twitter.com/heyjoshwood/status/1819579859862966562?ref_src=twsrc%5Etfw">August 3, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+> A wonderful few days at Madison Ruby. What a great community.
+<small>- Joshua Wood</small>
