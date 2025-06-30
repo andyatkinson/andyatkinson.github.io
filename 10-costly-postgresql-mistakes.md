@@ -26,8 +26,16 @@ Check our meeting readers at Rails World and Madison Ruby 👉 <br/>
 - [Rails World 2024 Conference Recap](https://andyatkinson.com/rails-world-2024-conference-recap)
 - [Madison+ Ruby 2024 Conference Recap](https://andyatkinson.com/blog/2024/08/13/madison-plus-ruby-conference-recap)
 
+## Past RailsConf Conference Experiences
+- [RailsConf 2024 Conference — The Long Goodbye](https://andyatkinson.com/blog/2024/05/17/railsconf-conference-2024-detroit)
+- 2024 Workshop YouTube recording: [RailsConf 2024 - Build High Performance Active Record Apps by Andrew Atkinson](https://www.youtube.com/watch?v=4SERkjBF-es)
+- 2024 Workshop GitHub repo: [RailsConf 2024 Workshop](https://github.com/andyatkinson/rideshare/tree/main/docs/workshop)
+- 2022 [RailsConf 2022 Conference](https://andyatkinson.com/blog/2022/05/23/railsconf-2022)
+- [RailsConf 2017](https://andyatkinson.com/blog/2017/06/06/railsconf-2017)
+- [RailsConf Conference 2010 Baltimore](https://andyatkinson.com/blog/2010/07/01/railsconf-2010)
 
-## Bonus Content
+
+## Extra Content
 ## RailsConf 2025: The Past, the Present, and the Future of Rails
 - Past: 1970s![^1]
 - Present: PostgreSQL, MySQL, SQLite, *2024 Rails Survey*,[^survey] 2700 responses
@@ -52,11 +60,11 @@ section li, section li a {
 .footnote {
   position:relative;
 }
-ul {
+.footnote ul {
   list-style-type:none;
   margin-left:-5px;
 }
-ul.two-column-list {
+.footnote ul.two-column-list {
   column-count: 2;
   column-gap: 2rem;
   padding: 0;
@@ -110,7 +118,7 @@ ul.two-column-list {
   15. <a href='https://andyatkinson.com/generating-short-alphanumeric-public-id-postgres'>andyatkinson.com/generating-short-alphanumeric-public-id-postgres</a>
 </li>
 <li id='footnote-3-1'>
-  16. <a href='https://andyatkinson/presentations/blob/main/pass2024/README.md'>andyatkinson/presentations/blob/main/pass2024/README.md</a>
+  16. <a href='https://andyatkinson/presentations/blob/main/pass2024/README.md'>andyatkinson.com/presentations/blob/main/pass2024/README.md</a>
 </li>
 <li id='footnote-3-2'>
   17. <a href='https://andyatkinson.com/constraint-driven-optimized-responsive-efficient-core-db-design'>andyatkinson.com/constraint-driven-optimized-responsive-efficient-core-db-design</a>
