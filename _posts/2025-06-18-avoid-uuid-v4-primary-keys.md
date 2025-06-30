@@ -5,52 +5,53 @@ title: Avoid UUID Version 4 Primary Keys
 ---
 
 ## Introduction
-In the last handful of years, I've worked on databases where UUID Version 4[^rfc] was picked for the primary key data type and the database typically had performance problems and excessive IO.
+Over the last decade, I've worked on databases where UUID Version 4[^rfc] was picked as the primary key data type, and these databases have had performance problems and excessive IO.
 
-UUID v4 is easy to pick as they can be natively generated in Postgres with the `gen_random_uuid()`[^gen] function added in 13 (2020). There's a native binary data type `uuid` to store values.
+UUID is a native data type that can be stored as binary data. Version 4 is usually picked for its randomness, obfuscating information like when the value was created.
 
-I've learned that there are misconceptions about UUID Version 4 that can lead to them being chosen.
+It's easy to work with in Postgres as the `gen_random_uuid()`[^gen] generates values since version 13 (2020).
 
-After seeing this pattern on repeat, I’ve come around to a general recommendation: Avoid UUID Version 4 for primary keys when possible.
+I've learned there are also misconceptions about UUID Version 4, and generally speaking, I think most users that picked of them are not aware of how destructive to performance they can be.
 
-In this post, we will look at why performance for v4 UUIDs is a problem, consider their storage, maintenance, and cache behavior. We'll cover the limited set of scenarios where UUIDs are likely required.
+After seeing this pattern a number of times, I’ve come around to a simple recommendation: Avoid UUID Version 4 for primary keys.
+
+In this post, we will look at why performance is a problem, consider their storage, maintenance, and cache behavior. We'll cover the limited set of scenarios where UUIDs are likely required.
 
 ## Defining UUID Scope
-- UUID in general (similar to GUID), 128 bit (16 byte) values
-- UUID Version 4, mostly random bits
-- UUID Version 7, includes a timestamp which makes it orderable, solving most of the problems
+UUID (Univerisally Unique Identifier) can mean a lot of different things, so we'll define the scope here.
+- UUIDs are a standard (similar to GUID), and are long strings of 36 characters (32 digits, 4 hyphens), stored as 128 bits (16 byte) values
+- The bits for UUID Version 4 are mostly randomly generated
+- UUID Version 7 is newer and includes a portion of the bits that represent a timestamp, making them comparable, sortable, and that solves most of the problems discussed in this post
 
-There are other versions below 4 and above 7, but versions 4 and 7 are the main ones discussed here.
+There are other versions below 4 and above 7, but versions 4 and 7 are discussed here.
 
-## Scope and scale of apps
+## Scope of web app usage and and scale
 The kinds of web applications I’ve worked on are monolithic web apps, with Postgres as their primary OLTP database, in categories like social media, e-commerce, click tracking, or general business process apps.
 
 The type of performance issues here are related to inefficient storage and retrieval, meaning they occur regardless of the type of app.
 
-## Randomness means loss of correlation and locality
+## Randomness is the issue
 The core issue is that among the 128 bits for UUID Version 4, 122 are "random or pseudo-randomly generated values."[^rfc]
 
 Random values don’t have natural sorting like integers do, or lexicographic (dictionary) sorting like character strings.
 
 UUID v4s are ordered by "byte ordering," which has no semantic meaning for their use.
 
-Because they're inserted randomly, we lose "correlation" between their insert-based logical ordering, and their physical storage.
-
-When inserts are physically stored with high correlation to their logical order, this is a key characteristic for efficiently scanning ranges of ordered data, fast binary search lookups of items in B+-Tree indexes, and part of the temporal and spatial locality for caching, which we'll look at later.
-
-Given the loss of orderability, why pick UUIDs?
+Why pick them?
 
 ## Why choose UUIDs at all? Generating values from one or more client applications
-Imagine an offline mobile or desktop application that wants to work with items using an identifier locally, that will be persisted in Postgres. The client generates a UUID value and passes it to the server, which passes it to Postgres to store.
+There are some use cases for UUIDs that make sense to me, however I also see their use outside of this narrow set of use cases.
 
-I personally haven’t worked on apps with this requirement. For web apps, they generally instantiate objects in memory and then get a database-generated id when they’re persisted. I also tend to work with monolithic apps that have a single application database.
+One use case is generating the UUID on a client or from multiple applications or services. The client generates a UUID value and passes it to the server, which passes it to Postgres to store.
 
-However, I have worked with microservices architectures where the apps have their own databases. The ability to generate unique UUID values across all databases without collisions could be useful, in scenarios where it was critical to uniquely identify the database where the value came from.
+For web apps, they generally instantiate objects in memory and then get a database-generated id when they're persisted. I also tend to work with monolithic apps that have a single application database.
 
-We can’t make the collision avoidance guarantee with sequence-backed integers.
+However, I have worked with microservices architectures where the apps have their own databases. The ability to generate UUIDs across all databases without collisions could be useful. It would make it possible to identify the database where the value came from.
+
+We can’t easily or practically make the collision avoidance guarantee with sequence-backed integers. Two instances, evens and odds? Using different integer ranges?
 <https://news.ycombinator.com/item?id=36429986>
 
-For example, the number of UUIDs that need to be generated in order to have a 50% probability of at least one collision is 2.71 quintillion.
+Per Wikipedia, we'd need 2.71 quintillion UUIDs in order to have a 50% probability of at least one collision.
 
 This number would be equivalent to "generating 1 billion UUIDs per second for about 86 years."
 <https://en.wikipedia.org/wiki/Universally_unique_identifier>
@@ -58,42 +59,47 @@ This number would be equivalent to "generating 1 billion UUIDs per second for ab
 ## Reason for UUID: Hiding positional generation information
 One reason folks cite is that a random UUID v4 reveals no information about when it was generated. While it's true that integers can reveal their generation time, can be compared and sorted, I haven't seen a practical negative imapct of this.
 
-Integers could be used internally, and external obfuscated identifiers can be generated for use. We'll look at that later next.
+Integers could be used internally, and external obfuscated identifiers can be generated if there's concern. We'll look at one approach for that.
 
 ## Misconceptions: UUIDs are for security
+One misconception about UUIDs is that they're meant to be sure.
+
 From RFC 4122[^rfc] Section 6 Security Considerations:
 > Do not assume that UUIDs are hard to guess; they should not be used
 >   as security capabilities
 
 
 ## Reasons against UUID: We can create obfuscated values using integers
-We can achieve pseudo-random obfuscated identifiers using integers. Algorithm:
+While UUID V4s can obfuscate their creation time and can't be easily sorted, we can achieve a degree of that using integers. The premise is to use integers internally, but use a generated pseudo-random identifier externally.
 
-- Convert decimal integer into binary bits
-- Perform an XOR operation on the bits using a key
+We can use this algorithm:
+- Convert a decimal integer like "2" into binary bits. E.g. a 4 byte, 32 bit integer: 00000000 00000000 00000000 00000010
+- Perform an exclusive OR (XOR) operation on all the bits using a key
 - Encode each bit using a base62 alphabet
 
-We started from integer primary keys, and stored this obfuscated value in a Postgres generated column. The generated value does not appear sequential to a human reader. 
+I put together an example of this. To store the obfuscated id, I used a Postgres generated column. The generated value does not appear sequential to a human reader.
 
-For example the values in insertion order are, `01Y9I`, `01Y9L`, then `01Y9K`.
+For example the values in insertion order were `01Y9I`, `01Y9L`, then `01Y9K`.
 
 If they followed alphabetical ordering we'd expect the last two to be flipped: `01Y9I`, then `01Y9K`, then `01Y9L`.
 
 This solution is detailed further in this post: *Short alphanumeric pseudo random identifiers in Postgres*[^alpha]
 
-If I wanted to have globally unique obfuscated ids, I’d probably want to make that a core table that was polymorphic, referring outward to a table by name and the primary key id, so I’d know how to look up which table the record was in based on it’s obfuscated id.
+If I wanted to use these for all tables, I’d probably want to make that a core table that was polymorphic, referring outward to a table by name and the primary key id, so I’d know how to look up which table the record was in based on it’s obfuscated id.
 
-Now that we covered some reasons why UUIDs might be selected, let’s look at the reasons to avoid UUID in general, and especially versoin 4 as primary keys.
+Now that we covered obfuscated values, what are other reasons to avoid UUID?
 
 ## Reasons against UUIDs in general: they consume a lot of space
 UUIDs are 16 bytes (128 bits) per value, which is double the space of bigint (8 bytes), or quadruple the space of 4-byte integers. This extra space adds up once many tables have millions of rows, and copies of a database are being moved around as backups and restores.
 
-## Reasons against: UUID v4s add insert latency due to page splits, fragmentation
+## Reasons against: UUID v4s add insert latency due to index page splits, fragmentation
 For UUID v4s, due to their randomness, Postgres incurs more latency for every insert operation.
 
-For integers, inserts are "append-mostly" operations on "leaf nodes." Inserts are maintained in the primary key index.
+For integer primary keys, inserts are "append-mostly" on "leaf nodes" of index pages. An index is created automatically for a primary key.
 
-For UUID v4s, inserts are not appended to the right most leaf page. They are placed into a random page, and could be mid-page or into a full page, causing an otherwise unnecessary page split.
+For UUID v4s, storing primary key index entries in sorted order in a B-Tree index problematic.
+
+Inserts are not appended to the right most leaf page. They are placed into a random page, and could be mid-page or into a full page, causing an otherwise unnecessary page split.
 
 Page splits and rebalancing mean more fragmented data, which means it will have higher latency to access.
 
