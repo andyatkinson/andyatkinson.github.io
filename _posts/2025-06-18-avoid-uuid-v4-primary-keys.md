@@ -7,7 +7,7 @@ tags: [PostgreSQL, Databases, Ruby on Rails]
 ---
 
 ## Introduction
-Over the last decade, when working on databases where UUID Version 4[^rfc] was picked as the primary key data type, these databases usually have bad performance and excessive IO.
+Over the last decade, when working on databases with UUID Version 4[^rfc] as the primary key data type, these databases have usually have bad performance and excessive IO.
 
 UUID is a native data type that can be stored as binary data, with various versions outlined in the RFC. Version 4 is mostly random bits, obfuscating information like when the value was created, or where it was generated.
 
