@@ -2,6 +2,8 @@
 layout: post
 permalink: /constraint-driven-optimized-responsive-efficient-core-db-design
 title: Avoid UUID Version 4 Primary Keys
+date: 2025-06-09
+tags: [PostgreSQL, Databases, Ruby on Rails]
 ---
 
 ## Introduction
