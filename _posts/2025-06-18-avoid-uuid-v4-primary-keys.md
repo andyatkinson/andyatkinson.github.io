@@ -17,7 +17,9 @@ Because of the poor performance, misconceptions, and available alternatives, I‚Ä
 
 My more controversial take is to avoid UUIDs in general, but I understand there are some legitimate scenarios where there aren't practical alternatives.
 
-As a database enthusiast, I also wanted to have an articulated position on this classic "Integer v. UUID" debate.
+As a database enthusiast, I wanted to have an articulated position on this classic "Integer v. UUID" debate.
+
+Among databases folks, debating these alternatives may be tired and clich√©d. However, from my consulting work, I can say that I'm working on databases with UUID v4 as the primary key in 2024 and 2025, and seeing the issues discussed in this post.
 
 Let's dig in.
 
