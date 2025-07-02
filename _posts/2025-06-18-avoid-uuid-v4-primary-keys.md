@@ -9,23 +9,23 @@ tags: [PostgreSQL, Databases, Ruby on Rails]
 ## Introduction
 Over the last decade, when working on databases with UUID Version 4[^rfc] as the primary key data type, these databases have usually have bad performance and excessive IO.
 
-UUID is a native data type that can be stored as binary data, with various versions outlined in the RFC. Version 4 is mostly random bits, obfuscating information like when the value was created, or where it was generated.
+UUID is a native data type in Postgres can be stored as binary data. Various versions are in the RFC. Version 4 has mostly random bits, obfuscating information like when the value was created or where it was generated.
 
-Version 4 UUIDs are easy to work with in Postgres as the `gen_random_uuid()`[^gen] function generates values natively since version 13 (2020).
+Version 4 UUIDs are easy to generate in Postgres using the `gen_random_uuid()`[^gen] function since version 13 (released in 2020).
 
-I've learned there are misconceptions about UUID Version 4, and sometimes the reasons users pick this data type is based on them.
+I've learned there are misconceptions about UUID Version 4, and sometimes these are the reasons users pick this data type.
 
 Because of the poor performance, misconceptions, and available alternatives, I’ve come around to a simple position: *Avoid UUID Version 4 for primary keys*.
 
-My more controversial take is to avoid UUIDs in general, but I understand there are some legitimate scenarios where there aren't practical alternatives.
+My more controversial take is to avoid UUIDs in general, but I understand there are some legitimate reasons for them without practical alternatives.
 
 As a database enthusiast, I wanted to have an articulated position on this classic "Integer v. UUID" debate.
 
-Among databases folks, debating these alternatives may be tired and clichéd. However, from my consulting work, I can say that I'm working on databases with UUID v4 as the primary key in 2024 and 2025, and seeing the issues discussed in this post.
+Among databases folks, debating this may be tired and clichéd. However, from my consulting work, I can say I work with databases using UUID v4 in 2024 and 2025, and still see the issues discussed in this post.
 
 Let's dig in.
 
-## The scope of UUIDs in this post
+## UUID context for this post
 - UUIDs (or GUID in Microsoft speak)[^ms]) are long strings of 36 characters, 32 digits, 4 hyphens, stored as 128 bits (16 byte) values, stored using the binary `uuid` data type in Postgres
 - The RFC documents how the 128 bits are set
 - The bits for UUID Version 4 are mostly random values
@@ -35,7 +35,7 @@ Although unreleased as of this writing, and pulled from Postgres 17 previously, 
 
 What kind of app databases are in scope for this post?
 
-## Scope of web app usage and and scale
+## Scope of web app usage and and their scale
 The kinds of web applications I'm thinking of with this post are monolithic web apps, with Postgres as their primary OLTP database. The apps could be in categories like social media, e-commerce, click tracking, or business process automation apps.
 
 The types of performance issues discussed here are related to inefficient storage and retrieval, meaning they happen for all of these types of apps.
