@@ -142,7 +142,7 @@ Let’s create integer, UUID v4, and UUID v7 fields, index them, load them into 
 
 I will use the schema examples from the Cybertec post [Unexpected downsides of UUID keys in PostgreSQL](https://www.cybertec-postgresql.com/en/unexpected-downsides-of-uuid-keys-in-postgresql/) by Ants Aasma.
 
-Find the [GitHub PR here](https://github.com/andyatkinson/pg_scripts/pull/20).
+View [andyatkinson/pg_scripts PR #20](https://github.com/andyatkinson/pg_scripts/pull/20).
 
 On my Mac, I compiled the `pg_uuidv7` extension. Once compiled and enabled for Postgres, I could use the extension functions to generate UUID V7 values.
 
@@ -175,7 +175,7 @@ That's between ~1 and ~3.4 seconds of additional latency solely based on the dat
 ## Inspecting density with the pageinspect extension
 We can inspect the average fill percentage (density) of leaf pages using the *pageinspect* extension.
 
-The `uuid_experiments/page_density.sql` query in the repo gets the indexes for the integer and v4 and v7 uuid columns, their total page counts, their page stats, and the number of leaf pages.
+The `uuid_experiments/page_density.sql` ([andyatkinson/pg_scripts PR #20](https://github.com/andyatkinson/pg_scripts/pull/20)) query in the repo gets the indexes for the integer and v4 and v7 uuid columns, their total page counts, their page stats, and the number of leaf pages.
 
 Using the leaf pages, the query calculates an average fill percentage.
 
@@ -273,6 +273,7 @@ Do you see any errors or have any suggested improvements? Please [contact me](/c
 - Franck Pachot for AWS Heroes has an interesting take on [UUID in PostgreSQL](https://dev.to/aws-heroes/uuid-in-postgresql-3n53)
 - Brandur has a great post: [Identity Crisis: Sequence v. UUID as Primary Key](https://brandur.org/nanoglyphs/026-ids)
 - 5mins of Postgres: [UUIDs vs Serial for Primary Keys - what's the right choice?](https://pganalyze.com/blog/5mins-postgres-uuid-vs-serial-primary-keys)
+- [andyatkinson/pg_scripts PR #20](https://github.com/andyatkinson/pg_scripts/pull/20)
 
 [^alpha]: <https://andyatkinson.com/generating-short-alphanumeric-public-id-postgres>
 [^gen]: <https://www.postgresql.org/docs/current/functions-uuid.html>
