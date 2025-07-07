@@ -47,6 +47,9 @@ Check our meeting readers at Rails World and Madison Ruby 👉 <br/>
 ![rails_best_practices gem 90%](/assets/images/pages/rbp.jpg)
 <small>rails_best_practices gem</small>
 
+## ❌ Mistake #6—ORM Pitfalls Extra
+- Use `EXISTS`,<sup><a href="#footnote-5-7">30</a></sup> set `implicit_order_column`<sup><a href="#footnote-5-8">31</a></sup>
+
 [^1]: <https://ibm.com/history/relational-database>
 [^survey]: <https://railsdeveloper.com/survey/2024/#databases>
 [^dbeng]: <https://db-engines.com/en/ranking>
