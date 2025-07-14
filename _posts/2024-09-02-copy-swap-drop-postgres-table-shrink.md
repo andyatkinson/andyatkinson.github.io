@@ -209,7 +209,7 @@ The new table will become the replacement table and immediately begin receiving 
 
 Make sure you’re prepared for that, meaning you've tested this in a pre-production environment where it's safe to make mistakes, experiment, and roll back.
 
-Before we're ready to cut over for real, we want the indexes added back support the read queries.
+Before we're ready to cut over, we want the indexes to be added back.
 
 ### Adding indexes back
 We intentionally left out indexes initially, so that row copying went as fast as possible.
@@ -313,9 +313,9 @@ The buffer helps when we copy in missed inserts from the original table.
 SELECT setval('events_intermediate_id_seq', nextval('events_id_seq') + 1000);
 ```
 
-## Step 3: SWAP
+## Step 2: SWAP
 ### Ready to swap
-The subset of original tables rows are copied over. The replacement table structure is identical, including columns, data types, constraints, and indexes.
+The subset of original table rows are copied over. The replacement table structure is identical, including columns, data types, constraints, and indexes.
 
 We're ready to swap.
 
@@ -487,4 +487,4 @@ This pattern can be used to copy a portion of rows, where only, for example, 5% 
 
 pg_repack is great when *all* rows are needed, but the layout of table data and index data in pages has become inefficient.
 
-Space can be reclaimed using this approach or using pg_repack. They have different goals are are complementary tactics.
+Space can be reclaimed using this approach or using pg_repack. They have different goals and are complementary tactics.
