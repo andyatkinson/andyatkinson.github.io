@@ -1,6 +1,6 @@
 ---
 layout: post
-permalink: /constraint-driven-optimized-responsive-efficient-core-db-design
+permalink: /avoid-uuid-version-4-primary-keys
 title: Avoid UUID Version 4 Primary Keys
 date: 2025-07-02
 tags: [PostgreSQL, Databases, Ruby on Rails]
