@@ -7,6 +7,8 @@ title: RailsConf 2025—10 Mistakes
 # 10 Costly Database Performance Mistakes
 ## (And How to Fix Them)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pbztEjDyp8s?si=ByUxIYsF3waRqGj-" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 👉 [PDF Download](https://files.speakerdeck.com/presentations/dc50086b2ca34ea9aa9654440c36952c/10_mistakes.pdf)
 
 <iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/dc50086b2ca34ea9aa9654440c36952c" title="10 Costly Database Performance Mistakes (And How To Fix Them)" allowfullscreen="true" style="border: 0px; background: padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
