@@ -2,18 +2,19 @@
 layout: post
 permalink: /postgresql-slru-multixact-what-can-go-wrong
 title: What are SLRUs and Multixacts in Postgres? What can go wrong?
-hidden: true
+date: 2025-09-25 11:15:00
+tags: [PostgreSQL, Databases]
 ---
 
 In this post we’ll cover two types of Postgres internals.
 
-The first internal item is an “SLRU.” The acronym stands for “simple least recently used.” The LRU portion is used to refer to how caches and how they work, although SLRUs in Postgres also refer to a collection of usages of this type of cache.
+The first internal item is an “SLRU.” The acronym stands for “simple least recently used.” The LRU portion refers to caches and how they work, and SLRUs in Postgres are a collection of these caches.
 
 SLRUs are small in-memory item stores. Since they need to persist across restarts, they're also saved into files on disk. Alvaro[^alvaro] calls SLRUs “poorly named” for a user-facing feature. If they're internal, why are they worth knowing about as Postgres users?
 
-They’re worth knowing about as because they're related to a couple of possible failure points due their fixed size, and we'll look at those later in this post.
+They’re worth knowing about because there can be a couple of possible failure points with them, due their fixed size. We'll look at those later in this post.
 
-Before getting into that, let's cover some basics learning more about what they are covering one of the specific types.
+Before getting into that, let's cover some basics about what they are and look at a specific type.
 
 ## Main purpose of SLRUs
 The main purpose of SLRUs is to track metadata about Postgres transactions.
@@ -28,21 +29,21 @@ Old SLRU cache items are periodically cleaned up by the Vacuum process.
 ## What about the buffer cache?
 The buffer cache (sized by configuring [shared_buffers](https://www.postgresql.org/docs/current/runtime-config-resource.html)) is another form of cache in Postgres. Thomas Munro proposed unifying the SLRUs and buffer cache mechanisms.
 
-However, as of Postgres 17 and the upcoming 18 release, SLRUs are still their own distinct type of cache.
+However, as of Postgres 17 and the upcoming 18 release (released September 9, 2025), SLRUs are still their own distinct type of cache.
 
 What types of data is stored in SLRUs?
 
-## What types of data is tracked in SLRUs?
+## What type of data is tracked in SLRUs?
 Transactions are a core concept for relational databases like Postgres. Transactions are abbreviated “Xact,” and Xacts are one of the types of data stored in SLRUs.
 
 Besides regular transactions, there are variations of transactions. Transactions can be created inside other transactions, which are called “nested transactions.”
 
-Whether parent or nested transactions, they each get their own 32-bit integer identifier once they begin modifying something, and these are all tracked while they're in use. The [SAVEPOINT](https://www.postgresql.org/docs/current/sql-savepoint.html) keyword (blog post: [You make a good point! — PostgreSQL Savepoints](https://andyatkinson.com/blog/2024/07/22/postgresql-savepoints) saves incremental status for a transaction.
+Whether parent or nested transactions, they each get their own 32-bit integer identifier once they begin modifying something, and these are all tracked while they're in use. The [SAVEPOINT](https://www.postgresql.org/docs/current/sql-savepoint.html) keyword (blog post: [You make a good point! — PostgreSQL Savepoints](https://andyatkinson.com/blog/2024/07/22/postgresql-savepoints) saves the incremental status for a transaction.
 
 Another variation of a transaction is a “multi-transaction,” (multiple transactions in a group) or “MultiXact” in Postgres speak.
 
 ## What are MultiXacts?
-A MultiXact gets a separate number from the transaction identifier. I think of it like a “group” number. The group is working with the same logical table row for example, but each transaction in the group has a distinct purpose. Think of multiple transactions all doing a foreign key referential integrity lookup on the same referenced primary key.
+A MultiXact gets a separate number from the transaction identifier. I think of it like a “group” number. The group might be related to a table row, but each transaction in the group is doing something different. Think of multiple transactions all doing a foreign key referential integrity check on the same referenced primary key.
 
 Here’s a definition of MultiXact IDs:
 > A MultiXact ID is a secondary data structure that tracks multiple transactions holding locks on the same row.
@@ -51,7 +52,7 @@ When MultiXacts are created, their identifier is stored in tuple header info, re
 
 As this buttondown blog post ("Notes on some PostgreSQL implementation details")[^buttondown] describes, the tuple (row version) header has a small fixed size. The MultiXact id replaces the transaction id using the same size identifier (but a different one), to keep the tuple header size small (as opposed to adding another identifier).
 
-Transaction IDs and Multixact IDs are both represented as a unsigned 32-bit integer, meaning it's possible to store a max of around ~4 billion values. We can get the current tranaction id value by running `select pg_current_xact_id();`.
+Transaction IDs and Multixact IDs are both represented as a unsigned 32-bit integer, meaning it's possible to store a max of around ~4 billion values (See: [Transactions and Identifiers](https://www.postgresql.org/docs/current/transaction-id.html). We can get the current transaction id value by running `select pg_current_xact_id();`.
 
 What do we mean by transaction metadata? One example is with nested transactions, the parent transaction, the “creator”.
 
@@ -103,7 +104,7 @@ select name from pg_stat_slru;
  Other
 ```
 
-To determine if our system is creating Multixact SLRUs, we can query the pg_stat_slru view. We'd see non-zero numbers for the data points (rows) below, when the system is creating SLRU data.
+To determine if our system is creating Multixact SLRUs, we can query the pg_stat_slru view. We'd see non-zero numbers in rows below when the system is creating SLRU data.
 
 ```sql
 select name from pg_stat_slru;
@@ -150,20 +151,24 @@ Two examples with public write-ups related to SLRU operational problems are:
 - Subtransactions overflow: Using subtransactions, each use of a subtransaction creates an id to track. At a high enough creation rate it's possible to run out of values.
 This was written up in the GitLab post: [Why we spent the last month eliminating PostgreSQL subtransactions](https://about.gitlab.com/blog/why-we-spent-the-last-month-eliminating-postgresql-subtransactions/).
 
-Multixact member space exhaustion: Multi-xact or multiple transactions can occur in a few scenarios.
+Multixact member space exhaustion: MultiXact or multiple transactions can occur in a few scenarios.
 - An explicit row lock: `SELECT … FOR SHARE`
 - `SELECT … FOR UPDATE`
 
 Written up in the Metronome blog post: [Root Cause Analysis: PostgreSQL MultiXact member exhaustion incidents (May 2025)](https://metronome.com/blog/root-cause-analysis-postgresql-multixact-member-exhaustion-incidents-may-2025).
 
-A foreign key constraint lookup on a high insert table referencing a low cardinality table as the referenced table.
+A scenario for that could be a foreign key constraint lookup on a high insert table referencing a low cardinality table.
 
 Another type of problem in the buttondown post[^buttondown] is the quadratic growth of MultiXacts.
 
-Dilip Kumar talked about: “Long running transaction, system can go fully to cache replacement, TPS drops, with subtransactions ids (need to get parent ids).” See presentation.[^dilip]
+Dilip Kumar talked about: “Long running transaction, system can go fully to cache replacement, TPS drops, with subtransactions ids (need to get parent ids).” See Dilip's presentation for more info.[^dilip]
 
-## What do we do with all of this info as Postgres operators?
-Let's wrap up this post with some takeaways. If operating a high scale Postgres instance when it comes to SLRUs, what's worth knowing about?
+## What do we do with info as Postgres operators?
+This is a huge topic and this post just scratches the surface.
+
+However, let's wrap this up here a bit with some takeaways.
+
+If operating a high scale Postgres instance when it comes to SLRUs, what's worth knowing about?
 
 - Know about the SLRU system in general, how to monitor it, and don't forget about extensions
 - Learn about SLRUs limitations and possible failure points, for the various types
@@ -173,12 +178,17 @@ Let's wrap up this post with some takeaways. If operating a high scale Postgres 
 In Postgres 17, the Multixact member space and offset is now configurable beyond the initial default size. The unit is the number of 8KB pages. The default size is X and Y and this is configurable.
 Multixact_member_buffers, default is 32 8kb pages
 
-Multixact_offset_buffers, default is 16 8kb pages
+Multixact_offset_buffers, default is 16 8kb pages.
 
 > In the recent episode of postgres.fm *MultiXact member space exhaustion*,[^pgfm] the Metronome engineers discussed working on a patch related to Multixact member exhaustion.
 
 Lukas covers changes in Postgres 17 to adjust SLRU cache sizes. Each of the SLRU types can now be configured to be larger in size.
 <https://pganalyze.com/blog/5mins-postgres-17-configurable-slru-cache>
+
+## Conclusion
+I'm still learning about MultiXacts, SLRUs, and failure modes as a result of these. If you have feedback on this post or additional useful resources, I'd love to hear about them. Please contact me here or on social media.
+
+Thanks for reading!
 
 ## Resources
 Dilip Kumar presentation 2024 - PostgreSQL Development Conference <https://www.youtube.com/watch?v=74xAqgS2thY>
