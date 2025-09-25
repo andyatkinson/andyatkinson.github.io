@@ -52,22 +52,22 @@ When MultiXacts are created, their identifier is stored in tuple header info, re
 
 As this buttondown blog post ("Notes on some PostgreSQL implementation details")[^buttondown] describes, the tuple (row version) header has a small fixed size. The MultiXact id replaces the transaction id using the same size identifier (but a different one), to keep the tuple header size small (as opposed to adding another identifier).
 
-Transaction IDs and Multixact IDs are both represented as a unsigned 32-bit integer, meaning it's possible to store a max of around ~4 billion values (See: [Transactions and Identifiers](https://www.postgresql.org/docs/current/transaction-id.html). We can get the current transaction id value by running `select pg_current_xact_id();`.
+Transaction IDs and MultiXact IDs are both represented as a unsigned 32-bit integer, meaning it's possible to store a max of around ~4 billion values (See: [Transactions and Identifiers](https://www.postgresql.org/docs/current/transaction-id.html). We can get the current transaction id value by running `select pg_current_xact_id();`.
 
 What do we mean by transaction metadata? One example is with nested transactions, the parent transaction, the “creator”.
 
-If you’d like to read how AWS introduces Multixacts, check out this post. This post describes them: What are Multixacts?
+If you’d like to read how AWS introduces MultiXacts, check out this post. This post describes them: What are MultiXacts?
 <https://aws.amazon.com/blogs/database/multixacts-in-postgresql-usage-side-effects-and-monitoring/>
 
-When do Multixacts get created?
+When do MultiXacts get created?
 
-## When do Multixacts get created?
-Multixacts get created only for certain types of DML operations and for certain schema definitions. In other words, it’s possible that your particular Postgres database workload does not create Multixacts at all, or it’s possible they’re heavily used.
+## When do MultiXacts get created?
+MultiXacts get created only for certain types of DML operations and for certain schema definitions. In other words, it’s possible that your particular Postgres database workload does not create MultiXacts at all, or it’s possible they’re heavily used.
 Let’s look at what creates MultiXacts:
 - Foreign key constraint enforcement
 - `SELECT FOR SHARE`
 
-If you use no foreign key constraints or your application (or ORM) never creates `SELECT FOR SHARE`, then your Postgres database may have no Multixacts.
+If you use no foreign key constraints or your application (or ORM) never creates `SELECT FOR SHARE`, then your Postgres database may have no MultiXacts.
 
 Let’s go back to SLRUs.
 
@@ -104,7 +104,7 @@ select name from pg_stat_slru;
  Other
 ```
 
-To determine if our system is creating Multixact SLRUs, we can query the pg_stat_slru view. We'd see non-zero numbers in rows below when the system is creating SLRU data.
+To determine if our system is creating MultiXact SLRUs, we can query the pg_stat_slru view. We'd see non-zero numbers in rows below when the system is creating SLRU data.
 
 ```sql
 select name from pg_stat_slru;
@@ -151,7 +151,7 @@ Two examples with public write-ups related to SLRU operational problems are:
 - Subtransactions overflow: Using subtransactions, each use of a subtransaction creates an id to track. At a high enough creation rate it's possible to run out of values.
 This was written up in the GitLab post: [Why we spent the last month eliminating PostgreSQL subtransactions](https://about.gitlab.com/blog/why-we-spent-the-last-month-eliminating-postgresql-subtransactions/).
 
-Multixact member space exhaustion: MultiXact or multiple transactions can occur in a few scenarios.
+MultiXact member space exhaustion: MultiXact or multiple transactions can occur in a few scenarios.
 - An explicit row lock: `SELECT … FOR SHARE`
 - `SELECT … FOR UPDATE`
 
@@ -175,12 +175,12 @@ If operating a high scale Postgres instance when it comes to SLRUs, what's worth
 - Determine whether your workload is using SLRUs, monitor their growth, and learn about the possible failure points based on your use
 
 ## What’s changing with SLRUs in new Postgres versions?
-In Postgres 17, the Multixact member space and offset is now configurable beyond the initial default size. The unit is the number of 8KB pages. The default size is X and Y and this is configurable.
-Multixact_member_buffers, default is 32 8kb pages
+In Postgres 17, the MultiXact member space and offset is now configurable beyond the initial default size. The unit is the number of 8KB pages. The default size is X and Y and this is configurable.
 
-Multixact_offset_buffers, default is 16 8kb pages.
+- multixact_member_buffers, default is 32 8kb pages
+- multixact_offset_buffers, default is 16 8kb pages
 
-> In the recent episode of postgres.fm *MultiXact member space exhaustion*,[^pgfm] the Metronome engineers discussed working on a patch related to Multixact member exhaustion.
+> In the recent episode of postgres.fm *MultiXact member space exhaustion*,[^pgfm] the Metronome engineers discussed working on a patch related to MultiXact member exhaustion.
 
 Lukas covers changes in Postgres 17 to adjust SLRU cache sizes. Each of the SLRU types can now be configured to be larger in size.
 <https://pganalyze.com/blog/5mins-postgres-17-configurable-slru-cache>
