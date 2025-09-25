@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-slru-multixact-what-can-go-wrong
-title: What are SLRUs and Multixacts in Postgres? What can go wrong?
+title: What are SLRUs and MultiXacts in Postgres? What can go wrong?
 date: 2025-09-25 11:15:00
 tags: [PostgreSQL, Databases]
 ---
