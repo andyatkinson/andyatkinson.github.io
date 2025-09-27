@@ -77,10 +77,13 @@ SLRUs have a fixed size (prior to Postgres 17) measured in pages. When items are
 The page being replaced is called the “victim” page and Postgres must do a little work to find a victim page.
 Since SLRUs survive Postgres restarts, they’re [saved in files in the PGDATA directory](https://www.interdb.jp/pg/pgsql08/01.html://www.postgresql.org/docs/17/storage-file-layout.html#PGDATA-CONTENTS-TABLE).
 
-The directory name will depend on the SLRU type. For example for MultiXacts, the directory name is `pg_multixact`.
-Despite being saved to disk, SLRUs are *not* logged in the write ahead log (WAL).
+The directory name will depend on the SLRU type. For example for MultiXacts, the directory name is `pg_multixact`. SLRU buffer pages are written to the WAL and to disk, meaning that if the primary instance fails, the state can be recovered.
 
-This means they exist only on the primary instance and survive restarts, but aren’t replicated, so they wouldn’t survive a loss of the primary instance in the event of a primary instance replacement.
+See the `slru.c` `SlruPhysicalWritePage` function comments which describes writing WAL and writing out data:
+<pre>
+Honor the write-WAL-before-data rule, if appropriate, so that we do not
+write out data before associated WAL records.
+</pre>
 
 Each SLRU instance implements a circular buffer of pages in shared memory, evicting the least recently used pages. A circular buffer is another interesting Postgres internal concept but is beyond the scope of this post.
 How can we observe what’s happening with SLRUs?
@@ -198,6 +201,13 @@ MultiXacts Dan Slimmon
 
 5 minutes of Postgres LWLock Lock Manager
 <https://pganalyze.com/blog/5mins-postgres-LWLock-lock-manager-contention>
+
+SLRU Improvements Proposals Wiki
+<https://wiki.postgresql.org/wiki/SLRU_improvements>
+
+## Corrections
+
+September 27, 2025: An earlier version of this post inaccurately described SLRU buffers as not being WAL logged. Thank you to Laurenz Albe for writing in to correct this and providing a pointer into the source code to learn more.
 
 [^pgfm]: <https://postgres.fm/episodes/multixact-member-space-exhaustion>
 [^buttondown]: <https://buttondown.com/nelhage/archive/notes-on-some-postgresql-implementation-details/>
