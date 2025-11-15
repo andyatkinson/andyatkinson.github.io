@@ -4,9 +4,9 @@ permalink: /postgresql-tips
 title: PostgreSQL Tips, Tricks, and Tuning
 ---
 
-This page has blog posts and learning resources related to the PostgreSQL database.
+This page has blog posts and learning resources from my experience using the PostgreSQL database.
 
-This page isn't maintained frequently was was created mostly from 2018-2022. Some of this content made it into my Postgres book, where it is more accurate and organized. Please consider purchasing a copy, which helps support my future writing endeavors on Postgres!
+Some of the content here made it into my Postgres book, where it's more accurate and organized. Please consider purchasing a copy, which helps support my future writing endeavors on Postgres!
 
 {% include promo-box-book.html %}
 

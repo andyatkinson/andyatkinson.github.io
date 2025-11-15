@@ -17,9 +17,9 @@ title: High Performance PostgreSQL for Rails Book
 - [O’Reilly learning platform](https://www.oreilly.com/library/view/high-performance-postgresql/9798888651070/) (Ebook)
 
 ## ⭐⭐⭐⭐⭐ Ratings
-- [Amazon: 4.8, 10 ratings, 8 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
-- [Goodreads: 4.80, 20 ratings, 6 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
-- [The StoryGraph: 5.0, 1 rating](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
+- [Amazon: 4.8, 11 global ratings, 9 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
+- [Goodreads: 4.81, 27 ratings, 6 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [The StoryGraph: 5.0, 1 review](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
 ## 📷 Reader photos
 [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
@@ -97,9 +97,10 @@ title: High Performance PostgreSQL for Rails Book
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
 ## Upcoming Appearances
-- July 8-10, 2025 - [RailsConf 2025](https://railsconf.org)
 
 ## Book Events and Past Appearances
+- October 8-10, 2025 - [PGConf NYC 2025](https://postgresql.us/events/pgconfus2025/schedule/session/1972-multitenancy-patterns-in-community-postgresql/)
+- July 8-10, 2025 - [RailsConf 2025](https://railsconf.org)
 - November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
 - September 26-27, 2024 - [Rails World 2024](https://rubyonrails.org/world/2024)
 - 2024 August: [Presented at Madison+ Ruby](/blog/2024/08/13/madison-plus-ruby-conference-recap)
