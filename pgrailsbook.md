@@ -97,6 +97,7 @@ title: High Performance PostgreSQL for Rails Book
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
 ## Upcoming Appearances
+- June 2026 - [PG DATA 2026](https://2026.pg-data.org/)
 
 ## Book Events and Past Appearances
 - October 8-10, 2025 - [PGConf NYC 2025](https://postgresql.us/events/pgconfus2025/schedule/session/1972-multitenancy-patterns-in-community-postgresql/)
