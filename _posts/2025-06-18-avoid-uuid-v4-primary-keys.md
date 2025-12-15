@@ -7,9 +7,9 @@ tags: [PostgreSQL, Databases, Ruby on Rails]
 ---
 
 ## Introduction
-Over the last decade, when working on databases with UUID Version 4[^rfc] as the primary key data type, these databases have usually have bad performance and excessive IO.
+Over the last decade, when working on databases with UUID Version 4[^rfc] as the primary key data type, these databases have usually had bad performance and excessive IO.
 
-UUID is a native data type in Postgres can be stored as binary data. Various versions are in the RFC. Version 4 has mostly random bits, obfuscating information like when the value was created or where it was generated.
+UUID is a native data type in Postgres stored as binary data. Various UUID versions are in the RFC. Version 4 has mostly random bits, obfuscating information like when the value was created or where it was generated.
 
 Version 4 UUIDs are easy to generate in Postgres using the `gen_random_uuid()`[^gen] function since version 13 (released in 2020).
 
@@ -35,7 +35,7 @@ Although unreleased as of this writing, and pulled from Postgres 17 previously, 
 
 What kind of app databases are in scope for this post?
 
-## Scope of web app usage and and their scale
+## Scope of web app usage and their scale
 The kinds of web applications I'm thinking of with this post are monolithic web apps, with Postgres as their primary OLTP database. The apps could be in categories like social media, e-commerce, click tracking, or business process automation apps.
 
 The types of performance issues discussed here are related to inefficient storage and retrieval, meaning they happen for all of these types of apps.
