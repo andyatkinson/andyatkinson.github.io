@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /avoid-uuid-version-4-primary-keys
-title: Avoid UUID Version 4 Primary Keys
+title: Avoid UUID Version 4 Primary Keys (for Postgres)
 date: 2025-07-02
 tags: [PostgreSQL, Databases, Ruby on Rails]
 ---
@@ -43,13 +43,19 @@ The types of performance issues discussed here are related to inefficient storag
 What's the core issue with UUID v4?
 
 ## Randomness is the issue
-The core issue with UUID Version 4, given 122 bits are "random or pseudo-randomly generated values"[^rfc] and primary keys are backed by indexes, is the impact to inserts and retrieval of individual items or ranges of values from the index.
+The core issue with UUID Version 4, given that the 122 bits they're made up of are "random or pseudo-randomly generated values"[^rfc], is how the values are maintained in indexes. Since primary keys are backed by indexes by default, each insert is less efficient compared with inserts for sequentially ordered values.
 
-Random values don't have natural sorting like integers or lexicographic (dictionary) sorting like character strings.
+For lookups, each update and delete for individual items or for ranges of items are less efficient, due to increased traversal of non-sequential index pages in Postgres.
 
-UUID v4s do have "byte ordering," but this has no useful meaning for how they're accessed.
+Since the randomly generated values aren't inserted sequentially (or in sequential/adjacent pages), it's less efficient to find them later for updates or deletes. Each of these workload types use the primary key index.
 
-What use cases for UUID are there?
+UUID v4s don't have a useful natural ordering that aligns with how they're stored, and thus both storage and retrieval is less efficient.
+
+Later in the post we'll look at just how many more Postgres pages need to be accessed for equivalent data, and what that means in terms of performance.
+
+Despite the inefficiencies, UUID v4s and UUIDs in general remain (or at least were) popular in the last decade based on my experience consulting in Postgres.
+
+Given the popularity, what use cases for UUID are there?
 
 ## Why choose UUIDs at all? Generating values from one or more client applications
 One use case for UUIDs is when there's a need to generate an identifier on a client or from multiple services, then passed to Postgres for persistence.
@@ -274,6 +280,9 @@ Do you see any errors or have any suggested improvements? Please [contact me](/c
 - Brandur has a great post: [Identity Crisis: Sequence v. UUID as Primary Key](https://brandur.org/nanoglyphs/026-ids)
 - 5mins of Postgres: [UUIDs vs Serial for Primary Keys - what's the right choice?](https://pganalyze.com/blog/5mins-postgres-uuid-vs-serial-primary-keys)
 - [andyatkinson/pg_scripts PR #20](https://github.com/andyatkinson/pg_scripts/pull/20)
+
+## Updates
+- 2025-12-15: Appeared on [front page of Hacker News](https://news.ycombinator.com/item?id=46272487). Updating the "Randomness is the issue" section for improved clarity.
 
 [^alpha]: <https://andyatkinson.com/generating-short-alphanumeric-public-id-postgres>
 [^gen]: <https://www.postgresql.org/docs/current/functions-uuid.html>
