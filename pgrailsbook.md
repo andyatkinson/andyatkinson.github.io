@@ -18,8 +18,8 @@ title: High Performance PostgreSQL for Rails Book
 
 ## ⭐⭐⭐⭐⭐ Ratings
 - [Amazon: 4.9, 12 global ratings, 9 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
-- [Goodreads: 4.73, 30 ratings, 6 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
-- [The StoryGraph: 5.0, 1 review](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
+- [Goodreads: 4.74, 31 ratings, 6 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
+- [The StoryGraph: 4.0, 2 reviews](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
 
 ## 📷 Reader photos
 [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
@@ -71,6 +71,9 @@ title: High Performance PostgreSQL for Rails Book
 
 ## Stay Informed!
 [Sign up for my Newsletter](https://pgrailsbook.com) covering book topics, consulting, and more. Around 1x/email per month.
+
+## Citations
+- [Karwin, Bill. More SQL Antipatterns. Pragmatic Bookshelf, March 2026, ISBN 9798888652060](https://pragprog.com/titles/bksap2/more-sql-antipatterns)
 
 ## Community Links
 - [Kevin Murphy](https://kevinjmurphy.com) wrote about the book in [2023 Year-End Review](https://kevinjmurphy.com/posts/2023-review/)
