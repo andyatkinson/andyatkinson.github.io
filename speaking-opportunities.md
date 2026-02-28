@@ -11,6 +11,11 @@ Explore all speaking engagements below or jump to [Ruby Events](https://www.ruby
 - Podcast (audio)
 - [🎙️ Helping Rails developers learn Postgres with Andrew Atkinson](https://talkingpostgres.com/episodes/helping-rails-developers-learn-postgres-with-andrew-atkinson/transcript)
 
+## Dead Code: Postgres and Destroy (with Andrew Atkinson)
+- <cite>2024-11-05</cite>
+- Podcast (audio)
+- [🎙️ Postgres and Destroy (with Andrew Atkinson)](https://shows.acast.com/dead-code/episodes/postgres-and-destroy-with-andrew-atkinson)
+
 ## StepChange: Scaling Rails & Postgres
 - <cite>2024-08-29</cite>
 - Video interview
