@@ -6,6 +6,11 @@ title: Speaking Opportunities
 
 Explore all speaking engagements below or jump to [Ruby Events](https://www.rubyevents.org/speakers/andrew-atkinson).
 
+## RailsConf 2025
+<cite>2025-09-04</cite>
+- Presentation
+- [🎥 RailsConf 2025 10 Costly Database Performance Mistakes (and How to Fix Them) by Andrew Atkinson](https://www.youtube.com/watch?v=pbztEjDyp8s)
+
 ## Talking Postgres
 - <cite>2024-11-15</cite>
 - Podcast (audio)
