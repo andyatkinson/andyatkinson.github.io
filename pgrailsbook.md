@@ -24,6 +24,9 @@ title: High Performance PostgreSQL for Rails Book
 ## Rideshare
 The Rails app for the book, [Rideshare](https://github.com/andyatkinson/rideshare), was recently updated for Postgres 18 compatibility.
 
+## Upcoming Appearances
+- June 2026 - [PG DATA 2026](https://2026.pg-data.org/)
+
 ## 📷 Reader photos
 [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
 
@@ -101,9 +104,6 @@ The Rails app for the book, [Rideshare](https://github.com/andyatkinson/rideshar
 - [Mention from University of Minnesota](https://www.linkedin.com/posts/university-of-minnesota-college-of-continuing-and-professional-studies_programming-softwaredevelopment-softwareengineer-activity-7221199488894345216-Ym6-?utm_source=share&utm_medium=member_desktop)
 - [Follow me on Amazon](https://www.amazon.com/stores/Andrew-Atkinson/author/B0D77SXQL9?ref=ap_rdr&isDramIntegrated=true&shoppingPortalEnabled=true)
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
-
-## Upcoming Appearances
-- June 2026 - [PG DATA 2026](https://2026.pg-data.org/)
 
 ## Book Events and Past Appearances
 - October 8-10, 2025 - [PGConf NYC 2025](https://postgresql.us/events/pgconfus2025/schedule/session/1972-multitenancy-patterns-in-community-postgresql/)
