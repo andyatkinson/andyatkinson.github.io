@@ -985,3 +985,31 @@ pre[class*="language-"] {
 .token.entity {
 	cursor: help;
 }
+
+.summary-box {
+  border-left: 4px solid #4f46e5;
+  background: #f8fafc;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 6px;
+}
+
+.styled-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.styled-table th, .styled-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.styled-table th {
+  text-align: left;
+  background: #f1f5f9;
+}
+.summary-row td {
+  background: #eef2ff;
+  border-top: 2px solid #6366f1;
+  font-weight: 500;
+  padding: 1rem;
+  text-align: left;
+}
