@@ -1,32 +1,30 @@
 ---
 layout: post
 permalink: /postgresql-scaling-aws-christmas-day-traffic-surge
-title: Scaling Postgres for Surging Christmas Day Traffic Surge (#1 App in the U.S.)
+title: Scaling Beyond a Single RDS Postgres Instance for Surging Christmas Traffic (#1 App in the U.S.)
 hidden: true
 ---
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>
-On Christmas Day 2024, the Postgres instance powering the Aura Frames app API went down for three hours under surging load. A year later, the reworked Postgres application layer handled even *more* traffic and without any issues, allowing the app to reach #1 in the U.S. and Canadian Apple and Android App Stores.
+On Christmas Day 2024, the Postgres instance powering the Aura Frames app API went down for three hours under surging client application load. A year later, the reworked approach not only survived, but thrived. </p>
+<p>
+Queries per second (QPS) peaked at 225,000 across the instances, with more than 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
+</p>
+<p>Postgres handled <em>more</em> traffic, without issues, helping the app reach #1 in the U.S. and Canadian Apple and Android App Stores.</p>
+<p>
+In this post we’ll look behind the scenes at the months of planning and execution that resulted in this outcome.
 </p>
 <p>
-Not only did Postgres survive, it thrived. Queries per second (QPS) peaked at 225,000, more than 100K sustained QPS over 10 hours for multiple days, with an average response time of 25 microseconds.
-</p>
-<p>
-In this post we’ll take a behind the scenes look at months of planning and execution which added tons of capacity to Postgres, allowing it to operate reliably at 4-5x the scale.
-</p>
-<p>
-A follow-up post will dig into the Ruby on Rails side, this one focuses on Postgres. Let’s dive in!
+A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres. Let’s dive in!
 </p>
 </div>
 
 ## What’s Aura?
-Postgres is the primary data store processing and serving customer data for the Aura Frames backend API, which is used by the iOS and Android apps.
+Aura Frames produces modern, stylish, wi-fi connected digital photo frames. The company has been around for more than 10 years and customers love adding the frames to their homes.
 
-What are Aura Frames? Aura Frames are modern, stylish, wi-fi connected digital photo frames. The company has been around for more than 10 years and customers love adding the frames to their homes.
-
-They're easy to gift as they are easy to use, don't require a subscription, and offer unlimited storage for photos and videos.
+The frames are easy to gift as the're easy to use, don't require a subscription, and offer unlimited storage for photos and videos.
 
 Aura keeps a relatively low profile in the tech community, but was previously featured on the [AWS blog post in October 2024](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/) for how it uses AWS S3 Express One Zone.
 
@@ -35,27 +33,25 @@ I also happen to be a fan of the products of the company and recommend them. I h
 ## Disclosures
 I joined the Aura team in 2025. Aura does not have a public space for technical blog posts so we discussed me writing this post on my own site where I regularly write about Postgres and Ruby on Rails.
 
-Engineering leadership was receptive to that. However, this post was written by me and I do not speak for the company. The company had the opportunity to review and edit the post before publication.
+This post was written by me and I do not speak for the company. The company had the opportunity to review and edit the post before publication.
 
 With those disclosures out of the way, let’s get into the technical details.
 
 
 ## Where does the surge in traffic come from?
-On Christmas Day, tens of thousands of customers set up new frames for the first time. It is critical they have a good experience!
+On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience, which means the platform needs to be scalable and reliable.
 
-The rate of new frames being set up with new photos being added is predictable given the gifting behavior, but does increase pressure on all systems as traffic increases by 4-5x over normal load.
+The rate of new frames being set up with new photos being added is predictable given the gifting behavior, but does increase pressure on all systems as traffic increases by 3x or more from normal levels.
 
 
 ## Scaling over the years
-The team has executed a variety of scaling tactics over the last half decade both by employees and in conjunction with Postgres consultants. Scaling efforts often focused on reducing pressure on Postgres.
+The team has executed a variety of scaling tactics over the last half decade by employees and in conjunction with Postgres consultants. Scaling efforts often focused on reducing pressure on Postgres, due to the limits of a single primary instance, and preserving that operational simplicity as long as possible.
 
-On the HTTP application side, being able to leverage horizontal scalability by creating a large fleet of application servers and image processing servers has made scaling easier.
+Scaling is more straightforward on the stateless, HTTP side. Aura uses AWS and has leveraged Auto Scaling Groups (ASGs), which can scale up to thousands of EC2 instances running the web application stack, image processing, PgBouncer, and other services.
 
-Aura uses AWS and has leveraged auto scaling groups (ASGs) with up to thousands of medium sized EC2 servers running the web application stack and image processing services.
+For Postgres, vertical scaling was leveraged as long as possible.
 
-For Postgres, vertical scaling was leveraged as long as possible. A single Postgres primary instance was in place for Christmas 2024. However, with the RDS instance class sized up to the largest available (db.r8g.48xlarge), there were no more options in the same instance class family to move to, to easily add resources.
-
-Here's a look at the primary database serving application traffic for Christmas 2024.
+Here's a look at the primary database instance serving application traffic from the prior year, Christmas 2024.
 <table class="styled-table">
   <thead>
     <tr>
@@ -68,7 +64,7 @@ Here's a look at the primary database serving application traffic for Christmas 
   </thead>
   <tbody>
     <tr>
-      <td>db.r8g.48xlarge</td>
+      <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
@@ -80,43 +76,47 @@ Here's a look at the primary database serving application traffic for Christmas 
 Without a larger instance class to move to, and having faced a 3 hour downtime during Christmas day 2024, the team was looking to heavily invest in reliability for Postgres ahead of Christmas 2025.
 
 ## Postgres Scaling Challenges and Solutions
-Postgres faces all kinds of common challenges.
+The use of Postgres by Aura faces all kinds of common Postgres scaling challenges.
 
-1. Insert latency. To help reduce latency, foreign key constraints are not used. All possible indexes are removed. Indexes are periodically rebuilt.
-1. Replication. Due to needing to read after write and high replication lag years ago, read queries were not run on replicas. Replication of write ahead logs (WAL) remained a challenge.
-1. Buffer cache and high cache hit rates. It was critical to have as much memory as possible for buffer cache to achieve sub-millisecond query executions, in order to have enough throughput to reach more than 100K TPS.
-1. IOPS consumption exceeded quota. It was critical to avoid high storage device queueing and latency, in part by over provisioning PIOPS on io2 storage.
-1. The team faced unexplained CPU spikes that were reproducible in a load testing environment. The CPU use spikes caused temporary but widespread increased latency.
-1. Using Postgres via RDS means the team was limited on debugging tools. Linux host OS debugging tools like “perf” were not available. Even “enhanced metrics” and with tons of CloudWatch metrics, consuming events from the Postgres log like verbose vacuum logs, logging lock waits, as many [system catalog statistics](https://www.postgresql.org/docs/current/monitoring-stats.html) as possible like pg_stat_slru or pg_stat_io, sometimes was not enough to prove certain theories with hard evidence. 
-1. During the surge events, the Postgres database faced very high client connections into the 10s of thousands. Thank goodness for pgbouncer, and many instances of it! (More on that later)
-1. The application design involved per-user counts that were constantly changing. This could be social media style likes, comments, activity feeds, and more. The backend relies heavily on memcached for this with HAProxy helping manage memcached connections.
-1. Disruptive vacuum during busy periods. The team relies on throttling down vacuum and running manually scheduled vacuum jobs in the middle of the night, to avoid disruptive IO from contending with user IO.
-1. Index bloat. The database uses a primary key data type that isn’t 100% ideal for minimizing bloat, this index bloat (and table bloat) can creep up and make indexes large and scans not perform as well. For this reason indexes are periodically rebuilt.
-1. Configuration complexity. Postgres parameters (GUCs) are not heavily modified beyond what RDS provides.
+- Insert latency. To help reduce latency, foreign key constraints are not used. All possible indexes are removed. Indexes are periodically rebuilt.
+- Replication. Due to needing to read after write and high replication lag years ago, read queries were not run on replicas. Replication of write ahead logs (WAL) remained a challenge.
+- Buffer cache and high cache hit rates. It was critical to have as much memory as possible for buffer cache to achieve sub-millisecond query executions, in order to have enough throughput to reach more than 100K TPS.
+- IOPS consumption exceeded quota. It was critical to avoid high storage device queueing and latency, in part by over provisioning PIOPS on io2 storage.
+- The team faced unexplained CPU spikes that were reproducible in a load testing environment. The CPU use spikes caused temporary but widespread increased latency.
+- Using Postgres via RDS means the team was limited on debugging tools. Linux host OS debugging tools like “perf” were not available. Even “enhanced metrics” and with tons of CloudWatch metrics, consuming events from the Postgres log like verbose vacuum logs, logging lock waits, as many [system catalog statistics](https://www.postgresql.org/docs/current/monitoring-stats.html) as possible like pg_stat_slru or pg_stat_io, sometimes was not enough to prove certain theories with hard evidence. 
+- During the surge events, the Postgres database faced very high client connections into the 10s of thousands. Thank goodness for pgbouncer, and many instances of it! (More on that later)
+- The application design involved per-user counts that were constantly changing. This could be social media style likes, comments, activity feeds, and more. The backend relies heavily on memcached for this with HAProxy helping manage memcached connections.
+- Disruptive vacuum during busy periods. The team relies on throttling down vacuum and running manually scheduled vacuum jobs in the middle of the night, to avoid disruptive IO from contending with user IO.
+- Index bloat. The database uses a primary key data type that isn’t 100% ideal for minimizing bloat, this index bloat (and table bloat) can creep up and make indexes large and scans not perform as well. For this reason indexes are periodically rebuilt.
+- Configuration complexity. Postgres parameters (GUCs) are not heavily modified beyond what RDS provides.
 
-## Postgres Christmas 2024
-Unfortunately on Christmas day 2024, the surging traffic outstripped what the Postgres instance could handle. A root cause analysis was conducted and revealed that one of the main contributors to downtime was the growth of the write ahead log exceeding the available space. This was due to the log not being consumed fast enough by the replica.
+## Christmas 2024 Retrospective
+Unfortunately on Christmas Day 2024, the surging client application traffic outpaced what the Postgres instance could handle. A root cause analysis revealed that one of the main contributors to downtime was the growth of the write ahead log (WAL) exceeding the available space. This was due to the log not being consumed fast enough by the replica.
 
 As a fix for that going forward, the team introduced a higher bandwidth solution: a [dedicated log volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) which offered a higher SLA for WAL log replay.
 
-The team also started forming theories for how to increase Postgres reliability, and began reproducing problematic CPU use under synthetic load tests for analysis. The CPU use was analyzed in the summer of 2025 and many theories were formed, but none had very hard evidence.
+That wasn't the totality of the problem though, and the team wanted more reliability.
 
-Various sharding and distributed Postgres theories were explored including one proof of concept using Rails’ horizontal sharding by a shared identifier. This was partially built out and could have been a viable solution, but was ultimately not chosen. As a reminder, we will focus more on the Ruby on Rails side changes in a future post.
+The team was able to reproduce problematic high CPU usage under synthetic load testing. A variety of theories for the high CPU use was analyzed over the summer of 2025, but ultimately none had very strong evidence. RDS Postgres limits access to the underlying host OS making it impossible to directly use [Linux profiling tools like perf](https://perfwiki.github.io/main/).
 
-So what happened for Christmas 2025?
+To increase reliability, the team began creating proofs of concept for distributing Postgres traffic (sharding). Various Postgres sharding approaches were explored, but with the team heavily preferring mature solutions, a high degree of operator ownership and deep understanding, that limited the options.
+
+Ruby on Rails’ [Horizontal Sharding](https://guides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding) was partially built out and could have been a viable solution, but ultimately was not chosen.
+
+With about half of the months gone of 2025, the expected further traffic increase for Christmas 2025 was approaching. A major constraint on the plan was what could be built on a small team within a few months. We wanted to leave time for load testing to validate changes.
 
 ## Postgres Christmas 2025
-The overarching goal was a reliable Postgres system for Christmas 2025, capable of meeting demand, and being stable. There was a willingness to spend on more instances, and even over provision those instances, if that brought stability through the holiday period.  
+The solution that seemed to fit the best would be a custom solution, rewriting a lot of the application query layer, taking direct control of key queries and making changes needed to distribute the tables.
 
-To prepare, the team analyzed the top 10 tables by write volume and the general idea was to divide up the traffic to more instances. To achieve that, all queries would need to be analyzed for incompatible elements, like tables joined together or having subqueries that referenced tables that would no longer be in the same database.
+To prepare, the top 10 tables by write volume were analyzed and grouped up. All queries for those tables would need to be analyzed for incompatible elements that don't work across a database boundary, like joins and some subqueries.
 
-Ultimately the 10 tables were distributed to 7 different primary instances, with some having as little as 1 table and others having a couple. All reads and writes to these tables would continue to come from the same primary Ruby on Rails codebase, not new microservices. To achieve that we’d use Active Record Multiple Databases support. https://guides.rubyonrails.org/active_record_multiple_databases.html That meant that each primary database would get the full accoutrement, including its own named config, the option of a read replica, the ability to manage schema definition DDL changes (schema.rb). The production configuration would be mirrored in all lower environments so that the existing extensive unit test suite would run but now with 7 databases. The only difference in developer environments was these 7 databases would exist within one Docker based Postgres instance, instead of being on their own server instances.
+Ultimately the 10 tables were distributed to 7 different primary instances, some with as few as 1 table. All reads and writes continued to flow from the same Ruby on Rails codebase, not new microservices. To achieve that we’d use [Active Record Multiple Databases](https://guides.rubyonrails.org/active_record_multiple_databases.html) support. That meant that each primary database would get the full accoutrement, including its own named config, the option of a read replica, the ability to manage schema definition DDL changes (Rails "Migrations"). The production configuration would be mirrored in all lower environments so that the extensive unit test suite would run across all with 7 databases. The only difference in developer environments was these 7 databases would exist within one Docker based Postgres instance, instead of being on their own server instances.
 
-With the plan in place, it was time to start coding, and the clock was ticking! We got started in earnest around August 2025 with 4-5 months in total available to execute the plan.
+With the plan in place, it was time to start coding, and the clock was ticking! We got started in earnest around August 2025 with 3-4 months available to execute and validate the plan.
 
-For 2025, with more than 7 instances available, the three largest scaled to 48x instances, there was simply way more capacity available.
+With each instance dedicated to one or a couple of tables, their was much more CPU, Memory, and IOPS available for their work. This allowed us to scale up the instances before Christmas, over-provisioning them to add extra headroom for increased reliability. We determined the query workload for the biggest table by size, row count, call frequency, and % of IO, would still fit ok on a single big instance.
 
-With each instance dedicated to one or a couple of tables, their was much more CPU, memory, and IOPS available for their work.
+Here's how it looked through Christmas 2025.
 
 <table class="styled-table">
   <thead>
@@ -130,136 +130,185 @@ With each instance dedicated to one or a couple of tables, their was much more C
   </thead>
   <tbody>
     <tr>
-      <td>db.r8g.48xlarge</td>
+      <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
       <td>✔️</td>
     </tr>
     <tr>
-      <td>db.r8g.48xlarge</td>
+      <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
       <td>✔️</td>
     </tr>
     <tr>
-      <td>db.r8g.48xlarge</td>
+      <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
       <td>✔️</td>
     </tr>
     <tr>
-      <td>...(and more)</td>
+      <td>db.r6g.16xlarge</td>
+      <td>64</td>
+      <td>512</td>
+      <td>gp3</td>
       <td></td>
+    </tr>
+    <tr>
+      <td>db.r6g.16xlarge</td>
+      <td>64</td>
+      <td>512</td>
+      <td>gp3</td>
       <td></td>
+    </tr>
+    <tr>
+      <td>db.r6g.16xlarge</td>
+      <td>64</td>
+      <td>512</td>
+      <td>gp3</td>
       <td></td>
+    </tr>
+    <tr>
+      <td>db.r6g.16xlarge</td>
+      <td>64</td>
+      <td>512</td>
+      <td>gp3</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>db.r6g.16xlarge</td>
+      <td>64</td>
+      <td>512</td>
+      <td>gp3</td>
       <td></td>
     </tr>
   </tbody>
   <tfoot>
     <tr class="summary-row">
-      <td></td>
-      <td>> 576 vCPUs</td>
-      <td>> 4608 GB</td>
+      <td><strong>Totals</strong></td>
+      <td><strong>832 vCPU</strong></td>
+      <td><strong>6656 GiB</strong></td>
       <td></td>
       <td></td>
     </tr>
   </tfoot>
 </table>
+
+This capacity powered Christmas well, but of course was expensive to operate. We'll look at how we reigned in costs after Christmas coming up.
 
 ## Workload driven “whole table sharding”
 We ended up using the term “whole table sharding” and the tables picked tended to have the most writes, the most rows, and be the most challenging to vacuum quickly or rebuild indexes for.
 
-We were able to gradually modify all the application queries and get everything rolled out in such a way it was code-compatible with the old and new method.
+We were able to gradually modify all the application queries and get everything rolled out in such a way it was compatible with the old and new approach.
 
-To actually transition the row data we tried using AWS pglogical and regular logical replication. Unfortunately neither ended up working ok. We may revisit that in the future, however we  ultimately decided on using physical replication to transition the data which we knew we could operate reliably and quickly. The major downside of this approach was that we had to repeat it 6 times, duplicating the entire database each time, when in some cases we only wanted a single table!
+To actually transition the row data we tried using [AWS pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.pglogical.html) and logical replication directly, but did not successfully replicate data in a reasonable amount of time.
 
-To address that downside, we decided it would be ok to temporarily over provision the space needed on the new instances, then scale the provisioned space back down after Christmas by using the AWS Blue Green deployments. BG Deployments made the process pretty smooth. We’ll cover that more in a bit.
+We may revisit that in the future, however we ultimately decided on physical replication to copy the whole instance, cutting over to the new location. We knew we could operate that approach reliably and with a minimal amount of downtime. The major downside of this approach was that we had to repeat it 6 times, duplicating the entire database each time, consuming a ton of extra space temporarily.
+
+We decided it would be ok to temporarily allow for the excess space consumption on the new instances, then scale the provisioned space back down after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). B/G Deployments made the process pretty smooth. We’ll cover that more in a bit.
 
 ## Postgres and Infra Key Metrics Christmas 2025
 
+All Postgres instances upgraded to 17.x in the Fall of 2025. TPS and QPS measured by [Odarix](https://odarix.com/). PgBouncer and Memcached are other key pieces of infrastructure.
 <table class="styled-table">
   <thead>
     <tr>
-      <th>Main</th>
-      <th>TPS (Peak)</th>
-      <th>QPS (Peak)</th>
+      <th>Metric</th>
+      <th>Low</th>
+      <th>Christmas Peak</th>
+      <th>Total</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Main</td>
-      <td>133K</td>
-      <td>126K</td>
+      <td>Main DB TPS</td>
+      <td>40K</td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
-      <td>#0</td>
+      <td>Main DB TPS</td>
       <td></td>
-      <td>29K</td>
+      <td>133K (<strong>3.3x increase</strong>)</td>
+      <td></td>
     </tr>
     <tr>
-      <td>...plus 5 more</td>
+      <td>Sum DB TPS</td>
       <td></td>
+      <td>225K</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Average query latency</td>
+      <td></td>
+      <td>25 microseconds</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Largest table</td>
+      <td></td>
+      <td></td>
+      <td>7 TB</td>
+    </tr>
+    <tr>
+      <td>Total space</td>
+      <td></td>
+      <td></td>
+      <td>30 TB</td>
+    </tr>
+    <tr>
+      <td>Largest row count</td>
+      <td></td>
+      <td></td>
+      <td>7B</td>
+    </tr>
+    <tr>
+      <td>PgBouncer Clients</td>
+      <td></td>
+      <td>~40K</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Biggest Dead Tuple Growth</td>
+      <td></td>
+      <td>80M</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Memcached Instances</td>
+      <td></td>
+      <td>36</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Memcached Clients</td>
+      <td></td>
+      <td>~30K</td>
       <td></td>
     </tr>
   </tbody>
-  <tfoot>
-    <tr class="summary-row">
-      <td></td>
-      <td>226K</td>
-      <td>225K</td>
-    </tr>
-  </tfoot>
 </table>
-
-All Postgres instances upgraded to 17.x in the Fall of 2025. TPS and QPS measured by [Odarix](https://odarix.com/).
 
 The weekend before Christmas is a higher traffic as new gifts are being opened and set up. The surge period gets started on Christmas eve, another common time a lot of folks celebrate Christmas
 
 Christmas day (December 25) is when traffic really gets cooking. The main surge period was over 10 hours where the main DB sustained more than 100K TPS from 10:00:00 to 20:00:00 US Central Time.
 
-The day after Christmas (December 26) in the same 10 hour period the database sustained over 90K TPS.
-
-The average query time in the main DB over the 3 days around Christmas was 25 microseconds (0.025 milliseconds.)
-
-The 7 DBs are consuming more than 30TB now in primary Postgres data storage. The largest single DB is 10TB which has 2 tables, with the largest being 7TB. The highest row count table is 7B rows.
-
-In the evening of Christmas day, employees began posting the U.S. and Canada Apple and Android app store rankings.
-
 Excitement grew seeing the app rise into the top 10 and reach #1. I grabbed a screenshot myself at around 11:30 PM CT December 25.
 
+![Aura Frames #1 App U.S. App Store Christmas Day](/assets/images/aura-christmas-2025.jpg)
+<br/>
+<small>Screenshot showing the Aura Frames app at the #1 rank in the U.S. Apple App Store</small>
 
-## PgBouncer Stats
-PgBouncer was a critical part of the infrastructure. PgBouncer runs on smaller EC2 instances, in transaction pooling mode, using a small pool of connections to Postgres.
-
-PgBouncer instances are launched as part of an Autoscaling Group (ASG) to handle higher and higher amounts of client connections.
-
-Summing the count of all client connections across PgBouncer instances, close to 40K client connections were established at peak.
-
-## Vacuum Stats
-Biggest pile up of dead tuples for a single table overnight vacuum was 80 million dead tuples, and the vacuum job ran that in about 4 hours (on a DB instance with a single table)
-
-
-## Memcached Infrastructure
-Memcached is primarily used via Rails’ Memcache framework (`ActiveSupport::Cache::MemCacheStore`) for count figures to reduce load on the Postgres database. As mentioned earlier, HAProxy is used in front of memcache to manage connections. On Christmas day Aura ran between 24 and 36 memcached instances peaking at nearly 30K client connections.
-
-## Aura User Metrics
+## Aura Customer Metrics
 Customers adding photos and videos to their frames are very busy on Christmas Day. Peak upload rate was nearly 6 million photos and videos per hour.
 
 From Dec 22 to the end of year period, Aura frame users added 100 million assets. Over all of 2025, customers added over 1 billion photos to the platform
 
 
 ## Reflecting back on the plan
-From September to December 2025, we reworked much of the application query layer to distribute reads and writes from around 10 different key tables from 1 primary database to 7. To meet the surging demand of Christmas, all instances were temporarily over provisioned via an advanced instance edit, additional provisioned IOPS were added, additional space was provisioned, the fastest io2 storage was used, and dedicated log volumes (DLVs) were added.
-
-This created ample headroom at the Postgres layer, and that headroom meant that Postgres was very reliable through the Christmas 2025 surge.
-
-We had zero issues for Postgres. Even with multiple instances accumulating 75 million dead tuples, VACUUM jobs ran overnight across instances in a matter of a couple of hours without issue.
-
-After traffic settled down, we were able to use a combination of instance resize edits and Blue Green Deployments to replace instance classes, allocated space, and storage types to be more cost efficient based on their needs.
-
 Some of the contributors to success:
 1. Having an extensive test suite to catch regressions as code was refactored
 1. Although making all changes at once prior to release, releasing small chunks at a time as PRs for easier review and post-release monitoring
@@ -271,11 +320,11 @@ Some of the contributors to success:
 1. Having experienced colleagues helping guide and review changes (invaluable!)
 
 ## Thank You and Looking Forward
-The biggest reward was seeing a stable Postgres platform over the holiday surge. All the preparation paid off. We were glued to the CloudWatch dashboards over the period and had practiced some load shedding maneuvers, but fortunately things were smooth.
+The biggest reward was seeing a stable Postgres platform during the holiday surge. All the preparation paid off. We were glued to the CloudWatch dashboards and had practiced some load shedding maneuvers, but fortunately there were no significant customer interruptions.
 
-It was rewarding to work with other great current engineers and also benefit from the accumulated code patterns and database scaling practices that past platform engineers had put in place.
+It was rewarding to work with great engineers and also benefit from the accumulated code patterns and database scaling practices that past platform engineers had put in place.
 
-For 2026 we’re forming our plans now to further improve reliability, scalability, and cost efficiency.
+For 2026 we’re forming our plans to further improve reliability, scalability, and cost efficiency.
 
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book (links below).
 
