@@ -217,7 +217,7 @@ All Postgres instances upgraded to 17.x in the Fall of 2025. TPS and QPS measure
   <thead>
     <tr>
       <th>Metric</th>
-      <th>Low</th>
+      <th>Normal</th>
       <th>Christmas Peak</th>
       <th>Total</th>
     </tr>
