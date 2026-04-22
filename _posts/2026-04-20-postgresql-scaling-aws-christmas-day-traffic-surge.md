@@ -1,14 +1,14 @@
 ---
 layout: post
-permalink: /postgresql-scaling-aws-christmas-day-traffic-surge
-title: Scaling RDS Postgres for Massive Holiday Traffic (#1 in App Store)
+permalink: /postgresql-scaling-aws-rds-christmas-day-traffic
+title: Scaling RDS Postgres for Peak Christmas Traffic (#1 in U.S. App Store)
 hidden: true
 ---
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>
-On Christmas Day 2024, the Postgres instance powering the Aura Frames app API went down for three hours under surging client application load. A year later, the reworked approach not only survived, but thrived. </p>
+On Christmas Day 2024, the Postgres instance powering the Aura Frames app API went down for three hours under peak client application load. A year later, the reworked approach not only survived, but thrived. </p>
 <p>
 Queries per second (QPS) peaked at 225,000 across the instances, with more than 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
 </p>
@@ -38,7 +38,7 @@ This post was written by me and I do not speak for the company. The company had 
 With those disclosures out of the way, let’s get into the technical details.
 
 
-## Where does the surge in traffic come from?
+## What causes the sharp increase in traffic?
 On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience, which means the platform needs to be scalable and reliable.
 
 The rate of new frames being set up with new photos being added is predictable given the gifting behavior, but does increase pressure on all systems as traffic increases by 3x or more from normal levels.
@@ -84,14 +84,14 @@ The use of Postgres by Aura faces all kinds of common Postgres scaling challenge
 - IOPS consumption exceeded quota. It was critical to avoid high storage device queueing and latency, in part by over provisioning PIOPS on io2 storage.
 - The team faced unexplained CPU spikes that were reproducible in a load testing environment. The CPU use spikes caused temporary but widespread increased latency.
 - Using Postgres via RDS means the team was limited on debugging tools. Linux host OS debugging tools like “perf” were not available. Even “enhanced metrics” and with tons of CloudWatch metrics, consuming events from the Postgres log like verbose vacuum logs, logging lock waits, as many [system catalog statistics](https://www.postgresql.org/docs/current/monitoring-stats.html) as possible like pg_stat_slru or pg_stat_io, sometimes was not enough to prove certain theories with hard evidence. 
-- During the surge events, the Postgres database faced very high client connections into the 10s of thousands. Thank goodness for pgbouncer, and many instances of it! (More on that later)
+- During the high load period, the Postgres database faced very high client connections into the 10s of thousands. Thank goodness for pgbouncer, and many instances of it! (More on that later)
 - The application design involved per-user counts that were constantly changing. This could be social media style likes, comments, activity feeds, and more. The backend relies heavily on memcached for this with HAProxy helping manage memcached connections.
 - Disruptive vacuum during busy periods. The team relies on throttling down vacuum and running manually scheduled vacuum jobs in the middle of the night, to avoid disruptive IO from contending with user IO.
 - Index bloat. The database uses a primary key data type that isn’t 100% ideal for minimizing bloat, this index bloat (and table bloat) can creep up and make indexes large and scans not perform as well. For this reason indexes are periodically rebuilt.
 - Configuration complexity. Postgres parameters (GUCs) are not heavily modified beyond what RDS provides.
 
 ## Christmas 2024 Retrospective
-Unfortunately on Christmas Day 2024, the surging client application traffic outpaced what the Postgres instance could handle. A root cause analysis revealed that one of the main contributors to downtime was the growth of the write ahead log (WAL) exceeding the available space. This was due to the log not being consumed fast enough by the replica.
+Unfortunately on Christmas Day 2024, the peak load client application traffic outpaced what the Postgres instance could handle. A root cause analysis revealed that one of the main contributors to downtime was the growth of the write ahead log (WAL) exceeding the available space. This was due to the log not being consumed fast enough by the replica.
 
 As a fix for that going forward, the team introduced a higher bandwidth solution: a [dedicated log volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) which offered a higher SLA for WAL log replay.
 
@@ -292,11 +292,9 @@ All Postgres instances upgraded to 17.x in the Fall of 2025. TPS and QPS measure
   </tbody>
 </table>
 
-The weekend before Christmas is a higher traffic as new gifts are being opened and set up. The surge period gets started on Christmas eve, another common time a lot of folks celebrate Christmas
+Christmas day (December 25) is when traffic really increases. The main sustained peak load period is over 10 hours on Christmas Day. The main DB sustained more than 100K TPS from 10:00:00 to 20:00:00 US Central Time.
 
-Christmas day (December 25) is when traffic really gets cooking. The main surge period was over 10 hours where the main DB sustained more than 100K TPS from 10:00:00 to 20:00:00 US Central Time.
-
-Excitement grew seeing the app rise into the top 10 and reach #1. I grabbed a screenshot myself at around 11:30 PM CT December 25.
+Excitement grew into the evening seeing the app rise in ranking among the top free apps, reaching the #1 rank in the night. I grabbed a screenshot at around 11:30 PM CT December 25.
 
 ![Aura Frames #1 App U.S. App Store Christmas Day](/assets/images/aura-christmas-2025.jpg)
 <br/>
@@ -320,7 +318,7 @@ Some of the contributors to success:
 1. Having experienced colleagues helping guide and review changes (invaluable!)
 
 ## Thank You and Looking Forward
-The biggest reward was seeing a stable Postgres platform during the holiday surge. All the preparation paid off. We were glued to the CloudWatch dashboards and had practiced some load shedding maneuvers, but fortunately there were no significant customer interruptions.
+The biggest reward was seeing the results of the work provide a reliable Postgres experience through the holiday season. All the preparation paid off. We were glued to the CloudWatch dashboards and had practiced some load shedding maneuvers, but fortunately there were no significant customer interruptions.
 
 It was rewarding to work with great engineers and also benefit from the accumulated code patterns and database scaling practices that past platform engineers had put in place.
 
