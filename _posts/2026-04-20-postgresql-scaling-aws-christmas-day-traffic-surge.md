@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-scaling-aws-christmas-day-traffic-surge
-title: Scaling Beyond a Single RDS Postgres Instance for Surging Christmas Traffic (#1 App in the U.S.)
+title: Scaling RDS Postgres for Massive Holiday Traffic (#1 in App Store)
 hidden: true
 ---
 
@@ -31,7 +31,7 @@ Aura keeps a relatively low profile in the tech community, but was previously fe
 I also happen to be a fan of the products of the company and recommend them. I have paid for frames on my own as gifts for family, friends, and as donations for my kid’s school fundraiser.
 
 ## Disclosures
-I joined the Aura team in 2025. Aura does not have a public space for technical blog posts so we discussed me writing this post on my own site where I regularly write about Postgres and Ruby on Rails.
+I began working with Aura in 2025. Aura does not have a public space for technical blog posts so we discussed me writing this post on my own site where I regularly write about Postgres and Ruby on Rails.
 
 This post was written by me and I do not speak for the company. The company had the opportunity to review and edit the post before publication.
 
@@ -305,7 +305,7 @@ Excitement grew seeing the app rise into the top 10 and reach #1. I grabbed a sc
 ## Aura Customer Metrics
 Customers adding photos and videos to their frames are very busy on Christmas Day. Peak upload rate was nearly 6 million photos and videos per hour.
 
-From Dec 22 to the end of year period, Aura frame users added 100 million assets. Over all of 2025, customers added over 1 billion photos to the platform
+The end of the year has a flurry of activity. From December 22 to the end of year period, customers added 100 million photos to the platform. Over all of 2025, customers added over 1 billion photos!
 
 
 ## Reflecting back on the plan
