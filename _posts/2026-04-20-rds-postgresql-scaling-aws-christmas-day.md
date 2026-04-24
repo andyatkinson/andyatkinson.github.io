@@ -2,6 +2,7 @@
 layout: post
 permalink: /postgresql-rds-scaling-aws-christmas-day-peak
 title: Scaling RDS Postgres for Peak Christmas Traffic (#1 in U.S. App Store)
+hidden: true
 ---
 
 <div class="summary-box">
