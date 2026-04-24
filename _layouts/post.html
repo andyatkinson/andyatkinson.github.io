@@ -80,6 +80,8 @@ post_class: post-template
                 </header>
             </article>
             {% endif %}
+
+            {% if page.published %}
             {% if page.next.url %}
             <article class="post">
                 <header class="post-header">
@@ -103,6 +105,7 @@ post_class: post-template
                     </p>
                 </header>
             </article>
+            {% endif %}
             {% endif %}
         </section><!-- .read-next -->
 
