@@ -12,38 +12,35 @@ On Christmas Day 2024, the Postgres instance powering the Aura Frames app API we
 <p>
 Queries per second (QPS) peaked at 225,000 (226K TPS) across the instances, with more than 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
 </p>
-<p>Postgres handled <em>more</em> traffic compared with the previous year, without downtime, helping the app reach the #1 overall app rank in the U.S. and Canadian Apple and Android App Stores.</p>
+<p>Postgres handled <em>more</em> traffic compared with the previous year, without downtime, helping the app reach the #1 rank in the U.S. and Canadian Apple and Android App Stores, as customers added millions of photos to their new digital frames.</p>
 <p>
 In this post we’ll look behind the scenes at the months of planning and execution leading up to that.
 </p>
 <p>
-A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres. Let’s dive in.
+A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres.
 </p>
 </div>
 
 ## What’s Aura?
-Aura Home, Inc. (Aura Frames) produces modern, stylish, wi-fi connected digital photo frames. The company has been around for more than 10 years and customers love adding the frames to their homes.
+[Aura Frames](https://auraframes.com) (Aura Home, Inc.) produces modern, stylish, wi-fi connected digital photo frames. The company has been around for more than 10 years and customers love the products.
 
-The frames are easy to use, don't require a subscription, and offer unlimited storage for photos and videos.
+The frames are easy to use via free iOS and Android apps, don't require a subscription, and offer unlimited storage for photos and videos.
 
-Aura has a lower profile in the tech community, but was previously featured in the AWS Storage Blog post titled [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
-
-I have paid for frames on my own as gifts for family, friends, and as donations for my kid’s school fundraiser. I can unequivocally recommend the frames as gifts for yourself or loved ones!
+On the engineering side, Aura was previously featured in the AWS Storage Blog: [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
 
 ## Disclosures
-I began working with Aura in 2025. Aura does not have a technical blog posts so we discussed me writing this post on my own site where I regularly write about Postgres and Ruby on Rails.
+I began working with Aura in 2025. Given Aura does not have a public engineering blog, we discussed me writing this post on my own site where I regularly write about Postgres and Ruby on Rails, key technologies used by Aura.
 
 This post was written by me and I do not speak for the company. The company had the opportunity to review and edit the post before publication.
 
 With those disclosures out of the way, let’s get into the traffic patterns and infrastructure details.
-
 
 ## What causes the sharp increase in traffic?
 On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience, which means the platform needs to be scalable and reliable.
 
 While the holiday timing is predictable, the rate of new frames and new photos added each year increases, and adds significant pressure to all infrastructure components. Postgres is not easily horizontally scalable, and is costly to operate.
 
-The average amount of increased peak TPS was around ~4.5x the normal values for Christmas 2025. This took advanced capacity planning for resource availability and financial budgeting for the company, provisioning the resources ahead of time, and shrinking them back down when they were no longer needed.
+The average amount of increased peak TPS on Christmas Day was around ~4.5x, with the biggest increase on a DB being ~18x the normal value! To meet this demand, advanced capacity and financial planning was necessary, along with provisioning the resources ahead of time and shrinking them back down afterwards.
 
 ## Scaling over the years
 The team has executed a variety of scaling tactics over the last half decade by employees and in conjunction with Postgres consultants. Scaling efforts often focused on reducing pressure on Postgres, due to the limits of a single primary instance, while preserving the operational simplicity of a single primary instance as long as possible. ([Squeeze the hell out of the system you have](https://blog.danslimmon.com/2023/08/11/squeeze-the-hell-out-of-the-system-you-have/)).
