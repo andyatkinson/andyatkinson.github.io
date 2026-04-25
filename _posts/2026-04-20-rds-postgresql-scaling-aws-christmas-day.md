@@ -213,26 +213,29 @@ The major downside of this approach was that we had to repeat it 6 times, duplic
 We decided it would be ok to temporarily allow for the excess space consumption on the new instances, then scale the provisioned space back down after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). B/G Deployments made the process pretty smooth. Once we'd cleaned up all the unneeded tables, we provisioned the new (green) instance with less space, and cut over to it, discarding the old (blue) instance.
 
 ## Postgres and Infra Metrics Christmas 2025
-
 All Postgres instances upgraded to 17.6 in the Fall of 2025. TPS and QPS measured by [Odarix](https://odarix.com/). PgBouncer, Memcached, HAProxy metrics from CloudWatch. Query and schema details from PgAnalyze.
+
+![Main DB 133K TPS Peak Christmas Day Odarix Screenshot](/assets/images/aura-tps-peak-christmas-2025.jpg)
+<small>Main DB 133K TPS Peak Christmas Day Odarix Screenshot</small>
+
 <table class="styled-table">
   <thead>
     <tr>
       <th>Metric</th>
       <th>Normal</th>
-      <th>Christmas Peak</th>
+      <th>Christmas Day</th>
       <th>Notes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Main DB TPS</td>
+      <td>Main DB TPS Peak</td>
       <td>40K</td>
-      <td>132K (<strong>3.3x ↗</strong>)</td>
+      <td>133K (<strong>3.3x ↗</strong>)</td>
       <td></td>
     </tr>
     <tr>
-      <td>Sum DB TPS</td>
+      <td>All DB TPS Peak Sum</td>
       <td>50K</td>
       <td>226K (<strong>4.5x ↗</strong>)</td>
       <td></td>
