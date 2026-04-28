@@ -268,7 +268,7 @@ All Postgres instances upgraded to 17.6 in the Fall of 2025. TPS and QPS measure
       <td>PgBouncer Instances</td>
       <td>73</td>
       <td>230 (<strong>~3.1x ↗</strong>)</td>
-      <td></td>
+      <td>Across 8 ASGs</td>
     </tr>
     <tr>
       <td>PgBouncer Client Connections</td>
