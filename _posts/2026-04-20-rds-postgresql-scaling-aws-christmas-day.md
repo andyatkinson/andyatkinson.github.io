@@ -8,13 +8,13 @@ hidden: true
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>
-On Christmas Day 2024, the Postgres instance powering the Aura Frames app API went down for three hours under peak client application load. A year later, the reworked approach not only survived, but thrived. </p>
+On Christmas Day 2024, the Postgres instance powering the Aura Frames app API was unavailable for three hours under peak load, disrupting the experience of new customers. One year later, much of the data access layer was reworked and the approach not only survived, but thrived. </p>
 <p>
-Queries per second (QPS) peaked at 225,000 (226K TPS) across the instances, with more than 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
+Queries per second (QPS) peaked at 225,000 (226K TPS) across multiple instances, with a sustained 100K QPS over 10 hours for multiple days and an average response time of 25 microseconds.
 </p>
-<p>Postgres handled <em>more</em> traffic compared with the previous year, without downtime, helping the app reach the #1 rank in the U.S. and Canadian Apple and Android App Stores, as customers added millions of photos to their new digital frames.</p>
+<p>Postgres handled more traffic than the previous year, without downtime, helping the app reach #1 rank in U.S. and Canadian Apple and Android App Stores, as customers added millions of photos to their new digital frames.</p>
 <p>
-In this post we’ll look behind the scenes at the months of planning and execution leading up to that.
+In this post we’ll look behind the scenes at months of planning and execution that went into that result.
 </p>
 <p>
 A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres.
@@ -250,22 +250,28 @@ All Postgres instances upgraded to 17.6 in the Fall of 2025. TPS and QPS measure
       <td>Largest table</td>
       <td></td>
       <td></td>
-      <td>7 TB, unpartitioned</td>
+      <td>7TB, unpartitioned</td>
     </tr>
     <tr>
       <td>Total space</td>
       <td></td>
       <td></td>
-      <td>30 TB</td>
+      <td>30TB</td>
     </tr>
     <tr>
       <td>Largest row count</td>
       <td></td>
       <td></td>
-      <td>7B, unpartitioned</td>
+      <td>7B (billion), unpartitioned</td>
     </tr>
     <tr>
-      <td>PgBouncer Clients</td>
+      <td>PgBouncer Instances</td>
+      <td>73</td>
+      <td>230 (<strong>~3.1x ↗</strong>)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>PgBouncer Client Connections</td>
       <td>7.3K</td>
       <td>~40K (<strong>~5.5x ↗</strong>)</td>
       <td>Across 7 ASGs</td>
