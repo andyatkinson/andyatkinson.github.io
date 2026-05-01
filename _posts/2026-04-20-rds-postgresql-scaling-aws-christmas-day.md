@@ -8,32 +8,38 @@ hidden: true
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>
-On Christmas Day 2024, the Postgres instance powering the Aura Frames app API was unavailable for three hours under peak load, disrupting the experience of new customers. One year later, much of the data access layer was reworked and the approach not only survived, but thrived. </p>
+On Christmas Day 2024, Postgres infrastructure powering the Aura Frames API had problems under peak load, being unavailable for three hours and disrupting the experience for new customers. Aura wanted to do better for 2025.</p>
 <p>
-Queries per second (QPS) peaked at 225,000 (226K TPS) across multiple instances, with a sustained 100K QPS over 10 hours for multiple days and an average response time of 25 microseconds.
+One year later, much of the resource intensive data access was reworked, the Postgres infrastructure was upsized, and this approach not only survived, but thrived, providing reliable Postgres through the holiday season. </p>
+<p>
+Total Queries per second (QPS) peaked at 225,000 (226K TPS), with 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
 </p>
-<p>Postgres handled more traffic than the previous year, without downtime, helping the app reach #1 rank in U.S. and Canadian Apple and Android App Stores, as customers added millions of photos to their new digital frames.</p>
+<p>The improved reliability meant customers could smoothly set up new frames and add photos, and they did it more than ever, with the Aura Frames app reaching #1 in U.S. and Canadian Apple and Android App Stores on Christmas Day.</p>
 <p>
-In this post we’ll look behind the scenes at months of planning and execution that went into that result.
+In this post we’ll look behind the scenes at months of engineering planning and execution that went into achieving that!
 </p>
 <p>
-A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres.
+A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres. I hope you'll be back for part 2!
 </p>
 </div>
 
-## What’s Aura?
-[Aura Frames](https://auraframes.com) (Aura Home, Inc.) produces modern, stylish, wi-fi connected digital photo frames. The company has been around for more than 10 years and customers love the products.
+## What's Aura Frames?
+[Aura Frames](https://auraframes.com) (Aura Home, Inc.) is the company behind modern, stylish, Wi-Fi connected digital photo frames that customers love.
 
-The frames are easy to use via free iOS and Android apps, don't require a subscription, and offer unlimited storage for photos and videos.
+The frames are easy to use via free iOS and Android apps, don't require a subscription, and offer unlimited cloud storage for photos and videos.
 
-On the engineering side, Aura was previously featured in the AWS Storage Blog: [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
+On the engineering side, Aura uses AWS and was featured on the AWS Storage Blog in the past: [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
 
 ## Disclosures
-I began working with Aura in 2025. Given Aura does not have a public engineering blog, we discussed me writing this post on my own site where I regularly write about Postgres and Ruby on Rails, key technologies used by Aura.
+I began working with Aura in 2025. Aura does not have a public engineering blog, so we discussed me writing a post here, where I regularly write about Postgres, Ruby on Rails, and scaling databases.
 
 This post was written by me and I do not speak for the company. The company had the opportunity to review and edit the post before publication.
 
-With those disclosures out of the way, let’s get into the traffic patterns and infrastructure details.
+I appreciate and commend Aura for a willingness to discuss what's in this post, even though it includes discussing painful scaling challenges publicy. I have benefitted from reading these kinds of posts from other companies, so I'm happy to help pay that forward for the benefit of other engineers.
+
+I'm biased, but from my view the company is very dedicated to continually improving the customer experience, in part with strategic investments in technical infrastructure for higher levels of reliability.
+
+With that covered, let's take a look at how the frames are used and what drives the traffic.
 
 ## What causes the sharp increase in traffic?
 On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience, which means the platform needs to be scalable and reliable.
@@ -66,12 +72,14 @@ Here's a look at the primary database instance serving application traffic from 
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
-      <td><em>Not used</em></td>
+      <td>⚠️</td>
     </tr>
   </tbody>
 </table>
 
-Without a larger instance class to move to, and having faced a 3 hour downtime during Christmas day 2024, the team was looking to heavily invest in reliability for Postgres ahead of Christmas 2025.
+Without a larger instance class to move to, the team was looking to heavily invest in reliability for Postgres ahead of Christmas 2025.
+
+⚠️ Although a Dedicated Log Volume (DLV) was in place for 2024, the configuration was not optimal.
 
 ## Postgres Scaling Challenges and Solutions
 The use of Postgres by Aura faces all kinds of common Postgres scaling challenges.
@@ -81,7 +89,7 @@ The use of Postgres by Aura faces all kinds of common Postgres scaling challenge
 - Buffer cache and high cache hit rates. It was critical to have as much memory as possible for buffer cache to achieve sub-millisecond query executions, in order to have enough throughput to reach more than 100K TPS.
 - IOPS consumption exceeded quota. It was critical to avoid exceeding the provisioned IOPS (PIOPS) allocation, otherwise queueing and high latency resulted.
 - The team faced unexplained CPU spikes that were reproducible in a load testing environment. The CPU use spikes caused temporary but widespread increased latency.
-- During the high load period, the Postgres database faced very high client connections into the tends of thousands.
+- During the high load period, the Postgres database faced very high client connections into the tens of thousands.
 - The application design involved per-user counts that were constantly changing. This could be social media style likes, comments, activity feeds, and more. The backend relies heavily on memcached for this with HAProxy helping manage connections.
 - Disruptive table vacuums during busy periods. The team relies on various tactics to minimize disruption from vacuum. Primarily vacuum is throttled to run slower, and tables with very high dead tuple growth are scheduled to run overnight during the lowest activity period.
 - Index bloat. The database uses a primary key data type that isn’t 100% ideal for minimizing bloat. Index bloat occurs meaning indexes occupy more space and aren't as efficient to scan. To solve that, indexes are periodically rebuilt, but rebuilding adds a lot of IOPS pressure so the timing needs coordination.
@@ -100,7 +108,7 @@ To increase reliability, the team began creating proofs of concept for distribut
 
 Ruby on Rails [Horizontal Sharding](https://guides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding) was partially built out and could have been a viable solution, but ultimately was not chosen.
 
-With about half of the months gone of 2025, the expected further traffic increase for Christmas 2025 was approaching. An additional significant constraint on planning was, what could be built on the small team, in time before Christmas? We wanted to leave time for load testing to validate changes.
+With about half of 2025 gone, preparedness for the Christmas 2025 holiday peak was looming and daunting. An additional significant constraint on planning was, what could be built on the small team, in time before Christmas? We wanted to leave time for load testing to validate changes.
 
 The clock was ticking!
 
@@ -113,7 +121,7 @@ Ultimately the 10 tables were distributed to 7 different primary instances, some
 
 With the plan in place, it was time to start coding! We got started in earnest around August 2025 with 3-4 months available to execute and validate the plan.
 
-With each instance dedicated to one or a couple of tables, their was much more CPU, Memory, and IOPS available in total. This allowed each of the instances to be over provisioned temporarily before Christmas, adding headroom, availability, and reliability.
+With each instance dedicated to one or a couple of tables, there was much more CPU, Memory, and IOPS available in total. This allowed each of the instances to be over provisioned temporarily before Christmas, adding headroom, availability, and reliability.
 
 We determined the query workload for the biggest table by size, row count, call frequency, and % of IO, would still fit ok on a single big instance, without needing to shard the table rows.
 
@@ -134,21 +142,21 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
-      <td>✔️</td>
+      <td>✅</td>
     </tr>
     <tr>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
-      <td>✔️</td>
+      <td>✅</td>
     </tr>
     <tr>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
-      <td>✔️</td>
+      <td>✅</td>
     </tr>
     <tr>
       <td>db.r6g.16xlarge</td>
@@ -189,8 +197,8 @@ Here's what the instances were scaled up to for Christmas 2025.
   <tfoot>
     <tr class="summary-row">
       <td><strong>Totals</strong></td>
-      <td><strong>832 vCPU</strong></td>
-      <td><strong>6656 GiB</strong></td>
+      <td>832 vCPU (<strong>~4.3x ↗</strong>)</td>
+      <td>6656 GiB (<strong>~4.3x ↗</strong>)</td>
       <td></td>
       <td></td>
     </tr>
@@ -250,7 +258,7 @@ All Postgres instances upgraded to 17.6 in the Fall of 2025. TPS and QPS measure
       <td>Largest table</td>
       <td></td>
       <td></td>
-      <td>7TB, unpartitioned</td>
+      <td>7TB</td>
     </tr>
     <tr>
       <td>Total space</td>
@@ -262,7 +270,7 @@ All Postgres instances upgraded to 17.6 in the Fall of 2025. TPS and QPS measure
       <td>Largest row count</td>
       <td></td>
       <td></td>
-      <td>7B (billion), unpartitioned</td>
+      <td>7B (Billion)</td>
     </tr>
     <tr>
       <td>PgBouncer Instances</td>
@@ -305,30 +313,21 @@ Employees noticed the Aura iOS and Android apps were moving up in the ranking ch
 <br/>
 <small>Screenshot showing the Aura Frames app at the #1 rank in the U.S. Apple App Store</small>
 
-## Aura Customer Metrics
-Customers are very busy adding photos and videos to their frames on Christmas Day. Peak upload rate was nearly 6 million photos and videos per hour!
-
-The end of the year has a flurry of activity. From December 22 to December 31, customers added 100 million photos. Looking back at all of 2025, customers added over 1 billion photos and videos!
-
 ## Reflecting back on the plan
 Some of the key contributors to successfully delivering reliable Postgres:
-1. Having an extensive test suite and continuous integration (CI) to catch regressions as code was refactored, along with PR reviews
-1. As we heavily refactored, releasing small chunks at a time enabled easier PR reviews and post-release monitoring for errors
-1. Using canary releases to release high impact changes to single instances at a time to validate correctness beyond the test suite and reviews.
-1. Having an extensive pre-production load testing mechanism to validate the accumulated changes under high load
-1. Having a large AWS infrastructure budget 😅 to work with and strategic spending, in order to over-provision instance sizes and IOPS temporarily, in part thanks to being a profitable company and having beloved products!
-1. Having a very comprehensive set of CloudWatch metrics, dashboards, web and Postgres logs for analysis ([AWS Athena](https://aws.amazon.com/athena/)), time-series metrics galore (formerly StatHat), and best-in-class Postgres observability ([PgAnalyze](https://pganalyze.com)), to empower engineers with information
-1. Having experienced, long-tenured infrastructure colleagues to guide and review changes, generously share their knowledge, and promote a disciplined, focused engineering culture
+1. Having an extensive test suite running tests continuously (CI) helping catch regressions as code was refactored, along with PR reviews from seasoned team members
+1. As refactorings happened in large batches, slicing out a smaller chunks as smaller PRs for easier review, and less risk as releases
+1. Using a canary release process for widespread changes, released to a single instances vs. the whole fleet, helped to validate correctness for issues that were hard to verify outside of the production environment
+1. Having an extensive pre-production load testing capability to validate the accumulated changes under high load, across most of the API surface area of the platform, drilling into performance regressions identified in load testing
+1. Having a large AWS infrastructure budget 😅 to work with and strategic spending, in order to over-provision instance sizes and IOPS temporarily to gain more reliability, thanks in part to being a profitable company!
+1. Having comprehensive CloudWatch metrics, dashboards, web, and Postgres logs for analysis ([AWS Athena](https://aws.amazon.com/athena/)), time-series metrics galore (formerly StatHat), and best-in-class Postgres observability ([PgAnalyze](https://pganalyze.com)), to empower backend engineers with data access layer visibility
+1. Having experienced, long-tenured colleagues to guide and review changes, focusing on high leverage opportunities, while generously sharing their knowledge.
 
 ## Thank You and Looking Forward
-The biggest payoff for this effort was seeing Postgres operate reliably for customers and the business through the peak traffic holiday season!
+While the biggest payoff was seeing that Postgres operated reliably through the peak traffic holiday season, it was also rewarding to work with great engineers currently on staff and benefit from all the accumulated scalability engineering practices injected into the codebase over many years.
 
-In addition to that, it was rewarding to work with great current engineers and benefit from the accumulated scalability engineering work past engineers contributed, this success was a shared success by all involved.
+For 2026 we’re forming our plans to further improve reliability, scalability, and cost efficiency.
 
-For 2026 we’re forming our plans now to further improve reliability, scalability, and cost efficiency.
-
-If these types of posts are interesting to you, please consider subscribing to my blog or buying my book (links below). If you've got any questions about Aura frames, hit me up!
-
-If you're an engineer interested in working on these types of challenges, please get in touch.
+If these types of posts are interesting to you, please consider subscribing to my blog or buying my book. If you're an engineer interested in working on these types of challenges, please get in touch.
 
 Thanks for reading!
