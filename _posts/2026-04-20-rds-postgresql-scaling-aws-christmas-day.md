@@ -8,9 +8,9 @@ hidden: true
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>
-On Christmas Day 2024, Postgres infrastructure powering the Aura Frames API had problems under peak load, being unavailable for three hours and disrupting the experience for new customers. Aura wanted to do better for 2025.</p>
+On Christmas Day 2024, Postgres infrastructure powering the Aura Frames API had problems under peak load, being unavailable for three hours and disrupting the experience for new customers. With Christmas being the biggest day of the year, the team knew it would need improvements for 2025 and beyond.</p>
 <p>
-One year later, much of the resource intensive data access was reworked, the Postgres infrastructure was upsized, and this approach not only survived, but thrived, providing reliable Postgres through the holiday season. </p>
+One year later, much of the resource intensive data access was reworked, the Postgres infrastructure was upsized, and this approach not only survived, but thrived, providing reliable service through the holiday season. </p>
 <p>
 Total Queries per second (QPS) peaked at 225,000 (226K TPS), with 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
 </p>
@@ -24,25 +24,29 @@ A follow-up post will dig into the Ruby on Rails side, while this one will focus
 </div>
 
 ## What's Aura Frames?
-[Aura Frames](https://auraframes.com) (Aura Home, Inc.) is the company behind modern, stylish, Wi-Fi connected digital photo frames that customers love.
+[Aura Frames](https://auraframes.com) (Aura Home, Inc.) is the company behind modern, high-quality, Wi-Fi connected digital photo frames that customers love.
 
-The frames are easy to use via free iOS and Android apps, don't require a subscription, and offer unlimited cloud storage for photos and videos.
+The frames are easy to use via free iOS and Android apps, don't require a subscription, and offer unlimited cloud storage for photos and videos. Once set up, family members can be invited to contribute photos and videos via the app from anywhere. Typically Aura frames have an average of 4 contributors adding content.
 
-On the engineering side, Aura uses AWS and was featured on the AWS Storage Blog in the past: [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
+In 2025, more than 1 billion photos were shared to Aura frames globally.
+
+[Aura Frames Co-Founders Eric and Abdur (CTO and CEO)](https://medium.com/aura-frames/aura-spotlight-on-co-founder-cto-eric-jensen-c93ecb49e4fb) were some of the very committers to the codebase in 2014 as the company was starting up, and both still leading the company in 2026.
+
+While public engineering blog posts are limited, Aura was featured on the AWS Storage Blog in the past. Link: [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
 
 ## Disclosures
-I began working with Aura in 2025. Aura does not have a public engineering blog, so we discussed me writing a post here, where I regularly write about Postgres, Ruby on Rails, and scaling databases.
+I began working with Aura in 2025. Aura does not have a public engineering blog, so we discussed writing a post here, where I regularly write about Postgres, Ruby on Rails, and scaling databases.
 
-This post was written by me and I do not speak for the company. The company had the opportunity to review and edit the post before publication.
+This post was written by me and I do not speak for the company. The company had the opportunity to review and make minor edits before publication.
 
-I appreciate and commend Aura for a willingness to discuss what's in this post, even though it includes discussing painful scaling challenges publicy. I have benefitted from reading these kinds of posts from other companies, so I'm happy to help pay that forward for the benefit of other engineers.
+The Christmas Day outage was a painful reality of scaling fast, and I appreciate Aura's willingness to discuss it here.
 
-I'm biased, but from my view the company is very dedicated to continually improving the customer experience, in part with strategic investments in technical infrastructure for higher levels of reliability.
+I'm biased, but from my view the company is dedicated to continually improving the customer experience, in part with strategic investments in technical infrastructure to achieve higher levels of reliability.
 
 With that covered, let's take a look at how the frames are used and what drives the traffic.
 
 ## What causes the sharp increase in traffic?
-On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience, which means the platform needs to be scalable and reliable.
+On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience from their first moments with the product, which means the backend platform needs to be reliable.
 
 While the holiday timing is predictable, the rate of new frames and new photos added each year increases, and adds significant pressure to all infrastructure components. Postgres is not easily horizontally scalable, and is costly to operate.
 
@@ -85,9 +89,9 @@ Without a larger instance class to move to, the team was looking to heavily inve
 The use of Postgres by Aura faces all kinds of common Postgres scaling challenges.
 
 - Insert latency. To help reduce latency, foreign key constraints are not used. All possible indexes are removed. Indexes are periodically rebuilt.
-- Replication. Due to needing to read after write and the possibility of high replication lag, read replicas have historically not been used for read queries.
+- Replication. Due to needing to read immediately after write operations and the possibility of high replication lag, read replicas have historically not been used for read queries.
 - Buffer cache and high cache hit rates. It was critical to have as much memory as possible for buffer cache to achieve sub-millisecond query executions, in order to have enough throughput to reach more than 100K TPS.
-- IOPS consumption exceeded quota. It was critical to avoid exceeding the provisioned IOPS (PIOPS) allocation, otherwise queueing and high latency resulted.
+- IOPS consumption exceeded quota. It was critical to avoid exceeding the provisioned IOPS (PIOPS) allocation, otherwise queuing and high latency resulted.
 - The team faced unexplained CPU spikes that were reproducible in a load testing environment. The CPU use spikes caused temporary but widespread increased latency.
 - During the high load period, the Postgres database faced very high client connections into the tens of thousands.
 - The application design involved per-user counts that were constantly changing. This could be social media style likes, comments, activity feeds, and more. The backend relies heavily on memcached for this with HAProxy helping manage connections.
@@ -312,6 +316,39 @@ Employees noticed the Aura iOS and Android apps were moving up in the ranking ch
 ![Aura Frames #1 App U.S. App Store Christmas Day](/assets/images/aura-christmas-2025.jpg)
 <br/>
 <small>Screenshot showing the Aura Frames app at the #1 rank in the U.S. Apple App Store</small>
+
+## Switchover to New DBs
+To actually switch over to new server instances, effectively relocating the tables, it was critical to not lose any write operations and to minimize user-facing downtime.
+
+The initial plan was to use [pglogical to synchronize data](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.pglogical.html). Unfortunately the sync process was too slow and this plan was abandoned.
+
+The next plan was to directly use native Logical Replication, setting up initially empty tables, a publication and subscription, ideally with an initial copy and then replication to fill in missing updates. This too proved to be too challenging and slow, and this plan was also abandoned.
+
+The next plan which was sort of a fallback, was to use physical replication by first setting up a read replica instance. We knew this would work, but it meant duplicating the entire database which wasn't ideal.
+
+It was the most inefficient plan in terms of space consumption as we had a lot of tables to clean up on both sides, but it worked reliably and repeatedly as we performed it a total of 6 times.
+
+**Initial setup steps:**
+1. For the RDS primary database, create a new read replica. It will need as much allocated space as the original instance. Use physical replication.
+1. Set up AWS SSM parameters for the new database to be used by Ruby on Rails and PgBouncer.
+1. Create a new PgBouncer Auto Scaling Group (ASG) for PgBouncer for the new DB. Set the SSM parameter to the network load balancer endpoint.
+1. Route application traffic through the new PgBouncer but have it continue to point at the original DB via an environment variable. This would be the sole change for switch over.
+
+**Switchover steps**:
+1. Bring all PgBouncer instances down (set ASG desired capacity to 0). No writes are now happening. Down for users.
+1. Wait for replication lag to reach zero. Promote the read replica to be a primary instance and wait for it to restart. Now it's ready for writes with no operations lost.
+1. Change the environment variable PgBouncer uses to point at the database, to now point at the newly promoted primary instance.
+1. Bring back PgBouncer instances, setting the ASG desired capacity back to the original value.
+
+This process involved in 5-10 minutes or less of user-facing downtime. We work up early to perform it off-peak in a low-activity time period.
+
+**Clean up:**
+1. Drop table from original primary (carefully review this with team members in advance). Initially rename first, double check again, then drop the renamed table.
+1. Drop all unneeded tables from the new replacement primary, which was most tables or all but one.
+
+With all the tables cleaned up on the new primary, we now had way more allocated space than needed, and this provisioned space costs money. This used to be more of a pain, but [AWS launched Blue/Green Deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html) and we used it to help here.
+
+We set up a Blue/Green Deployment where the Blue was the newly promoted primary, and the Green would be a replacement instance with less space provisioned. Once replication was caught up, we cut over to Green, and thus achieved an instance with an appropriate amount of provisioned space.
 
 ## Reflecting back on the plan
 Some of the key contributors to successfully delivering reliable Postgres:
