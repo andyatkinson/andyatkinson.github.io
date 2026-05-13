@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-rds-scaling-aws-christmas-day-peak
-title: Scaling RDS Postgres for Peak Christmas Traffic (#1 in U.S. App Store)
+title: Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)
 hidden: true
 ---
 
@@ -209,7 +209,7 @@ Here's what the instances were scaled up to for Christmas 2025.
 
 This capacity powered Christmas well, but of course was expensive to operate. We'll look at how we scaled down and reigned in costs after Christmas.
 
-## Workload driven “whole table sharding”
+## Workload-driven "Whole table sharding"
 We ended up using the term “whole table sharding” and the tables picked tended to have the most writes, the most rows, and be the most challenging to vacuum quickly or rebuild indexes for.
 
 We were able to gradually modify all the application queries and get everything rolled out where it was backwards compatible, then we could cut over.
@@ -334,7 +334,7 @@ It was the most inefficient plan in terms of space consumption as we had a lot o
 
 **Switchover steps**:
 1. Bring all PgBouncer instances down (set ASG desired capacity to 0). No writes are now happening. Down for users.
-1. Wait for replication lag to reach zero. Promote the read replica to be a primary instance and wait for it to restart. Now it's ready for writes with no operations lost.
+1. [Wait for replication lag to reach zero](https://github.com/andyatkinson/pg_scripts/commit/f91b3855a81e1387f1f795d31a7ee8612a2fd394). Promote the read replica to be a primary instance and wait for it to restart. Now it's ready for writes with no operations lost.
 1. Change the environment variable PgBouncer uses to point at the database, to now point at the newly promoted primary instance.
 1. Bring back PgBouncer instances, setting the ASG desired capacity back to the original value.
 

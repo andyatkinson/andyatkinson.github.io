@@ -201,15 +201,14 @@ For HABTM relationships that would span a DB boundary, we decided to keep the ta
 
 HABTM relationships that existed in the same DB were left alone.
 
-## Scaling at the operation level, inserts and updates
-Rails supports bulk insert and upsert (insert or update), however they’re limited. One limitation is that the ON CONFLICT clause can’t be customized, for example an attempted insert where a duplicate happens and skipping that by doing nothing.
+## Scaling Inserts and Updates
+Rails supports bulk inserts and *upserts* (either an insert or an update), however the helper methods are limited. One limitation is that the ON CONFLICT clause can’t be customized. For example attempting an INSERT and specifying the DO NOTHING option when unique constraint violations occur.
 
-For `insert_all()` ([API Documentation](https://apidock.com/rails/v6.0.0/ActiveRecord/Persistence/ClassMethods/insert_all)) the on conflict clause can’t be controlled.
+For `insert_all()` ([API Documentation](https://apidock.com/rails/v6.0.0/ActiveRecord/Persistence/ClassMethods/insert_all)) the ON CONFLICT clause can’t be controlled.
 
-Aura has custom code for mass insert with control over the on conflict clause, for this reason. Sometimes we want to bulk insert and skip duplicates. Being able to batch inserts and updates like this is a critical part of scalability, consolidating the overhead of a single transactional commit from many rows, possibly 1000, into a single commit.
+Aura has custom code for mass insert with drect control over the ON CONFLICT clause. Being able to batch inserts and updates like this is a critical part of scalability, consolidating the overhead of a single transactional commit from many rows, possibly 1000, into a single commit.
 
 Note that from Postgres 15 onward there is also support for the SQL MERGE keyword, but neither Active Record nor the custom code is using MERGE as of now.
-
 
 ## Scaling reads with batching
 Rails supports batched read queries with a few Active Record methods: `find_each()`, `in_batches()`, and `find_in_batches()`.
@@ -220,26 +219,14 @@ Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://a
 
 Still, reading a batch worth of rows at a time is a critical scalability tactic to make sure that that the query runs fast and the query result size is not overwhelming.
 
-## Scaling paginated queries with cursor positions
+## Scaling Reads with Paginated Queries
 Aura has custom code to perform keyset pagination, and generally does not use LIMIT and OFFSET style pagination that’s built in to Active Record. While LIMIT and OFFSET style pagination may work for smaller amounts of data, it doesn’t scale well for deep pagination levels or working with billions of rows.
 
 Instead, keyset pagination scales well for any amount of row data. The trick is to index a high cardinality column like a timestamp column, then query using that column in the WHERE clause and fetch a batch of rows. For example fetching rows from a position with a >= or < operator and a LIMIT of 1000. The last accessed value then becomes the cursor position to start from. 
 
 This is an incredibly useful pattern and common used in the codebase for paginating API requests and other spots, but to my knowledge Active Record does not have a generic pagination helper built in like this.  
 
-
-## Column Data Type Lookups
-The schema inspection queries for data types and other things, `pg_attribute`, while small individually, end up accounting for a significant amount of query volume at high scale. These queries are made against the primary instance using some resources that would better be made available for application queries.
-
-To fix that we use the schema cache feature in Active Record. Instead of querying Postgres for data types info, the `scheme_cache.yml` holds a serialized dump of this info in a file that can be read by Rails. Unfortunately in the initial expansion to supporting Multiple Databases, the schema cache was only available for the main primary DB.
-
-Later on an option was added to lazily load the schema cache, and this supports multiple primary DBs.
-
-`config.active_record.lazily_load_schema_cache = true` ([Blog post](https://blog.saeloun.com/2022/04/20/rails-7-lazy-loads-schema-cache/))
-
-`db/schema_cache.yml # default spot`
-
-## Counter cache style maintenance of frequently updated counters
+## Counter Cache Maintenance for Frequently Updated Counters
 Rails supports counter_cache columns, but these are columns that are updated on a table. Updating them means row row churn in Postgres, as updates even for a single column create a new immutable row version behind the scenes, leaving behind a former row version.
 
 The updates could also cause contention for that row being updated by another process.
@@ -248,49 +235,55 @@ Aura Frames does something similar but keeps counter cache columns in a separate
 
 That said, keeping a running count to avoid slow filtered COUNT queries is a critical part of high scale.
 
-## Getting random values for sampling
+## Random values and Sampling
 Ordering by `RANDOM()` is slow (`ORDER BY RAND()`). Aura makes use of TABLESAMPLE in Postgres, specified with a FROM clause for a table ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)).
 
 A couple of options are supported like `sampling_method` with built-in options of `system` and `bernoulli`, or they can be expanded further by enabling the `tsm_system_rows module` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)).
 
-## Scaling With Rails Caching
+## Using Memory Key Value Cache Stores
 Aura Frames makes use of the [Active Support Cache Store](https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html), Memcached with HAProxy performing connection management.
 
 Keeping certain values in Memcached is a key part of the scaling strategy. Things like per-user counters, per-feature rate limiting, or cached values with TTLs of certain environment variables are key pieces of data stored in Memcached.
 
 ## Managing Schema Changes with Multiple Databases
-Given each of the 6 new primary databases had their own config in config/database.yml, we could also manage DDL changes to these tables in the regular Rails way.  Each had their own db/schema.rb, a Ruby representation of the schema definition. There is also schema data type caching via `db/schema_cache.yml` but we will cover that later. 
+Given each of the 6 new primary databases had their own config in `config/database.yml`, we could also manage DDL changes to these tables in the regular Rails way.  Each had their own `schema.rb`, a Ruby representation of the schema definition.
 
-Each DB had its own directory for migration files, a respective `schema.rb` equivalent that was generated from the migrations, and a schema cache dump (`schema_cache.yml`) file.
+Each DB had its own directory for migration files and a respective `schema.rb` equivalent generated from migrations.
 
-Since each “new” database was actually based on an existing table, we started the “first” migration for the new database from the existing table definition. We used pg_dump to dump the current table definition from production.
+Since each "new" database was not actually new, but based on an existing table, we started a new "first" migration for it using the existing using `pg_dump`.
 
-This migration version would be added “idempotently” meaning the table was added when it didn’t exist. Initially the table would not exist in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there. The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database at “switch over” time. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later. 
+This migration version would be added *idempotently* meaning the table was added when it didn’t exist. Initially the table would not exist in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there.
 
-Imagine that new migration version was `1234567890`. Once switch over, we manually inserted that version into `schema_migrations`. This was manual but it could be approved via PR in advance and ultimately was only 6 insert statements. Prior to the insert we TRUNCATED the new DB’s `schema_migrations` table meaning it started as empty. 
+The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database at switchover time. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later. 
 
-Once all of that was done, schema management via migrations worked like normal from that point forward. Migrations can be generated, their files are in their own directory, and when applied with `rails db:migrate` `schema.rb` and `schema_cache.yml` generated files are produced for each. Nifty!
+Imagine that new migration version was `1234567890`. Once switch over, we manually inserted that version into `schema_migrations`. This was manual but it could be approved via PR in advance and ultimately was only 6 insert statements. Prior to the insert we `TRUNCATE`'d the new DB’s `schema_migrations` table meaning it started empty.
+```sql
+insert into schema_migrations (version) values ('1234567890');
+```
+
+
+Once all of that was done, schema management via migrations worked like normal from that point forward. Migrations can be generated, their files are in their own directory, and when applied with `rails db:migrate` all the respective `schema.rb` files are updated. Nifty!
 
 ```sh
 rails g migration --database new_db
+
 rails db:migrate --database my_animals_db
+# or rails db:migrate for all databases
+
 rails db:schema:cache:dump
 ```
 
 ## What’s missing in Rails?
 While Ruby on Rails has been expanded to help the needs of large scale apps, and intends to be a somewhat generic framework used for a variety of specific purposes, we did look at some ways that current features came up a bit short. This section will recap those with the idea that these may be possible future enhancement areas for Rails and Active Record.
 
-Limitations of `disable_joins: true` - not all association types are supported
-
-Limitation of schema cache dumping, can’t eagerly load schema cache for all primary DBs, but does seem supported when schema cache is lazily loaded for multiple DBs.
-
-Batched finders like `find_in_batches()` don’t support filtering (`WHERE` clause) on non primary key columns. We want to specify a non-PK column, set the direction ascending or descending, and set a limit.
-
-Methods `insert_all()` and `upsert_all()` don’t support a customizable `ON CONFLICT` clause.
-
-No built-in method for keyset pagination style pagination.
+- Limitations of `disable_joins: true`, not all association types are supported
+- Batched finders like `find_in_batches()` don’t support filtering (`WHERE` clause) on non primary key columns. We want to specify a non-PK column, set the direction ascending or descending, and set a limit.
+- Methods `insert_all()` and `upsert_all()` don’t support a customizable `ON CONFLICT` clause.
+- No built-in method for keyset pagination style pagination.
 
 ## Wrap Up
+Ruby on Rails has been a critical technology for Aura Frames to build with for more than a decade. Enhancements in the last handful of versions have been put to use by the platform, helping it reach greater levels of scale, and helping deliver a faster and more reliable experience to customers.
+
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book. If you're an engineer interested in working on these types of challenges, please get in touch.
 
 Thanks for reading!
