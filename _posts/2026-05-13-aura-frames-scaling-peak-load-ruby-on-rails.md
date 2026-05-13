@@ -11,7 +11,7 @@ hidden: true
 <p>The team added more primary databases to scale write and read operations out. Rails helps this with connection pools for each primary database, while working with the same deployed codebase.</p>
 <p>Web servers chosen long ago have been battle tested, including Apache, Phusion Passenger Enterprise Edition, and a custom AMI EC2 instance, part of an Auto Scaling Group (ASG) scaling to thousands of instances at peak for API traffic.</p>
 <p>With 8 primary databases in total, each server instance can be vertically scaled up for peak load, and back down later for cost savings.</p>
-<p>Primarily moving to Multiple Databases leveraged the <code>disable_joins: true</code> feature of Active Record, simulating joins for tables in separate databases.</p>
+<p>Primarily the team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> Active Record feature, simulating joins between tables in separate databases.</p>
 <p>This post looks at a variety of additional data layer scaling tactics, some part of Active Record and Ruby on Rails, and some not.</p>
 </div>
 
