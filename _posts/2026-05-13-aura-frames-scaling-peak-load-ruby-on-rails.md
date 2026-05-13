@@ -18,7 +18,7 @@ hidden: true
 ## Building With Ruby on Rails
 The Aura Frames platform has been built with Ruby on Rails since the beginning. Christmas 2025 was one of the busiest days of the year for the company and technical platform, serving a peak of 41 million API requests per second and processing a peak of 11.8 million background jobs per hour.
 
-For an introduction to the Aura Frames company and the products, please check out Part 1 - [Scaling RDS Postgres for Peak Christmas Traffic (#1 in U.S. App Store)](https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak).
+For an introduction to the Aura Frames company and the products, please check out [Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)](https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak).
 
 Besides Ruby on Rails, Aura Frames uses PostgreSQL and AWS as key technologies.
 
@@ -82,7 +82,7 @@ An exciting development for the team was seeing the Aura Frames app rise in the 
 Although there is a lot of interesting history from how the Aura Frames Rails codebase evolved over a decade, this post will focus on the slice of time from mid-2025 through Christmas 2025, preparing for a large scale Active Record query layer refactoring to distribute the work to multiple primary DBs.
 
 ## Getting Started With Multiple Databases
-From the Part 1 post on Postgres changes, you learned that eventually there were 7 total primary databases.
+From the earlier post on Postgres changes, you learned that eventually there were 7 total primary databases.
 
 Before any of that was rolled out, we started to make Active Record code changes in the local development environment so that queries accessed only their respective databases. Queries could not span a database boundary, and the tables being moved were no longer in the primary database.
 
@@ -287,3 +287,43 @@ Ruby on Rails has been a critical technology for Aura Frames to build with for m
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book. If you're an engineer interested in working on these types of challenges, please get in touch.
 
 Thanks for reading!
+
+<div style="
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1.25rem 1.5rem;
+  background: #fff8b3;
+  color: #333;
+  border-left: 6px solid #f4d03f;
+  border-radius: 3px;
+  box-shadow: 3px 4px 10px rgba(0,0,0,0.15);
+  font-family: sans-serif;
+  transform: rotate(-1deg);
+  position: relative;
+">
+
+  <div style="
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 70px;
+    height: 22px;
+    background: rgba(255,255,255,0.5);
+    transform: rotate(4deg);
+    border: 1px solid rgba(0,0,0,0.05);
+  "></div>
+
+  <strong style="display:block; margin-bottom:0.5rem;">
+    Related Reading
+  </strong>
+
+  <p style="margin:0; line-height:1.5;">
+    If you're interested in the PostgreSQL details for peak traffic on Christmas Day 2025,
+    you may also enjoy
+    <a href="https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak"
+       style="color:#005bbb; font-weight:600; text-decoration:none;">
+      Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)
+    </a>.
+  </p>
+</div>
+

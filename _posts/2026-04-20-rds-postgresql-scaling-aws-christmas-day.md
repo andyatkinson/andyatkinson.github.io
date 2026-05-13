@@ -366,3 +366,42 @@ For 2026 we’re forming our plans to further improve reliability, scalability, 
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book. If you're an engineer interested in working on these types of challenges, please get in touch.
 
 Thanks for reading!
+
+<div style="
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1.25rem 1.5rem;
+  background: #fff8b3;
+  color: #333;
+  border-left: 6px solid #f4d03f;
+  border-radius: 3px;
+  box-shadow: 3px 4px 10px rgba(0,0,0,0.15);
+  font-family: sans-serif;
+  transform: rotate(-1deg);
+  position: relative;
+">
+
+  <div style="
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 70px;
+    height: 22px;
+    background: rgba(255,255,255,0.5);
+    transform: rotate(4deg);
+    border: 1px solid rgba(0,0,0,0.05);
+  "></div>
+
+  <strong style="display:block; margin-bottom:0.5rem;">
+    Related Reading
+  </strong>
+
+  <p style="margin:0; line-height:1.5;">
+    If you're interested in Ruby on Rails details for peak traffic on Christmas Day 2025,
+    you may also enjoy
+    <a href="how-aura-frames-scales-for-peak-load-ruby-on-rails"
+       style="color:#005bbb; font-weight:600; text-decoration:none;">
+    How Aura Frames Scales For Peak Load with Ruby on Rails (#1 in App Store)
+    </a>.
+  </p>
+</div>
