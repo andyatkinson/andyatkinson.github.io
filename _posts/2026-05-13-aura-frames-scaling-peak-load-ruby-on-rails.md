@@ -32,7 +32,7 @@ Within sharding from the Rails application, another choice was whether to shard 
 
 Fortunately Ruby on Rails was enhanced over more than 15 years of developments to support the needs of mature, scaled-up platforms with billions of rows of data and terabyte sized DBs.
 
-In this post we’ll look at how the team scaled out from a single primary, to 7 primary DBs, as well as a variety of other scaling tactics in use for efficient data access.
+In this post we’ll look at how the team scaled out from a single primary, to 8 primary DBs, as well as a variety of other scaling tactics in use for efficient data access.
 
 Let’s dive into the Rails and Active Record code changes in this post, starting with some technical metrics from Christmas Day 2025.
 
@@ -82,11 +82,11 @@ An exciting development for the team was seeing the Aura Frames app rise in the 
 Although there is a lot of interesting history from how the Aura Frames Rails codebase evolved over a decade, this post will focus on the slice of time from mid-2025 through Christmas 2025, preparing for a large scale Active Record query layer refactoring to distribute the work to multiple primary DBs.
 
 ## Getting Started With Multiple Databases
-From the earlier post on Postgres changes, you learned that eventually there were 7 total primary databases.
+From the earlier post on Postgres changes, you learned that eventually there were 8 total primary databases.
 
 Before any of that was rolled out, we started to make Active Record code changes in the local development environment so that queries accessed only their respective databases. Queries could not span a database boundary, and the tables being moved were no longer in the primary database.
 
-The development environment uses a Docker Postgres instance and to keep things simple locally, all 7 databases were run on the same Docker Postgres instance. This meant the queries still “broke” if they tried to access a table in a different database, for example with SQL Joins that no longer worked. This meant “failing tests,” which were the development fuel to start refactoring. The gist of the changes was pretty straightforward, finding those queries, and changing their connection to make sure they connected to the new database. Their query results were then passed around in Ruby as input to queries in other databases.
+The development environment uses a Docker Postgres instance and to keep things simple locally, all 8 databases were run on the same Docker Postgres instance. This meant the queries still “broke” if they tried to access a table in a different database, for example with SQL Joins that no longer worked. This meant “failing tests,” which were the development fuel to start refactoring. The gist of the changes was pretty straightforward, finding those queries, and changing their connection to make sure they connected to the new database. Their query results were then passed around in Ruby as input to queries in other databases.
 
 With hundreds of failing tests to sift through, the refactoring work became evident and it was a matter of moving through all the test failures one by one. Eventually several weeks later, all tests passed once again. The nice thing about this design is the same reads without SQL Joins could be performed on the existing main DB, meaning the changes were backwards compatible.
 
@@ -153,7 +153,7 @@ end
 ```
 This means the `dogs` table (assuming `self.table_name = "dogs"` here) would be a table in the separate Animals database.
 
-This was the gist of the changes needed for Active Record in the Aura Frames codebase. This pattern was repeated 7 times for 7 new DBs.
+This was the gist of the changes needed for Active Record in the Aura Frames codebase. This pattern was repeated 7 times for 7 new DBs (making 8 in total).
 
 The nice thing about this was the query changes themselves were backwards compatible, meaning query changes were deployed in advance of the DB split, running on a single primary DB. This as meant to be temporary and while under less load than peak.
 
