@@ -30,8 +30,6 @@ The frames are easy to use via free iOS and Android apps, don't require a subscr
 
 In 2025, more than 1 billion photos were shared to Aura frames globally.
 
-[Aura Frames Co-Founders Eric and Abdur (CTO and CEO)](https://medium.com/aura-frames/aura-spotlight-on-co-founder-cto-eric-jensen-c93ecb49e4fb) were some of the very committers to the codebase in 2014 as the company was starting up, and both still leading the company in 2026.
-
 While public engineering blog posts are limited, Aura was featured on the AWS Storage Blog in the past. Link: [How Aura improves database performance using Amazon S3 Express One Zone for caching](https://aws.amazon.com/blogs/storage/how-aura-improves-database-performance-using-amazon-s3-express-one-zone-for-caching/).
 
 ## Disclosures

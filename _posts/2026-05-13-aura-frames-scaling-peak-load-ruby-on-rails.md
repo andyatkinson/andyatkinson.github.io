@@ -122,10 +122,10 @@ select * from posts where id IN (?);
 
 What else?
 
-## Rails side - New config and new parent classes
+## New Database Configuration
 With Multiple Databases, the first thing we need is a new YML config entry (`config/database.yml`) for the new database. The [Multiple Databases Documentation](https://guides.rubyonrails.org/active_record_multiple_databases.html) uses "animals" and `my_animals_db` as the second primary database, so we'll use that too for examples.
 
-This configuration is where we’ll store the Postgres connection string details and other application config like whether migrations are used, the schema dump path, schema cache path etc.
+This configuration is where we’ll store the Postgres connection string details and other application config like whether migrations are used, the schema dump path, etc.
 
 Second, Active Record classes that previously inherited (OOP style) from `ApplicationRecord < ActiveRecord::Base` would get a new parent class.
 
@@ -228,7 +228,7 @@ Instead, keyset pagination scales well for any amount of row data. The trick is 
 This is an incredibly useful pattern and common used in the codebase for paginating API requests and other spots, but to my knowledge Active Record does not have a generic pagination helper built in like this.  
 
 
-## Caching data type lookups: Schema cache querying
+## Column Data Type Lookups
 The schema inspection queries for data types and other things, `pg_attribute`, while small individually, end up accounting for a significant amount of query volume at high scale. These queries are made against the primary instance using some resources that would better be made available for application queries.
 
 To fix that we use the schema cache feature in Active Record. Instead of querying Postgres for data types info, the `scheme_cache.yml` holds a serialized dump of this info in a file that can be read by Rails. Unfortunately in the initial expansion to supporting Multiple Databases, the schema cache was only available for the main primary DB.
@@ -261,7 +261,7 @@ Keeping certain values in Memcached is a key part of the scaling strategy. Thing
 ## Managing Schema Changes with Multiple Databases
 Given each of the 6 new primary databases had their own config in config/database.yml, we could also manage DDL changes to these tables in the regular Rails way.  Each had their own db/schema.rb, a Ruby representation of the schema definition. There is also schema data type caching via `db/schema_cache.yml` but we will cover that later. 
 
-Each DB had its own directory for migration files, a respective schema.rb equivalent that was generated from the migrations, and a schema cache (`schema_cache.yml`) file.
+Each DB had its own directory for migration files, a respective `schema.rb` equivalent that was generated from the migrations, and a schema cache dump (`schema_cache.yml`) file.
 
 Since each “new” database was actually based on an existing table, we started the “first” migration for the new database from the existing table definition. We used pg_dump to dump the current table definition from production.
 
