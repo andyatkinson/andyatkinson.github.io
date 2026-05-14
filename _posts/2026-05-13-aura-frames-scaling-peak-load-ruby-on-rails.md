@@ -8,7 +8,7 @@ hidden: true
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>Using Ruby on Rails has helped make it possible to scale out and scale up, meeting the demands of millions of customers adding and viewing photos on millions of digital frames.</p>
-<p>In 2025, the team added more primary databases to scale peak write and read load ahead of Christmas Day. Rails helps manage pools of connections for each primary database, all from the same codebase.</p>
+<p>In 2025, the team added more primary databases to scale peak write and read load ahead of Christmas Day. Rails helps manage pools of connections for each primary database, within the same codebase.</p>
 <p>The Ruby web stack was chosen long ago and has been battle tested, including Apache and Phusion Passenger Enterprise Edition, built on a custom AMI EC2 instance, part of an Auto Scaling Group (ASG) that auto-scales to thousands of instances for peak API traffic.</p>
 <p>With 8 primary databases in total, each server instance can be vertically scaled up for peak load, and back down later for cost savings.</p>
 <p>To make this possible within Ruby on Rails, the team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> Active Record feature which simulates joins between tables in different databases.</p>
@@ -30,7 +30,7 @@ To handle greater levels of peak traffic reliably, the team decided to introduce
 
 Within sharding from the Rails application, another choice was whether to shard at the database table row level, meaning distributing the rows among multiple same-schema copies of the database, or to shard at the “whole table” level.
 
-Fortunately Ruby on Rails was enhanced over more than 15 years of developments to support the needs of mature, scaled-up platforms with billions of rows of data and terabyte sized DBs, and had a few capabilities that could accomodate either strategy.
+Fortunately Ruby on Rails was enhanced over more than 15 years of developments to support the needs of mature, scaled-up platforms with billions of rows of data and terabyte sized DBs, and had a few capabilities that could accommodate either strategy.
 
 Let’s dive into some technical metrics from Christmas Day 2025 to help set the context.
 
@@ -119,7 +119,7 @@ Author model has an existing association defined as: `has_many :posts, through: 
 To change this association, the `disable_joins: true` option is added like this:
 `Author has_many :posts, through: :author_posts, disable_joins: true`
 
-What's happeneing in SQL? Previously to get an Author’s posts, we’d query the `author_posts` table and join to the posts table on the author’s id.
+What's happening in SQL? Previously to get an Author’s posts, we’d query the `author_posts` table and join to the posts table on the author’s id.
 
 Instead of that, there will now be two queries performed like below. One queries `author_posts` by `author_id` (an important foreign key column to index) table to get post `id` values. Then a second query to the `posts` table by `id` (uses primary key index).
 
@@ -170,12 +170,12 @@ Eventually all new DBs and infra (PgBouncer, config vars) were set up, and could
 What were they?
 
 ## Post-split: Subquery Expressions
-Multiple tables exist in subquery expressions (aka "subqueries"), and these tables need to be in the same database for the statement to be vald.
+Multiple tables exist in subquery expressions (aka "subqueries"), and these tables need to be in the same database for the statement to be valid.
 
 When we found those, they needed to be restructured so that the DBs containing the table could be queried.
 
 ## Post-split: EXISTS Clauses
-Post-split, SQL like below no longer works when these tables aren't in the same DB.
+Post-split, the SQL below doesn't work when `users` and `posts` aren't in the same DB.
 ```sql
 SELECT users.*
 FROM users
@@ -185,91 +185,90 @@ WHERE EXISTS (
 ```
 
 ## Post-split: Aggregating And Grouping Multiple Tables
-Post-split, the resulting SQL from this Active Record no longer works when these tables aren't in the same DB.
+Post-split, there can be SQL fragments like this lurking, and this code needs to be changed.
 ```sql
 Users.select("users.*, COUNT(posts.id) AS posts_count")
 ```
 
 ## Post-split: Merging Scopes
-If `User` and `Post` are not in the same database, we can't merge a scope like this:
+If the tables for `User` and `Post` aren't in the same database, we can't merge a scope like this:
 ```sql
 User.merge(Post.recent)
 ```
 
 ## Post-split: References Method
-`references` [API Documentation](https://apidock.com/rails/v7.1.3.2/ActiveRecord/QueryMethods/references) (adds a SQL Join)
-Used in conjunction with `includes()` when it’s not clear what table is being referenced. Can’t reference a table that’s not in the same database. 
+`references` [API Documentation](https://apidock.com/rails/v7.1.3.2/ActiveRecord/QueryMethods/references) which adds a SQL join, is used in conjunction with `includes()` to specify a table. However, this won't work if the table is no longer in the same database.
 
-## Handling has_and_belongs_to_many
+## Other Associations: has_and_belongs_to_many
 We did have a handful of `has_and_belongs_to_many` (HABTM) relationships ([API Documentation](https://guides.rubyonrails.org/association_basics.html#has-and-belongs-to-many)). With these there is still a join table, but there is no Active Record model for it. The tables are also slim, no primary key or timestamp columns.
 
-For HABTM relationships that would span a DB boundary, we decided to keep the table definitions as is, but introduce a model class and convert the code-level relationship from HABTM to `has_many :through` (HMT) so that we could use the `disable_joins: true` option.
+For HABTM relationships that would span a DB boundary, we decided to keep the table definitions as is, but introduce a model class and convert the code-level relationship from HABTM to `has_many :through` (HMT) so that we could use `disable_joins: true`.
 
-HABTM relationships that existed in the same DB were left alone.
+HABTM relationships in the same DB were left alone.
 
 ## Scaling Inserts and Updates
-Rails supports bulk inserts and *upserts* (either an insert or an update), however the helper methods are limited. One limitation is that the ON CONFLICT clause can’t be customized. For example attempting an INSERT and specifying the DO NOTHING option when unique constraint violations occur.
+With Multiple Databases and `disable_joins: true` covered, what other database scalability tactics are used?
 
-For `insert_all()` ([API Documentation](https://apidock.com/rails/v6.0.0/ActiveRecord/Persistence/ClassMethods/insert_all)) the ON CONFLICT clause can’t be controlled.
+Rails supports bulk inserts and *upserts* (either an insert or an update), however the helper method for mass-inserting data didn't support what we needed. A limitation was that the ON CONFLICT clause couldn't be customized for `insert_all()` ([API Documentation](https://api.rubyonrails.org/v7.0/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-insert_all)). For example attempting an INSERT and specifying the DO NOTHING option when unique constraint violations occur.
 
-Aura has custom code for mass insert with drect control over the ON CONFLICT clause. Being able to batch inserts and updates like this is a critical part of scalability, consolidating the overhead of a single transactional commit from many rows, possibly 1000, into a single commit.
+Note that `upsert_all()` does support a `:on_duplicate` option.
 
-Note that from Postgres 15 onward there is also support for the SQL MERGE keyword, but neither Active Record nor the custom code is using MERGE as of now.
+Aura Frames has custom code for mass insert with direct control over the ON CONFLICT clause. Being able to batch inserts like this is a critical part of write scalability, consolidating the overhead of a batch of row insertions (e.g. 1000) into a single commit.
 
 ## Scaling reads with batching
 Rails supports batched read queries with a few Active Record methods: `find_each()`, `in_batches()`, and `find_in_batches()`.
 
-Aura has custom code for batched finding specifying an arbitrary column on the table and a sorting direction. 
+Aura Frames has custom code for batched finding specifying an arbitrary column on the table and a sorting direction. 
 
 Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://apidock.com/rails/ActiveRecord/Batches/find_in_batches)) to control ordering, but unfortunately the only column to order on is the primary key column.
 
-Still, reading a batch worth of rows at a time is a critical scalability tactic to make sure that that the query runs fast and the query result size is not overwhelming.
+Still, reading a batch worth of rows at a time is a critical scalability tactic to make sure that the query runs fast and the result size is not overwhelming.
 
 ## Scaling Reads with Paginated Queries
-Aura has custom code to perform keyset pagination, and generally does not use LIMIT and OFFSET style pagination that’s built in to Active Record. While LIMIT and OFFSET style pagination may work for smaller amounts of data, it doesn’t scale well for deep pagination levels or working with billions of rows.
+Aura Frames has custom code to perform keyset pagination, and generally does not use LIMIT and OFFSET style pagination built-in to Active Record. LIMIT and OFFSET pagination works for smaller amounts of data, but doesn’t scale well for deep pagination levels or when working with tables with billions of rows.
 
-Instead, keyset pagination scales well for any amount of row data. The trick is to index a high cardinality column like a timestamp column, then query using that column in the WHERE clause and fetch a batch of rows. For example fetching rows from a position with a >= or < operator and a LIMIT of 1000. The last accessed value then becomes the cursor position to start from. 
+Keyset pagination with a high cardinality indexed column works well for fetching batches even for multi-billion row tables. The trick is to index a high cardinality column like a timestamp column, then filter on that with a WHERE clause and a LIMIT sized batch of rows. For example fetching rows from a position with a >= or < operator and a LIMIT of 1000. The last accessed value then becomes the cursor position to start from. 
 
-This is an incredibly useful pattern and common used in the codebase for paginating API requests and other spots, but to my knowledge Active Record does not have a generic pagination helper built in like this.  
+This is an incredibly useful pattern and commonly used for API requests and other spots. To my knowledge Active Record doesn't have a generic keyset style pagination helper.
 
 ## Counter Cache Maintenance for Frequently Updated Counters
-Rails supports counter_cache columns, but these are columns that are updated on a table. Updating them means row row churn in Postgres, as updates even for a single column create a new immutable row version behind the scenes, leaving behind a former row version.
+Rails supports counter_cache columns ([Blog post](https://blog.appsignal.com/2018/06/19/activerecords-counter-cache.html)) as a running counter, kept updated at write time.
+
+Updating their values means row row churn in Postgres, as updates even for a single column create a new immutable row version behind the scenes, leaving behind a former row version, so it's smart to think about which tables will get churned this way and the follow-on impact (the need for Vacuum).
 
 The updates could also cause contention for that row being updated by another process.
 
-Aura Frames does something similar but keeps counter cache columns in a separate but related table. This avoids contention and row churn on the target table.
-
-That said, keeping a running count to avoid slow filtered COUNT queries is a critical part of high scale.
+Aura Frames does something similar but keeps counter cache columns in a separate but related table. This reduces contention and places the churn more on a separate utility table.
 
 ## Random values and Sampling
-Ordering by `RANDOM()` is slow (`ORDER BY RAND()`). Aura makes use of TABLESAMPLE in Postgres, specified with a FROM clause for a table ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)).
+Ordering by `RANDOM()` is slow (`ORDER BY RAND()`). Aura Frames uses TABLESAMPLE in Postgres, specified with a FROM clause for a table ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)).
 
 A couple of options are supported like `sampling_method` with built-in options of `system` and `bernoulli`, or they can be expanded further by enabling the `tsm_system_rows module` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)).
 
 ## Using Memory Key Value Cache Stores
-Aura Frames makes use of the [Active Support Cache Store](https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html), Memcached with HAProxy performing connection management.
+Aura Frames makes use of the [Active Support Cache Store](https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html) via Memcached with HAProxy performing connection management.
 
-Keeping certain values in Memcached is a key part of the scaling strategy. Things like per-user counters, per-feature rate limiting, or cached values with TTLs of certain environment variables are key pieces of data stored in Memcached.
+Keeping certain values in Memcached is a key part of the scaling strategy, values like per-user counters, per-feature rate limiting, or cached environment variable values with TTLs.
 
 ## Managing Schema Changes with Multiple Databases
-Given each of the 6 new primary databases had their own config in `config/database.yml`, we could also manage DDL changes to these tables in the regular Rails way.  Each had their own `schema.rb`, a Ruby representation of the schema definition.
+With 7 new primary databases and new configs in `config/database.yml`, we wanted to continue managing DDL changes via Rails Migrations like normal.
 
-Each DB had its own directory for migration files and a respective `schema.rb` equivalent generated from migrations.
+Fortunately this is supported. Each DB has its own `schema.rb`, a Ruby representation of the schema definition, and a directory for migration files.
 
-Since each "new" database was not actually new, but based on an existing table, we started a new "first" migration for it using the existing using `pg_dump`.
+Since each "new" database was not actually new, but based on an existing table, we started a new "first" migration for it using the existing table definition dumped via `pg_dump`.
 
-This migration version would be added *idempotently* meaning the table was added when it didn’t exist. Initially the table would not exist in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there.
+This migration version would be added *idempotently* meaning the table was added when it didn’t exist. Initially the table would *not exist* in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there.
 
 The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database at switchover time. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later. 
 
-Imagine that new migration version was `1234567890`. Once switch over, we manually inserted that version into `schema_migrations`. This was manual but it could be approved via PR in advance and ultimately was only 6 insert statements. Prior to the insert we `TRUNCATE`'d the new DB’s `schema_migrations` table meaning it started empty.
+Imagine the new migration version was `1234567890`. Once switched over, we manually inserted the version into `schema_migrations` to keep the state consistent with the migration file.
+
+Before inserting the version, we'd `TRUNCATE` the new DB's `schema_migrations` table.
 ```sql
 insert into schema_migrations (version) values ('1234567890');
 ```
 
-
-Once all of that was done, schema management via migrations worked like normal from that point forward. Migrations can be generated, their files are in their own directory, and when applied with `rails db:migrate` all the respective `schema.rb` files are updated. Nifty!
-
+Once that was done, schema management via migrations worked like normal. Migrations can be generated, their files are in their own directory, applied with `rails db:migrate` and `schema.rb` is kept updated. Nifty!
 ```sh
 rails g migration --database new_db
 
@@ -280,15 +279,17 @@ rails db:schema:cache:dump
 ```
 
 ## What’s missing in Rails?
-While Ruby on Rails has been expanded to help the needs of large scale apps, and intends to be a somewhat generic framework used for a variety of specific purposes, we did look at some ways that current features came up a bit short. This section will recap those with the idea that these may be possible future enhancement areas for Rails and Active Record.
+While Ruby on Rails has been expanded to help the needs of large scale apps, and intends to be a somewhat generic framework used for a variety of specific purposes, we did find that some of the features didn't support what we needed. This is a short recap with the idea it may be useful information for future enhancements to Active Record.
 
-- Limitations of `disable_joins: true`, not all association types are supported
-- Batched finders like `find_in_batches()` don’t support filtering (`WHERE` clause) on non primary key columns. We want to specify a non-PK column, set the direction ascending or descending, and set a limit.
-- Methods `insert_all()` and `upsert_all()` don’t support a customizable `ON CONFLICT` clause.
+- Limitations of `disable_joins: true`, not all association types supported
+- Batched finders like `find_in_batches()` don’t support filtering (`WHERE` clause) on non-primary key columns. We want to specify a non-PK column, set the direction ascending or descending, and set a limit.
+- Method `insert_all()` didn't support customization of the `ON CONFLICT` clause.
 - No built-in method for keyset pagination style pagination.
 
 ## Wrap Up
-Ruby on Rails has been a critical technology for Aura Frames to build with for more than a decade. Enhancements in the last handful of versions have been put to use by the platform, helping it reach greater levels of scale, and helping deliver a faster and more reliable experience to customers.
+Ruby on Rails has been a critical technology for Aura Frames to build with for more than a decade, enabling a small team to continually ship improvements to customers within the same codebase.
+
+Enhancements in the last handful of versions have been put to use, helping the platform reach greater levels of scale, delivering faster and more reliable experiences to customers.
 
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book. If you're an engineer interested in working on these types of challenges, please get in touch.
 
