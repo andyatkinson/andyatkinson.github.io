@@ -16,11 +16,11 @@ hidden: true
 </div>
 
 ## Building With Ruby on Rails
-The Aura Frames platform has been built with Ruby on Rails since the beginning. Christmas 2025 was one of the busiest days of the year for the company and technical platform, serving a peak of 41 million API requests per second and processing a peak of 11.8 million background jobs per hour.
+The Aura Frames platform has been built with Ruby on Rails since the beginning. Christmas 2025 was the busiest day of the year for the company and technical platform, serving a peak of 41 million API requests per second and processing a peak of 11.8 million background jobs per hour.
 
-For an introduction to the Aura Frames company and the products, please check out [Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)](https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak).
+For an introduction to the Aura Frames company and products, please check out Part 1 of this series: [Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)](https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak).
 
-Besides Ruby on Rails, Aura Frames uses PostgreSQL and AWS as key technologies.
+**Brief Recap from Part 1**: Besides Ruby on Rails, Aura Frames uses PostgreSQL and AWS as key technologies.
 
 Due to not being easily scalable horizontally for write operations, the database layer of PostgreSQL and Active Record often became a bottleneck. The team relied on vertically scaling the single primary server instance through Christmas of 2024.
 
@@ -28,11 +28,11 @@ The largest machine available for RDS on AWS is currently the 48x family (192 vC
 
 To handle greater levels of peak traffic reliably, the team decided to introduce a type of sharding using multiple primary databases. Several sharding approaches were considered. One goal was to leverage the existing code as much as possible, with minimal changes, and control the sharding distribution from the application level.
 
-Within sharding from the Rails application, another choice was whether to shard at the database table row level, meaning distributing the rows among multiple same-schema copies of the database, or to shard at the “whole table” level.
+Another choice was whether to shard at the table row level, meaning distributing the rows among multiple same-schema copies of the database, or to move "whole tables" (all rows) to their own DB.
 
-Fortunately Ruby on Rails was enhanced over more than 15 years of developments to support the needs of mature, scaled-up platforms with billions of rows of data and terabyte sized DBs, and had a few capabilities that could accommodate either strategy.
+Fortunately Ruby on Rails was enhanced over more than 15 years of development to support the needs of mature, scaled-up platforms with billions of rows and terabytes of data, with patterns but also flexibility. A couple of key capabilities could be used to accommodate either strategy.
 
-Let’s dive into some technical metrics from Christmas Day 2025 to help set the context.
+Before getting into the solution details, let's look at some technical metrics from Christmas Day 2025 to help set context.
 
 ## Technical Metrics
 On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below are some HTTP and background jobs oriented metrics that Rails developers might find interesting.
@@ -46,7 +46,7 @@ On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below a
   <tbody>
     <tr>
       <td>HTTP Requests (1pm CT) at Load Balancer</td>
-      <td>41 million requests/second</td>
+      <td>41 million/second</td>
     </tr>
     <tr>
       <td>Average Response Time (10am to 9pm CT)</td>
@@ -71,32 +71,32 @@ On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below a
   </tbody>
 </table>
 
-An exciting development for the team was seeing the free iOS Aura Frames app rise in App Store rank throughout the day.
+An exciting development for the team was seeing the free iOS and Android Aura Frames app rise in ranking throughout the day.
 
-Later on Christmas Day, the app reached a peak rank of #1 among all free apps in the U.S. and Canadian App Stores, even beating out apps from big companies like ChatGPT and Meta AI.
+Late on Christmas Day, the app reached a peak rank of #1 among all free apps in the U.S. and Canadian App Stores, even beating out apps from big companies like ChatGPT and Meta AI!
 
 ![Aura Frames #1 App U.S. App Store Christmas Day](/assets/images/aura-christmas-2025.jpg)
 <br/>
 <small>Screenshot showing the Aura Frames app at the #1 rank in the U.S. Apple App Store</small>
 
-Although there is a lot of interesting history from how the Aura Frames Rails codebase evolved over a decade, to handle the peak load for this post will look at changes made from mid-2025 through Christmas 2025 to the Active Record query layer, through refactoring and gradual rollouts.
+Although there is a lot of interesting history from how the Aura Rails codebase evolved over a decade, let's look at the changes made from mid-2025 before Christmas Day 2025 to Active Record to make the numbers above possible.
 
 ## Getting Started With Multiple Databases
 From earlier, you learned that the Aura Frames platform was expanded from a single primary application DB to a total of 8.
 
-To make that possible, heavy refactoring was performed to the Active Record that worked with the tables that were ultimately moved.
+To do that, heavy refactoring was performed to Active Record query layer code for tables being moved.
 
-Queries for tables must not span a database boundary, and given some of the big tables being moved to new databases, they'd no longer be in the primary database.
+Queries for tables must not span a database boundary, and given some of the big tables were being moved to a new database, queries would break.
 
-The development environment uses a Docker Postgres instance and to keep things simple locally, all 8 databases were run on the same Docker Postgres instance. This meant the queries still "broke" (helpfully) when they spanned a database boundary, but we didn't need to run 8 different instances locally.
+The development environment uses a Docker Postgres instance and to keep things simple locally, all 8 databases were run there. This meant the queries still "broke" (helpfully) when they spanned a database boundary, but we didn't need to run 8 different instances locally.
 
 These breakages showed up as “failing tests” in the extensive test suite, which was supremely useful to help know what needed to change.
 
-The gist of the changes was pretty straightforward, finding those breaking queries, then unraveling joins and changing connections for tables to be routed to the correct database. Their query results were then passed around in Ruby as input to queries in other databases.
+The gist of the changes was pretty straightforward, find the breaking queries, unraveling joins or other incompatible SQL, and change connections to the correct database. Their query results were then passed around in Ruby as input to queries in other databases.
 
 With hundreds of failing tests to sift through, the refactoring work took a long time as test failures were addressed one by one, but progress was easy to measure.
 
-Eventually, weeks later, all tests were passing! The nice property about this design was the same query changes without SQL joins could be performed on the existing main DB, meaning the changes were backwards compatible and could be rolled out in place initially, before the new DBs were in place.
+Eventually, weeks later, all tests were passing! The nice property about this design was the same query changes without SQL joins could be performed on the existing main DB, meaning the changes were backwards compatible and could be rolled out in place initially before the new DBs were in place.
 
 Some of the main changes were evaluating all Active Record relationships (`has_many`, `belongs_to`, etc.) and any subquery expressions or other incompatible code, and using `disable_joins: true`, removing subquery expressions and table references.
 
@@ -105,7 +105,7 @@ The key parts of Ruby on Rails and Active Record that made this possible were Mu
 
 Both of these were possible with custom code or third party library code (Ruby gems) before, but having native support in Rails was a differentiator. Native support meant more real world use, bug fixes, improved documentation, and a longer term commitment to supporting these features.
 
-Having `disable_joins` as a consistent pattern also helped with comprehension by the team. Enabling "learn how it works once, then re-use it all over the codebase."
+Having `disable_joins` as a consistent pattern also helped with comprehension by the team, enabling "learn how it works once, then re-use it all over the codebase."
 
 Due to the increase in SELECT queries (and loss of join efficiency), the team had concerns about additional read query volume. Fortunately the team had a load testing tool in place and was able to verify through load testing that the additional read queries performed would not be a problem.
 
@@ -121,19 +121,20 @@ To change this association, the `disable_joins: true` option is added like this:
 
 What's happening in SQL? Previously to get an Author’s posts, we’d query the `author_posts` table and join to the posts table on the author’s id.
 
-Instead of that, there will now be two queries performed like below. One queries `author_posts` by `author_id` (an important foreign key column to index) table to get post `id` values. Then a second query to the `posts` table by `id` (uses primary key index).
-
+Instead of that, there will now be two queries performed like below. One queries `author_posts` by `author_id` (an important foreign key column to index) to get post `id` values. Then a second query to the `posts` table by `id` (uses primary key index) gets the rows from the second table.
 ```sql
 select * from author_posts where author_id = '<some id>';
 select * from posts where id IN (?);
 ```
 
-What else needed to change to make this possible?
+What else needed to change?
 
 ## New Database Configuration
-Although we could roll this out on the same single DB, that was a temporary plan. The main plan was to use Multiple Databases and effectively relocate some of the largest, busiest tables to their own instances.
+Although we could roll this out on the same single DB, that was planned only temporarily to validate queries without the new DBs in place.
 
-For that we'd need to identify all the new DBs. The first thing we needed was new YML config entries (`config/database.yml`) for each of them. The [Multiple Databases Documentation](https://guides.rubyonrails.org/active_record_multiple_databases.html) uses "animals" and `my_animals_db` as the second primary database, so we'll use that too for examples here.
+The main plan was to use Multiple Databases and effectively relocate some of the largest, busiest tables to their own instances, with the one Rails codebase working with all of them.
+
+For that we'd need to provision all the new DBs and connect to them from Rails. The first thing we needed was new YML config entries (`config/database.yml`) for each of them. The [Multiple Databases Documentation](https://guides.rubyonrails.org/active_record_multiple_databases.html) uses "animals" and `my_animals_db` as the second primary database, so we'll use that too for examples here.
 
 This configuration is where we’ll store the Postgres connection string details and other application config like whether migrations are used, the schema dump path, etc.
 
@@ -163,7 +164,9 @@ end
 ```
 This means the `dogs` table (assuming `self.table_name = "dogs"` here) would be a table in the separate Animals database (`my_animals_db`).
 
-Eventually all new DBs and infra (PgBouncer, config vars) were set up, and could be switched over to.
+Eventually all new DBs and infra (PgBouncer, config vars) were set up, and could be switched over to. In the Rails app, the new DBs were named generically as they didn't really correspond to a particular grouping of activity like a service, we just wanted a bunch of DBs with unique names.
+
+The names of the DBs were part of the parent model, now the parent of the original model. Since the original model doesn't change with this, the new DB details are nicely "hidden" (encapsulated) in the parent model.
 
 `disable_joins` for `has_many :through` relationships ended up covering a lot of the needed query changes to get tests passing again, however there were other issues encountered on the way.
 
@@ -175,7 +178,7 @@ Multiple tables exist in subquery expressions (aka "subqueries"), and these tabl
 When we found those, they needed to be restructured so that the DBs containing the table could be queried.
 
 ## Post-split: EXISTS Clauses
-Post-split, the SQL below doesn't work when `users` and `posts` aren't in the same DB.
+Post-split, the SQL below doesn't work when `users` and `posts` (example models) aren't in the same DB.
 ```sql
 SELECT users.*
 FROM users
@@ -251,24 +254,26 @@ Aura Frames makes use of the [Active Support Cache Store](https://api.rubyonrail
 Keeping certain values in Memcached is a key part of the scaling strategy, values like per-user counters, per-feature rate limiting, or cached environment variable values with TTLs.
 
 ## Managing Schema Changes with Multiple Databases
-With 7 new primary databases and new configs in `config/database.yml`, we wanted to continue managing DDL changes via Rails Migrations like normal.
+With the 7 new DBs and configs in `config/database.yml`, we wanted to continue managing DDL changes via Rails Migrations like normal.
 
-Fortunately this is supported. Each DB has its own `schema.rb`, a Ruby representation of the schema definition, and a directory for migration files.
+Fortunately this is supported. Each DB has its own `schema.rb`, a Ruby representation of the schema definition, a directory for migration files, and a place for config options.
 
-Since each "new" database was not actually new, but based on an existing table, we started a new "first" migration for it using the existing table definition dumped via `pg_dump`.
+Since each "new" database was not actually new, but based on an existing table definition, we started a new "first" migration for it using the existing table definition dumped via `pg_dump`.
 
 This migration version would be added *idempotently* meaning the table was added when it didn’t exist. Initially the table would *not exist* in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there.
 
-The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database at switchover time. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later. 
+**Brief recap from Part 1**: The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later. 
 
 Imagine the new migration version was `1234567890`. Once switched over, we manually inserted the version into `schema_migrations` to keep the state consistent with the migration file.
 
-Before inserting the version, we'd `TRUNCATE` the new DB's `schema_migrations` table.
+We'd `TRUNCATE` the new DB's `schema_migrations` table and then insert the "new" migration version above as follows:
 ```sql
 insert into schema_migrations (version) values ('1234567890');
 ```
 
-Once that was done, schema management via migrations worked like normal. Migrations can be generated, their files are in their own directory, applied with `rails db:migrate` and `schema.rb` is kept updated. Nifty!
+Once that was done, schema management via migrations worked like normal. Migrations could be generated with their own directory for files, applied with `rails db:migrate` and `schema.rb` kept updated. Nifty!
+
+Some example commands:
 ```sh
 rails g migration --database new_db
 
@@ -279,12 +284,12 @@ rails db:schema:cache:dump
 ```
 
 ## What’s missing in Rails?
-While Ruby on Rails has been expanded to help the needs of large scale apps, and intends to be a somewhat generic framework used for a variety of specific purposes, we did find that some of the features didn't support what we needed. This is a short recap with the idea it may be useful information for future enhancements to Active Record.
+While Ruby on Rails has been expanded to help the needs of large scale apps, and intends to be a generic framework used for a variety of specific purposes, we did find that some of the features didn't support what we needed. This is a short recap of those (from above) with the idea it may be useful information for future enhancements to Active Record.
 
 - Limitations of `disable_joins: true`, not all association types supported
 - Batched finders like `find_in_batches()` don’t support filtering (`WHERE` clause) on non-primary key columns. We want to specify a non-PK column, set the direction ascending or descending, and set a limit.
 - Method `insert_all()` didn't support customization of the `ON CONFLICT` clause.
-- No built-in method for keyset pagination style pagination.
+- No built-in method for keyset style pagination.
 
 ## Wrap Up
 Ruby on Rails has been a critical technology for Aura Frames to build with for more than a decade, enabling a small team to continually ship improvements to customers within the same codebase.
