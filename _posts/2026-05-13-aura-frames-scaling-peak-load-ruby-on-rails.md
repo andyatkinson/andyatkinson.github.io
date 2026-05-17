@@ -218,7 +218,7 @@ Aura Frames has custom code for mass insert with direct control over the ON CONF
 ## Scaling reads with batching
 Rails supports batched read queries with a few Active Record methods: `find_each()`, `in_batches()`, and `find_in_batches()`.
 
-Aura Frames has custom code for batched finding specifying an arbitrary column on the table and a sorting direction. 
+Aura Frames has custom code for batched finding, specifying an arbitrary column on the table and a sorting direction. 
 
 Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://apidock.com/rails/ActiveRecord/Batches/find_in_batches)) to control ordering, but unfortunately the only column to order on is the primary key column.
 
