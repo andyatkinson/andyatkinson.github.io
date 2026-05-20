@@ -44,9 +44,9 @@ I'm biased, but from my view the company is dedicated to continually improving t
 With that covered, let's take a look at how the frames are used and what drives the traffic.
 
 ## What causes the sharp increase in traffic?
-On Christmas Day, tens of thousands of customers set up new frames. It's critical they have a good experience from their first moments with the product, which means the backend platform needs to be reliable.
+On Christmas Day, millions of customers set up hundreds of thousands of new Aura frames. The backend platform needs to work well for both existing customers and handle the load from new customer activity. For new customers it’s especially critical they have a good experience from their first moments with the product.
 
-While the holiday timing is predictable, the rate of new frames and new photos added each year increases, and adds significant pressure to all infrastructure components. Postgres is not easily horizontally scalable, and is costly to operate.
+While the holiday timing is predictable, the rate of new frames and new photos added each year increases, adding a new amount of pressure to infrastructure components. Postgres is not easily horizontally scalable, and is costly to operate.
 
 The average amount of increased peak TPS on Christmas Day was around ~4.5x, with the biggest increase on a DB being ~18x the normal value! To meet this demand, advanced capacity and financial planning were necessary, along with provisioning resources ahead of time and shrinking them back down afterwards.
 
@@ -81,7 +81,11 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
 
 Without a larger instance class to move to, the team no longer had vertical scaling as an option for improved reliability for Christmas 2025 and beyond.
 
-⚠️ Although a Dedicated Log Volume (DLV) was in place for 2024, the configuration was not optimal.
+⚠️  Although a Dedicated Log Volume (DLV) was in place for 2024, there was a problem traced back to a change with Postgres 14.1.
+
+"We weren't aware RDS had changed in-region replication to use replication slots by default in Postgres 14.1.
+
+This caused the amount of WAL stored on the primary to be unbounded when the replica lagged."
 
 ## Postgres Scaling Challenges and Solutions
 The use of Postgres by Aura faces all kinds of common Postgres scaling challenges.
