@@ -109,11 +109,11 @@ The use of Postgres by Aura faces all kinds of common Postgres scaling challenge
 - Configuration complexity. Postgres parameters (GUCs) are not heavily modified beyond what RDS provides.
 
 ## Christmas 2024 Retrospective
-Unfortunately on Christmas Day 2024, the client application demand outpaced what Postgres could handle. A root cause analysis revealed that one of the main contributors to downtime was the growth of the write ahead log (WAL) filling the storage volume.
+Unfortunately on Christmas Day 2024, the team, platform, and customers faced a significant outage. A root cause analysis revealed that the main contributor was running out of space on the DLV, due to the growth of write ahead logs (WAL) filling it up.
 
 The team had provisioned a [Dedicated Log Volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) offering lower latency as a dedicated volume for WAL log storage.
 
-Despite the DLV being in place, the team traced a root cause back to a change introduced in Postgres 14.1 (the prior year ran Postgres 13.x which used S3 for WAL archival) related to use of replication slots and replication.
+The team traced the root cause back to a change introduced in Postgres 14.1 (the prior year ran Postgres 13.x which used S3 for WAL archival) related to the new use of replication slots for replication.
 
 "We weren't aware RDS had changed in-region replication to use replication slots by default in Postgres 14.1. This caused the amount of WAL stored on the primary to be unbounded when the replica lagged." (Source: [RDS "Monitoring replication slots for your RDS for PostgreSQL DB instance"](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.Monitor.html))
 
@@ -121,14 +121,14 @@ From my own research, the benefits of using replication slots for replication se
 
 The trade-off is the possibility of unbounded slot growth for inactive slots, and pg_wal filling the storage volume causing [Postgres to shut down](https://www.netdata.cloud/guides/postgres/postgres-wal-disk-full/) (Docs for Postgres 16.x).
 
-This is even documented in community Postgres under [Disk Full Failure](https://www.postgresql.org/docs/16/disk-full.html) (Docs for Postgres 16.x) or under "No space left on device" [ENOSPC](https://wiki.postgresql.org/wiki/ENOSPC) on the wiki.
+This is documented in community Postgres under [Disk Full Failure](https://www.postgresql.org/docs/16/disk-full.html) (Docs for Postgres 16.x) or under "No space left on device" [ENOSPC](https://wiki.postgresql.org/wiki/ENOSPC) on the wiki.
 > The server will crash and run crash recovery.
 
 One way to limit the growth is to set [`max_slot_wal_keep_size`](https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/) ([Postgres replication docs](https://www.postgresql.org/docs/current/runtime-config-replication.html)) (new in 13, default value is `-1` which means disabled) but initially it's not set. `wal_keep_size`, `max_slot_wal_keep_size`, and `max_wal_size` were all updated going forward.
 
-The team was also able to reproduce problematic high CPU usage under synthetic load testing, during vacuum. A variety of theories for the high CPU use were analyzed over the summer of 2025, but ultimately none had very strong evidence. RDS Postgres limits access to the underlying host OS making it impossible to directly use [Linux profiling tools like perf](https://perfwiki.github.io/main/).
+The team was also able to reproduce problematic high CPU usage under synthetic load testing, during vacuum. A variety of theories for the high CPU use were analyzed over the summer of 2025, but ultimately none had very strong evidence. RDS Postgres limits access to the underlying host OS making it impossible to directly use [Linux profiling tools like perf](https://perfwiki.github.io/main/) (as compared with something like running community Postgres on EC2). Despite that limitation, the team wanted to stick with RDS for its other benefits.
 
-In exploring alternative designs, the team began creating proofs of concept for sharding Postgres to get the benefits of more instances. Various approaches were explored, but the team heavily preferred mature solutions and a high degree of owner-operator control, thus a custom solution with Ruby on Rails framework capabilities had the lowest friction.
+In exploring multi-instance designs, the team began creating proofs of concept for sharding Postgres from the application. Various approaches were explored, but the team heavily preferred mature solutions and a high degree of owner-operator control, thus a custom solution with Ruby on Rails framework capabilities had the lowest friction.
 
 Ruby on Rails [Horizontal Sharding](https://guides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding) was partially built out and could have been a viable solution, but ultimately was not chosen.
 
