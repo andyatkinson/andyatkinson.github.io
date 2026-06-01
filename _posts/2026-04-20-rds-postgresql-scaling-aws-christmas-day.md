@@ -119,7 +119,7 @@ The team traced the root cause back to a change introduced in Postgres 14.1 (the
 
 From my own research, the benefits of using replication slots for replication seemed to be speeding up replica "catch up" or full recovery if needed. Postgres docs say "replication slots retain only the number of segments known to be needed" (less overall content). ([Replication Slots](https://www.postgresql.org/docs/17/warm-standby.html#STREAMING-REPLICATION-SLOTS)).
 
-The trade-off is the possibility of unbounded slot growth for inactive slots, and pg_wal filling the storage volume causing [Postgres to shut down](https://www.netdata.cloud/guides/postgres/postgres-wal-disk-full/) (Docs for Postgres 16.x).
+The trade-off is the possibility of unbounded slot growth for inactive slots, and pg_wal filling the storage volume causing Postgres to shut down.
 
 This is documented in community Postgres under [Disk Full Failure](https://www.postgresql.org/docs/16/disk-full.html) (Docs for Postgres 16.x) or under "No space left on device" [ENOSPC](https://wiki.postgresql.org/wiki/ENOSPC) on the wiki.
 > The server will crash and run crash recovery.
