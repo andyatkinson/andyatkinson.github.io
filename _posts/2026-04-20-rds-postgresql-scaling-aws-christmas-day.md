@@ -61,6 +61,7 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
 <table class="styled-table">
   <thead>
     <tr>
+      <th>Version</th>
       <th>Instance class</th>
       <th>vCPU</th>
       <th>Memory (GiB)</th>
@@ -70,6 +71,7 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
   </thead>
   <tbody>
     <tr>
+      <td>14.x</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -81,11 +83,16 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
 
 Without a larger instance class to move to, the team no longer had vertical scaling as an option for improved reliability for Christmas 2025 and beyond.
 
-⚠️  Although a Dedicated Log Volume (DLV) was in place for 2024, there was a problem traced back to a change with Postgres 14.1.
+⚠️  For Christmas 2024, the team had a Dedicated Log Volume (DLV) in place for replication from the main instance. A DLV reduces latency and improves reliability for replication.
 
-"We weren't aware RDS had changed in-region replication to use replication slots by default in Postgres 14.1.
+Quoting from [AWS Docs on Using a Dedicated Log Volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html):
+> A DLV moves PostgreSQL database transaction logs ... to a storage volume that's separate from the volume containing the database tables.
 
-This caused the amount of WAL stored on the primary to be unbounded when the replica lagged."
+While replication lag is "normal" (asynchronous streaming replication) and varies due to write pressure, vacuum activity, and more, performance on the primary had not previously been affected by replication lag before.
+
+Unfortunately that changed during peak load on Christmas 2024. More details are below in the Christmas 2024 Retrospective section.
+
+Before diving into that, let's briefly cover some of the generic challenges of reaching the scalability limits of a single instance.
 
 ## Postgres Scaling Challenges and Solutions
 The use of Postgres by Aura faces all kinds of common Postgres scaling challenges.
@@ -102,17 +109,30 @@ The use of Postgres by Aura faces all kinds of common Postgres scaling challenge
 - Configuration complexity. Postgres parameters (GUCs) are not heavily modified beyond what RDS provides.
 
 ## Christmas 2024 Retrospective
-Unfortunately on Christmas Day 2024, the client application demand outpaced what Postgres could handle. A root cause analysis revealed that one of the main contributors to downtime was the growth of the write ahead log (WAL) exceeding the available space. This was due to the log not being consumed fast enough by the replica.
+Unfortunately on Christmas Day 2024, the client application demand outpaced what Postgres could handle. A root cause analysis revealed that one of the main contributors to downtime was the growth of the write ahead log (WAL) filling the storage volume.
 
-The team had provisioned a [Dedicated Log Volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) offering a higher SLA for WAL log replay, but it was not optimally configured.
+The team had provisioned a [Dedicated Log Volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) offering lower latency as a dedicated volume for WAL log storage.
 
-The team was able to reproduce problematic high CPU usage under synthetic load testing. A variety of theories for the high CPU use were analyzed over the summer of 2025, but ultimately none had very strong evidence. RDS Postgres limits access to the underlying host OS making it impossible to directly use [Linux profiling tools like perf](https://perfwiki.github.io/main/).
+Despite the DLV being in place, the team traced a root cause back to a change introduced in Postgres 14.1 (the prior year ran Postgres 13.x which used S3 for WAL archival) related to use of replication slots and replication.
 
-In exploring alternative designs, the team began creating proofs of concept for sharding Postgres activity. Various approaches were explored, but with the team heavily preferring mature solutions, a high degree of operator ownership and operator understanding, the team preferred a custom solution with Ruby on Rails.
+"We weren't aware RDS had changed in-region replication to use replication slots by default in Postgres 14.1. This caused the amount of WAL stored on the primary to be unbounded when the replica lagged." (Source: [RDS "Monitoring replication slots for your RDS for PostgreSQL DB instance"](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.Monitor.html))
+
+From my own research, the benefits of using replication slots for replication seemed to be speeding up replica "catch up" or full recovery if needed. Postgres docs say "replication slots retain only the number of segments known to be needed" (less overall content). ([Replication Slots](https://www.postgresql.org/docs/17/warm-standby.html#STREAMING-REPLICATION-SLOTS)).
+
+The trade-off is the possibility of unbounded slot growth for inactive slots, and pg_wal filling the storage volume causing [Postgres to shut down](https://www.netdata.cloud/guides/postgres/postgres-wal-disk-full/) (Docs for Postgres 16.x).
+
+This is even documented in community Postgres under [Disk Full Failure](https://www.postgresql.org/docs/16/disk-full.html) (Docs for Postgres 16.x) or under "No space left on device" [ENOSPC](https://wiki.postgresql.org/wiki/ENOSPC) on the wiki.
+> The server will crash and run crash recovery.
+
+One way to limit the growth is to set [`max_slot_wal_keep_size`](https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/) ([Postgres replication docs](https://www.postgresql.org/docs/current/runtime-config-replication.html)) (new in 13, default value is `-1` which means disabled) but initially it's not set. `wal_keep_size`, `max_slot_wal_keep_size`, and `max_wal_size` were all updated going forward.
+
+The team was also able to reproduce problematic high CPU usage under synthetic load testing, during vacuum. A variety of theories for the high CPU use were analyzed over the summer of 2025, but ultimately none had very strong evidence. RDS Postgres limits access to the underlying host OS making it impossible to directly use [Linux profiling tools like perf](https://perfwiki.github.io/main/).
+
+In exploring alternative designs, the team began creating proofs of concept for sharding Postgres to get the benefits of more instances. Various approaches were explored, but the team heavily preferred mature solutions and a high degree of owner-operator control, thus a custom solution with Ruby on Rails framework capabilities had the lowest friction.
 
 Ruby on Rails [Horizontal Sharding](https://guides.rubyonrails.org/active_record_multiple_databases.html#horizontal-sharding) was partially built out and could have been a viable solution, but ultimately was not chosen.
 
-With more than half of 2025 gone, Christmas Day 2025 was looming and daunting. An additional constraint on solutions were what could be built and supported in time.
+With more than half of 2025 gone, Christmas Day 2025 was looming and daunting. An additional constraint on solutions was what could be built and supported in time.
 
 The clock was ticking!
 
@@ -133,6 +153,7 @@ Here's what the instances were scaled up to for Christmas 2025.
 <table class="styled-table">
   <thead>
     <tr>
+      <th>Version</th>
       <th>Instance class</th>
       <th>vCPU</th>
       <th>Memory (GiB)</th>
@@ -142,6 +163,7 @@ Here's what the instances were scaled up to for Christmas 2025.
   </thead>
   <tbody>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -149,6 +171,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>✅</td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -156,6 +179,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>✅</td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -163,6 +187,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>✅</td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -170,6 +195,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -177,6 +203,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -184,6 +211,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -191,6 +219,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
+      <td>17.x</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -200,6 +229,7 @@ Here's what the instances were scaled up to for Christmas 2025.
   </tbody>
   <tfoot>
     <tr class="summary-row">
+      <td></td>
       <td><strong>Totals</strong></td>
       <td>832 vCPU (<strong>~4.3x ↗</strong>)</td>
       <td>6656 GiB (<strong>~4.3x ↗</strong>)</td>
@@ -344,8 +374,8 @@ We set up a Blue/Green Deployment where the Blue was the newly promoted primary,
 
 ## Reflecting back on the plan
 Some of the key contributors to successfully delivering reliable Postgres:
-1. Having an extensive test suite running tests continuously (CI) helping catch regressions as code was refactored, along with PR reviews from long-tenured team members (invaluable)!
-1. As refactorings happened in large batches, slicing out a smaller chunks as smaller PRs for easier review, and less risk as releases.
+1. Having an extensive test suite running tests continuously (CI) catching regressions as code was refactored, along with PR reviews from long-tenured team members (invaluable)!
+1. As refactorings happened in large batches, slicing out smaller chunks as smaller PRs for easier review, and less risk as releases.
 1. Using a canary release process for widespread changes, released to a single instance vs. the whole fleet, helped to validate correctness for issues that were hard to verify outside of the production environment.
 1. Having an extensive pre-production load testing capability to validate the accumulated changes under high load, across most of the API surface area of the platform, drilling into identified performance regressions.
 1. Having a large AWS infrastructure budget 😅 to work with and strategic spending, in order to over-provision instance sizes and IOPS temporarily to gain more reliability, thanks in part to being a profitable company!
