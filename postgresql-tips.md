@@ -548,7 +548,7 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | Parameter | Unit | Default RDS | Tuned | Link |
 | --- | ----------- | ---- |||
 | `shared_buffers` | 8kb | 25% mem |||
-| `autovacuum_cost_delay` | ms | 20 | 2 ||
+| `autovacuum_vacuum_cost_delay` | ms | 20 | 2 ||
 | `autovacuum_vaccum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
 | `effective_cache_size` | 8kb ||||
 | `work_mem` | MB | 4 | 250||

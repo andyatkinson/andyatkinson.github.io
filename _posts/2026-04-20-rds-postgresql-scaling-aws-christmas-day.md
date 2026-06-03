@@ -61,11 +61,11 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
 <table class="styled-table">
   <thead>
     <tr>
-      <th>Version</th>
-      <th>Instance class</th>
+      <th>Postgres Version</th>
+      <th>RDS Instance Class</th>
       <th>vCPU</th>
       <th>Memory (GiB)</th>
-      <th>Storage type</th>
+      <th>Storage Type</th>
       <th>DLV</th>
     </tr>
   </thead>
@@ -97,16 +97,17 @@ Before diving into that, let's briefly cover some of the generic challenges of r
 ## Postgres Scaling Challenges and Solutions
 The use of Postgres by Aura faces all kinds of common Postgres scaling challenges.
 
-- Insert latency. To help reduce latency, foreign key constraints are not used. Indexes on high write tables are minimized to critical ones. Indexes are periodically rebuilt.
-- Replication. Due to needing read after write and past high replication lag, read replicas have historically not been used for read queries, meaning read queries run on the primary.
-- Buffer cache and high cache hit rates. It was critical to have as much memory as possible allocated to buffer cache to achieve sub-millisecond query executions and reduce IOPS.
-- Provisioned IOPS exceeding allocated amount. It was critical to avoid exceeding the provisioned IOPS (PIOPS) allocation, otherwise queuing and high latency resulted.
-- The team faced unexplained CPU spikes in the single primary instance configuration, reproducible in a load testing environment. The CPU use caused temporary but widespread increased latency.
-- During the high load period, the Postgres database faced very high client connections into the tens of thousands.
-- The application design involved per-user counts that were constantly changing. This could be social media style likes, comments, activity feeds, and more. The backend relies heavily on memcached for this with HAProxy helping manage connections.
-- Disruptive table vacuums during busy periods. The team relies on various tactics to minimize disruption from vacuum. Primarily vacuum is throttled to run slower, and tables with very high dead tuple growth are scheduled to run overnight during the lowest activity period.
+- Insert latency. To help reduce latency, foreign key constraints are not used. Indexes on high write tables are minimized to critical ones. Indexes are periodically rebuilt (`reindex concurrently`).
+- Replication. Need read-after-write and can have high replication lag, read replicas have historically not been used for read queries. Read queries run on the primary. Fast storage is used (`io2`) and a DLV.
+- Buffer cache and high cache hit rates. It's critical to have as much memory as possible for buffer cache to achieve sub-millisecond query executions. In-memory access reduces storage device access and IOPS.
+- IOPS spikes that exceed Provisioned IOPS. It's critical to avoid exceeding allocated PIOPS, otherwise queuing and high latency occurs.
+- The team faced CPU spikes in the single primary configuration, during vacuum, reproduced in load testing. The CPU spike caused knock on high query latency.
+- During the peak load period, tens of thousands of client connections are established.
+- The application has per-user counts that constantly change. For example, could social media-style likes, comments, activity feeds, and more. These counts are stored in Memcached when possible, with connections managed by HAProxy.
+- Disruptive Autovacuum vacuums during busy periods. To minimize disruption, Autovacuum is throttled to run slower (`autovacuum_vacuum_cost_limit`, `autovacuum_vacuum_cost_delay`). Tables with heavy dead tuple growth are vacuumed manually in a low activity period overnight, not by Autovacuum.
 - Index bloat. The database uses a primary key data type that isn’t 100% ideal for minimizing bloat. Index bloat occurs meaning indexes occupy more space and aren't as efficient to scan. To solve that, indexes are periodically rebuilt, but rebuilding adds a lot of IOPS pressure so the timing needs coordination.
-- Configuration complexity. Postgres parameters (GUCs) are not heavily modified beyond what RDS provides.
+- Configuration complexity. Postgres parameters (GUCs) are modified beyond what RDS provides very strategically, with the exception of Autovacuum parameters as Vacuum is regularly being monitored and adjustments made to control IO spikes.
+- Background work state, queue style data. The team had previously created a separate Postgres database used to manage background jobs.
 
 ## Christmas 2024 Retrospective
 Unfortunately on Christmas Day 2024, the team, platform, and customers faced a significant outage. A root cause analysis revealed that the main contributor was running out of space on the DLV, due to the growth of write ahead logs (WAL) filling it up.
@@ -155,17 +156,17 @@ Here's what the instances were scaled up to for Christmas 2025.
 <table class="styled-table">
   <thead>
     <tr>
-      <th>Version</th>
-      <th>Instance class</th>
+      <th>Postgres Version</th>
+      <th>RDS Instance Class</th>
       <th>vCPU</th>
       <th>Memory (GiB)</th>
-      <th>Storage type</th>
+      <th>Storage Type</th>
       <th>DLV</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -173,7 +174,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>✅</td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -181,7 +182,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>✅</td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
@@ -189,7 +190,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td>✅</td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -197,7 +198,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -205,7 +206,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -213,7 +214,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -221,7 +222,7 @@ Here's what the instances were scaled up to for Christmas 2025.
       <td></td>
     </tr>
     <tr>
-      <td>17.x</td>
+      <td>17.6</td>
       <td>db.r6g.16xlarge</td>
       <td>64</td>
       <td>512</td>
@@ -385,9 +386,9 @@ Some of the key contributors to successfully delivering reliable Postgres:
 1. Having experienced, long-tenured colleagues to guide changes, focusing on high leverage, while generously sharing their knowledge and experience.
 
 ## Thank You and Looking Forward
-While the biggest payoff was seeing that Postgres operated reliably through the peak traffic holiday season, it was also rewarding to work with great engineers currently on staff and benefit from all the accumulated scalability engineering practices injected into the codebase over many years.
+While the biggest payoff was seeing that Postgres operated reliably through the peak traffic holiday season, it was very rewarding to work with great engineers on staff, be well supported by leadership, and benefit from all the accumulated scalability engineering practices injected into the codebase over many years. A special thank you to Josh, Ronnie, and EJ.
 
-For 2026 we’re forming our plans to further improve reliability, scalability, and cost efficiency.
+For 2026 we’re forming plans to further improve Postgres reliability, scalability, and cost efficiency.
 
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book. If you're an engineer interested in working on these types of challenges, please get in touch.
 
