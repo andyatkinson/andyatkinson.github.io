@@ -383,7 +383,8 @@ Some of the key contributors to successfully delivering reliable Postgres:
 1. Having an extensive pre-production load testing capability to validate the accumulated changes under high load, across most of the API surface area of the platform, drilling into identified performance regressions.
 1. Having a large AWS infrastructure budget 😅 to work with and strategic spending, in order to over-provision instance sizes and IOPS temporarily to gain more reliability, thanks in part to being a profitable company!
 1. Having comprehensive CloudWatch metrics, dashboards, web, and Postgres logs for analysis ([AWS Athena](https://aws.amazon.com/athena/)), time-series metrics galore (formerly StatHat), and best-in-class Postgres observability ([PgAnalyze](https://pganalyze.com)), to empower backend engineers with data access layer visibility.
-1. Having experienced, long-tenured colleagues to guide changes, focusing on high leverage, while generously sharing their knowledge and experience.
+1. Running recent versions of Postgres and Ruby on Rails, unlocking useful features for high scale operations
+1. Experienced, long-tenured colleagues helping guide changes, focusing on high leverage opportunities, while generously sharing their knowledge and experience.
 
 ## Thank You and Looking Forward
 While the biggest payoff was seeing that Postgres operated reliably through the peak traffic holiday season, it was very rewarding to work with great engineers on staff, be well supported by leadership, and benefit from all the accumulated scalability engineering practices injected into the codebase over many years. A special thank you to Josh, Ronnie, and EJ.
