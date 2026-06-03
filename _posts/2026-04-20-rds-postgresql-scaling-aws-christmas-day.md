@@ -387,7 +387,7 @@ Some of the key contributors to successfully delivering reliable Postgres:
 1. Experienced, long-tenured colleagues helping guide changes, focusing on high leverage opportunities, while generously sharing their knowledge and experience.
 
 ## Thank You and Looking Forward
-While the biggest payoff was seeing that Postgres operated reliably through the peak traffic holiday season, it was very rewarding to work with great engineers on staff, be well supported by leadership, and benefit from all the accumulated scalability engineering practices injected into the codebase over many years. A special thank you to Josh, Ronnie, and EJ.
+While the biggest payoff was seeing Postgres operate reliably through peak holiday traffic, it was equally rewarding to work with great engineers, be well supported by leadership, and benefit from the accumulated scalability engineering practices injected into the codebase. A special thank you to Josh, Ronnie, and EJ.
 
 For 2026 we’re forming plans to further improve Postgres reliability, scalability, and cost efficiency.
 
