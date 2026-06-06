@@ -3,6 +3,7 @@ layout: post
 permalink: /postgresql-beta-testing-docker
 title: Beta Testing PostgreSQL With Docker
 date: 2026-06-05 20:15:00
+tags: [PostgreSQL, Databases]
 ---
 
 The Postgres community values feedback from testing of Beta releases, and with Docker it's been easier to get pre-release versions up and running.
