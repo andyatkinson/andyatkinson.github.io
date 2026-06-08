@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-beta-testing-docker
-title: Beta Testing PostgreSQL With Docker
+title: Beta Testing PostgreSQL 19 With Docker
 date: 2026-06-05 20:15:00
 tags: [PostgreSQL, Databases]
 ---
