@@ -6,9 +6,9 @@ date: 2026-06-05 20:15:00
 tags: [PostgreSQL, Databases]
 ---
 
-The Postgres community values feedback from testing of Beta releases, and with Docker it's been easier to get pre-release versions up and running.
+The Postgres community releases Beta versions, and with Docker it's been easier than ever to configure pre-release versions to use and test.
 
-With the [recent announcement of PostgreSQL 19 Beta 1](https://www.postgresql.org/about/news/postgresql-19-beta-1-released-3313/), let's get that running and test some of the new capabilities.
+With the [recent announcement of PostgreSQL 19 Beta 1](https://www.postgresql.org/about/news/postgresql-19-beta-1-released-3313/), it's a great time to do that. Let's get an instance up and running and test some of the new capabilities in Postgres 19.
 
 ## Pre-Release Versions of Postgres with Docker
 First, you'll need to install [Docker](https://www.docker.com) for your OS! Grab the version needed for your OS and processor architecture, for example ARM or AMD/Intel/x86.
@@ -42,6 +42,12 @@ docker run \
 ```
 
 To check if it's running, I run `docker ps -a`. For logs I'd run: `docker logs -f postgres:19beta1-trixie`.
+
+## Released Versions
+Shortly after writing the initial post on June 5th, the `postgres:beta1` image became available for download without any special steps:
+```sh
+docker run --detach postgres:19beta1
+```
 
 ## Connect via psql
 The container is running and the logs have what we want: "database system is ready to accept connections".
