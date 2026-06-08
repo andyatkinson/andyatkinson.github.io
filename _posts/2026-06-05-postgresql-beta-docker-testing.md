@@ -182,6 +182,58 @@ It worked! We see `generic_plan_calls` was incremented.
 
 This looks very useful to monitor the use of prepared statements.
 
+## Repack Concurrently for Tables
+We've had the ability to use `reindex concurrently` to rebuild indexes since Postgres 12, but have lacked the ability to rebuild tables.
+
+That changes in 19, with the introduction of `repack concurrently` for tables.
+
+Let's try it out quick and bloat a table by updating every row. We'll compare the size before and after repacking it.
+
+Run these examples using psql:
+```sql
+create table bloat (id int primary key);
+CREATE TABLE
+
+insert into bloat (id) select i from generate_series(1, 1_000_000) as t(i);
+INSERT 0 1000000
+
+SELECT pg_size_pretty(pg_total_relation_size('bloat'));
+ pg_size_pretty
+----------------
+ 56 MB
+
+analyze bloat;
+ANALYZE
+
+-- Update every row
+update bloat set id = id;
+UPDATE 1000000
+
+analyze bloat;
+ANALYZE
+
+-- The table size has doubled
+SELECT pg_size_pretty(pg_total_relation_size('bloat'));
+ pg_size_pretty
+----------------
+ 112 MB
+
+repack (concurrently, verbose) bloat;
+INFO:  repacking "public.bloat" in physical order
+INFO:  "public.bloat": found 0 removable, 1000000 nonremovable row versions in 8850 pages
+DETAIL:  0 dead row versions cannot be removed yet.
+CPU: user: 0.21 s, system: 0.04 s, elapsed: 0.28 s.
+REPACK
+
+-- Returns to original table size
+SELECT pg_size_pretty(pg_total_relation_size('bloat'));
+ pg_size_pretty
+----------------
+ 56 MB
+```
+
+Very useful! Check out the [repack](https://www.postgresql.org/docs/19/sql-repack.html) documentation for more info.
+
 ## Wrapping Up
 Please give this a shot and experiment with new features in Postgres 19!
 
