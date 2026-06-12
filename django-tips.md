@@ -13,7 +13,7 @@ pdb.set_trace()
 ```
 
 ## Testing
-We used Pytest which is built-in.
+We used Pytest.
 
 Testing tools like mocks and factories are also built in.
 To run tests: `poetry run pytest`.

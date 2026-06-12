@@ -62,7 +62,7 @@ In general I prefer to avoid specifying versions entirely in the `Gemfile` and r
 ## Caller code source location
 This is more of a Ruby tip but you can get a method reference and use source location. For example with an instance of foo:
 
-`Foo.new` the `method` method can be called with a method name like `bar`, e.g. `Foo.new.method(:bar).source_location` and calling source_location will show the line number of the caller.
+`Foo.new` the `method` method can be called with a method name like `bar`, e.g. `Foo.new.method(:bar).source_location` and calling source_location will show where the method is defined.
 
 ## Nested Attributes
 If there is the option to control the front-end HTTP request payload, take advantage of built-in [nested attributes support](https://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html) to create objects via an association.
@@ -80,7 +80,7 @@ Because nested models can be created or updated this way, Active Record lifecycl
 ## Test Code Tips: Rspec Tips
 * Run specific spec: use line number on end like `rspec spec/foo_spec.rb:123` to run line 123
 
-## Compare times at course granularity
+## Compare times at coarse granularity
 `expect(thing.time).to be_within(1.second).of Time.now`
 
 ## Tail test log file when running test
@@ -95,7 +95,7 @@ Review my Sidekiq page: [Sidekiq](/sidekiq).
 <https://github.com/mperham/sidekiq/wiki/Testing> We use the `inline!` method to test jobs synchronously.
 
 ## External web requests
-We use [webmock](https://github.com/bblimke/webmock) for 3rd party APIs to capture authentic HTTP stubbed responses.
+We use [webmock](https://github.com/bblimke/webmock) for 3rd party APIs to capture real HTTP stubbed responses.
 
 ## Rails and Database Tips
 ## Statement timeout
