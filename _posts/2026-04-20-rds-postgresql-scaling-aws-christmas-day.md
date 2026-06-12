@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-rds-scaling-aws-christmas-day-peak
-title: "From Outage to #1 App Store Rank: An Aura Frames Postgres Scaling Retrospective"
+title: "From Christmas Outage to #1 App Store Ranking: An Aura Frames Postgres Scaling Retrospective"
 hidden: true
 ---
 
@@ -127,7 +127,7 @@ The trade-off can be severe, as there's the possibility of unbounded slot growth
 This is documented in community Postgres under [Disk Full Failure](https://www.postgresql.org/docs/16/disk-full.html) (Docs for Postgres 16.x) or under "No space left on device" [ENOSPC](https://wiki.postgresql.org/wiki/ENOSPC) on the wiki.
 > The server will crash and run crash recovery.
 
-One way to limit the growth is to set [`max_slot_wal_keep_size`](https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/) ([Postgres replication docs](https://www.postgresql.org/docs/current/runtime-config-replication.html)) (new in 13, default value is `-1` which means uncapped) but initially it's not set. `wal_keep_size`, `max_slot_wal_keep_size`, and `max_wal_size` were all updated going forward. Why set these? In a worst case, the replica would become unusable but not cause the primary to shut down.
+One way to limit the growth is to set [`max_slot_wal_keep_size`](https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/) ([Postgres replication docs](https://www.postgresql.org/docs/current/runtime-config-replication.html)) (new in 13, default value is `-1` which means uncapped). `wal_keep_size`, `max_slot_wal_keep_size`, and `max_wal_size` were all updated going forward. Why set these? In a worst case, the replica would become unusable but not cause the primary to shut down.
 
 With the replication issue solved going forward, the team faced a second issue, problematic occasional CPU spikes during vacuum. The issue was reproducible under load testing. A variety of theories were explored, evidence collected within the constraints of RDS, but no very strong causes and sources of evidence were discovered.
 
@@ -150,7 +150,7 @@ To prepare, the top 10 tables by write operations and size were analyzed. All qu
 
 Ultimately the 10 tables were distributed to 7 new primary instances (making 8 in total), some DBs with as few as 1 table. All reads and writes continued to flow from the same Ruby on Rails codebase, not new microservices. To achieve that we’d use [Active Record Multiple Databases](https://guides.rubyonrails.org/active_record_multiple_databases.html) support. That meant that each primary database would get the full <em>accoutrement</em>, including its own named config, the option of a read replica, and the ability to manage schema definition DDL changes (Rails "Migrations"). The production configuration would be mirrored in all lower environments so that the extensive unit test suite would run across all 8 databases. The only difference in the development environment was the 8 databases ran on one Docker Postgres container.
 
-With the plan in place, it was time to start coding! We got started in earnest around August 2025 with 3 or so to execute and validate the plan ahead of Christmas.
+With the plan in place, it was time to start coding! We got started in earnest around August 2025 with 3 months to execute and validate the plan ahead of Christmas.
 
 With each instance dedicated to one or a couple of tables, there was much more CPU, Memory, and IOPS available in total. This allowed each of the instances to be over provisioned temporarily before Christmas, adding headroom, availability, and reliability.
 
@@ -261,7 +261,9 @@ We may revisit that in the future, however we ultimately decided on <em>physical
 
 The major downside of this approach was that we had to repeat it 7 times, duplicating the entire database, consuming a ton of extra space temporarily.
 
-We decided those trade-offs were worth it, we could re-provision reduced space after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). B/G Deployments made the process pretty smooth. Once we'd cleaned up all the unneeded tables, we provisioned the new (green) instance with less space, and cut over to it, discarding the old (blue) instance.
+We decided the trade-offs was worth it, we could re-provision new instances and reduce space after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). More on that later.
+
+Let's look at some metrics from Christmas 2025.
 
 ## Postgres and Infra Metrics Christmas 2025
 All Postgres instances were upgraded to 17.6 in the Fall of 2025. TPS measured by [Odarix](https://odarix.com/). PgBouncer, Memcached, HAProxy metrics from CloudWatch. Query and schema details from PgAnalyze.
@@ -350,7 +352,7 @@ All Postgres instances were upgraded to 17.6 in the Fall of 2025. TPS measured b
 
 Traffic grows in the week before Christmas, but on Christmas day (December 25) it really takes a sharp upward trajectory. The peak load period lasts for more than 10 hours on Christmas Day, with the main DB receiving more than 100K TPS from 10:00 to 20:00 US Central Time.
 
-Employees noticed the free Aura Frames iOS and Android apps moving up in the App Store ranks. Excitement built into the evening as the App Store app moved into the top 10, top 5, eventually reaching the #1 rank. 🎉 I grabbed the screenshot below at around 11:30 PM CT December 25.
+Employees noticed the free Aura Frames iOS and Android apps moving up in the App Store ranks. Excitement built into the evening as the Aura Frames app moved into the top 10, top 5, and eventually reached the #1 rank. 🎉 I grabbed the screenshot below at around 11:30 PM CT December 25.
 
 ![Aura Frames #1 App U.S. App Store Christmas Day](/assets/images/aura-christmas-2025.jpg)
 <br/>
@@ -382,7 +384,7 @@ As mentioned, due to the choice of physical replication, the majority of the tab
 
 With all the unneeded tables cleaned up, we now had way more allocated space than needed. Provisioned space costs money. [AWS launched Blue/Green Deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html) which has made it easier to replace instances with newly configured ones.
 
-We set up a Blue/Green Deployment with the Blue as the newly promoted primary, and the Green would be a replacement instance with less space provisioned. Once replication was caught up, we cut over to Green. This process was smooth, and the result was an appropriate amount of provisioned space and cost.
+We set up a Blue/Green Deployment with the Blue as the newly promoted primary, and the Green would be a replacement instance with less space provisioned. Once replication was caught up, we cut over to Green. This process was smooth, and the result was right-sized space and cost.
 
 ## Reflecting back on the plan
 Some of the key contributors to successfully delivering this plan:
