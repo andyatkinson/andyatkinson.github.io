@@ -4,6 +4,12 @@ permalink: /extra
 title: Extra
 ---
 
+## Ruby on Rails
+[Ruby on Rails Tips](/rails-tips)
+
+## PostgreSQL
+[PostgreSQL Tips](/postgresql-tips)
+
 ## Open Source
 [Open Source](/open-source)
 
@@ -31,3 +37,6 @@ title: Extra
 
 ## Django
 [Django](/django-tips)
+
+## Archive
+[Archive](/tag)

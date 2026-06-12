@@ -3,7 +3,7 @@ exclude: [config.ru, Gemfile, Gemfile.lock, Procfile, Rakefile, README.md, vendo
 # Site settings
 name: 'Andrew Atkinson'
 title: 'Software Engineer, Author, High Performance PostgreSQL for Rails'
-tagline: 'Software Engineer, Postgres, Consultant, Author.'
+tagline: 'Software Engineer, Postgres Specialist, Author'
 description: "Andrew Atkinson Software Engineer blog about PostgreSQL, Ruby on Rails, Elasticsearch, Kubernetes, and Vim. Andrew is the Author of Ruby bestseller High Performance PostgreSQL for Rails"
 meta_description: 'Andrew Atkinson Software Engineer. PostgreSQL specialist. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails published by Pragmatic Programmers'
 logo:
@@ -42,22 +42,16 @@ navigation:
     url: /
   - text: About
     url: /about
-  - text: Consulting
-    url: /consulting
   - text: Book
     url: /pgrailsbook
+  - text: Consulting
+    url: /consulting
   - text: Speaking
     url: /speaking-opportunities
+  - text: Guides
+    url: /extra
   - text: Writing
     url: /writing
-  - text: Ruby on Rails
-    url: /rails-tips
-  - text: PostgreSQL
-    url: /postgresql-tips
-  - text: Extra
-    url: /extra
-  - text: Archive
-    url: /tag
   - text: Contact Me
     url: /contact
 
