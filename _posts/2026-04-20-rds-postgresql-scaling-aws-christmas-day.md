@@ -110,7 +110,7 @@ The use of Postgres at Aura faced all kinds of common Postgres scaling challenge
 - Background work state and queue style data could be managed separately. The team had previously created a separate Postgres database to manage the state of background work.
 
 ## Christmas 2024 Retrospective
-Unfortunately on Christmas Day 2024, the team, platform, and customers faced a significant outage. A root cause analysis revealed that the main contributor was running out of space on the DLV, due to the growth of write ahead logs (WAL) filling it up.
+Unfortunately on Christmas Day 2024, the team, platform, and customers faced a significant outage. A root cause analysis revealed that the main contributor was running out of space on the DLV, due to the growth of write-ahead logs (WAL) filling it up.
 
 The team had provisioned a [Dedicated Log Volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) offering lower latency as a dedicated volume for WAL log storage.
 
