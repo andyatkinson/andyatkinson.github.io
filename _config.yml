@@ -3,9 +3,9 @@ exclude: [config.ru, Gemfile, Gemfile.lock, Procfile, Rakefile, README.md, vendo
 # Site settings
 name: 'Andrew Atkinson'
 title: 'Software Engineer, Author, High Performance PostgreSQL for Rails'
-tagline: "Andrew Atkinson's site about PostgreSQL, Ruby on Rails, Elasticsearch, Kubernetes, and Vim. Andrew is the Author of High Performance PostgreSQL for Rails"
-description: 'Software Engineer, Author, Consultant'
-meta_description: 'Personal Site Andrew Atkinson. PostgreSQL. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails Pragmatic Programmers'
+tagline: 'Software Engineer, Postgres, Consultant, Author.'
+description: "Andrew Atkinson Software Engineer blog about PostgreSQL, Ruby on Rails, Elasticsearch, Kubernetes, and Vim. Andrew is the Author of Ruby bestseller High Performance PostgreSQL for Rails"
+meta_description: 'Andrew Atkinson Software Engineer. PostgreSQL specialist. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails published by Pragmatic Programmers'
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:

@@ -2,6 +2,7 @@
 layout: page
 permalink: /about
 title: About
+description: Andrew is a Software Engineer, PostgreSQL specialist, and Author of High Performance PostgreSQL for Rails
 ---
 
 ## Summary
