@@ -50,7 +50,7 @@ First we'll create an assessment of the data and operational health of your syst
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Best rails, Postgres and performance consultant you can find. 🚀 <a href="https://t.co/rUwwvxqXfU">https://t.co/rUwwvxqXfU</a></p>&mdash; Shao | 少蒙 (@randomor) <a href="https://twitter.com/randomor/status/1744804349602304005?ref_src=twsrc%5Etfw">January 9, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Let's Talk
-[Contact me](/contact) to get the process started, and I'll send over a questionnare and some pre-meeting documents for your review.
+[Contact me](/contact) to get the process started.
 
 I'm looking forward to learning how I can help, and thanks for taking a look!
 

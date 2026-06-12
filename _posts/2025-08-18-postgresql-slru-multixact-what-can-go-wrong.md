@@ -10,7 +10,7 @@ In this post we’ll cover two types of Postgres internals.
 
 The first internal item is an “SLRU.” The acronym stands for “simple least recently used.” The LRU portion refers to caches and how they work, and SLRUs in Postgres are a collection of these caches.
 
-SLRUs are small in-memory item stores. Since they need to persist across restarts, they're also saved into files on disk. Alvaro[^alvaro] calls SLRUs “poorly named” for a user-facing feature. If they're internal, why are they worth knowing about as Postgres users?
+SLRUs are small in-memory item stores. Since they need to persist across restarts, they're also saved into files on disk. Álvaro Herrera[^alvaro] calls SLRUs "poorly named for a user-facing feature." If they're internal, why are they worth knowing about as Postgres users?
 
 They’re worth knowing about because there can be a couple of possible failure points with them, due their fixed size. We'll look at those later in this post.
 
@@ -29,7 +29,7 @@ Old SLRU cache items are periodically cleaned up by the Vacuum process.
 ## What about the buffer cache?
 The buffer cache (sized by configuring [shared_buffers](https://www.postgresql.org/docs/current/runtime-config-resource.html)) is another form of cache in Postgres. Thomas Munro proposed unifying the SLRUs and buffer cache mechanisms.
 
-However, as of Postgres 17 and the upcoming 18 release (released September 9, 2025), SLRUs are still their own distinct type of cache.
+However, as of Postgres 17 and the upcoming 18 release (Update: PostgreSQL 18 released September 25, 2025), SLRUs are still their own distinct type of cache.
 
 What types of data is stored in SLRUs?
 
@@ -52,7 +52,9 @@ When MultiXacts are created, their identifier is stored in tuple header info, re
 
 As this buttondown blog post ("Notes on some PostgreSQL implementation details")[^buttondown] describes, the tuple (row version) header has a small fixed size. The MultiXact id replaces the transaction id using the same size identifier (but a different one), to keep the tuple header size small (as opposed to adding another identifier).
 
-Transaction IDs and MultiXact IDs are both represented as a unsigned 32-bit integer, meaning it's possible to store a max of around ~4 billion values (See: [Transactions and Identifiers](https://www.postgresql.org/docs/current/transaction-id.html). We can get the current transaction id value by running `select pg_current_xact_id();`.
+Transaction IDs and MultiXact IDs are both represented as a circular 32-bit integer space, meaning it's possible to store a max of around ~4 billion values (See: [Transactions and Identifiers](https://www.postgresql.org/docs/current/transaction-id.html), half in the past, half in the future.
+
+We can get the current transaction id value by running `select pg_current_xact_id();`.
 
 What do we mean by transaction metadata? One example is with nested transactions, the parent transaction, the “creator”.
 
@@ -75,7 +77,7 @@ Let’s go back to SLRUs.
 SLRUs have a fixed size (prior to Postgres 17) measured in pages. When items are evicted from the SLRU cache, a [page replacement](https://www.interdb.jp/pg/pgsql08/01.html) occurs.
 
 The page being replaced is called the “victim” page and Postgres must do a little work to find a victim page.
-Since SLRUs survive Postgres restarts, they’re [saved in files in the PGDATA directory](https://www.interdb.jp/pg/pgsql08/01.html://www.postgresql.org/docs/17/storage-file-layout.html#PGDATA-CONTENTS-TABLE).
+Since SLRUs survive Postgres restarts, they’re [saved in files in the PGDATA directory](http://www.postgresql.org/docs/17/storage-file-layout.html#PGDATA-CONTENTS-TABLE).
 
 The directory name will depend on the SLRU type. For example for MultiXacts, the directory name is `pg_multixact`. SLRU buffer pages are written to the WAL and to disk, meaning that if the primary instance fails, the state can be recovered.
 
@@ -178,10 +180,10 @@ If operating a high scale Postgres instance when it comes to SLRUs, what's worth
 - Determine whether your workload is using SLRUs, monitor their growth, and learn about the possible failure points based on your use
 
 ## What’s changing with SLRUs in new Postgres versions?
-In Postgres 17, the MultiXact member space and offset is now configurable beyond the initial default size. The unit is the number of 8KB pages. The default size is X and Y and this is configurable.
+In Postgres 17, the MultiXact member space and offset is now configurable beyond the initial default size. The unit is the number of 8KB pages.
 
-- multixact_member_buffers, default is 32 8kb pages
-- multixact_offset_buffers, default is 16 8kb pages
+- `multixact_member_buffers`, default is 32 8kb pages
+- `multixact_offset_buffers`, default is 16 8kb pages
 
 > In the recent episode of postgres.fm *MultiXact member space exhaustion*,[^pgfm] the Metronome engineers discussed working on a patch related to MultiXact member exhaustion.
 
