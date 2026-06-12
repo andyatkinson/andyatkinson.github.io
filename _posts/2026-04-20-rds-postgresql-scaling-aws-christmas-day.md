@@ -238,15 +238,15 @@ Here's what the instances were scaled up to for Christmas 2025. (Older generatio
     <tr class="summary-row">
       <td></td>
       <td><strong>Totals</strong></td>
-      <td>832 vCPU (<strong>~4.3x ↗</strong>)</td>
-      <td>6656 GiB (<strong>~4.3x ↗</strong>)</td>
+      <td>896 vCPU (<strong>~4.7x ↗</strong>)</td>
+      <td>7168 GiB (<strong>~4.7x ↗</strong>)</td>
       <td></td>
       <td></td>
     </tr>
   </tfoot>
 </table>
 
-With 4.3x more CPU, Memory, and more IOPS, the expanded capacity provided plenty of power through Christmas! We'll look at how we scaled down to reduce costs after Christmas in an upcoming section.
+With ~4.7x more CPU, Memory, and more IOPS, the expanded capacity provided plenty of power through Christmas! We'll look at how we scaled down to reduce costs after Christmas in an upcoming section.
 
 Let's look at the sharding strategy in more detail.
 
@@ -255,7 +255,7 @@ We ended up using the term “whole table sharding” and the tables picked tend
 
 We were able to gradually modify all the application queries and get everything rolled out where it was backwards compatible, then we could cut over.
 
-To transition the row data, wanting to initially replicate it, we tried using [AWS pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.pglogical.html) and logical replication directly but were not able to successfully replicate the data in a reasonable amount of time.
+To transition the row data, wanting to initially replicate it, we tried using [AWS pglogical](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.pglogical.html) and logical replication directly but the initial replication was too slow.
 
 We may revisit that in the future, however we ultimately decided on <em>physical</em> replication which copied the whole instance, before cutting over to the new one. While more wasteful initially, we knew we could operate that approach reliably and with a minimal amount of downtime.
 
