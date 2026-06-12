@@ -261,7 +261,7 @@ We may revisit that in the future, however we ultimately decided on <em>physical
 
 The major downside of this approach was that we had to repeat it 7 times, duplicating the entire database, consuming a ton of extra space temporarily.
 
-We decided the trade-offs was worth it, we could re-provision new instances and reduce space after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). More on that later.
+We decided the trade-off was worth it, we could re-provision new instances and reduce space after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). More on that later.
 
 Let's look at some metrics from Christmas 2025.
 
