@@ -1,25 +1,25 @@
 ---
 layout: post
 permalink: /postgresql-rds-scaling-aws-christmas-day-peak
-title: Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)
+title: "From Christmas Outage to #1 App Store Rank: An Aura Frames Postgres Scaling Retrospective"
 hidden: true
 ---
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>
-On Christmas Day 2024, Postgres infrastructure powering the Aura Frames API had problems under peak load, being unavailable for three hours and disrupting the experience for new customers. With Christmas being the biggest day of the year, the team knew it would need improvements for 2025 and beyond.</p>
+On Christmas Day 2024, Postgres infrastructure powering the Aura Frames API had problems under peak load, being unavailable for three hours and disrupting the experience for new customers. The team knew it would need improvements to handle the surge for Christmas 2025 and beyond.</p>
 <p>
 One year later, much of the resource intensive data access was reworked, the Postgres infrastructure was upsized, and this approach not only survived, but thrived, providing reliable service through the holiday season. </p>
 <p>
-Total Queries per second (QPS) peaked at 225,000 (226K TPS), with 100K QPS sustained over 10 hours for multiple days, and an average response time of 25 microseconds.
+The sum of Transactions Per Second (TPS) across the DBs peaked at 226,000, with more than 100K TPS sustained for 10 hours and repeating on multiple days after Christmas, with an average query time of 25 microseconds.
 </p>
 <p>The improved reliability meant customers could smoothly set up new frames and add photos, and they did it more than ever, with the Aura Frames app reaching #1 in U.S. and Canadian Apple and Android App Stores on Christmas Day.</p>
 <p>
-In this post we’ll look behind the scenes at months of engineering planning and execution that went into achieving that!
+In this post we’ll look back at the months of planning and execution that went into achieving that outcome!
 </p>
 <p>
-A follow-up post will dig into the Ruby on Rails side, while this one will focus on Postgres. I hope you'll be back for part 2!
+A second post in this series will dig into the Ruby on Rails side, while this one will focus on Postgres.
 </p>
 </div>
 
@@ -103,7 +103,7 @@ The use of Postgres by Aura faces all kinds of common Postgres scaling challenge
 - IOPS spikes that exceed Provisioned IOPS. It's critical to avoid exceeding allocated PIOPS, otherwise queuing and high latency occurs.
 - The team faced CPU spikes in the single primary configuration, during vacuum, reproduced in load testing. The CPU spike caused knock on high query latency.
 - During the peak load period, tens of thousands of client connections are established.
-- The application has per-user counts that constantly change. For example, could social media-style likes, comments, activity feeds, and more. These counts are stored in Memcached when possible, with connections managed by HAProxy.
+- The application has per-user counts that constantly change. For example, social media-style likes, comments, activity feeds, and more. These counts are stored in Memcached when possible, with connections managed by HAProxy.
 - Disruptive Autovacuum vacuums during busy periods. To minimize disruption, Autovacuum is throttled to run slower (`autovacuum_vacuum_cost_limit`, `autovacuum_vacuum_cost_delay`). Tables with heavy dead tuple growth are vacuumed manually in a low activity period overnight, not by Autovacuum.
 - Index bloat. The database uses a primary key data type that isn’t 100% ideal for minimizing bloat. Index bloat occurs meaning indexes occupy more space and aren't as efficient to scan. To solve that, indexes are periodically rebuilt, but rebuilding adds a lot of IOPS pressure so the timing needs coordination.
 - Configuration complexity. Postgres parameters (GUCs) are modified beyond what RDS provides very strategically, with the exception of Autovacuum parameters as Vacuum is regularly being monitored and adjustments made to control IO spikes.
@@ -114,20 +114,20 @@ Unfortunately on Christmas Day 2024, the team, platform, and customers faced a s
 
 The team had provisioned a [Dedicated Log Volume (DLV)](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.dlv.html) offering lower latency as a dedicated volume for WAL log storage.
 
-The team traced the root cause back to a change introduced in Postgres 14.1 (the prior year ran Postgres 13.x which used S3 for WAL archival) related to the new use of replication slots for replication.
+The team traced the root cause back to a change introduced in RDS Postgres 14.1 (the prior year ran Postgres 13.x which used S3 for WAL archival), newly using replication slots for replication.
 
 "We weren't aware RDS had changed in-region replication to use replication slots by default in Postgres 14.1. This caused the amount of WAL stored on the primary to be unbounded when the replica lagged."
 
 (AWS source: [RDS "Monitoring replication slots for your RDS for PostgreSQL DB instance"](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PostgreSQL.Replication.ReadReplicas.Monitor.html)) "RDS for PostgreSQL 14.1 and higher versions use replication slots for in-Region read replicas."
 
-From my own research, the benefits of using replication slots for replication seemed to be speeding up replica "catch up" or full recovery if needed. Postgres docs say "replication slots retain only the number of segments known to be needed" (less overall content). ([Replication Slots](https://www.postgresql.org/docs/17/warm-standby.html#STREAMING-REPLICATION-SLOTS)).
+The Postgres docs describe the benefits of replication slots: "Replication slots provide an automated way to ensure that the primary server does not remove WAL segments until they have been received by all standbys" in [26.2.6. Replication Slots](https://www.postgresql.org/docs/17/warm-standby.html#STREAMING-REPLICATION-SLOTS).
 
-The trade-off off though can be severe, as there's the possibility of unbounded slot growth for inactive (or heavy lagging consumption) slots, resulting in pg_wal filling the storage volume and causing Postgres to shut down.
+The trade-off can be severe, as there's the possibility of unbounded slot growth for inactive (or heavy lagging consumption) slots, resulting in pg_wal filling the storage volume and causing Postgres to shut down. There's a Caution block now about this in the documentation that looks like it's new in the Postgres 17 documentation.
 
 This is documented in community Postgres under [Disk Full Failure](https://www.postgresql.org/docs/16/disk-full.html) (Docs for Postgres 16.x) or under "No space left on device" [ENOSPC](https://wiki.postgresql.org/wiki/ENOSPC) on the wiki.
 > The server will crash and run crash recovery.
 
-One way to limit the growth is to set [`max_slot_wal_keep_size`](https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/) ([Postgres replication docs](https://www.postgresql.org/docs/current/runtime-config-replication.html)) (new in 13, default value is `-1` which means disabled) but initially it's not set. `wal_keep_size`, `max_slot_wal_keep_size`, and `max_wal_size` were all updated going forward. In a worst case, this should result in the replica becoming unusable, but not causing the primary to shut down.
+One way to limit the growth is to set [`max_slot_wal_keep_size`](https://postgresqlco.nf/doc/en/param/max_slot_wal_keep_size/) ([Postgres replication docs](https://www.postgresql.org/docs/current/runtime-config-replication.html)) (new in 13, default value is `-1` which means uncapped) but initially it's not set. `wal_keep_size`, `max_slot_wal_keep_size`, and `max_wal_size` were all updated going forward. In a worst case, this should result in the replica becoming unusable, but not causing the primary to shut down.
 
 Besides the replication issue, the team was also able to reproduce problematic high CPU usage under synthetic load testing during vacuum. A variety of theories for the high CPU use were analyzed over the summer of 2025, but ultimately none had very strong evidence. RDS Postgres limits access to the underlying host OS making it impossible to directly use [Linux profiling tools like perf](https://perfwiki.github.io/main/) (as compared with something like running community Postgres on EC2). Despite that limitation, the team wanted to stick with RDS for its other benefits.
 
@@ -152,7 +152,7 @@ With each instance dedicated to one or a couple of tables, there was much more C
 
 We determined the query workload for the biggest table by size, row count, call frequency and % of IO would still fit ok on a single big instance, without needing to shard the table rows.
 
-Here's what the instances were scaled up to for Christmas 2025.
+Here's what the instances were scaled up to for Christmas 2025. (Older generation: Graviton2 ARM and DDR4 memory)
 <table class="styled-table">
   <thead>
     <tr>
@@ -258,7 +258,7 @@ The major downside of this approach was that we had to repeat it 7 times, duplic
 We decided it would be ok to temporarily allow for the excess space consumption on the new instances, then scale the provisioned space back down after Christmas by using the [AWS Blue/Green deployments](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/blue-green-deployments.html). B/G Deployments made the process pretty smooth. Once we'd cleaned up all the unneeded tables, we provisioned the new (green) instance with less space, and cut over to it, discarding the old (blue) instance.
 
 ## Postgres and Infra Metrics Christmas 2025
-All Postgres instances were upgraded to 17.6 in the Fall of 2025. TPS and QPS measured by [Odarix](https://odarix.com/). PgBouncer, Memcached, HAProxy metrics from CloudWatch. Query and schema details from PgAnalyze.
+All Postgres instances were upgraded to 17.6 in the Fall of 2025. TPS measured by [Odarix](https://odarix.com/). PgBouncer, Memcached, HAProxy metrics from CloudWatch. Query and schema details from PgAnalyze.
 
 ![Main DB 133K TPS Peak Christmas Day Odarix Screenshot](/assets/images/aura-tps-peak-christmas-2025.jpg)
 <small>Main DB 133K TPS Peak Christmas Day Odarix Screenshot</small>
@@ -286,7 +286,7 @@ All Postgres instances were upgraded to 17.6 in the Fall of 2025. TPS and QPS me
       <td></td>
     </tr>
     <tr>
-      <td>Average query latency</td>
+      <td>Average query time</td>
       <td></td>
       <td>25 microseconds</td>
       <td></td>
