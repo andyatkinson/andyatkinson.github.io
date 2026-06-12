@@ -9,7 +9,7 @@ tags: [PostgreSQL, Databases, Ruby on Rails]
 ## Introduction
 Over the last decade, when working on databases with UUID Version 4[^rfc] as the primary key data type, these databases have usually had bad performance and excessive IO.
 
-UUID is a native data type in Postgres stored as binary data. Various UUID versions are in the RFC. Version 4 has mostly random bits, obfuscating information like when the value was created or where it was generated.
+UUID is a native data type in Postgres stored as binary data. Various UUID versions are in the RFC. Version 4 has 128 bits, with 122 being random, obfuscating information like when the value was created or where it was generated.
 
 Version 4 UUIDs are easy to generate in Postgres using the `gen_random_uuid()`[^gen] function since version 13 (released in 2020).
 
@@ -130,8 +130,6 @@ Planet Scale has a nice visualization of index page splits and rebalancing.[^ps]
 
 Unnecessary splits and rebalancing add space consumption and processing latency to write operations. This extra IO shows up in Write Ahead Log (WAL) generation as well.
 
-[Buildkite reported a 50% reduction in write IO](https://buildkite.com/resources/blog/goodbye-integers-hello-uuids/) for the WAL by moving to time-ordered UUIDs.
-
 Given fixed size pages, we want high density within the pages. Later on we'll use *pageinspect* to check the average leaf density between integer and UUID to help compare the two.
 
 ## Excessive IO for lookups even with orderable UUIDs
@@ -165,8 +163,8 @@ Cybertec post results:
 
 Since these are buffer *hits* we're accessing them from memory, which is faster than disk. We can focus then on only the difference in latency based on the data types.
 
-How many more pages are accessed for the UUID index? 8,535,628 (8.5 million!) more 8KB pages were accessed, a 31229.4% increase. In terms of MB and MB/s that is:
-- 68,285,024 MB or ~68.3 GB! more data that's accessed
+How many more pages are accessed for the UUID index? 8,535,628 (8.5 million!) more 8KB pages were accessed, a 31229.4% increase.
+- 68,285,024 KB or ~68.3 GB! more data that's accessed
 
 Calculating a low and high estimate of access speeds for memory:
 - Low estimate: 20 GB/s
@@ -176,7 +174,11 @@ Accessing 68.3 GB of data from memory (`shared_buffers` in PostgreSQL) would add
 - ~3.4 seconds of latency (low speed)
 - ~0.86 seconds of latency (high speed)
 
-That's between ~1 and ~3.4 seconds of additional latency solely based on the data type. Here we used 10 million rows and performed 1 million updates, but the latencies will get worse as data and query volumes increase.
+That's between ~1 and ~3.4 seconds of additional latency solely based on the data type using this simplistic method of calculation.
+
+Please note this is not a rigorous calculation method, just something to do some comparisons.
+
+Here we used 10 million rows and performed 1 million updates, but the latencies will get worse as data and query volumes increase.
 
 ## Inspecting density with the pageinspect extension
 We can inspect the average fill percentage (density) of leaf pages using the *pageinspect* extension.
@@ -218,9 +220,9 @@ Indexes can be rebuilt online using `REINDEX CONCURRENTLY`.
 While the newly laid out data in pages, they will still not have correlation, and thus not be smaller. The space formerly occupied by deletes will be reclaimed for reuse though.
 
 ## Mitigation: Shared buffers and work_mem memory sizing
-If possible, size your primary instance to have 4x the amount of memory of your size of database. In order words if your database is 25GB, try and run a 128GB memory instance.
+If possible, size your primary instance memory to be 4x than the size of database. If your database size is 25GB, run an instance with at least 100GB of memory if its in the budget.
 
-This gives around 32GB to 50GB of memory for buffer cache (`shared_buffers`) which is hopefully enough to store all accessed pages and index entries.
+A 128GB memory with 25% of memory allocated to buffer cache provides 32GB (controllable via `shared_buffers`) which could be enough to keep all table and index pages in memory cache.
 
 Use *pg_buffercache*[^pgbc] to inspect the contents, and *pg_prewarm*[^pgpre] to populate tables into it.
 
