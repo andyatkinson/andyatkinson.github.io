@@ -5,13 +5,11 @@ title: About
 ---
 
 ## Summary
-Andrew is a Staff Software Engineer and PostgreSQL specialist who builds high performance web applications.
+Andrew is a Software Engineer and PostgreSQL specialist who builds high performance web applications. Recently working with Aura Frames and various consulting clients, and Microsoft and Groupon in the past.
 
-Andrew wrote [*High Performance PostgreSQL for Rails*](/pgrailsbook), a bestselling book published by [Pragmatic Bookshelf](https://pragprog.com/titles/aapsql/high-performance-postgresql-for-rails/) (2024).
+Andrew wrote [*High Performance PostgreSQL for Rails*](/pgrailsbook) published in 2024, a bestselling book published by Pragmatic Bookshelf, read by thousands of software engineers, and regularly appearing as the #1 ranked book in the Ruby programming category on Amazon.com.
 
-Andrew has [spoken at conferences and been a guest on podcasts](/speaking-opportunities) including RailsConf, PGConf, PGDay, Talking Postgres, Ship It!, Ruby Rogues, Remote Ruby, The Ruby on Rails podcast, Rails Changelog, [Slow & Steady](https://www.slowandsteadypodcast.com), [Code With Jason](https://www.codewithjason.com), [Ruby for All](https://www.rubyforall.com), and the [Rubber Duck Dev Show](https://www.rubberduckdevshow.com).
-
-When not at a computer, Andrew spends time with family and friends, watches Timberwolves NBA basketball, and plays pickleball!
+Andrew has [spoken at many Rails and Postgres conferences and on podcasts](/speaking-opportunities). These include RailsConf, PGConf, PGDay, Talking Postgres, Ship It!, Ruby Rogues, Remote Ruby, The Ruby on Rails podcast, Rails Changelog, Slow & Steady, Code With Jason, Ruby for All, and the Rubber Duck Dev Show.
 
 ## Education
 Andrew earned Bachelors (B.A.Sc. IT Infrastructure and B.A. Spanish Studies) degrees from the [University of Minnesota](http://umn.edu) in Minneapolis, MN, with one semester at the Fundación José Ortega y Gasset school in Toledo, Spain.
@@ -23,4 +21,4 @@ Andrew earned Bachelors (B.A.Sc. IT Infrastructure and B.A. Spanish Studies) deg
 > Andrew is a great person to have on a team because of his communication skills and patience to mentor and train other developers.
 <cite>- CTO</cite>
 
-See more recomendations on [LinkedIn](http://linkedin.com/in/andyatkinson/)
+More on [LinkedIn](http://linkedin.com/in/andyatkinson/)
