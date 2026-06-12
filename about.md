@@ -6,7 +6,7 @@ description: Andrew is a Software Engineer, PostgreSQL specialist, and Author of
 ---
 
 ## Summary
-Andrew is a Software Engineer and PostgreSQL specialist who builds high performance web applications. Recently working with Aura Frames and various consulting clients, and Microsoft and Groupon in the past.
+Andrew is a Software Engineer and PostgreSQL specialist who builds high performance web applications. Recently he's worked with Aura Frames and consulting clients, and Microsoft and Groupon in the past.
 
 Andrew wrote [*High Performance PostgreSQL for Rails*](/pgrailsbook) published in 2024, a bestselling book published by Pragmatic Bookshelf, read by thousands of software engineers, and regularly appearing as the #1 ranked book in the Ruby programming category on Amazon.com.
 
