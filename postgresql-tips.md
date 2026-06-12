@@ -59,7 +59,7 @@ SELECT pg_terminate_backend(pid);
 ```
 
 ## Tuning Autovacuum
-PostgreSQL runs a scheduler Autovacuum process when PostgreSQL starts up. This process looks at configurable thresholds for all tables and determines whether a `VACUUM` worker should run, per table.
+PostgreSQL starts an Autovacuum launcher process. This process looks at configurable thresholds for all tables and determines whether a `VACUUM` worker should run, per table.
 
 Thresholds can be configured per table. A good starting place for tables that have a large amount of UPDATE and DELETE queries, is to perform that per-table tuning.
 
@@ -134,8 +134,6 @@ In our system on our highest write table we had 10 total indexes defined and 6 w
 - `lock_timeout`
 
 ## Connections Management
-[A connection forks the OS process (creates a new process)](https://azure.microsoft.com/en-us/blog/performance-best-practices-for-using-azure-database-for-postgresql-connection-pooling/) and is thus expensive.
-
 Use a connection pooler to reduce overhead from connection establishment
 
 - PgBouncer (see below). [Running PgBouncer on ECS](https://www.revenuecat.com/blog/pgbouncer-on-aws-ecs)
@@ -171,23 +169,21 @@ HOT ("heap only tuple") updates, are updates to tuples not referenced from outsi
 
 [HOT updates in PostgreSQL for better performance](https://www.cybertec-postgresql.com/en/hot-updates-in-postgresql-for-better-performance/)
 
-2 requirements:
+2 requirements for a HOT update:
 
 - Enough space in the block (page) to contain the updated row
-- No index for the column being modified (very common to have high cardinality columns indexed!)
+- No index for the column being modified (very common to have high cardinality columns indexed! which means they'd not be able to get a HOT update)
 
 ## The `fillfactor`
 [What is fillfactor and how does it affect PostgreSQL performance?](https://www.cybertec-postgresql.com/en/what-is-fillfactor-and-how-does-it-affect-postgresql-performance/)
 
 - Percentage between 10 and 100, default is 100 ("fully packed")
-- Reducing it leaves room for "HOT" updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
+- Reducing it leaves room for HOT updates when they're possible. Set to 90 to leave 10% space available for HOT updates.
 - "good starting value for it is 70 or 80" [Deep Dive](https://dataegret.com/2017/04/deep-dive-into-postgres-stats-pg_stat_all_tables/)
 - For tables with heavy updates a smaller fillfactor may yield better write performance
 - Set per table or per index (B-Tree defaults to 90 fillfactor)
 - Trade-off: "Faster UPDATE vs Slower Sequential Scan and wasted space (partially filled blocks)" from [Fillfactor Deep Dive](https://medium.com/nerd-for-tech/postgres-fillfactor-baf3117aca0a)
 - No index defined on any column whose value is modified
-
-Limitations: Requires a `VACUUM FULL` after modifying (or pg_repack)
 
 ```sql
 ALTER TABLE foo SET ( fillfactor = 90 );
@@ -212,15 +208,8 @@ Note: use `-k, --no-superuser-check`
 
 > "Then slow lock acquisition will appear in the database logs for later analysis."
 
-## Lock Types
-Exclusive locks and shared locks.
-
-`AccessExclusiveLock` - Locks the table, queries are not allowed.
-
-Table locks and row locks.
-
 ## EXPLAIN (ANALYZE, BUFFERS)
-This article [5 Things I wish my grandfather told me about ActiveRecord and PostgreSQL](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANLAYZE output written more in plain English.
+This article [5 Things I wish my grandfather told me about ActiveRecord and PostgreSQL](https://medium.com/carwow-product-engineering/5-things-i-wish-my-grandfather-told-me-about-activerecord-and-postgres-93416faa09e7) has a nice translation of EXPLAIN ANALYZE output written more in plain English.
 
 ## [pgMustard](https://www.pgmustard.com/)
 
@@ -295,12 +284,10 @@ Reducing the value causes more frequent checkpoint operations.
 `checkpoint_warning` parameter
 `checkpoint_completion_target`
 
-General Recommendation (not mine)
-
+Common Recommendation:
 > "On a system that's very close to maximum I/O throughput during normal operation, you might want to increase `checkpoint_completion_target` to reduce the I/O load from checkpoints."
 
 Parameters:
-
 * `commit_delay` (0 by default)
 * `wal_sync_method`
 * `wal_debug`
@@ -396,7 +383,7 @@ How does bloat (table bloat, index bloat) affect performance?
 
 * "When a table is bloated, PostgreSQL's `ANALYZE` tool calculates poor or inaccurate information that the query planner uses.". Example of 7:1 bloated/active tuples ratio causing query planner to skip.
 * Queries on tables with high bloat will require additional IO, navigating through more pages of data.
-* Bloated indexes, such as indexes that reference tuples that have been vacuumed, add IO. Rebuild the index `REINDEX ... CONCURRENTLY`
+* Bloated indexes are indexes that reference tuples that have been removed. Rebuild indexes periodically using `REINDEX CONCURRENTLY`
 * Index only scans slow down with outdated statistics. Autovacuum updates table statistics. Minimize table bloat to improve performance of index only scans. [PG Routing vacuuming docs](https://www.postgresql.org/docs/current/routine-vacuuming.html).
 * [Cybertec: Detecting Table Bloat](https://www.cybertec-postgresql.com/en/detecting-table-bloat/)
 * [Dealing with significant PostgreSQL database bloat — what are your options?](https://medium.com/compass-true-north/dealing-with-significant-postgres-database-bloat-what-are-your-options-a6c1814a03a5)
@@ -438,6 +425,10 @@ Released September 2023
 - `pg_stat_io` System View
 - Replication running from a standby as a source
 - Bi-directional or "active-active" Logical Replication. This is cool! <https://www.crunchydata.com/blog/active-active-postgres-16>
+
+## PG 17 (2024)
+
+## PG 18 (2025)
 
 ## Amazon RDS
 Amazon RDS hosts PostgreSQL (with customizations). RDS is a regular single-writer primary instance model for PostgreSQL.
@@ -494,7 +485,7 @@ Built-in table partitioning.
 - [pg_party](https://github.com/rkrage/pg_party)
 
 ## Partition Pruning
-Default is `on` or `SET enable_partition_pruning = off;` to turn it off.
+Enabled by default. Use `SET enable_partition_pruning = off;` to turn it off.
 
 <https://www.postgresql.org/docs/13/ddl-partitioning.html#DDL-PARTITION-PRUNING>
 
@@ -549,7 +540,7 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | --- | ----------- | ---- |||
 | `shared_buffers` | 8kb | 25% mem |||
 | `autovacuum_vacuum_cost_delay` | ms | 20 | 2 ||
-| `autovacuum_vaccum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
+| `autovacuum_vacuum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
 | `effective_cache_size` | 8kb ||||
 | `work_mem` | MB | 4 | 250||
 | `maintenance_work_memory` |  ||||
@@ -572,7 +563,7 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 * Logical Replication restrictions: "Sequence data is not replicated" (as of PG 16) <https://www.postgresql.org/docs/current/logical-replication-restrictions.html>
 
 ## Identity Columns
-* Identity columns are recommended for primary keys, over using Sequences (with Serial or BigSerial)
+* Identity columns are a modern recommendation for primary keys over Sequences (with Serial or BigSerial)
 
 ## Scaling Web Applications
 - [My GOTO Postgres Configuration for Web Services](https://tightlycoupled.io/my-goto-postgres-configuration-for-web-services/)
