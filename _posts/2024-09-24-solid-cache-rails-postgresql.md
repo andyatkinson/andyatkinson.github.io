@@ -35,7 +35,7 @@ With all of that said, why might we not want to adopt a relational database back
 ## Why to NOT use a relational DB?
 A relational DB has more features than are needed for safely storing cache data. These features are critical for non-cache primary data, but add latency.
 
-What are some examples? Postgres uses write ahead logging ([WAL](https://www.postgresql.org/docs/current/wal-intro.html)), offers ACID guarantees, and has concurrency guarantees using multiversion concurrency control ([MVCC](https://www.postgresql.org/docs/current/mvcc.html)), that are all a bit overkill for cache data.
+What are some examples? Postgres uses write-ahead logging ([WAL](https://www.postgresql.org/docs/current/wal-intro.html)), offers ACID guarantees, and has concurrency guarantees using multiversion concurrency control ([MVCC](https://www.postgresql.org/docs/current/mvcc.html)), that are all a bit overkill for cache data.
 
 This is because cache data can usually be lost entirely and repopulated, which impacts response times until the cache data is repopulated, but doesn't result in permanent data loss.
 
@@ -133,7 +133,7 @@ What else might we consider looking into with Postgres?
 
 
 ## PostgreSQL Optimizations
-As discussed earlier, we could disable write ahead logging (WAL) for the `solid_cache_entries` table to reduce write IO operations. If Postgres were to crash or have an "unclean shutdown", and `solid_cache_entries` was unlogged, the table [will be truncated](https://www.postgresql.org/docs/current/sql-createtable.html) on startup. If that's not acceptable, keep the table "logged," which is the default.
+As discussed earlier, we could disable write-ahead logging (WAL) for the `solid_cache_entries` table to reduce write IO operations. If Postgres were to crash or have an "unclean shutdown", and `solid_cache_entries` was unlogged, the table [will be truncated](https://www.postgresql.org/docs/current/sql-createtable.html) on startup. If that's not acceptable, keep the table "logged," which is the default.
 
 With that said, to change the table from the default of "logged" to unlogged, run:
 ```sql
@@ -205,7 +205,7 @@ Normally a Postgres instance might allocate 25% of the available system memory t
 
 After adjusting `shared_buffers`, increase `effective_cache_size` to keep the planner up to date.
 
-With Write Ahead Logging disabled, write IO spikes from `CHECKPOINT` operations are avoided. Besides disabling it entirely, another option is to reduce the `wal_level` to `minimal` which still provides durability guarantees, but with less IO, albeit losing the ability to perform replication.
+With Write-ahead logging disabled, write IO spikes from `CHECKPOINT` operations are avoided. Besides disabling it entirely, another option is to reduce the `wal_level` to `minimal` which still provides durability guarantees, but with less IO, albeit losing the ability to perform replication.
 
 What about transactions? All Postgres operations from Active Record are wrapped in an implicit transaction. Active Record provides a way to explicitly control the transaction, including providing options to the transaction.
 
