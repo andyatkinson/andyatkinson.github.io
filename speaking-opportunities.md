@@ -6,6 +6,16 @@ title: Speaking Opportunities
 
 Explore all speaking engagements below or jump to [Ruby Events](https://www.rubyevents.org/speakers/andrew-atkinson).
 
+## PG Data 2026 Chicago
+<cite>2025-09-25</cite>
+- Presentation
+- [Active Record and Postgres Workshop](https://github.com/andyatkinson/rideshare/tree/main/docs/workshop)
+
+## PGConf NYC 2025
+<cite>2025-09-25</cite>
+- Presentation
+- [Multitenancy Patterns in Community PostgreSQL](https://speakerdeck.com/andyatkinson/multitenancy-patterns-in-community-postgresql)
+
 ## RailsConf 2025
 <cite>2025-09-04</cite>
 - Presentation
@@ -24,7 +34,7 @@ Explore all speaking engagements below or jump to [Ruby Events](https://www.ruby
 ## StepChange: Scaling Rails & Postgres
 - <cite>2024-08-29</cite>
 - Video interview
-- [🎥 Scaling Rails & Postgres to Millions of Users at Microsoft: Lessons & Takeaways](https://stepchange.work/blog/scaling-rails-postgres-to-millions-of-users-at-microsoft-lessons-takeaways)
+- [🎥 Scaling Rails & Postgres to Millions of Users at Microsoft: Lessons & Takeaways](https://news.ycombinator.com/item?id=41382687)
 
 ## POSETTE 2024
 - <cite>2024-06-13</cite>
