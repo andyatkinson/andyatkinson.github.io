@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /how-aura-frames-scales-for-peak-load-ruby-on-rails
-title: "Scaling Ruby on Rails and Postgres Databases: Lessons from Aura Frames #1 App Store Ranking"
+title: "Scaling Rails at Aura Frames: Lessons from Splitting to 8 Primaries and reaching #1 in the App Store"
 hidden: true
 ---
 
@@ -10,7 +10,7 @@ hidden: true
 <p>Ruby on Rails has helped make it possible to scale out the database layer, meeting the demands of millions of customers setting up millions of digital frames.</p>
 <p>In 2025, the Aura Frames team added primary databases to expand capacity for peak write and read load ahead of Christmas Day, the busiest day of the year for the company. Rails helps manage pools of connections for each primary database, within the same codebase.</p>
 <p>With 8 primary databases in total, each server instance can be vertically scaled ahead of peak load, and back down for cost savings.</p>
-<p>To make this possible within a single Ruby on Rails codebase, the team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> feature in Active Record feature which simulates joins between tables in different databases.</p>
+<p>To make this possible within a single Ruby on Rails codebase, the team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> feature in Active Record, which replaces SQL joins but still combines data from tables in different databases.</p>
 <p>This post looks back at the technical details of that plan, as well as a variety of additional data layer scaling tactics, that culminated in a successful Christmas 2025 season, and a peak App Store ranking of #1 in the US and Canada.</p>
 </div>
 
@@ -23,11 +23,11 @@ For an introduction to the Aura Frames company and products, please check out Pa
 
 Due to not being easily scalable horizontally for write operations, the database layer of PostgreSQL and Active Record often became a bottleneck. The team relied on vertically scaling the single primary server instance through Christmas of 2024.
 
-The largest machine available for RDS on AWS is currently the 48x family (192 vCPU, 1.5 TB RAM). Even with that jumbo sized instance, the platform had reliability issues at peak load on Christmas 2024, driving a need to re-design for reliability improvements before Christmas 2025.
+The largest instance available for RDS at the time was the 48x family (192 vCPU, 1.5 TB RAM). Even with that jumbo-sized instance, the platform had reliability issues at peak load on Christmas 2024, driving a need to re-design for reliability improvements before Christmas 2025.
 
-To handle greater levels of peak traffic reliably, the team decided to introduce a type of sharding using multiple primary databases. Several sharding approaches were considered. One goal was to leverage the existing code as much as possible, with minimal changes, and control the sharding distribution from the application level.
+To handle greater levels of peak traffic reliably, the team decided to introduce application-level sharding using multiple primary databases. Several alternative approaches were considered. One goal was to leverage the existing code as much as possible, with minimal changes, and control the sharding distribution from the application level.
 
-Another choice was whether to shard at the table row level, meaning distributing the rows among multiple same-schema copies of the database, or to move "whole tables" (all rows) to their own DB.
+Another choice was whether to do traditional sharding at the row level, which distributes rows across multiple instances with databases having the same schema.
 
 Fortunately Ruby on Rails was enhanced over more than 15 years of development to support the needs of mature, scaled-up platforms with billions of rows and terabytes of data, with patterns but also flexibility. A couple of key capabilities could be used to accommodate either strategy.
 
@@ -91,7 +91,7 @@ The development environment uses a Docker Postgres instance and to keep things s
 
 These breakages showed up as “failing tests” in the extensive test suite, which was supremely useful to help know what needed to change.
 
-The gist of the changes was pretty straightforward, find the breaking queries, unraveling joins or other incompatible SQL, and change connections to the correct database. Their query results were then passed around in Ruby as input to queries in other databases.
+The gist of the changes was pretty straightforward, find the breaking queries, unravel joins or other incompatible SQL, and change connections to the correct database. Their query results were then passed around in Ruby as input to queries in other databases.
 
 With hundreds of failing tests to sift through, the refactoring work took a long time as test failures were addressed one by one, but progress was easy to measure.
 
@@ -233,7 +233,9 @@ Still, reading a batch of rows is a critical tactic to make sure that query exec
 ## Scaling Reads with Paginated Queries
 Aura Frames has custom code to perform keyset pagination, and generally does not use LIMIT and OFFSET style pagination built-in to Active Record. LIMIT and OFFSET pagination works for smaller amounts of data, but doesn’t scale well for deep pagination levels or when working with tables with billions of rows.
 
-Keyset pagination with a high cardinality indexed column works well for fetching batches even for multi-billion row tables. The trick is to index a high cardinality column like a timestamp column, then filter on that with a WHERE clause and a LIMIT sized batch of rows. For example fetching rows from a position with a >= or < operator and a LIMIT of 1000. The last accessed value then becomes the cursor position to start from. 
+Keyset pagination with a high cardinality indexed column works well for fetching batches even for multi-billion row tables. The trick is to index a high cardinality column like a timestamp column, then filter on that with a WHERE clause and use LIMIT for a batch of rows. Note that timestamps can be duplicated, so you may need an additional column in that case.
+
+An example fetch might be from a value with a `>=` or `<` operator and a LIMIT of 1000 as a batch size. The last accessed value then becomes the cursor position to start from.
 
 This is an incredibly useful pattern and commonly used for API requests and other spots. To my knowledge Active Record doesn't have a generic keyset style pagination helper.
 
@@ -247,7 +249,7 @@ The updates could also cause contention for that row being updated by another pr
 Aura Frames does something similar but keeps counter cache columns in a separate but related table. This reduces contention and places the churn more on a separate utility table.
 
 ## Random values and Sampling
-Ordering by `RANDOM()` is slow (`ORDER BY RAND()`). Aura Frames uses TABLESAMPLE in Postgres, specified with a FROM clause for a table ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)).
+Ordering by `RANDOM()` is slow. To avoid that, the Aura codebase uses TABLESAMPLE in Postgres, which is specified with a FROM clause for a table ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)).
 
 A couple of options are supported like `sampling_method` with built-in options of `system` and `bernoulli`, or they can be expanded further by enabling the `tsm_system_rows module` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)).
 
@@ -274,7 +276,7 @@ We'd `TRUNCATE` the new DB's `schema_migrations` table and then insert the "new"
 insert into schema_migrations (version) values ('1234567890');
 ```
 
-Once that was done, schema management via migrations worked like normal. Migrations could be generated with their own directory for files, applied with `rails db:migrate` and `schema.rb` kept updated. Nifty!
+Once that was done, schema management via migrations worked like normal. Migrations could be generated with their own directory for files, applied with `rails db:migrate` and `schema.rb` kept updated.
 
 Some example commands:
 ```sh
@@ -287,10 +289,10 @@ rails db:schema:cache:dump
 ```
 
 ## What’s missing in Rails?
-While Ruby on Rails has been expanded to help the needs of large scale apps, and intends to be a generic framework used for a variety of specific purposes, we did find that some of the features didn't support what we needed. This is a short recap of those (from above) with the idea it may be useful information for future enhancements to Active Record.
+While Ruby on Rails has expanded to help the needs of large scale apps, we did find that some of the features didn't yet support our specific needs. This is a short recap of those (from above) with the idea it may be useful information for future enhancements to Active Record.
 
-- Limitations of `disable_joins: true`, not all association types supported
-- Batched finders like `find_in_batches()` don’t support filtering (`WHERE` clause) on non-primary key columns. We want to specify a non-PK column, set the direction ascending or descending, and set a limit.
+- Limitations of `disable_joins: true`, not all association types are supported
+- Batched finders like `find_in_batches()` work with primary key columns, but we wanted to use cursor or keyset style pagination from arbitrary columns on the table. We also need to set the direction and the batch size.
 - Method `insert_all()` didn't support customization of the `ON CONFLICT` clause.
 - No built-in method for keyset style pagination.
 
