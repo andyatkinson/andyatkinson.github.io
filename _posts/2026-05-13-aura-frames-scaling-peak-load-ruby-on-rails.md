@@ -1,24 +1,23 @@
 ---
 layout: post
 permalink: /how-aura-frames-scales-for-peak-load-ruby-on-rails
-title: How Aura Frames Scales For Peak Load with Ruby on Rails (#1 in App Store)
+title: "Scaling Ruby on Rails and Postgres Databases: Lessons from Aura Frames #1 App Store Ranking"
 hidden: true
 ---
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
-<p>Using Ruby on Rails has helped make it possible to scale out and scale up, meeting the demands of millions of customers adding and viewing photos on millions of digital frames.</p>
-<p>In 2025, the team added more primary databases to scale peak write and read load ahead of Christmas Day. Rails helps manage pools of connections for each primary database, within the same codebase.</p>
-<p>The Ruby web stack was chosen long ago and has been battle tested, including Apache and Phusion Passenger Enterprise Edition, built on a custom AMI EC2 instance, part of an Auto Scaling Group (ASG) that auto-scales to thousands of instances for peak API traffic.</p>
-<p>With 8 primary databases in total, each server instance can be vertically scaled up for peak load, and back down later for cost savings.</p>
-<p>To make this possible within Ruby on Rails, the team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> Active Record feature which simulates joins between tables in different databases.</p>
-<p>This post looks at how that plan was developed and rolled out, as well as a variety of additional data layer scaling tactics.</p>
+<p>Ruby on Rails has helped make it possible to scale out the database layer, meeting the demands of millions of customers setting up millions of digital frames.</p>
+<p>In 2025, the Aura Frames team added primary databases to expand capacity for peak write and read load ahead of Christmas Day, the busiest day of the year for the company. Rails helps manage pools of connections for each primary database, within the same codebase.</p>
+<p>With 8 primary databases in total, each server instance can be vertically scaled ahead of peak load, and back down for cost savings.</p>
+<p>To make this possible within a single Ruby on Rails codebase, the team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> feature in Active Record feature which simulates joins between tables in different databases.</p>
+<p>This post looks back at the technical details of that plan, as well as a variety of additional data layer scaling tactics, that culminated in a successful Christmas 2025 season, and a peak App Store ranking of #1 in the US and Canada.</p>
 </div>
 
 ## Building With Ruby on Rails
-The Aura Frames platform has been built with Ruby on Rails since the beginning. Christmas 2025 was the busiest day of the year for the company and technical platform, serving a peak of 41 million API requests per second and processing a peak of 11.8 million background jobs per hour.
+The Aura Frames platform has been built with Ruby on Rails since the beginning. Christmas 2025 was the busiest day of the year for the company and technical platform, serving a peak of 41 million API requests per hour (~11.4K requests per second), and processing a peak of 11.8 million background jobs per hour.
 
-For an introduction to the Aura Frames company and products, please check out Part 1 of this series: [Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)](https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak).
+For an introduction to the Aura Frames company and products, please check out Part 1 of this series.
 
 **Brief Recap from Part 1**: Besides Ruby on Rails, Aura Frames uses PostgreSQL and AWS as key technologies.
 
@@ -46,7 +45,7 @@ On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below a
   <tbody>
     <tr>
       <td>HTTP Requests (1pm CT) at Load Balancer</td>
-      <td>41 million/second</td>
+      <td>41 million requests/hour</td>
     </tr>
     <tr>
       <td>Average Response Time (10am to 9pm CT)</td>
@@ -54,7 +53,7 @@ On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below a
     </tr>
     <tr>
       <td>Cloudfront Global Requests</td>
-      <td>33,675,000/hour (561K requests/second)</td>
+      <td>33,675,000 requests/hour</td>
     </tr>
     <tr>
       <td>Image Processing EC2 Instances Count</td>
@@ -73,7 +72,7 @@ On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below a
 
 An exciting development for the team was seeing the free iOS and Android Aura Frames app rise in ranking throughout the day.
 
-Late on Christmas Day, the app reached a peak rank of #1 among all free apps in the U.S. and Canadian App Stores, even beating out apps from big companies like ChatGPT and Meta AI!
+Late on Christmas Day, the app reached a peak rank of #1 among all free apps in the U.S. and Canadian App Stores, beating apps from big companies like OpenAI (ChatGPT) and Meta (Meta AI)!
 
 ![Aura Frames #1 App U.S. App Store Christmas Day](/assets/images/aura-christmas-2025.jpg)
 <br/>
@@ -101,7 +100,7 @@ Eventually, weeks later, all tests were passing! The nice property about this de
 Some of the main changes were evaluating all Active Record relationships (`has_many`, `belongs_to`, etc.) and any subquery expressions or other incompatible code, and using `disable_joins: true`, removing subquery expressions and table references.
 
 ## From SQL Joins to Multiple SELECTs
-The key parts of Ruby on Rails and Active Record that made this possible were Multiple Databases launched in 6.0, then the `disable_joins` feature for `has_many :through` and `belongs_to :through` relationships, to query across databases, [launched in Rails 7.0](https://www.bigbinary.com/blog/rails-7-adds-disable-joins-for-associations) (2021).
+The key parts of Ruby on Rails and Active Record that made this possible were Multiple Databases launched in 6.0, then the `disable_joins` feature for `has_many :through` and `has_one :through` relationships, to query across databases, [launched in Rails 7.0](https://www.bigbinary.com/blog/rails-7-adds-disable-joins-for-associations) (2021).
 
 Both of these were possible with custom code or third party library code (Ruby gems) before, but having native support in Rails was a differentiator. Native support meant more real world use, bug fixes, improved documentation, and a longer term commitment to supporting these features.
 
@@ -117,7 +116,11 @@ Here's a simple example using `Author` and `Post` models illustrating how `disab
 Author model has an existing association defined as: `has_many :posts, through: :author_posts`.
 
 To change this association, the `disable_joins: true` option is added like this:
-`Author has_many :posts, through: :author_posts, disable_joins: true`
+```rb
+class Author < ApplicationRecord
+  has_many :posts, through: :author_posts, disable_joins: true
+end
+```
 
 What's happening in SQL? Previously to get an Author’s posts, we’d query the `author_posts` table and join to the posts table on the author’s id.
 
@@ -132,7 +135,7 @@ What else needed to change?
 ## New Database Configuration
 Although we could roll this out on the same single DB, that was planned only temporarily to validate queries without the new DBs in place.
 
-The main plan was to use Multiple Databases and effectively relocate some of the largest, busiest tables to their own instances, with the one Rails codebase working with all of them.
+The main plan was to use Multiple Databases, relocate some of the largest, busiest tables to their own instances, all accessed from the single Rails codebase.
 
 For that we'd need to provision all the new DBs and connect to them from Rails. The first thing we needed was new YML config entries (`config/database.yml`) for each of them. The [Multiple Databases Documentation](https://guides.rubyonrails.org/active_record_multiple_databases.html) uses "animals" and `my_animals_db` as the second primary database, so we'll use that too for examples here.
 
@@ -207,7 +210,7 @@ We did have a handful of `has_and_belongs_to_many` (HABTM) relationships ([API D
 
 For HABTM relationships that would span a DB boundary, we decided to keep the table definitions as is, but introduce a model class and convert the code-level relationship from HABTM to `has_many :through` (HMT) so that we could use `disable_joins: true`.
 
-HABTM relationships in the same DB were left alone.
+Not all HABTM relationships were changed. When the HABTM involved tables in the same DB, those didn't need to change and were left unmodified.
 
 ## Scaling Inserts and Updates
 With Multiple Databases and `disable_joins: true` covered, what other database scalability tactics are used?
@@ -223,9 +226,9 @@ Rails supports batched read queries with a few Active Record methods: `find_each
 
 Aura Frames has custom code for batched finding, specifying an arbitrary column on the table and a sorting direction. 
 
-Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://apidock.com/rails/ActiveRecord/Batches/find_in_batches)) to control ordering, but unfortunately the only column to order on is the primary key column.
+Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://apidock.com/rails/ActiveRecord/Batches/find_in_batches)) to control ordering, but only the primary key column may be ordered on in ascending or descending order. We needed to order on arbitrary columns.
 
-Still, reading a batch worth of rows at a time is a critical scalability tactic to make sure that the query runs fast and the result size is not overwhelming.
+Still, reading a batch of rows is a critical tactic to make sure that query execution times are stable when querying data with varying amounts of results.
 
 ## Scaling Reads with Paginated Queries
 Aura Frames has custom code to perform keyset pagination, and generally does not use LIMIT and OFFSET style pagination built-in to Active Record. LIMIT and OFFSET pagination works for smaller amounts of data, but doesn’t scale well for deep pagination levels or when working with tables with billions of rows.
@@ -237,7 +240,7 @@ This is an incredibly useful pattern and commonly used for API requests and othe
 ## Counter Cache Maintenance for Frequently Updated Counters
 Rails supports counter_cache columns ([Blog post](https://blog.appsignal.com/2018/06/19/activerecords-counter-cache.html)) as a running counter, kept updated at write time.
 
-Updating their values means row row churn in Postgres, as updates even for a single column create a new immutable row version behind the scenes, leaving behind a former row version, so it's smart to think about which tables will get churned this way and the follow-on impact (the need for Vacuum).
+Updating their values means row churn in Postgres, as updates even for a single column create a new immutable row version behind the scenes, leaving behind a former row version, so it's smart to think about which tables will get churned this way and the follow-on impact (the need for Vacuum).
 
 The updates could also cause contention for that row being updated by another process.
 
@@ -260,7 +263,7 @@ Fortunately this is supported. Each DB has its own `schema.rb`, a Ruby represent
 
 Since each "new" database was not actually new, but based on an existing table definition, we started a new "first" migration for it using the existing table definition dumped via `pg_dump`.
 
-This migration version would be added *idempotently* meaning the table was added when it didn’t exist. Initially the table would *not exist* in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there.
+This migration version was written to be *idempotent* meaning the table was added only when it didn’t exist. Initially the table would *not exist* in dev, test, and staging, but based on how we planned to migrate the tables in production, the table would exist there.
 
 **Brief recap from Part 1**: The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later. 
 
