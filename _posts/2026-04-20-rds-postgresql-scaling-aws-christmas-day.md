@@ -444,7 +444,7 @@ And as always, please contact me with any questions or suggestions. Thanks for r
     you may also enjoy
     <a href="how-aura-frames-scales-for-peak-load-ruby-on-rails"
        style="color:#005bbb; font-weight:600; text-decoration:none;">
-    How Aura Frames Scales For Peak Load with Ruby on Rails (#1 in App Store)
+    Scaling Rails at Aura Frames: Splitting to 8 Primaries and Reaching #1 in the App Store
     </a>.
   </p>
 </div>

@@ -1,21 +1,21 @@
 ---
 layout: post
 permalink: /how-aura-frames-scales-for-peak-load-ruby-on-rails
-title: "Scaling Rails at Aura Frames: Splitting to 8 Primaries and Reaching #1 in the App Store"
+title: "Scaling Rails at Aura Frames: Splitting to 8 Primary DBs and Reaching #1 in the App Store"
 hidden: true
 ---
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>Ruby on Rails has helped make it possible to scale out the database layer, meeting the demands of millions of Aura Frames customers enjoying their digital photo frames.</p>
-<p>In 2025, the team added additional primary databases to expand capacity for peak write and read load ahead of Christmas Day, the busiest day of the year for the company. Rails manages queries and schema changes for each primary database within the same codebase, and now with the additional capacity of many primary databases.</p>
+<p>In late 2025, the team added additional primary databases to expand capacity for peak write and read load ahead of Christmas Day, the busiest day of the year for the company. Rails manages queries and schema changes for each primary database within the same codebase, and now with the additional capacity of many primary databases.</p>
 <p>With 8 primary databases in total, each server instance can be vertically scaled ahead of peak load. When load returns to normal levels, instances are scaled down for cost savings.</p>
 <p>The team leveraged native support for Multiple Databases and the <code>disable_joins: true</code> feature in Active Record, the ORM for Ruby on Rails. The disable_joins feature replaces SQL joins, issuing multiple SELECT statements to combine data in the application from different databases.</p>
 <p>This post looks back at the technical details of that plan, as well as a variety of additional data layer scaling tactics, that culminated in a successful Christmas 2025 season, with peak U.S. and Canadian Apple App Store and Google Play Store rankings of #1.</p>
 </div>
 
 ## Building With Ruby on Rails
-The Aura Frames platform has been built with Ruby on Rails since the beginning (more than 10 years ago!). Christmas 2025 was the busiest day of the year for the company and technical platform, serving a peak of 41 million API requests per hour (~11.4K requests per second), and processing a peak of 11.8 million background jobs per hour. On the database side, the sum of DB peak transactions per second (TPS) was 226K.
+The Aura Frames platform has been built with Ruby on Rails since the beginning (more than 10 years ago!). Christmas 2025 was the busiest day of the year for the company and technical platform, serving a peak of 41 million API requests per hour (~11.4K requests per second), and processing a peak of 11.8 million background jobs per hour (~3300 jobs/second). On the database side, the sum of DB peak transactions per second (TPS) was 226K.
 
 For an introduction to the Aura Frames company and products, and a deeper dive on the Postgres side of things, please check out [Part 1](/postgresql-rds-scaling-aws-christmas-day-peak#postgres-scaling-challenges-and-solutions) of this series.
 
@@ -65,7 +65,7 @@ On Christmas Day, the Aura Frames platform sees a 4-5x increase in load. Below a
     </tr>
     <tr>
       <td>Background Job Processing Rate</td>
-      <td>11.8 million jobs/hour (197K jobs/second)</td>
+      <td>11.8 million jobs/hour (~3300 jobs/second)</td>
     </tr>
   </tbody>
 </table>
@@ -104,7 +104,7 @@ Both of these were possible with custom code or third party library code (Ruby g
 
 Having `disable_joins` as a consistent pattern also helped with comprehension by the team, enabling "learn how it works once, then re-use it all over the codebase."
 
-Due to the increase in SELECT queries (and loss of join efficiency), the team had concerns about additional read query volume. Fortunately the team had a load testing tool in place and was able to verify through load testing that the additional read queries performed would not be a problem.
+Due to the increase in SELECT queries (and loss of join efficiency), the team had concerns about additional read query volume. Fortunately the team had a load testing tool in place and was able to verify through load testing that the additional read queries performed would not be a problem. With that said, over time we have replaced certain usages of disable_joins associations code with more targeted queries based on slow query logs or query cancellations. These queries are index supported, select minimal fields, and narrow ranges of rows by using batching.
 
 Here's a simple example using `Author` and `Post` models illustrating how `disable_joins: true` works:
 - Author (table_name: `authors`)
@@ -128,14 +128,14 @@ select * from author_posts where author_id = '<some id>';
 select * from posts where id IN (?);
 ```
 
-Active Record handles the query change and presents the objects and collections in the the same way to the developer.
+Active Record handles the query change and presents the objects and collections in the same way to the developer.
 
 Besides the query changes, what else needed to change?
 
 ## New Database Configuration
 Although we rolled out the query changes on the single primary DB architecture initially, that was intended to be temporary to further validate the changes without needing the new DBs in place.
 
-The main plan was to use separate DB server instances, relocating the largest, busiest tables to their own instances in able to add much more capacity and distribute the load.
+The main plan was to use separate DB server instances, relocating the largest, busiest tables to their own instances in order to add more capacity and distribute the load.
 
 For that we'd need to provision all the new DBs and connect to them from Rails. The first thing we needed was new YML config entries (`config/database.yml`) for each of them. The [Multiple Databases Documentation](https://guides.rubyonrails.org/active_record_multiple_databases.html) uses "animals" and `my_animals_db` as the second primary database, so we'll use that too for examples here.
 
@@ -218,9 +218,11 @@ Let's shift gears into some general additional data layer scaling tactics.
 ## Scaling Inserts and Updates
 With Multiple Databases and `disable_joins: true` covered, what other database scalability tactics are used?
 
-Rails supports bulk inserts and *upserts* (either an insert or an update), however the helper method for mass-inserting data didn't support what we needed. A limitation was that the ON CONFLICT clause couldn't be customized for `insert_all()` ([API Documentation](https://api.rubyonrails.org/v7.0/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-insert_all)). For example attempting an INSERT and specifying the DO NOTHING option when unique constraint violations occur.
+Rails supports bulk inserts and *upserts* (either an insert or an update), however the helper method for mass-inserting data didn't support what we needed. A limitation was that the ON CONFLICT clause couldn't be customized for `insert_all()` ([API Documentation](https://api.rubyonrails.org/v7.0/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-insert_all)), which we needed.
 
-Note that `upsert_all()` does support a `:on_duplicate` option.
+For example attempting an INSERT and specifying the DO NOTHING option for handling unique constraint violations.
+
+However, `upsert_all()` did get support for an `:on_duplicate` option.
 
 Aura Frames has custom code for mass insert with direct control over the ON CONFLICT clause. Being able to batch inserts like this is a critical part of write scalability, consolidating the overhead of a batch of row insertions (e.g. 1000) into a single commit.
 
@@ -250,7 +252,7 @@ Caveats are row churn and possible lock contention. Even updates of a single col
 Aura Frames does something similar but keeps counter cache columns in a separate but related table (plus counters in Memcached, see below). This reduces contention and places the churn more on a separate utility table.
 
 ## Random Values and Sampling
-Ordering by `RANDOM()` is slow. To avoid that, the Aura codebase uses TABLESAMPLE in Postgres, which is specified with a FROM clause ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)) which works fine from Active Record.
+Ordering by `RANDOM()` is slow. To avoid that, the Aura codebase uses TABLESAMPLE in Postgres (a contrib module), which is specified with a FROM clause ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)) which works fine from Active Record.
 
 A couple of options are supported like `sampling_method` with built-in options of `system` and `bernoulli`, or they can be expanded further by enabling the `tsm_system_rows module` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)).
 
@@ -270,7 +272,7 @@ This migration version was written to be *idempotent* meaning the table was adde
 
 **Brief recap from Part 1**: The plan was to use physical replication from the original primary instance to create a read only replica, then promote it to become a writer database. The replication was used as the means of moving all of the row data. This approach proved very reliable, but it did mean we had the former table copy on the original DB to clean up later, plus a ton of unneeded tables on all the new DBs to clean up (more on that in the other post).
 
-Imagine the new migration version was `1234567890`. Once switched over, we'd `TRUNCATE` its `schema_migrations` table, then manually insert the new migratino version into `schema_migrations` to keep the state consistent.
+Imagine the new migration version was `1234567890`. Once switched over, we'd `TRUNCATE` its `schema_migrations` table, then manually insert the new migration version into `schema_migrations` to keep the state consistent.
 ```sql
 insert into schema_migrations (version) values ('1234567890');
 ```
@@ -292,7 +294,7 @@ rails db:schema:cache:dump
 ## Wrap Up
 Ruby on Rails has been a critical technology for Aura Frames to build with for more than a decade, enabling a small team to continually ship improvements to customers from the same codebase, with the expanded capacity of many primary databases.
 
-Enhancements in the last handful of versions have been put to use, helping the platform reach greater levels of scale, delivering faster and more reliable experiences to customers.
+Enhancements in the last handful of versions like Multiple Databases support, `disable_joins: true` for associations have helped the team expand DB capacity, and still ship quickly to continue to deliver higher performance, and more reliable solutions to customers.
 
 If these types of posts are interesting to you, please consider subscribing to my blog or buying my book.
 
@@ -334,7 +336,7 @@ Thanks for reading!
     you may also enjoy
     <a href="https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak"
        style="color:#005bbb; font-weight:600; text-decoration:none;">
-      Scaling RDS Postgres for Peak Christmas Traffic (#1 in App Store)
+      From Christmas Outage to #1 App Store Ranking: An Aura Frames Postgres Scaling Retrospective
     </a>.
   </p>
 </div>
