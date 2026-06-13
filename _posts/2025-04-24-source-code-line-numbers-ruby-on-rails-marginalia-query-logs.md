@@ -45,8 +45,7 @@ That changed in the last year! Starting from PR 50969 to Rails linked below, for
 PR: Support `:source_location` tag option for query log tags by [fatkodima](https://github.com/fatkodima)
 <https://github.com/rails/rails/pull/50969#issuecomment-2797357558>
 
-An example of `:source_location` in action looks like this:
-
+An example of `:source_location` in action looks like below. The query comment was <strong>bolded</strong> and a ➡️ was added for emphasis, but neither appear in a real query comment.
 <pre><code>
 application=Rideshare
 controller=trip_requests
@@ -54,12 +53,14 @@ controller=trip_requests
 action=create
 </code></pre>
 
-Nice, now we've got the class name, line number, and Ruby method. In this example, we can get to work optimizing the `best_available_driver` method.
+Nice, now we've got the class name (`TripCreator`), line number (`26`), and Ruby method (`best_available_driver()`).
 
 Dima described how the Marginalia `:line` option was costly in production and even managed to improve that with the Query Logs change.
 
 ## Safe Logging Locally or in Production
-If you're unsure about source code line logging in production, but want to get started using it, a great place to start is using it in your local development enrivonment.
+If you're unsure about source code line logging in production, but want to get started using it, a great place to start is using it in your local development environment or pre-production environments.
+
+Note that warnings of performance impact with line-level Marginalia date back to the 2.x era of Ruby, and modern 3.x+ has improved backtrace generation. Impact is also workload dependent, what's going into the backtraces, lots of gems, middlewares etc.
 
 To avoid enabling the option for all environments, we'll use an environment variable that's enabled only for local development.
 
@@ -95,9 +96,11 @@ The configuration above was tested with Rails 7.2.2.
 If your team uses Query Logs `:source_location` in development or production, I'd love to know!
 
 ## Wrap Up
-Having source code line-level logging for query statistics is critical information that allows backend engineers to quickly zero in on where to fix database performance issues.
+Source code line-level logging for queries is critical information that allows backend engineers to quickly zero in on where to fix database performance issues.
 
-With this combo of information, engineers can identify the most heavy queries, then go backwards into the source code to know where to redesign, refactor, or restructure, or even remove costly queries.
+Marginalia and Query Logs are roughly similar in features, but Marginalia likely has more features and is more mature including support, consider that when choosing.
+
+Regardless of which tool you choose, with query annotations engineers can identify problematic query execution, then navigate from queries to source code to know where to redesign, refactor, or restructure.
 
 ## What's next?
 The `pg_stat_statements` extension is critical for this workflow, but it's not without opportunities for improvement.
