@@ -163,7 +163,7 @@ IF NOT EXISTS
 idx_uniq_pub_id ON transactions (public_id);
 ```
 
-We can very that individual lookups or range scans use this index, by inspecting query execution plans for this table.
+We can verify that individual lookups or range scans use this index, by inspecting query execution plans for this table.
 
 ## PL/pgSQL Source Code
 <https://github.com/andyatkinson/pg_scripts/pull/15>
@@ -177,5 +177,5 @@ Thanks for reading!
 
 ## Alternatives
 - [Base32 Crockford](https://www.crockford.com/base32.html) - An emphasis ease of use for humans: removing similar looking characters, case insensitivity.
-- [ULID](https://blog.lawrencejones.dev/ulid/) - Also 128 bits/8 bytes like UUIDs, so I had ruled these out for space consumption, and they're slightly less "usable"
+- [ULID](https://blog.lawrencejones.dev/ulid/) - Also 128 bits/16 bytes like UUIDs, so I had ruled these out for space consumption, and they're slightly less "usable"
 - [NanoIDs at PlanetScale](https://planetscale.com/blog/why-we-chose-nanoids-for-planetscales-api) - I like aspects of NanoID. This is random generation though like UUID vs. encoding a unique integer.

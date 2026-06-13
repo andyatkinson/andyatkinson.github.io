@@ -142,14 +142,14 @@ Since we're now using a join operation, we've got statistics available from both
 
 The planner also isn't needing to parse and store a large list of constant values.
 
-While `IN` clauses might perform fine with smaller inputs, e.g. 100 values or fewer,[^1] for large lists we should try and restructure the query to use a join operation instead.
+While `IN` clauses might perform fine with smaller inputs of 100 values or fewer, for large lists we should try and restructure the query to use a join operation instead.
 
 Besides restructuring the queries into joins, are there other alternatives?
 
-## Alternative approaches using ANY or SOME
+## Alternative approaches using ANY
 Crunchy Data's post [Postgres Query Boost: Using ANY Instead of IN](https://www.crunchydata.com/blog/postgres-query-boost-using-any-instead-of-in) describes how `IN` is more restrictive on the input.
 
-A more usable alternative to `IN` can be using `ANY` or `SOME`, which has more flexibility in handling the list of values.
+A more usable alternative to `IN` can be `ANY` (or synonym `SOME`), which has more flexibility in handling the list of values.
 
 Here's A CTE example using `ANY`:
 ```sql
