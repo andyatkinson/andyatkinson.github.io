@@ -13,7 +13,7 @@ Recently I had the chance to work with Python, Django, and Postgres as a long-ti
 
 There were some things I thought were really nice. So am I switching?
 
-The team I worked with was experienced with Django so I was curious to learn from them which libraries and tools are popular, and how how to write idiomatic code.
+The team I worked with was experienced with Django so I was curious to learn from them which libraries and tools are popular, and how to write idiomatic code.
 
 In this post I'll briefly cover the database parts of Django using Postgres (of course!), highlight libraries and tools, and compare aspects to the Ruby on Rails framework. You'll find a small Django repo towards the end as well.
 
