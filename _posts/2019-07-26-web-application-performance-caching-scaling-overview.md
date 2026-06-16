@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Web Application Performance, Caching, and Scaling"
-tags: [Tips, Programming, Ruby, Rails, Performance, Open Source, Databases]
+tags: [Tips, Programming, Ruby, Ruby on Rails, Performance, Open Source, Databases]
 date: 2019-07-26
 comments: true
 ---

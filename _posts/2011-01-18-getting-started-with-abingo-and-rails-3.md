@@ -3,7 +3,7 @@ layout: post
 title: Getting Started with A/Bingo and Rails 3
 date: 2011-01-18
 comments: true
-tags: [Tips, Lean Startup, Ruby, Rails]
+tags: [Tips, Lean Startup, Ruby, Ruby on Rails]
 ---
 
 [A/Bingo](http://www.bingocardcreator.com/abingo) is a "A/B" or "split" testing framework to try out different text or images (or other things) and see how they perform relative to each other. [Vanity](https://github.com/assaf/vanity) is the another a/b testing option for Rails applications, and is probably more popular as of this writing. However A/Bingo is a nice library as well and is perhaps a bit simpler. Ryan Bates did a great job explaining the basic idea and implementation of [A/Bingo in a Rails 2 app here](http://railscasts.com/episodes/214-a-b-testing-with-a-bingo), but what about Rails 3?

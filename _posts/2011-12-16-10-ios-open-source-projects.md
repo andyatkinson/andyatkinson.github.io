@@ -2,7 +2,7 @@
 layout: post
 title: 10 iOS Open Source Projects
 date: 2011-12-16
-tags: [Programming, Tips, Objective-C, iOS]
+tags: [Programming, Tips, Objective-C]
 ---
 
 Working independently on personal iOS projects, I'd used a couple of Objective-C open source libraries and wanted to share what they are. 

@@ -3,7 +3,7 @@ layout: post
 title: "Delayed Job Exception Notification Integration"
 date: 2014-05-03
 comments: true
-tags: [Ruby, Rails, Tools]
+tags: [Ruby, Ruby on Rails, Tools]
 ---
 We are using [delayed_job](https://github.com/collectiveidea/delayed_job) for background jobs and didn't see a built-in option to send email notifications when a job failed. Since we were already using [exception_notification](https://github.com/smartinez87/exception_notification) to email application exceptions, we thought it would be nice to integrate that.
 

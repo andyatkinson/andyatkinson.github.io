@@ -3,7 +3,7 @@ layout: post
 title: Auto-linking Twitter Tweets in Ruby and JavaScript
 date: 2009-04-20
 comments: true
-tags: [Programming, Ruby, JavaScript, Tips, Scripts, RegExp]
+tags: [Programming, Ruby, JavaScript, Tips, Scripts]
 ---
 
 Ruby on Rails introduced me to the concept of an `auto_link` helper method, which finds and hyperlinks URLs within text.

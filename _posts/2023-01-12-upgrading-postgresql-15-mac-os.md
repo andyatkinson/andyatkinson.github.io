@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Upgrading to PostgreSQL 15 on Mac OS"
-tags: [PostgreSQL, DevOps]
+tags: [PostgreSQL, Databases, DevOps]
 date: 2022-12-12
 comments: true
 ---

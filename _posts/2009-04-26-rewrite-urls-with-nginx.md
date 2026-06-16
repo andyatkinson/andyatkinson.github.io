@@ -3,7 +3,7 @@ layout: post
 title: Rewrite URLs with Nginx
 date: 2009-04-26
 comments: true
-tags: [Tools, Tips, Programming, Scripts, RegExp]
+tags: [Tools, Tips, Programming, Scripts, DevOps]
 ---
 
 A previous work project involved changing our blog software and server configuration. Date-based URLs would no longer be used, and the blog would be run within the main site instead of on a subdomain. The "slug" (which is `this-is-the-page-slug` in this example) would be retained for blog posts in the new app.  

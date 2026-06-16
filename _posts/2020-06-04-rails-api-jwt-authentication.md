@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Rails API Authentication with JWT"
-tags: [Ruby, Rails, API]
+tags: [Ruby, Ruby on Rails, API]
 date: 2020-06-04
 comments: true
 ---

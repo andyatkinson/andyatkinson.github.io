@@ -3,7 +3,7 @@ layout: post
 title: "Building a Web App with Boring Technologies (2017 Edition)"
 date: 2018-09-10
 comments: true
-tags: [Ruby, Rails, Databases, Programming, PostgreSQL]
+tags: [Ruby, Ruby on Rails, Databases, Programming, PostgreSQL]
 ---
 
 This post was written in February 2017 and I'm just getting around to posting it now in September of 2018. These technologies are not new or flashy but they are proven and have a lot of documentation and tooling support.
