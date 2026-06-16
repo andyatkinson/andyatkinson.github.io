@@ -20,8 +20,8 @@
 </script>
 
 <meta property="og:description" content="{{ site.meta_description }}" />
-<meta property="og:image" content="{{ page.featured_image | default: site.author.image }}" alt="{{ page.featured_image_caption | default: page.title }}" />
+<meta property="og:image" content="{{ page.social_share_image | default: site.author.image }}" alt="{{ page.title }}" />
 <meta property="og:image:width" content="1200"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="{{ site.url}}{{ page.image }}"/>
-<meta name="twitter:description" content="{{ page.description }}"/>
+<meta name="twitter:image" content="{{ site.url}}{{ page.social_share_image }}"/>
+<meta name="twitter:description" content="{{ page.title }}"/>

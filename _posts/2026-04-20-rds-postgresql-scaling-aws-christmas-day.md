@@ -3,7 +3,7 @@ layout: post
 permalink: /postgresql-rds-scaling-aws-christmas-day-peak
 title: "From Christmas Outage to #1 App Store Ranking: An Aura Frames Postgres Scaling Retrospective"
 hidden: true
-image: /assets/images/posts/2026/blog-aura-frames-postgres-christmas-2025-web.jpg
+social_share_image: /assets/images/posts/2026/blog-aura-frames-postgres-christmas-2025-web.jpg
 canonical: https://andyatkinson.com/postgresql-rds-scaling-aws-christmas-day-peak
 ---
 
