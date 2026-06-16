@@ -4,7 +4,7 @@ permalink: /how-aura-frames-scales-for-peak-load-ruby-on-rails
 title: "Scaling Rails at Aura Frames: Splitting to 8 Primary DBs and Reaching #1 in the App Store"
 social_share_image: /assets/images/posts/2026/blog-aura-frames-rails-christmas-2025-web.jpg
 canonical: https://andyatkinson.com/how-aura-frames-scales-for-peak-load-ruby-on-rails
-date: 2026-06-16
+date: 2026-06-16 13:00:00
 tags: [Ruby on Rails, Ruby, PostgreSQL, Performance]
 ---
 
