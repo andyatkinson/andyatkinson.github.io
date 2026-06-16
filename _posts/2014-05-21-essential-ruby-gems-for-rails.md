@@ -3,7 +3,7 @@ layout: post
 title: "Essential Ruby Gems for Rails"
 date: 2014-05-21
 comments: true
-tags: [Ruby, Rails, Tips, Programming]
+tags: [Ruby, Ruby on Rails, Tips, Programming]
 ---
 
 This is my recommend list of Ruby gems for Rails apps.

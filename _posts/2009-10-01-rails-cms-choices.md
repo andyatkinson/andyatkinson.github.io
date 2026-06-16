@@ -3,7 +3,7 @@ layout: post
 title: Rails CMS Choices
 date: 2009-10-01
 comments: true
-tags: [Tips, Ruby, Rails, Tools]
+tags: [Tips, Ruby, Ruby on Rails, Tools]
 ---
 
 Rails content management system options:

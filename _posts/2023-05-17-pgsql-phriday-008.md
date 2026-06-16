@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PGSQL Phriday #008 — pg_stat_statements, PgHero, Query ID"
-tags: [PostgreSQL, Rails, Open Source]
+tags: [PostgreSQL, Ruby on Rails, Open Source]
 date: 2023-05-17
 comments: true
 ---

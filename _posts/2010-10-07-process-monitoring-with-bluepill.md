@@ -3,7 +3,7 @@ layout: post
 title: Process Monitoring with Bluepill
 date: 2010-10-07
 comments: true
-tags: [DevOps, Ruby, Rails, CLI]
+tags: [DevOps, Ruby, Ruby on Rails, CLI]
 ---
 
 On our current project my colleague chose [Bluepill](http://github.com/arya/bluepill) for process monitoring. Bluepill has been working well so I wanted to recommend it and share some notes. 

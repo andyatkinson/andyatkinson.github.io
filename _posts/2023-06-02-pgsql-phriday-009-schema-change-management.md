@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PGSQL Phriday #009 — Database Change Management"
-tags: [PostgreSQL, Rails, Open Source]
+tags: [PostgreSQL, Ruby on Rails, Open Source]
 date: 2023-06-02
 comments: true
 ---

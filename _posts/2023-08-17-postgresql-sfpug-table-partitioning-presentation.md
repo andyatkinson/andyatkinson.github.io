@@ -1,11 +1,10 @@
 ---
 layout: post
 title: "Presenting 'Partitioning Billions of Rows' at SFPUG August 2023"
-tags: [PostgreSQL, Rails, Open Source, Books]
+tags: [PostgreSQL, Ruby on Rails, Open Source, Books]
 date: 2023-08-17
 comments: true
 ---
-
 
 On August 8, 2023 I had the chance to present to the San Francisco Bay Area PostgreSQL User Group (SFPUG) on our case study for a recent online table partitioning migration. The main tools we used were PostgreSQL 13 and the pgslice gem.
 

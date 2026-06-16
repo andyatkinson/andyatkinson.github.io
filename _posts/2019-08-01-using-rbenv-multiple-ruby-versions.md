@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Using rbenv To Manage Multiple Ruby Versions"
-tags: [Tips, Ruby, Rails]
+tags: [Tips, Ruby, Ruby on Rails]
 date: 2019-08-01
 comments: true
 ---

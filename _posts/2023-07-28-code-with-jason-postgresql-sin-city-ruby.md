@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Code With Jason 190 &mdash; PostgreSQL and Sin City Ruby 🎙️"
-tags: [PostgreSQL, Rails, Podcasts]
+tags: [PostgreSQL, Ruby on Rails, Podcasts]
 date: 2023-07-28
 comments: true
 ---

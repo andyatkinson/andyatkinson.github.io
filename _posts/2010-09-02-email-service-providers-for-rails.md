@@ -3,7 +3,7 @@ layout: post
 title: Email Service Providers for Rails
 date: 2010-09-02
 comments: true
-tags: [Ruby, Rails]
+tags: [Ruby, Ruby on Rails]
 ---
 
 Sending email (transactional and marketing) is part of most every web application. At work our project is nearing its first public release and we are talking about emails the application may be sending. The emails we know the application will be sending now are transactional emails like the "welcome" email for new users and password resets, however we are also expect our marketing team to send release announcements. We want to format the emails with HTML and CSS. 

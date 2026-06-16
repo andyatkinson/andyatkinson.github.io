@@ -3,7 +3,7 @@ layout: post
 title: Rails 2.3 Features
 date: 2009-07-29
 comments: true
-tags: [Ruby, Rails, Tips]
+tags: [Ruby, Ruby on Rails, Tips]
 ---
 
 Some feaures from Rails 2.3 that I wanted to highlight:

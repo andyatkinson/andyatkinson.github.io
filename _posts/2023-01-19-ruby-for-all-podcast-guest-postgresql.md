@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ruby For All Podcast: My Guest Experience 🎙️"
-tags: [PostgreSQL, Rails, Podcasts]
+tags: [PostgreSQL, Ruby on Rails, Podcasts]
 date: 2023-01-19
 comments: true
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Manually Fixing a Rails Migration"
-tags: [PostgreSQL, Rails, Databases, Tips]
+tags: [PostgreSQL, Ruby on Rails, Databases, Tips]
 date: 2021-08-30
 comments: true
 ---

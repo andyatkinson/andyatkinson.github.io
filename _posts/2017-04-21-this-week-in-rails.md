@@ -3,7 +3,7 @@ layout: post
 title: "This Week in Rails"
 date: 2017-04-21
 comments: true
-tags: [Ruby, Rails, "Open Source"]
+tags: [Ruby, Ruby on Rails, Open Source]
 ---
 
 "This Week in Rails" is a weekly newsletter, started by [Godfrey Chan](https://twitter.com/chancancode), that covers a week's worth of interesting changes to the Ruby on Rails framework.

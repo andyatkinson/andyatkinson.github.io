@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PGSQL Phriday #011 &mdash; Sharding and Partitioning"
-tags: [PostgreSQL, Rails, Open Source]
+tags: [PostgreSQL, Ruby on Rails, Open Source]
 date: 2023-08-04
 comments: true
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "PostgreSQL, Ruby on Rails, Rails Guides"
-tags: [PostgreSQL, Rails]
+tags: [PostgreSQL, Ruby on Rails]
 date: 2022-12-12
 comments: true
 ---

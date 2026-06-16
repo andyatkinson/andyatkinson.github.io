@@ -3,7 +3,7 @@ layout: post
 title: WindyCityRails Conference 2009
 date: 2009-09-25
 comments: true
-tags: [Ruby, Rails, Conferences, Events]
+tags: [Ruby, Ruby on Rails, Conferences, Events]
 ---
 
 I attended WindyCityRails in Chicago this year. [Videos of the sessions are available here](http://windycityrails.org/videos).

@@ -3,7 +3,7 @@ layout: post
 title: Rails Deployments
 date: 2008-10-01
 comments: true
-tags: [DevOps, Ruby, Rails]
+tags: [DevOps, Ruby, Ruby on Rails]
 ---
 
 This September I deployed two Rails applications with different stacks, and I wanted to share the details.

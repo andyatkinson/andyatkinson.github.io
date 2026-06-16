@@ -3,7 +3,7 @@ layout: post
 title: Moving A Rails App to Heroku
 date: 2010-07-26
 comments: true
-tags: [DevOps, Ruby, Rails]
+tags: [DevOps, Ruby, Ruby on Rails]
 ---
 
 This website runs on an open source blogging application I developed called Rehash. The application has always been deployed on a virtual private server but I wanted to try moving it to Heroku. 

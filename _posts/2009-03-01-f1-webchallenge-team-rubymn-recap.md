@@ -3,7 +3,7 @@ layout: post
 title: F1 Webchallenge Team Ruby.mn Recap
 date: 2009-03-01
 comments: true
-tags: [Events, Ruby, Rails, JavaScript]
+tags: [Events, Ruby, Ruby on Rails, JavaScript]
 ---
 
 This year I participated in the [F1 Web Challenge](http://f1webchallenge.com/). The event brings together teams of programmers, designers, and project managers with non-profit organizations. The goal is to build a professional website for the non-profit in less than 24 hours, and teams compete against each other for the overall best website.

@@ -3,7 +3,7 @@ layout: post
 title: Ship It Quicker
 date: 2012-03-22
 comments: true
-tags: [Tips, Ruby, Rails, Productivity, Lean Startup]
+tags: [Tips, Ruby, Ruby on Rails, Productivity, Lean Startup]
 ---
 
 Shipped software can provide A/B test results and behavior data, which can help clarify whether a feature is worth enhancing or abandoning. It is important for the team to embrace shipping software (without hurting quality) to keep planning meetings short and on-topic. In my experience an iterative development style is the best way to build web apps. What follows are some ways to release code while reducing risk.
