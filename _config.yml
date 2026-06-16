@@ -6,6 +6,7 @@ title: 'Software Engineer, Author, High Performance PostgreSQL for Rails'
 tagline: 'Software Engineer, Postgres Specialist, Author'
 description: "Andrew Atkinson Software Engineer blog about PostgreSQL, Ruby on Rails, Elasticsearch, Kubernetes, and Vim. Andrew is the Author of Ruby bestseller High Performance PostgreSQL for Rails"
 meta_description: 'Andrew Atkinson Software Engineer. PostgreSQL specialist. Ruby on Rails, Elasticsearch, Kubernetes, Vim. Author High Performance PostgreSQL for Rails published by Pragmatic Programmers'
+social_share_default_image: '/assets/images/andyatkinson-com-social-share.jpg'
 logo:
 # Author image is used in site sidebar and greetings in the home page hero text
 author:
