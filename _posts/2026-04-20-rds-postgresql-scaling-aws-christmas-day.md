@@ -75,7 +75,7 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
   <tbody>
     <tr>
       <td>14.x</td>
-      <td>db.r6g.48xlarge</td>
+      <td>48xlarge (either db.r7i or db.r8g)</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
@@ -182,7 +182,7 @@ Here's what the instances were scaled up to for Christmas 2025. (Older generatio
     </tr>
     <tr>
       <td>17.6</td>
-      <td>db.r6g.48xlarge</td>
+      <td>db.r8g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
@@ -190,7 +190,7 @@ Here's what the instances were scaled up to for Christmas 2025. (Older generatio
     </tr>
     <tr>
       <td>17.6</td>
-      <td>db.r6g.48xlarge</td>
+      <td>db.r8g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
