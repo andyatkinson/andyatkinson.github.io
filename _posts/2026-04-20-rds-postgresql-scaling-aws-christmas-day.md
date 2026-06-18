@@ -75,7 +75,7 @@ Here's a look at the primary database instance at peak for Christmas Day 2024. N
   <tbody>
     <tr>
       <td>14.x</td>
-      <td>48xlarge (either db.r7i or db.r8g)</td>
+      <td>rb.r7i.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
