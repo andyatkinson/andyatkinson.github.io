@@ -174,7 +174,7 @@ Here's what the instances were scaled up to for Christmas 2025. (Older generatio
   <tbody>
     <tr>
       <td>17.6</td>
-      <td>db.r6g.48xlarge</td>
+      <td>db.r8g.48xlarge</td>
       <td>192</td>
       <td>1536</td>
       <td>io2</td>
