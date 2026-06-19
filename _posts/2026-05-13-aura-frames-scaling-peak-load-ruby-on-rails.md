@@ -325,10 +325,10 @@ If you're an engineer interested in working on these types of challenges, please
 
 Thanks for reading!
 
-## Updates
-2026-06-18
-- Chedli Bourguiba: `:cursor` option for [find_in_batches()](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches)
-- Chedli Bourguiba: Recommendation to link to [Edge Rails documentation](https://api.rubyonrails.org) over ver APIDock (replaced two spots)
+### Updates
+2026-06-18 Chedli Bourguiba
+- `:cursor` option for [find_in_batches()](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches)
+- Replaced two instances of documentation with [Edge Rails documentation](https://api.rubyonrails.org)
 
 <div style="
   max-width: 420px;
