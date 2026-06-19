@@ -270,9 +270,9 @@ Trip.from("trips TABLESAMPLE SYSTEM (5)").count
 Trip.from("trips TABLESAMPLE BERNOULLI (5)").count
 ```
 
-The `sampling_method` options (built-in) above were `SYSTEM` and `BERNOULLI`. With 1000 rows in my local table, I should get about 50 rows by specifying 5%, but if you run this you'll notice it's only approximate. System is faster but less accurate.
+The `sampling_method` options (built-in) above were `SYSTEM` and `BERNOULLI`. With 1000 rows in my local table, I should get about 50 rows by specifying 5%, but if you run this you'll notice it's only approximate. System is faster, but neither are fully accurate.
 
-To get a precise amoutn of rows, enable the `tsm_system_rows` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)) extension, and specify the row count like this:
+To get a precise amount of rows, enable the `tsm_system_rows` extension ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)) and specify a row count like this:
 ```rb
 Trip.from("trips TABLESAMPLE SYSTEM_ROWS(50)").count
   Trip Count (11.9ms)  SELECT COUNT(*) FROM trips TABLESAMPLE SYSTEM_ROWS(50)
