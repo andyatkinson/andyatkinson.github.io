@@ -207,7 +207,7 @@ User.merge(Post.recent)
 ```
 
 ## Post-split: References Method
-`references` [API Documentation](https://apidock.com/rails/v7.1.3.2/ActiveRecord/QueryMethods/references) which adds a SQL join, is used in conjunction with `includes()` to specify a table. However, this won't work if the table is no longer in the same database.
+`references` [API Documentation](https://api.rubyonrails.org/classes/ActiveRecord/QueryMethods.html#method-i-references) which adds a SQL join, is used in conjunction with `includes()` to specify a table. However, this won't work if the table is no longer in the same database.
 
 ## Other Associations: has_and_belongs_to_many
 We did have a handful of `has_and_belongs_to_many` (HABTM) relationships ([API Documentation](https://guides.rubyonrails.org/association_basics.html#has-and-belongs-to-many)). With these there is still a join table, but there is no Active Record model for it. The tables are also slim, no primary key or timestamp columns.
@@ -234,9 +234,11 @@ Rails supports batched read queries with a few Active Record methods: `find_each
 
 Aura Frames has custom code for batched finding, specifying an arbitrary column on the table and a sorting direction. 
 
-Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://apidock.com/rails/ActiveRecord/Batches/find_in_batches)) to control ordering, but only the primary key column may be ordered on in ascending or descending order. We needed to order on arbitrary columns.
+Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches) to control ordering, but only the primary key column was supported for ordering in ascending or descending order. We needed to order on arbitrary columns.
 
-Still, reading a batch of rows is a critical tactic to make sure that query execution times are stable when querying data with varying amounts of results.
+Chedli Bourguiba pointed out that in Rails 8, a `:cursor` option was added to support columns beyond the primary key column. See more at: [JetThoughts - Ruby on Rails 8: How to Batch with Custom Columns](https://jetthoughts.com/blog/ruby-on-rails-8-how-batch-with-custom-columns).
+
+Reading a batch of rows using keyset pagination is a critical tactic for stable query execution times with varying result set sizes.
 
 ## Scaling Reads With Paginated Queries
 Aura Frames has custom code to perform keyset pagination, and generally does not use LIMIT and OFFSET style pagination built-in to Active Record. LIMIT and OFFSET pagination works for smaller amounts of data, but doesn’t scale well for deep pagination levels or when working with tables with billions of rows.
@@ -255,9 +257,27 @@ Caveats are row churn and possible lock contention. Even updates of a single col
 Aura Frames does something similar but keeps counter cache columns in a separate but related table (plus counters in Memcached, see below). This reduces contention and places the churn more on a separate utility table.
 
 ## Random Values and Sampling
-Ordering by `RANDOM()` is slow. To avoid that, the Aura codebase uses TABLESAMPLE in Postgres (a contrib module), which is specified with a FROM clause ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)) which works fine from Active Record.
+Ordering by `RANDOM()` is slow. To avoid that, the Aura codebase uses TABLESAMPLE in Postgres (a contrib module which means no extensions are needed to install). A tablesample can be specified in a FROM clause ([Postgres Documentation](https://www.postgresql.org/docs/current/sql-select.html)).
 
-A couple of options are supported like `sampling_method` with built-in options of `system` and `bernoulli`, or they can be expanded further by enabling the `tsm_system_rows module` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)).
+As a quick example from [Rideshare](https://github.com/andyatkinson/rideshare) using the `Trip` model (`trips` table) as SQL:
+```rb
+Trip.connection.select_all("SELECT * FROM trips TABLESAMPLE SYSTEM (10)").to_a
+```
+
+Or as more conventional Active Record
+```rb
+Trip.from("trips TABLESAMPLE SYSTEM (5)").count
+Trip.from("trips TABLESAMPLE BERNOULLI (5)").count
+```
+
+The `sampling_method` built-in options of `system` and `bernoulli` are used above. With 1000 rows in my local table, I didn't always get the ~5% figure, around 50 rows.
+
+A more precise option is enabling the `tsm_system_rows` ([Postgres Documentation](https://www.postgresql.org/docs/current/tsm-system-rows.html)) extension to specify an exact sample row count:
+```rb
+rideshare(dev)> Trip.from("trips TABLESAMPLE SYSTEM_ROWS(50)").count
+  Trip Count (11.9ms)  SELECT COUNT(*) FROM trips TABLESAMPLE SYSTEM_ROWS(50)
+  => 50
+```
 
 ## Using Memory Key Value Cache Stores
 Aura Frames makes use of the [Active Support Cache Store](https://api.rubyonrails.org/classes/ActiveSupport/Cache/Store.html) via Memcached with HAProxy performing connection management.
@@ -304,6 +324,11 @@ If these types of posts are interesting to you, please consider subscribing to m
 If you're an engineer interested in working on these types of challenges, please get in touch.
 
 Thanks for reading!
+
+## Updates
+2026-06-18
+- Chedli Bourguiba pointed out the `:cursor` option for [find_in_batches()](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches)
+- Chedli recommended linking to Edge Rails Guides as documentation over APIDock (replaced two instances)
 
 <div style="
   max-width: 420px;
