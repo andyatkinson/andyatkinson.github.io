@@ -236,7 +236,7 @@ Aura Frames has custom code for batched finding, specifying an arbitrary column 
 
 Rails 6.1 did add support for `find_in_batches()` ([API Documentation](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches) to control ordering, but only the primary key column was supported for ordering in ascending or descending order. We needed to order on arbitrary columns.
 
-Chedli Bourguiba pointed out that in Rails 8, a `:cursor` option was added to support columns beyond the primary key column. See more at: [JetThoughts - Ruby on Rails 8: How to Batch with Custom Columns](https://jetthoughts.com/blog/ruby-on-rails-8-how-batch-with-custom-columns).
+Chedli Bourguiba pointed out that Rails 8 added a `:cursor` option to support cursor pagination on a non-primary key column. See more at: [JetThoughts - Ruby on Rails 8: How to Batch with Custom Columns](https://jetthoughts.com/blog/ruby-on-rails-8-how-batch-with-custom-columns). I will be evaluating this in the future.
 
 Reading a batch of rows using keyset pagination is a critical tactic for stable query execution times with varying result set sizes.
 
@@ -327,8 +327,8 @@ Thanks for reading!
 
 ## Updates
 2026-06-18
-- Chedli Bourguiba pointed out the `:cursor` option for [find_in_batches()](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches)
-- Chedli recommended linking to Edge Rails Guides as documentation over APIDock (replaced two instances)
+- Chedli Bourguiba: `:cursor` option for [find_in_batches()](https://api.rubyonrails.org/classes/ActiveRecord/Batches.html#method-i-find_in_batches)
+- Chedli Bourguiba: Recommendation to link to [Edge Rails documentation](https://api.rubyonrails.org) over ver APIDock (replaced two spots)
 
 <div style="
   max-width: 420px;
