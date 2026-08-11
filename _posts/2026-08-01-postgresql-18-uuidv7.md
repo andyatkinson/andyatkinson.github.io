@@ -139,8 +139,9 @@ Fortunately I was able to avoid cancelling any queries using the looping retry f
 
 
 ## Improvements
-Measuring average latency as measured by PgAnalyze
+I cherry picked 4 tables where insert latency decreased the most.
 
+Below shows the average latency before and after as reported by PgAnalyze including calls/minute volume and the corresponding improvement.
 <table class="styled-table">
   <thead>
     <tr>
@@ -164,16 +165,16 @@ Measuring average latency as measured by PgAnalyze
       <td>23x</td>
     </tr>
     <tr>
-      <td>900/min</td>
-      <td>5.3ms</td>
-      <td>0.64ms</td>
-      <td>8x</td>
-    </tr>
-    <tr>
       <td>2000/min</td>
       <td>0.6ms</td>
       <td>0.07ms</td>
       <td>9x</td>
+    </tr>
+    <tr>
+      <td>900/min</td>
+      <td>5.3ms</td>
+      <td>0.64ms</td>
+      <td>8x</td>
     </tr>
   </tbody>
 </table>
