@@ -179,17 +179,19 @@ Below shows the average latency before and after as reported by PgAnalyze includ
   </tbody>
 </table>
 
-![](/assets/images/uuidv7-1-table-am-pganalyze.jpg)
-<br/>
-<small>Switching column default table 1 to uuidv7 big decrease (good) in insert latency</small>
+Showing three of the tables above visually:
 
 ![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
 <br/>
-<small>Switching column default table 2 to uuidv7 big decrease (good) in insert latency</small>
+<small>63x improvement. 0.50ms to 0.08ms (500 microseconds to 8 microseconds)</small>
+
+![](/assets/images/uuidv7-1-table-am-pganalyze.jpg)
+<br/>
+<small>20x reduction in insert latency. 1ms to around 50 microseconds.</small>
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>Switching column default table 2 to uuidv7 big decrease (good) in insert latency</small>
+<small>~9x improvement. 0.6ms to 0.1ms.</small>
 
 
 ## Wrap Up
