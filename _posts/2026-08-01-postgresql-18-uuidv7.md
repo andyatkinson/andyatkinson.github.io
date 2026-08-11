@@ -147,7 +147,7 @@ Measuring average latency as measured by PgAnalyze
       <th>Peak 7d Calls/Min</th>
       <th>Original latency</th>
       <th>New</th>
-      <th></th>
+      <th>Improvement</th>
     </tr>
   </thead>
   <tbody>
