@@ -161,7 +161,7 @@ Below shows the average latency before and after as reported by PgAnalyze includ
     <tr>
       <td>12000/min</td>
       <td>0.7ms</td>
-      <td>0.3ms</td>
+      <td>0.03ms</td>
       <td>23x</td>
     </tr>
     <tr>
@@ -179,11 +179,15 @@ Below shows the average latency before and after as reported by PgAnalyze includ
   </tbody>
 </table>
 
-![](/assets/images/uuidv7-1-table-1-am-pganalyze.jpg)
+![](/assets/images/uuidv7-1-table-am-pganalyze.jpg)
 <br/>
 <small>Switching column default table 1 to uuidv7 big decrease (good) in insert latency</small>
 
-![](/assets/images/uuidv7-2-table-2-th-pganalyze.jpg)
+![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
+<br/>
+<small>Switching column default table 2 to uuidv7 big decrease (good) in insert latency</small>
+
+![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
 <small>Switching column default table 2 to uuidv7 big decrease (good) in insert latency</small>
 
