@@ -182,7 +182,7 @@ Measuring average latency as measured by PgAnalyze
 <br/>
 <small>Switching column default table 1 to uuidv7 big decrease (good) in insert latency</small>
 
-![](/assets/images/uuidv7-2-table-1-th-pganalyze.jpg)
+![](/assets/images/uuidv7-2-table-2-th-pganalyze.jpg)
 <br/>
 <small>Switching column default table 2 to uuidv7 big decrease (good) in insert latency</small>
 
