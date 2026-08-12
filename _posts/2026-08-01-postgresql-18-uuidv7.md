@@ -8,7 +8,8 @@ hidden: true
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>Average execution time for high calls/min insert queries dropped significantly after switching primary key columns to uuidv7() values.</p>
-<p>Primary key columns were switched one by one on Postgres 18.4, keeping their uuid data type, but changing their format from either v1 or v4, to v7.</p>
+<p>These databases were running Postgres 18.4 and kept their uuid primary key data type, but changed the generation function for new inserts from either v1 or v4, to v7.</p>
+<p>The benefits weren't apparent across the board, but in a handful of tables there were very clear and immediate visibile reductions in average times.</p>
 </div>
 
 We recently upgraded all databases to Postgres 18.4 and with that we gained the `uuidv7()` function that can generate v7 UUID values.
@@ -164,11 +165,11 @@ We'd likely want to stack up our `alter table` immediately after. I didn't end u
 With all of the tables modified, what did our results look like?
 
 ## What kinds of improvements did we see?
-I began going through each table looking for the effect. For many of the tables, there wasn't an obvious reduction in insert latency.
+I began going through each table looking for the effect. For many of the tables, there wasn't an obvious reduction in insert execution times.
 
-However, I picked 5 tables where insert latency decreased significantly and the graphs were quite fun to see. The improvements in these cases were 8x, 9x, 20x, 23x, and 63x!
+However, I picked 5 tables where execution times dropped significantly and the graphs were quite fun to see. The improvements in these cases were 8x, 9x, 20x, 23x, and even 63x!
 
-The tables with the 63x, 23x, and 9x improvements are shown below.
+Below are graphs from a few of those, the tables with improvements of 63x, 23x, and 9x.
 <table class="styled-table">
   <thead>
     <tr>
@@ -219,12 +220,10 @@ Showing PgAnalyze insert graphs from tables A, B, C:
 
 
 ## Wrap Up
-We found significant insert latency reduction moving to `uuidv7()` primary key values from v1 or v4.
+We found significant reductions with `uuidv7()` primary key values replacing v1 or v4 for a handful of tables.
 
-The only wrinkle is the exclusive lock for very busy tables, but that's solvable using the tactics above.
+The only wrinkle in performing this work was the exclusive lock the `alter table` requires on very busy tables, but that was solvable using the tactics above.
 
-I would recommend moving any of the Postgres databases you maintain using uuid primary keys, to use `uuidv7()` to gain these advantages.
+Although this won't benefit 100% of tables, I would recommend `uuidv7()` as the new best default choice for uuid columns and in some cases the improvement can be very significant.
 
-Thanks to the Postgres core team for creating this new capability.
-
-Thanks for reading this post!
+Thanks to the Postgres core team for creating this new capability, and thanks for reading this post
