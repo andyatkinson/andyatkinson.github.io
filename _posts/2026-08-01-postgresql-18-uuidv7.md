@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-18-uuidv7
-title: PostgreSQL 18 v7 UUIDs
+title: 63x Faster Inserts With PostgreSQL 18 v7 UUIDs
 hidden: true
 ---
 
