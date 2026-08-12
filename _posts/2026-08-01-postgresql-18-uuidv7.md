@@ -17,7 +17,7 @@ Since the system generally uses v1 and v4 UUIDs and the `uuid` data type for pri
 
 How did it go?
 
-## Current UUID generation
+## History and trade-offs for UUIDs
 The system uses UUIDs throughout. I have typically advocated for bigint and sequences over UUID values for primary keys, but I have softened my position on this as I worked on lots of client databases.
 
 My main beef was the poor performance due to random IO from v4 UUIDs. The poor performance stemmed from reduced page density, more frequent page splits, and increased latency when inserting index entries.
@@ -26,7 +26,7 @@ Fortunately this system mostly uses v1 which are less efficient than v7 but do h
 
 With that said, the system also used v4 in a couple of spots strategically, and in a couple of other spots unintentionally due to bad defaults. For example the default UUID type for newly generated was set to v4 unintentionally.
 
-## Identifying current UUID use
+## Auditing where the UUIDs came from
 First we went through and identified the current use.
 
 For the UUID values they came from:
@@ -36,15 +36,16 @@ For the UUID values they came from:
 
 For nearly all instances, we wanted to replace these with the `uuidv7()` function in Postgres 18.
 
-## How
+## How did the switch go?
 One wrinkle was that modifying the column default generation function, while fast, requires an `access exclusive` lock.
 
-This means the lock held, as an exclusive lock, conflicts with *everything* including regular old `select` statements.
+This means the lock held conflicts with *everything* including regular `select` statements.
 
 For our highest queried tables, this was a problem as there was almost never a "window" to perform this operation.
 
+Let's look at the simpler case first.
 
-Let's look at the simpler case first. In our migrations framework, we'd perform a transaction and use `set local` to set very short timeouts to try and perform the `alter table`:
+In our migrations framework, we'd perform a transaction and use `set local` to set very short timeouts to try and perform the `alter table`:
 
 From psql:
 ```sql
@@ -67,7 +68,7 @@ ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7();
 
 The `alter table` would immediately commit if it grabbed the lock within 50ms, or we'd get an error that the `lock_timeout` was reached.
 
-## Retries
+## Retrying the column modification
 Sometimes one or two retries would do the job. We'd run the statement again and after a few tries it would work. Great, move on.
 
 The most heavily queried table though was more tricky.
@@ -104,10 +105,12 @@ BEGIN
 END $$;
 ```
 
-## Active cancellation
-Thanks to Ants Asma for the idea to actively cancel the lock holder if needed.
+## Actively cancelling lock-holding queries
+In cases where queries are holding the lock we need, we may need to actively monitor and cancel these queries to create a window.
 
-We may need to inspect live queries:
+Thanks to Ants Aasma from the community PostgreSQL Slack for this idea.
+
+We can inspect live queries:
 ```sql
 SELECT
     pid, state, left(query,100), xact_start, state_change,
@@ -119,7 +122,7 @@ WHERE
 ORDER BY xact_start;
 ```
 
-We may need to dig further into queries that are holding locks:
+We can identify queries holding locks:
 ```sql
 SELECT
     blocked_locks.pid AS blocked_pid,
@@ -137,7 +140,7 @@ WHERE NOT blocked_locks.granted;
 ```
 
 
-And if we find them, actively cancel them in order to create a window to run our `alter table`:
+If we find them, we could cancel them to create a window to run our `alter table`. Hopefully they can be retried.
 ```sql
 SELECT pg_cancel_backend(blocking_pid);
 ```
@@ -145,7 +148,7 @@ SELECT pg_cancel_backend(blocking_pid);
 Fortunately I was able to avoid cancelling any queries using the looping retry function above.
 
 
-## Improvements
+## What kinds of improvements did we see?
 I picked 5 tables where insert latency decreased significantly. The improvements were 8x, 9x, 20x, 23x, and 63x!
 
 Below shows the tables for the 63x, 20x, and 9x reductions.
@@ -200,4 +203,12 @@ Showing graphs from tables A, B, C:
 
 
 ## Wrap Up
-Thanks for reading.
+We found significant insert latency reduction moving to `uuidv7()` primary key values from v1 or v4.
+
+The only wrinkle is the exclusive lock for very busy tables, but that's solvable using the tactics above.
+
+I would recommend moving any of the Postgres databases you maintain using uuid primary keys, to use `uuidv7()` to gain these advantages.
+
+Thanks to the Postgres core team for creating this new capability.
+
+Thanks for reading this post!
