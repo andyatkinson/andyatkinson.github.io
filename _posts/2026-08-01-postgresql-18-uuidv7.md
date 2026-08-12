@@ -7,28 +7,32 @@ hidden: true
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
-<p>Average execution time for high calls/min insert queries dropped significantly after switching primary key columns to uuidv7() values on Postgres 18.4.</p>
+<p>Average execution time for high calls/min insert queries dropped significantly after switching primary key columns to uuidv7() values.</p>
+<p>Primary key columns were switched one by one on Postgres 18.4, keeping their uuid data type, but changing their format from either v1 or v4, to v7.</p>
 </div>
 
 We recently upgraded all databases to Postgres 18.4 and with that we gained the `uuidv7()` function that can generate v7 UUID values.
 
-Since the system generally uses v1 and v4 UUIDs and the `uuid` data type for primary key column, we had plans to adopt v7 values to gain the insert efficiency advantages.
+Since the system generally uses v1 and v4 UUIDs and the `uuid` data type for primary key columns, we had plans to adopt v7 values to gain the insert efficiency advantages.
 
 How did it go?
 
 ## History and trade-offs for UUIDs
-The system uses UUIDs throughout. I have typically advocated for bigint and sequences over UUID values for primary keys, but I have softened my position on this as I worked on lots of client databases.
+The system uses UUIDs throughout. I have typically advocated for bigint and sequences over [UUID v4 values for primary keys](avoid-uuid-version-4-primary-keys). Fortunately this database mostly used v1 which didn't have as much randomness as v4, but was still less efficient than v7 values.
 
-My main beef was the poor performance due to random IO from v4 UUIDs. The poor performance stemmed from reduced page density, more frequent page splits, and increased latency when inserting index entries.
-
-Fortunately this system mostly uses v1 which are less efficient than v7 but do have a portion of bits corresponding to time and thus don't have as bad of latency as v4.
+My main beef with v4 was poor performance from random IO. The poor performance stemmed from reduced page density, more frequent page splits, and increased latency when inserting index entries.
 
 With that said, the system also used v4 in a couple of spots strategically, and in a couple of other spots unintentionally due to bad defaults. For example the default UUID type for newly generated was set to v4 unintentionally.
+
+Previously we did some experimentation and benchmarking with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments).
+
+We'd leaned mostly on external reports of increased latency, and we decided the ROI of this change given the light development effort was worth it.
 
 ## Auditing where the UUIDs came from
 First we went through and identified the current use.
 
-For the UUID values they came from:
+In almost all cases, the values came from the column default which was the uuid generation function.
+
 - The `uuid_generate_v1()` function from the [`uuid-ossp` module](https://www.postgresql.org/docs/current/uuid-ossp.html)
 - The function `gen_random_uuid()` [added in Postgres 14](https://www.postgresql.org/docs/current/functions-uuid.html) that generates v4 UUIDs without the extension above
 - UUID v4 values sent by a client application, which meant the column default function was not used
@@ -36,15 +40,17 @@ For the UUID values they came from:
 For nearly all instances, we wanted to replace these with the `uuidv7()` function in Postgres 18.
 
 ## How did the switch go?
-One wrinkle was that modifying the column default generation function, while fast, requires an `access exclusive` lock.
+One wrinkle we found was that modifying the column default while fast, required an `access exclusive` lock.
 
-This means the lock held conflicts with *everything* including regular `select` statements.
+This lock type conflicts with *every* read and write operation including regular `select` statements.
 
-For our highest queried tables, this was a problem as there was almost never a "window" to perform this operation.
+For our highest queried tables, it's queried constantly, so this was a problem as there was almost never a "window" to perform this operation.
 
-Let's look at the simpler case first.
+Before we get to how we solved that, let's look at a less complicated case.
 
-In our migrations framework, we'd perform a transaction and use `set local` to set very short timeouts to try and perform the `alter table`:
+In our migrations framework (Active Record in Ruby on Rails), we could perform the `alter table` using a regular old migration.
+
+We did create an explicit transaction and used `set local` to control timeout values. We'd set very short timeouts for the `alter table` to give up quickly if it didn't work or ran too long.
 
 From psql:
 ```sql
@@ -58,25 +64,29 @@ ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7();
 COMMIT;
 ```
 
-However, this didn't work for higher activity tables. For those we'd do the same thing from a psql session, but without a transaction:
+This worked for the majority of tables. For the higher activity tables, we'd need some retries. We'd use a manual psql session:
 ```sql
 SET lock_timeout = '50ms';
 SET statement_timeout = '100ms';
 ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7();
 ```
 
-The `alter table` would immediately commit if it grabbed the lock within 50ms, or we'd get an error that the `lock_timeout` was reached.
+The `alter table` would commit if it grabbed the lock within 50ms, or we'd get an error that the `lock_timeout` was reached.
 
-## Retrying the column modification
-Sometimes one or two retries would do the job. We'd run the statement again and after a few tries it would work. Great, move on.
+This way we could manually retry until successful and backfill a Rails migration to keep everything in sync.
 
-The most heavily queried table though was more tricky.
+However, for our most heavily queried tables, changing the PK column default there required an upgraded approach to retries.
 
-For that the strategy that worked was the same, retry until we got a "window". But we had to upgrade the machinery and try a lot more retries.
+## Bringing in the big retry machinery
+Sometimes one or two retries would do the job. Great, we'd move on.
+
+However, for our most heavily queried table that didn't work.
+
+What ended up working was using the same strategy of retries, but just adding more sophistication with looping and backoffs.
 
 Claude helped me cook up the PL/pgSQL looping retry function below with these features:
-- Try up to 50 times (configurable max attempts)
-- Add a pause in between retries with a jittered backoff of 50-250ms
+- Try up to 50 times (max attempts is configurable)
+- Add a pause in between retries, with a jittered backoff of 50-250ms
 
 From psql:
 ```sql
@@ -104,8 +114,10 @@ BEGIN
 END $$;
 ```
 
+By using the function above, we were able to find a small window to perform the `alter table` after a burst of a couple of dozen retries.
+
 ## Actively cancelling lock-holding queries
-In cases where queries are holding the lock we need, we may need to actively monitor and cancel these queries to create a window.
+In cases where even that doesn't work, and we don't want downtime, we may be left with needing to actively monitor and cancel queries holding the lock.
 
 Thanks to Ants Aasma from the community PostgreSQL Slack for this idea.
 
@@ -121,7 +133,7 @@ WHERE
 ORDER BY xact_start;
 ```
 
-We can identify queries holding locks:
+And identify queries holding locks:
 ```sql
 SELECT
     blocked_locks.pid AS blocked_pid,
@@ -138,19 +150,21 @@ JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = bl
 WHERE NOT blocked_locks.granted;
 ```
 
-
 If we find them, we could cancel them to create a window to run our `alter table`. Hopefully they can be retried.
 ```sql
 SELECT pg_cancel_backend(blocking_pid);
 ```
 
-Fortunately I was able to avoid cancelling any queries using the looping retry function above.
+We'd likely want to stack up our `alter table` immediately after. I didn't end up needing to do this.
 
+With all of the tables modified, what did our results look like?
 
 ## What kinds of improvements did we see?
-I picked 5 tables where insert latency decreased significantly. The improvements were 8x, 9x, 20x, 23x, and 63x!
+I began going through each table looking for the effect. For many of the tables, there wasn't an obvious reduction in insert latency.
 
-Below shows the tables for the 63x, 20x, and 9x reductions.
+However, I picked 5 tables where insert latency decreased significantly and the graphs were quite fun to see. The improvements in these cases were 8x, 9x, 20x, 23x, and 63x!
+
+The tables with the 63x, 20x, and 9x reductions are shown below.
 <table class="styled-table">
   <thead>
     <tr>
@@ -186,8 +200,7 @@ Below shows the tables for the 63x, 20x, and 9x reductions.
   </tbody>
 </table>
 
-Showing graphs from tables A, B, C:
-
+Showing PgAnalyze insert graphs from tables A, B, C:
 ![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
 <br/>
 <small>Table A - 63x reduction. 0.50ms to 0.08ms, 9500/min</small>
@@ -198,7 +211,7 @@ Showing graphs from tables A, B, C:
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>Table C - 9x improvement. 0.6ms to 0.1ms, 2000/min</small>
+<small>Table C - 9x reduction. 0.6ms to 0.1ms, 2000/min</small>
 
 
 ## Wrap Up
