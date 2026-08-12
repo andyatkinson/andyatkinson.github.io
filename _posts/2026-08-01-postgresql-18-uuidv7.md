@@ -7,8 +7,7 @@ hidden: true
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
-<p>Insert latency dropped significantly when switching primary key column defaults to `uuidv7()` on Postgres 18.4.</p>
-<p>The benefit was most pronounced for high call volume queries. Most tables had their primary key default generation function change from generating v1 uuids to v7.</p>
+<p>Average execution time for high calls/min insert queries dropped significantly after switching primary key columns to uuidv7() values on Postgres 18.4.</p>
 </div>
 
 We recently upgraded all databases to Postgres 18.4 and with that we gained the `uuidv7()` function that can generate v7 UUID values.
