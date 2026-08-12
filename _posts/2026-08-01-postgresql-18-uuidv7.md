@@ -164,7 +164,7 @@ I began going through each table looking for the effect. For many of the tables,
 
 However, I picked 5 tables where insert latency decreased significantly and the graphs were quite fun to see. The improvements in these cases were 8x, 9x, 20x, 23x, and 63x!
 
-The tables with the 63x, 20x, and 9x reductions are shown below.
+The tables with the 63x, 23x, and 9x improvements are shown below.
 <table class="styled-table">
   <thead>
     <tr>
