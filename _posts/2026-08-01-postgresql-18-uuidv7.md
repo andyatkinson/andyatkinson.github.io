@@ -7,9 +7,9 @@ hidden: true
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
-<p>Average execution time for high calls/min insert queries dropped significantly after switching primary key columns to uuidv7() values.</p>
+<p>Average execution time for high calls/min insert queries dropped significantly for a handful of tables after switching primary key columns to uuidv7() values.</p>
 <p>These databases were running Postgres 18.4 and kept their uuid primary key data type, but changed the generation function for new inserts from either v1 or v4, to v7.</p>
-<p>The benefits weren't apparent across the board, but in a handful of tables there were very clear and immediate visibile reductions in average times.</p>
+<p>One thing to note is this DDL change requires an exclusive lock, so we needed to use a short lock timeout and retries to find a window for the operation to run.</p>
 </div>
 
 We recently upgraded all databases to Postgres 18.4 and with that we gained the `uuidv7()` function that can generate v7 UUID values.
@@ -222,8 +222,8 @@ Showing PgAnalyze insert graphs from tables A, B, C:
 ## Wrap Up
 We found significant reductions with `uuidv7()` primary key values replacing v1 or v4 for a handful of tables.
 
-The only wrinkle in performing this work was the exclusive lock the `alter table` requires on very busy tables, but that was solvable using the tactics above.
+The only wrinkle was the exclusive lock required by the `alter table` when run on very actively queried tables, but that was solvable using a short lock timeout and retries.
 
-Although this won't benefit 100% of tables, I would recommend `uuidv7()` as the new best default choice for uuid columns and in some cases the improvement can be very significant.
+Although this didn't benefit 100% of our tables, we decided `uuidv7()` was the new best default choice for uuid columns.
 
-Thanks to the Postgres core team for creating this new capability, and thanks for reading this post
+Thanks to the Postgres core team for creating this new capability, and thank you for reading this post.
