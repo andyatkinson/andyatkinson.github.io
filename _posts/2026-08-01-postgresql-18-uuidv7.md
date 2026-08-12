@@ -95,22 +95,22 @@ SET lock_timeout = '100ms';
 
 DO $$
 DECLARE
-    attempt      INT := 0;
-    max_attempts INT := 50;
+  attempt      INT := 0;
+  max_attempts INT := 50;
 BEGIN
-    LOOP
-        attempt := attempt + 1;
-        BEGIN
-            EXECUTE 'ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7()';
-            RAISE NOTICE 'Succeeded on attempt %', attempt;
-            EXIT;
-        EXCEPTION WHEN lock_not_available THEN
-            IF attempt >= max_attempts THEN
-                RAISE EXCEPTION 'Failed to acquire lock after % attempts', attempt;
-            END IF;
-            PERFORM pg_sleep(0.05 + random() * 0.2);  -- jittered backoff, 50-250ms
-        END;
-    END LOOP;
+  LOOP
+    attempt := attempt + 1;
+      BEGIN
+        EXECUTE 'ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7()';
+        RAISE NOTICE 'Succeeded on attempt %', attempt;
+        EXIT;
+      EXCEPTION WHEN lock_not_available THEN
+        IF attempt >= max_attempts THEN
+          RAISE EXCEPTION 'Failed to acquire lock after % attempts', attempt;
+        END IF;
+      PERFORM pg_sleep(0.05 + random() * 0.2);  -- jittered backoff, 50-250ms
+    END;
+  END LOOP;
 END $$;
 ```
 
@@ -124,29 +124,33 @@ Thanks to Ants Aasma from the community PostgreSQL Slack for this idea.
 We can inspect live queries:
 ```sql
 SELECT
-    pid, state, left(query,100), xact_start, state_change,
-    age(clock_timestamp(), xact_start) AS tx_duration
+  pid, state, left(query,100), xact_start, state_change,
+  age(clock_timestamp(), xact_start) AS tx_duration
 FROM
-    pg_stat_activity
+  pg_stat_activity
 WHERE
-    state != 'idle'
+  state != 'idle'
 ORDER BY xact_start;
 ```
 
 And identify queries holding locks:
 ```sql
 SELECT
-    blocked_locks.pid AS blocked_pid,
-    blocking_locks.pid AS blocking_pid,
-    blocked_activity.query AS blocked_statement,
-    blocking_activity.query AS current_statement_in_blocking_process
-FROM pg_catalog.pg_locks blocked_locks
-JOIN pg_catalog.pg_stat_activity blocked_activity ON blocked_activity.pid = blocked_locks.pid
+  blocked_locks.pid AS blocked_pid,
+  blocking_locks.pid AS blocking_pid,
+  blocked_activity.query AS blocked_statement,
+  blocking_activity.query AS current_statement_in_blocking_process
+FROM
+  pg_catalog.pg_locks blocked_locks
+JOIN
+  pg_catalog.pg_stat_activity blocked_activity
+  ON blocked_activity.pid = blocked_locks.pid
 JOIN pg_catalog.pg_locks blocking_locks
-    ON blocking_locks.locktype = blocked_locks.locktype
-    AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
-    AND blocking_locks.pid != blocked_locks.pid
-JOIN pg_catalog.pg_stat_activity blocking_activity ON blocking_activity.pid = blocking_locks.pid
+  ON blocking_locks.locktype = blocked_locks.locktype
+  AND blocking_locks.relation IS NOT DISTINCT FROM blocked_locks.relation
+  AND blocking_locks.pid != blocked_locks.pid
+JOIN pg_catalog.pg_stat_activity blocking_activity
+  ON blocking_activity.pid = blocking_locks.pid
 WHERE NOT blocked_locks.granted;
 ```
 
