@@ -157,7 +157,7 @@ Below shows the tables for the 63x, 20x, and 9x reductions.
     <tr>
       <th></th>
       <th>Calls/min</th>
-      <th>Original latency</th>
+      <th>Original time</th>
       <th>New</th>
       <th>Reduction</th>
     </tr>
@@ -168,21 +168,21 @@ Below shows the tables for the 63x, 20x, and 9x reductions.
       <td>9500/min</td>
       <td>0.50ms</td>
       <td>0.08ms</td>
-      <td>63x</td>
+      <td>📉 63x</td>
     </tr>
     <tr>
       <td>Table B</td>
       <td>12000/min</td>
       <td>0.7ms</td>
       <td>0.03ms</td>
-      <td>23x</td>
+      <td>📉 23x</td>
     </tr>
     <tr>
       <td>Table C</td>
       <td>2000/min</td>
       <td>0.6ms</td>
       <td>0.07ms</td>
-      <td>9x</td>
+      <td>📉 9x</td>
     </tr>
   </tbody>
 </table>
@@ -191,15 +191,15 @@ Showing graphs from tables A, B, C:
 
 ![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
 <br/>
-<small>Table A - 63x improvement. 0.50ms to 0.08ms (500 microseconds to 8), 9500/min</small>
+<small>Table A - 63x reduction. 0.50ms to 0.08ms, 9500/min</small>
 
 ![](/assets/images/uuidv7-4-table-do-pganalyze.jpg)
 <br/>
-<small>Table B - 23x insert latency reduction. 0.7ms to 30 microseconds, (700 microseconds to 30), 12000 calls/minute.</small>
+<small>Table B - 23x reduction. 0.7ms to 0.03ms, 12000/min</small>
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>~9x improvement. 0.6ms to 0.1ms (600 microseconds to 100), 2000/min</small>
+<small>Table C - 9x improvement. 0.6ms to 0.1ms, 2000/min</small>
 
 
 ## Wrap Up
