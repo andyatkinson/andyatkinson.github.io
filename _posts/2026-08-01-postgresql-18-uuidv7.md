@@ -5,9 +5,15 @@ title: PostgreSQL 18 v7 UUIDs
 hidden: true
 ---
 
+<div class="summary-box">
+<strong>📌 Overview</strong>
+<p>Insert latency dropped significantly when switching primary key column defaults to `uuidv7()` on Postgres 18.4.</p>
+<p>The benefit was most pronounced for high call volume queries. Most tables had their primary key default generation function change from generating v1 uuids to v7.</p>
+</div>
+
 We recently upgraded all databases to Postgres 18.4 and with that we gained the `uuidv7()` function that can generate v7 UUID values.
 
-Since the system generally uses v1 and v4 UUIDs which mostly come from `uuid` data type primary key columns and their generation function, we had plans to adopt v7 values for newly inserted rows by changing the column default.
+Since the system generally uses v1 and v4 UUIDs and the `uuid` data type for primary key column, we had plans to adopt v7 values to gain the insert efficiency advantages.
 
 How did it go?
 
@@ -23,12 +29,10 @@ With that said, the system also used v4 in a couple of spots strategically, and 
 ## Identifying current UUID use
 First we went through and identified the current use.
 
-For the V4 values they came from:
-- the `uuidv1()` function from the `uuid-ossp` extension
-- The native function `gen_random_uuid()` added in Postgres 12 that generates v4 UUIDs without the extension above
-- UUID v4 values set and sent by a client application meaning the column default was not used
-
-The V1 values came exclusively from the extension function.
+For the UUID values they came from:
+- The `uuid_generate_v1()` function from the [`uuid-ossp` module](https://www.postgresql.org/docs/current/uuid-ossp.html)
+- The function `gen_random_uuid()` [added in Postgres 14](https://www.postgresql.org/docs/current/functions-uuid.html) that generates v4 UUIDs without the extension above
+- UUID v4 values sent by a client application, which meant the column default function was not used
 
 For nearly all instances, we wanted to replace these with the `uuidv7()` function in Postgres 18.
 
@@ -100,15 +104,18 @@ BEGIN
 END $$;
 ```
 
-
 ## Active cancellation
 Thanks to Ants Asma for the idea to actively cancel the lock holder if needed.
 
 We may need to inspect live queries:
 ```sql
-SELECT pid, state, left(query,100), xact_start, state_change, age(clock_timestamp(), xact_start) AS tx_duration
-FROM pg_stat_activity
-WHERE state != 'idle'
+SELECT
+    pid, state, left(query,100), xact_start, state_change,
+    age(clock_timestamp(), xact_start) AS tx_duration
+FROM
+    pg_stat_activity
+WHERE
+    state != 'idle'
 ORDER BY xact_start;
 ```
 
@@ -139,59 +146,57 @@ Fortunately I was able to avoid cancelling any queries using the looping retry f
 
 
 ## Improvements
-I cherry picked 4 tables where insert latency decreased the most.
+I picked 5 tables where insert latency decreased significantly. The improvements were 8x, 9x, 20x, 23x, and 63x!
 
-Below shows the average latency before and after as reported by PgAnalyze including calls/minute volume and the corresponding improvement.
+Below shows the tables for the 63x, 20x, and 9x reductions.
 <table class="styled-table">
   <thead>
     <tr>
-      <th>Peak 7d Calls/Min</th>
+      <th></th>
+      <th>Calls/min</th>
       <th>Original latency</th>
       <th>New</th>
-      <th>Improvement</th>
+      <th>Reduction</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td>Table A</td>
       <td>9500/min</td>
       <td>0.50ms</td>
       <td>0.08ms</td>
       <td>63x</td>
     </tr>
     <tr>
+      <td>Table B</td>
       <td>12000/min</td>
       <td>0.7ms</td>
       <td>0.03ms</td>
       <td>23x</td>
     </tr>
     <tr>
+      <td>Table C</td>
       <td>2000/min</td>
       <td>0.6ms</td>
       <td>0.07ms</td>
       <td>9x</td>
     </tr>
-    <tr>
-      <td>900/min</td>
-      <td>5.3ms</td>
-      <td>0.64ms</td>
-      <td>8x</td>
-    </tr>
   </tbody>
 </table>
 
-Showing three of the tables above visually:
+Showing graphs from tables A, B, C:
 
 ![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
 <br/>
-<small>63x improvement. 0.50ms to 0.08ms (500 microseconds to 8 microseconds)</small>
+<small>Table A - 63x improvement. 0.50ms to 0.08ms (500 microseconds to 8), 9500/min</small>
 
-![](/assets/images/uuidv7-1-table-am-pganalyze.jpg)
+![](/assets/images/uuidv7-4-table-do-pganalyze.jpg)
 <br/>
-<small>20x reduction in insert latency. 1ms to around 50 microseconds.</small>
+<small>Table B - 23x insert latency reduction. 0.7ms to 30 microseconds, (700 microseconds to 30), 12000 calls/minute.</small>
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>~9x improvement. 0.6ms to 0.1ms.</small>
+<small>~9x improvement. 0.6ms to 0.1ms (600 microseconds to 100), 2000/min</small>
 
 
 ## Wrap Up
