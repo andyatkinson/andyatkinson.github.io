@@ -34,17 +34,15 @@ When an index:
 
 Since v4 index entries are scattered to more pages compared with filling in from the right, this means there will also be more "page splits" when index pages are full. Page splits cause more latency and also increase WAL, causing more IO.
 
-Previously we experimented and benchmarked with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments).
-
-Combining that with external reports of reduced latency (e.g. [How Sequential UUIDv7 Boosts Ingestion Performance](https://www.tigerdata.com/blog/how-sequential-uuidv7-boosts-ingestion-performance)), we decided the ROI of this change was high enough and the effort light enough to pursue it.
-
-<https://alan.is/insights/simplicity-and-power-of-uuid-v7/>
-
-<https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark>
-
 Besides all of the concerns on inserts, v1 and v4 indexes use more space, and are slower to access for point lookups and range lookups.
 
-How did we get started?
+We experimented and benchmarked with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments) and we leveraged the research and write-ups from external sources like the ones below.
+
+- [How Sequential UUIDv7 Boosts Ingestion Performance](https://www.tigerdata.com/blog/how-sequential-uuidv7-boosts-ingestion-performance)
+- [Simplicity and power of UUID v7](https://alan.is/insights/simplicity-and-power-of-uuid-v7/)
+- [PostgreSQL UUID Performance: Benchmarking Random (v4) and Time-based (v7) UUIDs](https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark)
+
+Once ready to make the switch, how did we get started?
 
 ## Auditing where the UUIDs came from
 First we went through and identified the current use.
