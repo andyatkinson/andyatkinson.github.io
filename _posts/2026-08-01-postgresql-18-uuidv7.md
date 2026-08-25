@@ -18,7 +18,7 @@ Since the system generally used v1 and v4 UUIDs with the `uuid` data type, and s
 
 How did it go?
 
-## History and trade-offs for UUIDs
+## History and trade-offs with UUIDs
 The system uses UUID primary keys throughout, and while I have typically advocated for bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys), the particular flavor in use was mostly v1, not quite as bad as v4 from a performance perspective.
 
 One of the main performance problems with v4 primary key UUIDs is poor insert performance, especially bad for high ingestion rate tables with billions of rows.
@@ -44,7 +44,64 @@ We experimented and benchmarked with [v1, v4, and v7 uuid formats](https://githu
 - [Simplicity and power of UUID v7](https://alan.is/insights/simplicity-and-power-of-uuid-v7/)
 - [PostgreSQL UUID Performance: Benchmarking Random (v4) and Time-based (v7) UUIDs](https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark)
 
-Once ready to make the switch, how did we get started?
+What kinds of results did we see?
+
+## What kinds of improvements did we see?
+Note that we performed the `alter table alter column` DDL operation (covered later) with the tables online during normal daytime activity. No other changes affected these results apart from this singular change.
+
+After all tables were changed, I began going through the insert queries for each one looking at results. For many of the tables, there wasn't an obvious reduction in insert execution times.
+
+However, for a handful of the, there was an immediate and significant reduction. I picked 5 with reductions of 6x, 8x, 9x, 20x, and 23x. Three tables have their main insert query graphs from PgAnalyze shown below.
+
+<table class="styled-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Calls/min</th>
+      <th>Original time</th>
+      <th>New</th>
+      <th>Reduction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Table A</td>
+      <td>12000</td>
+      <td>0.7ms</td>
+      <td>0.03ms</td>
+      <td>📉 23x</td>
+    </tr>
+    <tr>
+      <td>Table B</td>
+      <td>2000</td>
+      <td>0.6ms</td>
+      <td>0.07ms</td>
+      <td>📉 9x</td>
+    </tr>
+    <tr>
+      <td>Table C</td>
+      <td>9500</td>
+      <td>0.50ms</td>
+      <td>0.08ms</td>
+      <td>📉 6x</td>
+    </tr>
+  </tbody>
+</table>
+
+Showing PgAnalyze insert query graphs for tables A, B, C:
+![](/assets/images/uuidv7-4-table-do-pganalyze.jpg)
+<br/>
+<small>Table A - 23x reduction. 0.7ms to 0.03ms, 12000 calls/min</small>
+
+![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
+<br/>
+<small>Table B - 9x reduction. 0.6ms to 0.07ms, 2000 calls/min</small>
+
+![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
+<br/>
+<small>Table C - 6x reduction. 0.50ms to 0.08ms, 9500 calls/min</small>
+
+Now that we've seen the results, let's talk about how this was done and the challenges.
 
 ## Auditing where the UUIDs came from
 First we went through and identified the current use.
@@ -52,7 +109,7 @@ First we went through and identified the current use.
 In almost all cases, the values came from the column default which was the uuid generation function.
 
 - The `uuid_generate_v1()` function from the [`uuid-ossp` module](https://www.postgresql.org/docs/current/uuid-ossp.html)
-- The function `gen_random_uuid()` [added in Postgres 14](https://www.postgresql.org/docs/current/functions-uuid.html) that generates v4 UUIDs without the extension above
+- The function `gen_random_uuid()` [added in Postgres 13](https://www.postgresql.org/docs/current/functions-uuid.html) that generates v4 UUIDs without the extension above
 - UUID v4 values sent by a client application, which meant the column default function was not used
 
 For nearly all instances, we wanted to replace these with the `uuidv7()` function in Postgres 18.
@@ -178,62 +235,6 @@ SELECT pg_cancel_backend(blocking_pid);
 ```
 
 We'd likely want to stack up our `alter table` immediately after. I didn't end up needing to do this.
-
-With all of the tables modified, what did our results look like?
-
-## What kinds of improvements did we see?
-I began going through each table looking for the effect. For many of the tables, there wasn't an obvious reduction in insert execution times.
-
-However, I picked 5 tables where execution times dropped significantly and the graphs were fun to see. The gains were 6x, 8x, 9x, 20x, and 23x! Not all have graphs, but a few are shown below.
-
-<table class="styled-table">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Calls/min</th>
-      <th>Original time</th>
-      <th>New</th>
-      <th>Reduction</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Table A</td>
-      <td>12000</td>
-      <td>0.7ms</td>
-      <td>0.03ms</td>
-      <td>📉 23x</td>
-    </tr>
-    <tr>
-      <td>Table B</td>
-      <td>2000</td>
-      <td>0.6ms</td>
-      <td>0.07ms</td>
-      <td>📉 9x</td>
-    </tr>
-    <tr>
-      <td>Table C</td>
-      <td>9500</td>
-      <td>0.50ms</td>
-      <td>0.08ms</td>
-      <td>📉 6x</td>
-    </tr>
-  </tbody>
-</table>
-
-Showing PgAnalyze insert graphs from tables A, B, C:
-![](/assets/images/uuidv7-4-table-do-pganalyze.jpg)
-<br/>
-<small>Table A - 23x reduction. 0.7ms to 0.03ms, 12000 calls/min</small>
-
-![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
-<br/>
-<small>Table B - 9x reduction. 0.6ms to 0.07ms, 2000 calls/min</small>
-
-![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
-<br/>
-<small>Table C - 6x reduction. 0.50ms to 0.08ms, 9500 calls/min</small>
-
 
 ## Wrap Up
 We found some significant execution time reductions after switching to `uuidv7()` primary keys when replacing v1 and v4 values.
