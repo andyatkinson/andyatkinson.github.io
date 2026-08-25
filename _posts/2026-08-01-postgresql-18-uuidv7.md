@@ -42,7 +42,7 @@ We experimented and benchmarked with [v1, v4, and v7 uuid formats](https://githu
 1. [Simplicity and power of UUID v7](https://alan.is/insights/simplicity-and-power-of-uuid-v7/)
 1. [PostgreSQL UUID Performance: Benchmarking Random (v4) and Time-based (v7) UUIDs](https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark)
 
-Besides all of the concerns on inserts, v1 and v4 indexes use more space, and are slower to access for point lookups and range lookups. (See #3 above)
+Besides all of the concerns related to insert performance, post #3 above shows how v1 and v4 indexes use more space and can be slower to access for point lookups and range lookups due to their increased space for equivalent content.
 
 What kinds of results did we see?
 
