@@ -9,7 +9,7 @@ hidden: true
 <strong>📌 Overview</strong>
 <p>Execution time for INSERT queries on some high calls/min tables dropped significantly after switching their UUID primary keys from v4 and v1 to v7.</p>
 <p>The databases are running Postgres 18.4 with uuid data type for primary keys and foreign keys.</p>
-<p>To make the change, the alter column DDL while fast, required an access exclusive lock. While short, this blocks everything including selects. We used a short lock timeout and lots of retries to successfully perform the operation without downtime.</p>
+<p>To make the change, the alter column DDL while fast, required an access exclusive lock which blocks everything including selects. To solve that, we used a short lock timeout and lots of retries to successfully perform the operation without downtime.</p>
 </div>
 
 We recently upgraded all databases to Postgres 18.4 and with that gained the `uuidv7()` function.
@@ -19,18 +19,20 @@ Since the system generally used v1 and v4 UUIDs with the `uuid` data type, and s
 How did it go?
 
 ## History and trade-offs for UUIDs
-The system uses UUID primary keys throughout, v1 and v4 prior to this change. I have typically advocated for bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys). Fortunately this database used v1 which wasn't as bad as v4 due to having less randomness, which means insert performance wasn't as bad. However some key tables did use v4.
+The system uses UUID primary keys throughout, and while I have typically advocated for bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys), the particular flavor in use was mostly v1, not quite as bad as v4 from a performance perspective.
 
-One of the main performance problems with v4 primary key UUIDs is how their randomness harms insert performance. As new rows are inserted and their keys need to be maintained in the b-tree index, their first bytes are compared to determine where to insert the new index entry.
+One of the main performance problems with v4 primary key UUIDs is poor insert performance, especially bad for high ingestion rate tables with billions of rows.
 
-Given the values are random, they will not nicely fill in from the right but could be sorted ahead of or behind any random value on any of the pages for the index.
+As new rows are inserted and their primary key values are maintained in sorted order in their b-tree index. The first bytes are compared to determine where to insert the new index entry.
 
-Postgres caches index entry pages into buffer cache, which is DB instance memory allocated for caching. The host OS for Postgres also has a page cache.
+Given new values are random, they will not nicely fill in from the right, they aren't monotonically increasing (they lack "monotonicity"). Values could be sorted ahead of or behind as random values, meaning any page holding index entries may be loaded to place the new entry.
+
+Normally this is fine, as Postgres caches index entry pages into buffer cache, which is DB instance memory allocated for caching. The host OS for Postgres also has a page cache. This memory is shared though with portions of table data, and limited! We don't want to incur cache misses for simply inserting new data.
 
 When an index:
-- has millions or billions of entries, and its size exceeds allocated buffer cache memory
-- After Postgres sorts the index entry and determines the page for where to place it, it must load the page that holds that index entry
-- This may be a cold page, outside of buffer cache, outside of page cache, and this means increased IO latency due to disk access
+- has millions or billions of entries, and its size exceeds allocated buffer cache memory (imagine an index hundreds of GBs in size alone)
+- as Postgres sorts the new index entry and determines the page for where to place it, it must load the page, which is likely not in buffer cache if the new value is random
+- when this load is a "cold" page, outside of buffer cache, that's a cache miss, which means increased IO latency due to disk access (when not cached by the OS)
 
 Since v4 index entries are scattered to more pages compared with filling in from the right, this means there will also be more "page splits" when index pages are full. Page splits cause more latency and also increase WAL, causing more IO.
 
