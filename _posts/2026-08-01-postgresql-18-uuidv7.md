@@ -23,7 +23,7 @@ The system uses UUID primary keys throughout, and while I have typically advocat
 
 One of the main performance problems with v4 primary key UUIDs is poor insert performance, especially bad for high ingestion rate tables with billions of rows.
 
-As new rows are inserted and their primary key values are maintained in sorted order in their b-tree index. The first bytes are compared to determine where to insert the new index entry.
+As new rows are inserted, their primary key values are maintained in sorted order in the primary key b-tree index. The first bytes are compared to determine where to insert the new index entry.
 
 Given new values are random, they will not nicely fill in from the right, they aren't monotonically increasing (they lack "monotonicity"). Values could be sorted ahead of or behind as random values, meaning any page holding index entries may be loaded to place the new entry.
 
@@ -36,13 +36,13 @@ When an index:
 
 Since v4 index entries are scattered to more pages compared with filling in from the right, this means there will also be more "page splits" when index pages are full. Page splits cause more latency and also increase WAL, causing more IO.
 
-Besides all of the concerns on inserts, v1 and v4 indexes use more space, and are slower to access for point lookups and range lookups.
-
 We experimented and benchmarked with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments) and we leveraged the research and write-ups from external sources like the ones below.
 
-- [How Sequential UUIDv7 Boosts Ingestion Performance](https://www.tigerdata.com/blog/how-sequential-uuidv7-boosts-ingestion-performance)
-- [Simplicity and power of UUID v7](https://alan.is/insights/simplicity-and-power-of-uuid-v7/)
-- [PostgreSQL UUID Performance: Benchmarking Random (v4) and Time-based (v7) UUIDs](https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark)
+1. [How Sequential UUIDv7 Boosts Ingestion Performance](https://www.tigerdata.com/blog/how-sequential-uuidv7-boosts-ingestion-performance)
+1. [Simplicity and power of UUID v7](https://alan.is/insights/simplicity-and-power-of-uuid-v7/)
+1. [PostgreSQL UUID Performance: Benchmarking Random (v4) and Time-based (v7) UUIDs](https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark)
+
+Besides all of the concerns on inserts, v1 and v4 indexes use more space, and are slower to access for point lookups and range lookups. (See #3 above)
 
 What kinds of results did we see?
 
@@ -241,7 +241,7 @@ We found some significant execution time reductions after switching to `uuidv7()
 
 The only wrinkle in performing the switch was the exclusive lock required for the `alter table alter column` DDL for very actively queried tables. That was solvable using a very short lock timeout and retrying a bunch of times until the fast DDL operation could run.
 
-Although this didn't benefit 100% of our tables, the gains for some tables after switching to `uuidv7()` have been significant enough that this has become the new default choice for uuid columns. This post also looked at average execution times, but we expect even better gains with inserts for the high tail latencies.
+Although this didn't benefit 100% of our tables, the gains for some tables after switching to `uuidv7()` have been significant enough that this has become the new default choice for uuid columns.
 
 Thanks to the Postgres core team for creating this new capability within Postgres, which made it easier to adopt for AWS RDS with limited extension support.
 
