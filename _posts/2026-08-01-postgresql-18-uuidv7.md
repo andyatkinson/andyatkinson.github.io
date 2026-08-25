@@ -8,26 +8,31 @@ hidden: true
 <div class="summary-box">
 <strong>📌 Overview</strong>
 <p>Execution time for INSERT queries on some high calls/min tables dropped significantly after switching their UUID primary keys from v4 and v1 to v7.</p>
-<p>The databases are running Postgres 18.4 with uuid data type primary keys generated using the `uuidv7()` function.</p>
-<p>To make the change, the alter column DDL required an exclusive lock, and while short, required a very short lock timeout and a number of retries to successfully perform.</p>
+<p>The databases are running Postgres 18.4 with uuid data type for primary keys and foreign keys.</p>
+<p>To make the change, the alter column DDL while fast, required an access exclusive lock. While short, this blocks everything including selects. We used a short lock timeout and lots of retries to successfully perform the operation without downtime.</p>
 </div>
 
-We recently upgraded all databases to Postgres 18.4 and with that gained the `uuidv7()` function that generates v7 UUIDs.
+We recently upgraded all databases to Postgres 18.4 and with that gained the `uuidv7()` function.
 
-Since the system generally used v1 and v4 UUIDs with the `uuid` data type, and since we'd read about execution time reductions from others with v7, we were eager to try it out and see if we could achieve the same benefits, especially ahead of peak load periods with heavy inserts.
+Since the system generally used v1 and v4 UUIDs with the `uuid` data type, and since we'd read about execution time reductions from others with v7, we were eager to try it out and see if we could achieve the same benefits.
 
 How did it go?
 
 ## History and trade-offs for UUIDs
-The system uses UUID primary keys throughout, v1 and v4 prior to this change. I have typically advocated for bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys). Fortunately this database used v1 which wasn't as bad as v4 due to having less randomness, and less worse insert performance, although some key tables do use v4.
+The system uses UUID primary keys throughout, v1 and v4 prior to this change. I have typically advocated for bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys). Fortunately this database used v1 which wasn't as bad as v4 due to having less randomness, which means insert performance wasn't as bad. However some key tables did use v4.
 
-One of the main performance problems with v4 primary key UUIDs is how their index entries are inserted. Postgres automatically maintains a primary key index behind the scenes, and uuid v4 values are random.
+One of the main performance problems with v4 primary key UUIDs is how their randomness harms insert performance. As new rows are inserted and their keys need to be maintained in the b-tree index, their first bytes are compared to determine where to insert the new index entry.
 
-Given an index that's made up of a set of pages with a size that exceed memory for buffer cache, this means index pages will be looked up outside of cache. While the non-cached pages may be cached by the OS page cache, when that's not the case accessing the page involves disk IO and that has the most latency.
+Given the values are random, they will not nicely fill in from the right but could be sorted ahead of or behind any random value on any of the pages for the index.
 
-With v4 index entries the inserts are scattered to more pages, which causes more page splits when there's no more room on pages, and these page splits cause more latency. Page splits add WAL which also causes more IO.
+Postgres caches index entry pages into buffer cache, which is DB instance memory allocated for caching. The host OS for Postgres also has a page cache.
 
-v1 was the default and does not have as bad of performance characteristics as v4, but still is not as good as v7 which typically inserts into the same page that's already hot in buffer cache. Inserting into the same hot page is the crux of the big performance gains we'll see for some tables coming up.
+When an index:
+- has millions or billions of entries, and its size exceeds allocated buffer cache memory
+- After Postgres sorts the index entry and determines the page for where to place it, it must load the page that holds that index entry
+- This may be a cold page, outside of buffer cache, outside of page cache, and this means increased IO latency due to disk access
+
+Since v4 index entries are scattered to more pages compared with filling in from the right, this means there will also be more "page splits" when index pages are full. Page splits cause more latency and also increase WAL, causing more IO.
 
 Previously we experimented and benchmarked with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments).
 
@@ -37,7 +42,9 @@ Combining that with external reports of reduced latency (e.g. [How Sequential UU
 
 <https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark>
 
-Besides the insert benefits, the post above shows how uuid v7 indexes are more space efficient, and both point and range lookups are faster!
+Besides all of the concerns on inserts, v1 and v4 indexes use more space, and are slower to access for point lookups and range lookups.
+
+How did we get started?
 
 ## Auditing where the UUIDs came from
 First we went through and identified the current use.
