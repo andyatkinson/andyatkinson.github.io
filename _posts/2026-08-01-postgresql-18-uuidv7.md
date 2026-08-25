@@ -7,27 +7,37 @@ hidden: true
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
-<p>Average execution time for high calls/min insert queries dropped significantly for a handful of tables after switching primary key columns to uuidv7() values.</p>
-<p>These databases were running Postgres 18.4 and kept their uuid primary key data type, but changed the generation function for new inserts from either v1 or v4, to v7.</p>
-<p>One thing to note is this DDL change requires an exclusive lock, so we needed to use a short lock timeout and retries to find a window for the operation to run.</p>
+<p>Execution time for INSERT queries on some high calls/min tables dropped significantly after switching their UUID primary keys from v4 and v1 to v7.</p>
+<p>The databases are running Postgres 18.4 with uuid data type primary keys generated using the `uuidv7()` function.</p>
+<p>To make the change, the alter column DDL required an exclusive lock, and while short, required a very short lock timeout and a number of retries to successfully perform.</p>
 </div>
 
-We recently upgraded all databases to Postgres 18.4 and with that we gained the `uuidv7()` function that can generate v7 UUID values.
+We recently upgraded all databases to Postgres 18.4 and with that gained the `uuidv7()` function that generates v7 UUIDs.
 
-Since the system generally uses v1 and v4 UUIDs and the `uuid` data type for primary key columns, we had plans to adopt v7 values to gain the insert efficiency advantages.
+Since the system generally used v1 and v4 UUIDs with the `uuid` data type, and since we'd read about execution time reductions from others with v7, we were eager to try it out and see if we could achieve the same benefits, especially ahead of peak load periods with heavy inserts.
 
 How did it go?
 
 ## History and trade-offs for UUIDs
-The system uses UUIDs throughout. I have typically advocated for bigint and sequences over [UUID v4 values for primary keys](avoid-uuid-version-4-primary-keys). Fortunately this database mostly used v1 which didn't have as much randomness as v4, but was still less efficient than v7 values.
+The system uses UUID primary keys throughout, v1 and v4 prior to this change. I have typically advocated for bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys). Fortunately this database used v1 which wasn't as bad as v4 due to having less randomness, and less worse insert performance, although some key tables do use v4.
 
-My main beef with v4 was poor performance from random IO. The poor performance stemmed from reduced page density, more frequent page splits, and increased latency when inserting index entries.
+One of the main performance problems with v4 primary key UUIDs is how their index entries are inserted. Postgres automatically maintains a primary key index behind the scenes, and uuid v4 values are random.
 
-With that said, the system also used v4 in a couple of spots strategically, and in a couple of other spots unintentionally due to bad defaults. For example the default UUID type for newly generated was set to v4 unintentionally.
+Given an index that's made up of a set of pages with a size that exceed memory for buffer cache, this means index pages will be looked up outside of cache. While the non-cached pages may be cached by the OS page cache, when that's not the case accessing the page involves disk IO and that has the most latency.
 
-Previously we did some experimentation and benchmarking with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments).
+With v4 index entries the inserts are scattered to more pages, which causes more page splits when there's no more room on pages, and these page splits cause more latency. Page splits add WAL which also causes more IO.
 
-We'd leaned mostly on external reports of increased latency, and we decided the ROI of this change given the light development effort was worth it.
+v1 was the default and does not have as bad of performance characteristics as v4, but still is not as good as v7 which typically inserts into the same page that's already hot in buffer cache. Inserting into the same hot page is the crux of the big performance gains we'll see for some tables coming up.
+
+Previously we experimented and benchmarked with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments).
+
+Combining that with external reports of reduced latency (e.g. [How Sequential UUIDv7 Boosts Ingestion Performance](https://www.tigerdata.com/blog/how-sequential-uuidv7-boosts-ingestion-performance)), we decided the ROI of this change was high enough and the effort light enough to pursue it.
+
+<https://alan.is/insights/simplicity-and-power-of-uuid-v7/>
+
+<https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark>
+
+Besides the insert benefits, the post above shows how uuid v7 indexes are more space efficient, and both point and range lookups are faster!
 
 ## Auditing where the UUIDs came from
 First we went through and identified the current use.
@@ -167,9 +177,8 @@ With all of the tables modified, what did our results look like?
 ## What kinds of improvements did we see?
 I began going through each table looking for the effect. For many of the tables, there wasn't an obvious reduction in insert execution times.
 
-However, I picked 5 tables where execution times dropped significantly and the graphs were quite fun to see. The improvements in these cases were 8x, 9x, 20x, 23x, and even 63x!
+However, I picked 5 tables where execution times dropped significantly and the graphs were fun to see. The biggest gains were 8x, 9x, 20x, 23x, and even 63x! A few are shown below.
 
-Below are graphs from a few of those, the tables with improvements of 63x, 23x, and 9x.
 <table class="styled-table">
   <thead>
     <tr>
@@ -216,14 +225,16 @@ Showing PgAnalyze insert graphs from tables A, B, C:
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>Table C - 9x reduction. 0.6ms to 0.1ms, 2000/min</small>
+<small>Table C - 9x reduction. 0.6ms to 0.07ms, 2000/min</small>
 
 
 ## Wrap Up
-We found significant reductions with `uuidv7()` primary key values replacing v1 or v4 for a handful of tables.
+We found some significant execution time reductions after switching to `uuidv7()` primary keys when replacing v1 and v4 values.
 
-The only wrinkle was the exclusive lock required by the `alter table` when run on very actively queried tables, but that was solvable using a short lock timeout and retries.
+The only wrinkle in performing the switch was the exclusive lock required for the `alter table alter column` DDL for very actively queried tables. That was solvable using a very short lock timeout and retrying a bunch of times until the fast DDL operation could run.
 
-Although this didn't benefit 100% of our tables, we decided `uuidv7()` was the new best default choice for uuid columns.
+Although this didn't benefit 100% of our tables, the gains for some tables after switching to `uuidv7()` have been significant enough that this has become the new default choice for uuid columns. This post also looked at average execution times, but we expect even better gains with inserts for the high tail latencies.
 
-Thanks to the Postgres core team for creating this new capability, and thank you for reading this post.
+Thanks to the Postgres core team for creating this new capability within Postgres, which made it easier to adopt for AWS RDS with limited extension support.
+
+Thanks for reading and until next time.
