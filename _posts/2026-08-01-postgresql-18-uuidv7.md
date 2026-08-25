@@ -199,21 +199,21 @@ However, I picked 5 tables where execution times dropped significantly and the g
   <tbody>
     <tr>
       <td>Table A</td>
-      <td>12000/min</td>
+      <td>12000</td>
       <td>0.7ms</td>
       <td>0.03ms</td>
       <td>📉 23x</td>
     </tr>
     <tr>
-      <td>Table C</td>
-      <td>2000/min</td>
+      <td>Table B</td>
+      <td>2000</td>
       <td>0.6ms</td>
       <td>0.07ms</td>
       <td>📉 9x</td>
     </tr>
     <tr>
-      <td>Table A</td>
-      <td>9500/min</td>
+      <td>Table C</td>
+      <td>9500</td>
       <td>0.50ms</td>
       <td>0.08ms</td>
       <td>📉 6x</td>
@@ -224,15 +224,15 @@ However, I picked 5 tables where execution times dropped significantly and the g
 Showing PgAnalyze insert graphs from tables A, B, C:
 ![](/assets/images/uuidv7-4-table-do-pganalyze.jpg)
 <br/>
-<small>Table A - 23x reduction. 0.7ms to 0.03ms, 12000/min</small>
+<small>Table A - 23x reduction. 0.7ms to 0.03ms, 12000 calls/min</small>
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>Table B - 9x reduction. 0.6ms to 0.07ms, 2000/min</small>
+<small>Table B - 9x reduction. 0.6ms to 0.07ms, 2000 calls/min</small>
 
 ![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
 <br/>
-<small>Table C - 6x reduction. 0.50ms to 0.08ms, 9500/min</small>
+<small>Table C - 6x reduction. 0.50ms to 0.08ms, 9500 calls/min</small>
 
 
 ## Wrap Up
