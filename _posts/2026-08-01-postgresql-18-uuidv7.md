@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-18-uuidv7
-title: Up To 63x Faster Inserts With PostgreSQL 18 v7 UUIDs
+title: Up To 23x Faster Inserts With PostgreSQL 18 v7 UUIDs
 hidden: true
 ---
 
@@ -184,7 +184,7 @@ With all of the tables modified, what did our results look like?
 ## What kinds of improvements did we see?
 I began going through each table looking for the effect. For many of the tables, there wasn't an obvious reduction in insert execution times.
 
-However, I picked 5 tables where execution times dropped significantly and the graphs were fun to see. The biggest gains were 8x, 9x, 20x, 23x, and even 63x! A few are shown below.
+However, I picked 5 tables where execution times dropped significantly and the graphs were fun to see. The gains were 6x, 8x, 9x, 20x, and 23x! Not all have graphs, but a few are shown below.
 
 <table class="styled-table">
   <thead>
@@ -199,13 +199,6 @@ However, I picked 5 tables where execution times dropped significantly and the g
   <tbody>
     <tr>
       <td>Table A</td>
-      <td>9500/min</td>
-      <td>0.50ms</td>
-      <td>0.08ms</td>
-      <td>📉 63x</td>
-    </tr>
-    <tr>
-      <td>Table B</td>
       <td>12000/min</td>
       <td>0.7ms</td>
       <td>0.03ms</td>
@@ -218,21 +211,28 @@ However, I picked 5 tables where execution times dropped significantly and the g
       <td>0.07ms</td>
       <td>📉 9x</td>
     </tr>
+    <tr>
+      <td>Table A</td>
+      <td>9500/min</td>
+      <td>0.50ms</td>
+      <td>0.08ms</td>
+      <td>📉 6x</td>
+    </tr>
   </tbody>
 </table>
 
 Showing PgAnalyze insert graphs from tables A, B, C:
-![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
-<br/>
-<small>Table A - 63x reduction. 0.50ms to 0.08ms, 9500/min</small>
-
 ![](/assets/images/uuidv7-4-table-do-pganalyze.jpg)
 <br/>
-<small>Table B - 23x reduction. 0.7ms to 0.03ms, 12000/min</small>
+<small>Table A - 23x reduction. 0.7ms to 0.03ms, 12000/min</small>
 
 ![](/assets/images/uuidv7-3-table-c-pganalyze.jpg)
 <br/>
-<small>Table C - 9x reduction. 0.6ms to 0.07ms, 2000/min</small>
+<small>Table B - 9x reduction. 0.6ms to 0.07ms, 2000/min</small>
+
+![](/assets/images/uuidv7-2-table-th-pganalyze.jpg)
+<br/>
+<small>Table C - 6x reduction. 0.50ms to 0.08ms, 9500/min</small>
 
 
 ## Wrap Up
