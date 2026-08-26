@@ -1,1 +1,7 @@
 {% seo %}
+
+{% unless page.image %}
+<meta property="og:image" content="{{ site.url }}{{ site.social_share_default_image }}">
+<meta name="twitter:image" content="{{ site.url }}{{ site.social_share_default_image }}">
+<meta name="twitter:card" content="summary_large_image">
+{% endunless %}
