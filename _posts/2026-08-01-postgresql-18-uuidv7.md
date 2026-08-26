@@ -53,6 +53,7 @@ The PgAnalyze graphs for the 23x, 9x, and 6x queries are shown below.
     <tr>
       <th></th>
       <th>Calls/min</th>
+      <th>Indexes</th>
       <th>Original time</th>
       <th>New</th>
       <th>Reduction</th>
@@ -62,6 +63,7 @@ The PgAnalyze graphs for the 23x, 9x, and 6x queries are shown below.
     <tr>
       <td>Table A</td>
       <td>12,000</td>
+      <td>2 (+1 PK)</td>
       <td>0.7ms</td>
       <td>0.03ms</td>
       <td>📉 23x</td>
@@ -69,6 +71,7 @@ The PgAnalyze graphs for the 23x, 9x, and 6x queries are shown below.
     <tr>
       <td>Table B</td>
       <td>2000</td>
+      <td>1 (+1 PK)</td>
       <td>0.6ms</td>
       <td>0.07ms</td>
       <td>📉 9x</td>
@@ -76,6 +79,7 @@ The PgAnalyze graphs for the 23x, 9x, and 6x queries are shown below.
     <tr>
       <td>Table C</td>
       <td>9500</td>
+      <td>2 (+1 PK)</td>
       <td>0.50ms</td>
       <td>0.08ms</td>
       <td>📉 6x</td>
