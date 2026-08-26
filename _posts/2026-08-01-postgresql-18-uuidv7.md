@@ -16,6 +16,40 @@ tags: [PostgreSQL, Databases]
 <p>The biggest speedup was 23x faster average execution time for a multi-row insert query called 12000 times per minute on a table with billions of rows.</p>
 </div>
 
+<div style="
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1.25rem 1.5rem;
+  background: #fff8b3;
+  color: #333;
+  border-left: 6px solid #f4d03f;
+  border-radius: 3px;
+  box-shadow: 3px 4px 10px rgba(0,0,0,0.15);
+  font-family: sans-serif;
+  transform: rotate(-1deg);
+  position: relative;
+">
+
+  <div style="
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 70px;
+    height: 22px;
+    background: rgba(255,255,255,0.5);
+    transform: rotate(4deg);
+    border: 1px solid rgba(0,0,0,0.05);
+  "></div>
+
+  <strong style="display:block; margin-bottom:0.5rem;">
+    Want to talk Postgres in person? 🐘
+  </strong>
+
+  <p style="margin:0; line-height:1.5;">
+  This September and October I'll be in Austin, TX and NYC, check my <a href="/pgrailsbook">Book</a> page for upcoming appearances.
+  </p>
+</div>
+
 ## History and trade-offs with UUIDs
 The system uses UUID primary keys throughout. I typically recommend starting with bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys), although here uuid v1 was used. Insert performance is not as bad for v1 compared with v4.
 

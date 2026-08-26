@@ -17,15 +17,16 @@ title: High Performance PostgreSQL for Rails Book
 - [O’Reilly learning platform](https://www.oreilly.com/library/view/high-performance-postgresql/9798888651070/) (Ebook)
 
 ## ⭐⭐⭐⭐⭐ Ratings
-- [Amazon: 4.9, 12 global ratings, 9 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
+- [Amazon: 4.9, 13 global ratings, 9 reviews](https://www.amazon.com/High-Performance-PostgreSQL-Rails-Maintainable/dp/B0CX876RLY/ref=sr_1_1?crid=3ERQ79CYX2O5H&dib=eyJ2IjoiMSJ9.5c-GeJVEesYYxAI--3lXeV9zmN0lDYEx9pGCfLCUE-bmc9aE78zS0Xot9OqiJBg5.DRj5NTbX-6PYdxk66_sXPloHA9P7okekA3VN5I8i1pY&dib_tag=se&keywords=high+performance+postgresql+for+rails&qid=1723579359&sprefix=high+performance+postgre%2Caps%2C105&sr=8-1)
 - [Goodreads: 4.70, 33 ratings, 6 reviews](https://www.goodreads.com/book/show/209538533-high-performance-postgresql-for-rails)
-- [The StoryGraph: 4.0, 2 reviews](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
+- [The StoryGraph: 4.33, 3 reviews](https://app.thestorygraph.com/books/e71f8281-a1e2-4cfd-9376-ece6c5e694dd)
+
+## Upcoming Appearances
+- September 2026 - [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale)
+- October 2026 - [Postgres Summit US](https://postgresql.us/events/postgressummitus2026/schedule/session/2347-how-aura-frames-scaled-rds-postgres-for-peak-christmas-traffic-1-in-app-store/)
 
 ## Rideshare
 The Rails app for the book, [Rideshare](https://github.com/andyatkinson/rideshare), was recently updated for Postgres 18 compatibility.
-
-## Upcoming Appearances
-- June 2026 - [PG DATA 2026](https://2026.pg-data.org/)
 
 ## 📷 Reader photos
 [📚 Readers get their copies of "High Performance PostgreSQL for Rails"](/blog/2024/07/23/high-performance-postgresql-for-rails-readers-getting-books)
@@ -106,6 +107,7 @@ The Rails app for the book, [Rideshare](https://github.com/andyatkinson/rideshar
 - [Follow me on Goodreads](https://www.goodreads.com/author/show/47149838.Andrew_Atkinson)
 
 ## Book Events and Past Appearances
+- June 2026 - [PG DATA 2026](https://2026.pg-data.org/)
 - October 8-10, 2025 - [PGConf NYC 2025](https://postgresql.us/events/pgconfus2025/schedule/session/1972-multitenancy-patterns-in-community-postgresql/)
 - July 8-10, 2025 - [RailsConf 2025](https://railsconf.org)
 - November 4-8, 2024 - [PASS Data Community Summit 2024](https://passdatacommunitysummit.com)
