@@ -1,7 +1,7 @@
 ---
 layout: post
 permalink: /postgresql-18-uuidv7
-title: "PostgreSQL 18: 23x Faster Inserts With UUID V7"
+title: "PostgreSQL 18: 23x Faster Inserts With UUID v7"
 canonical: https://andyatkinson.com/postgresql-18-uuidv7
 date: 2026-08-26 11:50:00
 tags: [PostgreSQL, Databases]
