@@ -13,7 +13,7 @@ tags: [PostgreSQL, Databases]
 <p>The databases were running Postgres 18.4 and mostly used v1 with some v4 uuid values for primary keys.</p>
 <p>Changing the column default involved running a single alter table command, but did require an exclusive lock on the table, blocking <em>everything</em> including selects.</p>
 <p>To solve that, we used a short lock timeout and lots of retries.</p>
-<p>The biggest speedup was 23x faster average execution time for a multi-row insert query called 12000 times per minute on a table with billions of rows.</p>
+<p>The biggest speedup was 23x faster average execution time for a multi-row insert query called 12,000 times per minute on a table with billions of rows.</p>
 </div>
 
 <div style="
