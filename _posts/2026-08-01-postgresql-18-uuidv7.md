@@ -1,32 +1,36 @@
 ---
 layout: post
 permalink: /postgresql-18-uuidv7
-title: Up To 23x Faster Inserts With PostgreSQL 18 v7 UUIDs
-hidden: true
+title: "PostgreSQL 18: 23x Faster Inserts With UUID V7s"
+date: 2026-08-26 11:50:00
+tags: [PostgreSQL, Databases]
 ---
 
 <div class="summary-box">
 <strong>📌 Overview</strong>
-<p>We recently adopted v7 uuids for table primary keys, and for a handful of tables we saw a significant drop in execution time for insert queries.</p>
-<p>The databases were running Postgres 18.4 and using mostly v1 uuids with some v4 for primary keys.</p>
-<p>Changing the column default is straightforward and fast, but does require an access exclusive lock on the table which blocks everything including selects. To solve that we used a short lock timeout and lots of retries.</p>
-<p>In the best case we saw a 23x improvement in average execution time for inserts at 12000 calls/min on a table with billions of rows.</p>
+<p>We recently switched to version 7 (v7) uuid primary keys and saw significantly faster inserts for some tables.</p>
+<p>The databases were running Postgres 18.4 and mostly used v1 with some v4 uuid values for primary keys.</p>
+<p>Changing the column default involved running a single alter table command, but did require an exclusive lock on the table, blocking <em>everything</em> including selects.</p>
+<p>To solve that, we used a short lock timeout and lots of retries.</p>
+<p>The biggest speedup was 23x faster average execution time for a multi-row insert query called 12000 times per minute on a table with billions of rows.</p>
 </div>
 
 ## History and trade-offs with UUIDs
-The system uses UUID primary keys throughout. I typically recommend starting with bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys), although here uuid v1 was used and this format does not have as bad of performance as v4.
+The system uses UUID primary keys throughout. I typically recommend starting with bigint and sequences over [UUID v4 primary keys](avoid-uuid-version-4-primary-keys), although here uuid v1 was used. Insert performance is not as bad for v1 compared with v4.
 
-Still though, v7 brings better performance for inserts, and can result in more compact and with less CPU and IO from page splits.
+Still though, v7 brings better performance than both for inserts and can also result in smaller indexes with fewer page splits meaning less CPU and IO.
 
-What makes v4 and to a lesser extent v1, bad for insert performance? Let's do a quick refresher. As new table rows are inserted and a primary key is defined, primary key values are maintained in sorted order in a b-tree index. The first bytes of values are compared to determine which index page to place the new index entry.
+What drives bad performance for v4 and to a lesser extent v1? Let's do a quick refresher. As new table rows are inserted and a primary key is defined, primary key values are maintained in sorted order in a b-tree index. Just like table rows, index entries in Postgres are stored in fixed size 8kb pages.
 
-For v4 new values are random, they aren't monotonically increasing (they lack "monotonicity"), they could be sorted earlier or later, it's random.
+Postgres needs to know in which page to place the new index entry. For sorted order, the first bytes of new uuid values are compared.
 
-When Postgres inserts the index entry into a page, and the page was recently accessed, it's "hot" in the buffer cache, this is a cache hit and means the latency is minimal.
+For v4 given new values are very random and not monotonically increasing (they lack "monotonicity"), values can be earlier or later, meaning they're unlikely to be placed into the same recently accessed page. This is bad for caching!
 
-With v4 and to a lesser extent v1, what happens is Postgres is not using the most recently used index page much or most of the time, meaning the page access can be "cold", outside of buffer cache, possibly out of OS cache, meaning a slow disk read with high latency.
+When new values are monotonically increasing, the recently accessed page is "hot" in the Postgres buffer cache (in memory copy of the on-disk page).
 
-Besides the worse insert performance, since v4 values are scattered to more pages, this means there are more "page splits" when the target page is full. Page splits cause more latency and also increase WAL, which also causes more IO.
+When Postgres is not able to use the hot index page for the newly inserted value, that page could be outside the buffer cache, not in the OS cache, and ultimately result in a much slower disk read which increases latency.
+
+Besides the worse insert performance, since v4 values are scattered to more pages, this means there are more "page splits" when new inserts are attempted in full pages. Page splits cause more latency from increase WAL and IO.
 
 We experimented and benchmarked with [v1, v4, and v7 uuid formats](https://github.com/andyatkinson/pg_scripts/tree/main/uuid_experiments) and we leveraged the research and write-ups from external sources like the ones below.
 
@@ -34,18 +38,14 @@ We experimented and benchmarked with [v1, v4, and v7 uuid formats](https://githu
 1. [Simplicity and power of UUID v7](https://alan.is/insights/simplicity-and-power-of-uuid-v7/)
 1. [PostgreSQL UUID Performance: Benchmarking Random (v4) and Time-based (v7) UUIDs](https://www.umangsinha.in/blog/postgresql-uuid-performance-benchmark)
 
-Besides the insert-performance concerns, post #3 above shows that v1 and v4 indexes can use more space for equivalent content, which can make point and range lookups slower.
-
-With v7, we're looking to preserve the collision avoidance without any central coordination benefits, but also leverage the timestamp portion for monotonicity and hot index page page access, greatly reducing latency.
-
-What kinds of results did we see?
+Benchmarks are great, but what kind of real world results did we see?
 
 ## What kinds of improvements did we see?
-Note that we performed the `alter table alter column` DDL operation (covered later) with the tables online during normal daytime activity. No other changes affected these results apart from this singular change.
+We decided to make this the new default unless v4 was needed for more randomness. After all qualified tables were changed, I began going through insert queries for each changed table. For many of the tables, there wasn't an obvious change.
 
-After all tables were changed, I began going through the insert queries for each one looking at results. For many of the tables, there wasn't an obvious reduction in insert execution times.
+However, for a handful we saw an immediate and significant improvement. I picked 5 with speedups of 6x, 8x, 9x, 20x, and 23x.
 
-However, for a handful of the, there was an immediate and significant reduction. I picked 5 with reductions of 6x, 8x, 9x, 20x, and 23x. Three tables have their main insert query graphs from PgAnalyze shown below.
+The PgAnalyze graphs for the 23x, 9x, and 6x queries are shown below.
 
 <table class="styled-table">
   <thead>
@@ -60,7 +60,7 @@ However, for a handful of the, there was an immediate and significant reduction.
   <tbody>
     <tr>
       <td>Table A</td>
-      <td>12000</td>
+      <td>12,000</td>
       <td>0.7ms</td>
       <td>0.03ms</td>
       <td>📉 23x</td>
@@ -98,28 +98,28 @@ Showing PgAnalyze insert query graphs for tables A, B, C:
 Now that we've seen the results, let's talk about how this was done and the challenges.
 
 ## Auditing where the UUIDs came from
-First we went through and identified the current use.
-
-In almost all cases, the values came from the column default which was the uuid generation function.
+The UUID values came from various sources:
 
 - The `uuid_generate_v1()` function from the [`uuid-ossp` module](https://www.postgresql.org/docs/current/uuid-ossp.html)
-- The function `gen_random_uuid()` [added in Postgres 13](https://www.postgresql.org/docs/current/functions-uuid.html) that generates v4 UUIDs without the extension above
+- The function `gen_random_uuid()` [added in Postgres 13](https://www.postgresql.org/docs/current/functions-uuid.html) that generates v4 UUIDs natively
 - UUID v4 values sent by a client application, which meant the column default function was not used
 
-For nearly all instances, we wanted to replace these with the `uuidv7()` function in Postgres 18.
+We replaced most of these with the `uuidv7()` function in Postgres 18. To do that, we needed to run a single `alter table ... alter column` statement per table.
+
+The statement ran fast, so no problem, right?
 
 ## How did the switch go?
 One wrinkle we found was that modifying the column default while fast, required an `access exclusive` lock.
 
 This lock type conflicts with *every* read and write operation including regular `select` statements.
 
-For our highest queried tables, it's queried constantly, so this was a problem as there was almost never a "window" to perform this operation.
+For our highest queried tables, they're queried constantly, so this was a problem. There was almost never a "window" to perform this operation, and we didn't want to take downtime for this switch.
 
-Before we get to how we solved that, let's look at a less complicated case.
+While heavily queried tables were a challenge, infrequently queried tables did not pose a problem for this alter table statement at all.
 
-In our migrations framework (Active Record in Ruby on Rails), we could perform the `alter table` using a regular old migration.
+For those, we could use our migrations framework (Active Record in Ruby on Rails) and perform the `alter table` using a regular old migration.
 
-We did create an explicit transaction and used `set local` to control timeout values. We'd set very short timeouts for the `alter table` to give up quickly if it didn't work or ran too long.
+For those, we did add some safeguards, by creating an explicit transaction and using `set local` to control timeout values. We'd set short timeouts for the `alter table` to give up quickly if it didn't work or ran too long.
 
 From psql:
 ```sql
@@ -133,7 +133,7 @@ ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7();
 COMMIT;
 ```
 
-This worked for the majority of tables. For the higher activity tables, we'd need some retries. We'd use a manual psql session:
+For the higher activity tables, we'd need some retries. We'd use a manual psql session:
 ```sql
 SET lock_timeout = '50ms';
 SET statement_timeout = '100ms';
@@ -142,9 +142,11 @@ ALTER TABLE my_table ALTER COLUMN id SET DEFAULT uuidv7();
 
 The `alter table` would commit if it grabbed the lock within 50ms, or we'd get an error that the `lock_timeout` was reached.
 
-This way we could manually retry until successful and backfill a Rails migration to keep everything in sync.
+The benefit of the manual approach was we could retry until successful and backfill a Rails migration to keep everything in sync. A more sophisticated solution might have automated retries within Ruby.
 
-However, for our most heavily queried tables, changing the PK column default there required an upgraded approach to retries.
+However, for our most heavily queried tables, we wanted even more control over the retries.
+
+How did we do that?
 
 ## Bringing in the big retry machinery
 Sometimes one or two retries would do the job. Great, we'd move on.
@@ -153,7 +155,7 @@ However, for our most heavily queried table that didn't work.
 
 What ended up working was using the same strategy of retries, but just adding more sophistication with looping and backoffs.
 
-Claude helped me cook up the PL/pgSQL looping retry function below with these features:
+Claude helped me cook up the PL/pgSQL looping retry function below, I did some testing and was ready to try it. It has these features:
 - Try up to 50 times (max attempts is configurable)
 - Add a pause in between retries, with a jittered backoff of 50-250ms
 
@@ -183,14 +185,16 @@ BEGIN
 END $$;
 ```
 
-By using the function above, we were able to find a small window to perform the `alter table` after a burst of a couple of dozen retries.
+By using the function above, we were able to find a small window to perform the `alter table` after several dozen quick retries!
 
 ## Actively cancelling lock-holding queries
-In cases where even that doesn't work, and we don't want downtime, we may be left with needing to actively monitor and cancel queries holding the lock.
+In cases where even many retries won't work, and we don't want downtime, we may be left with needing to actively monitor lock holder queries and to cancel them (assuming that's ok).
 
 Thanks to Ants Aasma from the community PostgreSQL Slack for this idea.
 
-We can inspect live queries:
+We didn't end up needing to do this, but here was my prep for this. It's still useful to review lock holder queries.
+
+First we'd inspect live queries:
 ```sql
 SELECT
   pid, state, left(query,100), xact_start, state_change,
@@ -223,23 +227,23 @@ JOIN pg_catalog.pg_stat_activity blocking_activity
 WHERE NOT blocked_locks.granted;
 ```
 
-If we find them, we could cancel them to create a window to run our `alter table`. Hopefully they can be retried.
+If we find them, we could cancel them to create a window to run our `alter table`. That could mean bad user experience so you'd need to figure that out for your database.
 ```sql
 SELECT pg_cancel_backend(blocking_pid);
 ```
 
-We'd likely want to stack up our `alter table` immediately after. I didn't end up needing to do this.
+We'd likely want to stack up our `alter table` operation to occur immediately after. Fortunately we didn't end up needing to do this, but I'd be interested to hear the stories from others with heavily queried databases.
 
 ## Downsides of uuid v7
-Since uuid v7 values use a timestamp in their first bits, this timestamp can be easily decoded. This can be viewed as "leaking" or exposing the creation time, where v4 does not have this property.
+Since uuid v7 values use a timestamp in their first bits, this timestamp can be easily decoded. This can be viewed as "leaking" or exposing the creation time of the record via that timestamp, which could be a downside for your database. You'll have to decide that. v4 UUIDs do not expose the creation time.
 
 ## Wrap Up
-We found some significant execution time reductions after switching to `uuidv7()` primary keys when replacing v1 and v4 values.
+We found some significant speedups for insert queries after switching to `uuidv7()` primary keys, for a relatively low effort change. A nice ROI.
 
-The only wrinkle in performing the switch was the exclusive lock required for the `alter table alter column` DDL for very actively queried tables. That was solvable using a very short lock timeout and retrying a bunch of times until the fast DDL operation could run.
+The only wrinkle was the exclusive lock `alter table ... alter column` required, but we solved that with short lock related timeouts and many retries.
 
-Although this didn't benefit 100% of our tables, the gains for some tables after switching to `uuidv7()` have been significant enough that this has become the new default choice for uuid columns.
+Although this didn't benefit 100% of our tables, the gains for some were significant and uuid v7 has become our new default choice for uuid primary keys.
 
-Thanks to the Postgres core team for creating this new capability within Postgres, which made it easier to adopt for AWS RDS with limited extension support.
+Thanks to the Postgres core team for creating this new capability within Postgres. The availability in core made it possible to adopt on AWS RDS which supports a limited amount of extensions.
 
-Thanks for reading and until next time.
+Thanks for reading, and until next time.

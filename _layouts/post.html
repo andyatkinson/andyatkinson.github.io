@@ -55,6 +55,7 @@ post_class: post-template
         {% endif %}
 
         <section class="read-next inner">
+            {% if page.previous.published %}
             <h2 class="read-next-title">Read Next</h2>
             {% if page.previous.url %}
             <article class="post">
@@ -79,6 +80,7 @@ post_class: post-template
                     </p>
                 </header>
             </article>
+            {% endif %}
             {% endif %}
 
             {% if page.published %}
