@@ -25,6 +25,43 @@ title: High Performance PostgreSQL for Rails Book
 - September 2026 - [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale)
 - October 2026 - [Postgres Summit US](https://postgresql.us/events/postgressummitus2026/schedule/session/2347-how-aura-frames-scaled-rds-postgres-for-peak-christmas-traffic-1-in-app-store/)
 
+Thanks for Aura for sponsoring my trips to Austin and NYC! 🤠 🗽
+
+<div style="
+  max-width: 420px;
+  margin: 2rem auto;
+  padding: 1.25rem 1.5rem;
+  background: #dbefff;
+  color: #333;
+  border-left: 6px solid #3984b8;
+  border-radius: 3px;
+  box-shadow: 3px 4px 10px rgba(0,0,0,0.15);
+  font-family: sans-serif;
+  transform: rotate(-1deg);
+  position: relative;
+">
+
+  <div style="
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 70px;
+    height: 22px;
+    background: rgba(255,255,255,0.5);
+    transform: rotate(4deg);
+    border: 1px solid rgba(0,0,0,0.05);
+  "></div>
+
+  <strong style="display:block; margin-bottom:0.5rem;">
+    Interested in a Career at Aura?
+  </strong>
+
+  <p style="margin:0; line-height:1.5;padding-bottom:2px;">
+  Aura frames are beautifully designed digital photo frames that help people stay connected to the moments that matter.
+  </p>
+  <p style="margin:10px 0 0 0; line-height:1.5;"><a href="https://auraframes.com/careers?referrer=andyatkinson.com">Join our team</a> and help build the products and infrastructure behind Aura. Explore open roles across engineering, product, mobile, and more.</p>
+</div>
+
 ## Rideshare
 The Rails app for the book, [Rideshare](https://github.com/andyatkinson/rideshare), was recently updated for Postgres 18 compatibility.
 

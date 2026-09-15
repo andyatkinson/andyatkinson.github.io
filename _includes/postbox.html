@@ -8,7 +8,11 @@
         </h2>
     </header><!-- .post-header -->
     <div class="post-content">
-        <p>{{ post.excerpt | strip_html | truncatewords:40 }} </p>
+        {% if post.summary %}
+          <p>{{ post.summary }}</p>
+        {% else %}
+          <p>{{ post.excerpt | strip_html | truncatewords:40 }}</p>
+        {% endif %}
         <p class="post-tags">
             {% if post.tags.size > 0 %}
             {% for tag in post.tags %}
