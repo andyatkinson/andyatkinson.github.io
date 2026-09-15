@@ -5,17 +5,8 @@ title: "PostgreSQL 18: 23x Faster Inserts With UUID v7"
 canonical: https://andyatkinson.com/postgresql-18-uuidv7
 date: 2026-08-26 11:50:00
 tags: [PostgreSQL, Databases]
-summary: "Exploring PostgreSQL 18’s native UUIDv7 support and how time-ordered UUIDs can improve index locality and performance compared with random UUIDv4 primary keys."
+summary: "Let's see how switching to PostgreSQL 18’s native UUIDv7 time-ordered UUIDs affected locality and performance compared with v1 and v4 primary key values."
 ---
-
-<div class="summary-box">
-<strong>📌 Overview</strong>
-<p>We recently switched to version 7 (v7) uuid primary keys and saw significantly faster inserts for some tables.</p>
-<p>The databases were running Postgres 18.4 and mostly used v1 with some v4 uuid values for primary keys.</p>
-<p>Changing the column default involved running a single alter table command, but did require an exclusive lock on the table, blocking <em>everything</em> including selects.</p>
-<p>To solve that, we used a short lock timeout and lots of retries.</p>
-<p>The biggest speedup was 23x faster average execution time for a multi-row insert query called 12,000 times per minute on a table with billions of rows.</p>
-</div>
 
 <div style="
   max-width: 420px;
@@ -47,7 +38,7 @@ summary: "Exploring PostgreSQL 18’s native UUIDv7 support and how time-ordered
   </strong>
 
   <p style="margin:0; line-height:1.5;">
-  🤠 🗽 This September and October I'll be in Austin, TX and NYC, check my <a href="/pgrailsbook">Book</a> page for upcoming appearances.
+  🤠 🗽 This September and October I'll be in Austin, TX and NYC, check my <a href="/pgrailsbook">Book</a> page for upcoming appearances. Thanks to Aura for sponsoring these trips.
   </p>
 </div>
 
@@ -84,6 +75,15 @@ summary: "Exploring PostgreSQL 18’s native UUIDv7 support and how time-ordered
   Aura frames are beautifully designed digital photo frames that help people stay connected to the moments that matter.
   </p>
   <p style="margin:10px 0 0 0; line-height:1.5;"><a href="https://auraframes.com/careers?referrer=andyatkinson.com">Join our team</a> and help build the products and infrastructure behind Aura. Explore open roles across engineering, product, mobile, and more.</p>
+</div>
+
+<div class="summary-box">
+<strong>📌 Overview</strong>
+<p>We recently switched to version 7 (v7) uuid primary keys and saw significantly faster inserts for some tables.</p>
+<p>The databases were running Postgres 18.4 and mostly used v1 with some v4 uuid values for primary keys.</p>
+<p>Changing the column default involved running a single alter table command, but did require an exclusive lock on the table, blocking <em>everything</em> including selects.</p>
+<p>To solve that, we used a short lock timeout and lots of retries.</p>
+<p>The biggest speedup was 23x faster average execution time for a multi-row insert query called 12,000 times per minute on a table with billions of rows.</p>
 </div>
 
 ## History and trade-offs with UUIDs

@@ -6,7 +6,7 @@ social_share_image: /assets/images/posts/2026/blog-aura-frames-rails-christmas-2
 canonical: https://andyatkinson.com/how-aura-frames-scales-for-peak-load-ruby-on-rails
 date: 2026-06-16 13:15:00
 tags: [Ruby on Rails, Ruby, PostgreSQL, Performance]
-summary: "How Aura Frames scaled Ruby on Rails from one primary database to eight, handling 41 million requests per hour and reaching #1 in the App Store."
+summary: "How Aura Frames refactored Active Record code in Ruby on Rails, splitting from one primary database to eight, handling 41 million requests per hour and reaching #1 in the App Store."
 ---
 
 <div style="
