@@ -26,6 +26,8 @@ Scaling Rails at Aura Frames: Splitting to 8 Primaries and Reaching #1 in the Ap
 </li>
 </ul>
 
+If you're not able to make those events or prefer to listen to a discussion of the content, then the podcast will have a lot of the same information.
+
 ## Technical Books
 Besides the work at Aura, we also checked in on my book <em>High Performance PostgreSQL for Rails</em>, which has now been published in print form for 2 years. Ryan asked about what’s next for the book, and it’s a difficult question to answer.
 
@@ -33,12 +35,12 @@ With the availability and quality of AI tooling for software engineers, I don’
 
 I’m very appreciative to have had the opportunity to write a book before the rise of the AI tools. I also am still getting positive community feedback from my book which is very fulfilling.
 
-Recently I met [Madison Sites](https://www.linkedin.com/in/madisonsites/) who's a reader, and they shared feedback that they're reading the book as part of the [WNB.rb book club](https://www.wnb-rb.dev). Madison said the book has been helpful to build vocabulary and familiarity with database concepts and implementation details, and that's helped them with database work in their jobs and getting more out of conference talks that cover those topics. I appreciated hearing about that!
+Recently I met [Madison Sites](https://www.linkedin.com/in/madisonsites/) who's a reader, and they shared feedback that they're reading the book as part of the [WNB.rb book club](https://www.wnb-rb.dev). Madison said the book has been helpful to build vocabulary and familiarity with database concepts and implementation details, and that's helped them with database work in their job and to understand more from conference talks about similar topics. I appreciated hearing about that!
 
 ## Using AI Tools
 We segued into how we're all using AI tools like Claude in our jobs as software developers, whether it’s writing or reviewing code, doing architectural planning, or myriad other tasks.
 
-One of my favorite use cases has been generating infrastructure as code with tools like Terraform. One of the main challenges I'm experiencing is on the review side, what's expected when it's AI-generated code in terms of my own comprehension, and how to provide a quality review given the ambiguity around how much comprehension is needed from me.
+One of my favorite use cases has been generating infrastructure as code with tools like Terraform. One of the main challenges I'm experiencing is on the review side, what's expected when it's AI-generated code in terms of my own comprehension, and how to still provide a quality review given the ambiguity around how much comprehension is needed from me. I also can find it challenging to navigate some of the social awkwardness on teams around AI-generated comments. One concept that's resonated with me is: [don't be a meat proxy](https://simonwillison.net/2026/Aug/3/dont-be-a-meat-proxy/).
 
 I hope you can take a listen to the episode, and please let us know if you have feedback. Thank you!
 
