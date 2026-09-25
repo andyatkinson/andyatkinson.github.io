@@ -6,6 +6,17 @@ title: Speaking Opportunities
 
 Explore all speaking engagements below or jump to [Ruby Events](https://www.rubyevents.org/speakers/andrew-atkinson).
 
+https://andyatkinson.com/rails-business-podcast
+
+## Rails Business with Andrew Atkinson
+- <cite>2026-09-25</cite>
+- Podcast (audio)
+- [🎙️ Rails Business: Andrew Atkinson](https://andyatkinson.com/rails-business-podcast)
+
+## Rails At Scale Summit
+<cite>2026-09-22</cite>
+- Presentation
+
 ## PG Data 2026 Chicago
 <cite>2025-09-25</cite>
 - Presentation
