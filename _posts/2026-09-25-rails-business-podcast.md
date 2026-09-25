@@ -4,12 +4,12 @@ permalink: /rails-business-podcast
 title: Let's Get Down to Business with Rails and PostgreSQL
 ---
 
-I'm happy to share that I was a guest on the [Rails Business](https://www.railsbusiness.com) podcast and the episode has just gone live. Here's a quick recap of the topics we covered.
+I'm happy to share that I was a guest on the [Rails Business](https://www.railsbusiness.com) podcast and the episode is now live. Here's a recap of the topics we discussed.
 
 ## Engineering Work at Aura
-We spent most of the time discussing engineering work last year related to scaling the database workload for peak traffic at Aura frames where we use Ruby on Rails and PostgreSQL.
+We spent most of the time discussing engineering work last year related to scaling the database workload for peak traffic at Aura where we use Ruby on Rails and PostgreSQL.
 
-I’m presenting this information in two places this Fall, the [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale) and the [Postgres Summit](https://2026.postgressummit.us).
+I’m presenting this information in two places this fall, [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale) in Austin, TX and the [Postgres Summit](https://2026.postgressummit.us) in NYC.
 
 Besides the podcast, you can get more details in these posts:
 <ul>
@@ -27,18 +27,18 @@ Scaling Rails at Aura Frames: Splitting to 8 Primaries and Reaching #1 in the Ap
 </ul>
 
 ## Technical Books
-Besides the work at Aura, we also checked in on my book High Performance PostgreSQL for Rails, which has now been published in print form for 2 years, meaning it’s no longer an exciting new thing, sales are more of a trickle, but it’s still something I’m very proud of and always up for talking about. Ryan asked about what’s next for the book, and it’s hard to answer.
+Besides the work at Aura, we also checked in on my book <em>High Performance PostgreSQL for Rails</em>, which has now been published in print form for 2 years. Ryan asked about what’s next for the book, and it’s a difficult question to answer.
 
-With the availability and quality of AI tooling for software engineers, I don’t see developers buying books as much. This reduced size the of the readership makes the ROI less attractive for prospective authors and titles. Producing a published book is a resource intensive activity.
+With the availability and quality of AI tooling for software engineers, I don’t see developers buying books as much. With fewer prospective readers, the ROI is less attractive for authors and publishers to commit to the resource-intensive process of creating a book.
 
 I’m very appreciative to have had the opportunity to write a book before the rise of the AI tools. I also am still getting positive community feedback from my book which is very fulfilling.
 
-Recently [Madison Sites](https://www.linkedin.com/in/madisonsites/) shared great feedback as they're re reading the book as part of the [WNB.rb book club](https://www.wnb-rb.dev). Madison said it's been helpful to build vocabulary and familiarity with database concepts and implementation details, and that's helped improve their understanding for database related work and conference talks.
+Recently I met [Madison Sites](https://www.linkedin.com/in/madisonsites/) who's a reader, and they shared feedback that they're reading the book as part of the [WNB.rb book club](https://www.wnb-rb.dev). Madison said the book has been helpful to build vocabulary and familiarity with database concepts and implementation details, and that's helped them with database work in their jobs and getting more out of conference talks that cover those topics. I appreciated hearing about that!
 
 ## Using AI Tools
 We segued into how we're all using AI tools like Claude in our jobs as software developers, whether it’s writing or reviewing code, doing architectural planning, or myriad other tasks.
 
-One of my favorite use cases has been for infrastructural as code like Terraform. One of the main challenges I'm experiencing is on the review side, what's expected when it's AI generated code in terms of my own comprehension, and how to provide a quality review given the ambiguity around how much comprehension is needed from me.
+One of my favorite use cases has been generating infrastructure as code with tools like Terraform. One of the main challenges I'm experiencing is on the review side, what's expected when it's AI-generated code in terms of my own comprehension, and how to provide a quality review given the ambiguity around how much comprehension is needed from me.
 
 I hope you can take a listen to the episode, and please let us know if you have feedback. Thank you!
 
