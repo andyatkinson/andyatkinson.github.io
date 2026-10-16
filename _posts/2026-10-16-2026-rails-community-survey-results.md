@@ -3,7 +3,7 @@ layout: post
 permalink: /2026-rails-community-survey-results
 title: PostgreSQL in the 2026 Ruby on Rails Community Survey and Book Giveaways
 date: 2026-10-16 13:35:00
-tags: [PostgreSQL, Databases]
+tags: [PostgreSQL, Ruby on Rails, Databases]
 summary: "Celebrating 2 years of High Performance PostgreSQL for Rails being published. Let's review results about PostgreSQL from the 2026 Ruby on Rails Community Survey and give away some books."
 ---
 
