@@ -2,14 +2,14 @@
 layout: post
 permalink: /2026-rails-community-survey-results
 title: PostgreSQL in the 2026 Ruby on Rails Community Survey and Book Giveaways
-date: 2026-09-25 12:55:00
+date: 2026-10-16 12:55:00
 summary: "Celebrating 2 years of High Performance PostgreSQL for Rails being published. Let's review results about PostgreSQL from the 2026 Ruby on Rails Community Survey and give away some books."
 ---
 
 <div class="summary-box">
 <strong>📌 Summary</strong>
 <p>84% of surveyed Rails developers use PostgreSQL in production</p>
-<p>While PostgreSQL is less popular than Oracle, MySQL, Microsoft SQL Server today, the gap is narrowing</p>
+<p>While PostgreSQL is less popular than Oracle, MySQL, and Microsoft SQL Server today, the gap is narrowing</p>
 <p>Win a signed copy of High Performance PostgreSQL for Rails, see below for details</p>
 </div>
 
@@ -34,12 +34,12 @@ According to the [DB-Engines Ranking Trend](https://db-engines.com/en/ranking_tr
 <small>Popularity of Oracle, MySQL, Microsoft SQL Server and PostgreSQL per DB-Engines</small>
 
 ## How do Rails developers learn
-How do developers learn? Books are holding down a smaller portion of learning resources for developers at 37% for developers in their first two years of learning. For those developers 10% of them felt reading all of a book worked best, while 7% felt that way and they'd read part of a book. This means books still help developers, but less so.
+How do developers learn? Books hold a smaller but steady percentage among learning resources. 37% of respondents in their first two years of learning felt reading whole books was most helpful, while 10% has read parts of a book and found that best.
 
-What worked better for them was building and deploying their own applications, which makes sense! That’s how it’s always been for me too. Nothing beats building something yourself and becoming an owner and operator. However, documentation, learning videos, podcasts, books, and blog posts all help support those developers looking to learn new skills.
+What worked best among respondents was building and deploying their own applications. This makes sense! That’s how it’s always been for me too. Nothing beats building something yourself and becoming an owner and operator. Documentation, learning videos, podcasts, books, and blog posts all help support developers looking to improve their skills.
 
 ## High Performance PostgreSQL for Rails in the Top 12
-I was happy to see High Performance PostgreSQL for Rails [ranked #12 among the most recommended books](https://railsdeveloper.com/survey/2026?q=learning-what-rails-related-books-do-you-recommend-others-read). Thank you!
+I was happy to see *High Performance PostgreSQL for Rails* [ranked #12 among recommended books](https://railsdeveloper.com/survey/2026?q=learning-what-rails-related-books-do-you-recommend-others-read). Thank you!
 
 The book has been published for 2 years now and I’m not as actively promoting it these days. I’m grateful to occasionally hear from developers at events like [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale) that they found the book helpful. Seeing that reflected in the survey results is very fulfilling.
 
