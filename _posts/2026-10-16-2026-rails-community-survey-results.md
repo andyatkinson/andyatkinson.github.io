@@ -51,6 +51,6 @@ The book has been published for 2 years now and I’m not as actively promoting 
 ## Win a signed copy of the book
 To celebrate the survey results and the book having been published for 2 years, I'd like to sign and give away a couple of copies.
 
-If you're in the contiguous U.S. and would like to enter, please send me a message through my site in the next couple of weeks. That's it. I'll draw two winners at random and ship them their copies. Good luck!
+If you're in the contiguous U.S. and would like to enter, please [send me a message](/contact) through my site in the next couple of weeks. That's it. I'll draw two winners at random and ship them their copies. Good luck!
 
 Please check out the full [2026 Ruby on Rails Community Survey Results](https://railsdeveloper.com/survey/2026#learning).
