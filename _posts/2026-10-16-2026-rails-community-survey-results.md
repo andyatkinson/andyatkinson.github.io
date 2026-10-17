@@ -9,7 +9,7 @@ summary: "Celebrating 2 years of High Performance PostgreSQL for Rails being pub
 
 <div class="summary-box">
 <strong>📌 Summary</strong>
-<p>84% of surveyed Rails developers use PostgreSQL in production.</p>
+<p>84% of 1,800 surveyed Rails developers use PostgreSQL in production.</p>
 <p>While PostgreSQL is less popular than Oracle, MySQL, and Microsoft SQL Server today, the gap is shrinking.</p>
 <p>Win a signed copy of High Performance PostgreSQL for Rails, see below for details.</p>
 </div>
