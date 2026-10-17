@@ -9,16 +9,14 @@ summary: "Celebrating 2 years of High Performance PostgreSQL for Rails being pub
 
 <div class="summary-box">
 <strong>📌 Summary</strong>
-<p>84% of surveyed Rails developers use PostgreSQL in production</p>
-<p>While PostgreSQL is less popular than Oracle, MySQL, and Microsoft SQL Server today, the gap is narrowing</p>
-<p>Win a signed copy of High Performance PostgreSQL for Rails, see below for details</p>
+<p>84% of surveyed Rails developers use PostgreSQL in production.</p>
+<p>While PostgreSQL is less popular than Oracle, MySQL, and Microsoft SQL Server today, the gap is shrinking.</p>
+<p>Win a signed copy of High Performance PostgreSQL for Rails, see below for details.</p>
 </div>
 
 The 2026 version of the Ruby on Rails Community Survey results are now live.
 
-Two things caught my eye: how dominant PostgreSQL use is, and the learning resources that Rails developers find most valuable.
-
-The survey had 1,800 responses.
+Two things caught my eye: how dominant PostgreSQL use is and the learning resources developers found to be most valuable.
 
 Among relational SQL databases, [84% of respondents use PostgreSQL in production](https://railsdeveloper.com/survey/2026?q=databases-which-relational-databases-do-you-use-in-production). That's wild! The next one is MySQL at 23%.
 
@@ -39,7 +37,7 @@ Books hold a smaller but steady percentage among learning resources. 37% of resp
 
 What worked best among respondents was building and deploying their own applications. This makes sense! That’s how it’s always been for me too, nothing beats building something yourself and becoming an owner and operator. Documentation, learning videos, podcasts, books, and blog posts all help support developers looking to improve their skills.
 
-## High Performance PostgreSQL for Rails Ranked #12
+## High Performance PostgreSQL for Rails ranked #12
 I was happy to see *High Performance PostgreSQL for Rails* [ranked #12 among recommended books](https://railsdeveloper.com/survey/2026?q=learning-what-rails-related-books-do-you-recommend-others-read). Thank you!
 
 The book has been published for 2 years now and isn't being actively promoted. I’m grateful to occasionally hear from readers at events like [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale) that they've found the book helpful. Seeing that reflected in the survey results was very fulfilling.
