@@ -16,9 +16,9 @@ summary: "Celebrating 2 years of High Performance PostgreSQL for Rails being pub
 
 The 2026 version of the Ruby on Rails Community Survey results are now live.
 
-Two things caught my eye: how dominant PostgreSQL use is for Rails apps, and the learning resources Rails developers use.
+Two things caught my eye: how dominant PostgreSQL use is, and the learning resources that Rails developers find most valuable.
 
-The survey has responses from nearly 1,800 developers.
+The survey had 1,800 responses.
 
 Among relational SQL databases, [84% of respondents use PostgreSQL in production](https://railsdeveloper.com/survey/2026?q=databases-which-relational-databases-do-you-use-in-production). That's wild! The next one is MySQL at 23%.
 
@@ -42,7 +42,7 @@ What worked best among respondents was building and deploying their own applicat
 ## High Performance PostgreSQL for Rails Ranked #12
 I was happy to see *High Performance PostgreSQL for Rails* [ranked #12 among recommended books](https://railsdeveloper.com/survey/2026?q=learning-what-rails-related-books-do-you-recommend-others-read). Thank you!
 
-The book has been published for 2 years now and I’m not as actively promoting it these days. I’m grateful to occasionally hear from developers at events like [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale) that they found the book helpful. Seeing that reflected in the survey results is very fulfilling.
+The book has been published for 2 years now and isn't being actively promoted. I’m grateful to occasionally hear from readers at events like [Rails at Scale Summit](https://rubyonrails.org/world/2026/rails-at-scale) that they've found the book helpful. Seeing that reflected in the survey results was very fulfilling.
 
 ![High Performance PostgreSQL for Rails](/assets/images/2026-rails-survey-pgrailsbook.jpg)
 <br/>
