@@ -16,7 +16,7 @@ summary: "Celebrating 2 years of High Performance PostgreSQL for Rails being pub
 
 The 2026 version of the Ruby on Rails Community Survey results are now live.
 
-Two things caught my eye: just how much PostgreSQL is in production for Rails apps, and the learning resources Rails developers use.
+Two things caught my eye: how dominant PostgreSQL use is for Rails apps, and the learning resources Rails developers use.
 
 The survey has responses from nearly 1,800 developers.
 
@@ -35,7 +35,7 @@ According to the [DB-Engines Ranking Trend](https://db-engines.com/en/ranking_tr
 <small>Popularity of Oracle, MySQL, Microsoft SQL Server and PostgreSQL per DB-Engines</small>
 
 ## How do Rails developers learn?
-How do developers learn? Books hold a smaller but steady percentage among learning resources. 37% of respondents in their first two years of learning felt reading whole books was most helpful, while 10% have read parts of a book and found that best.
+Books hold a smaller but steady percentage among learning resources. 37% of respondents in their first two years of learning felt reading whole books was most helpful, while 10% have read parts of a book and found that best.
 
 What worked best among respondents was building and deploying their own applications. This makes sense! That’s how it’s always been for me too, nothing beats building something yourself and becoming an owner and operator. Documentation, learning videos, podcasts, books, and blog posts all help support developers looking to improve their skills.
 
