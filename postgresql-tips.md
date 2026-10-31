@@ -562,6 +562,9 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 * Serial and BigSerial are special types that use Sequences
 * Logical Replication restrictions: "Sequence data is not replicated" (as of PG 16) <https://www.postgresql.org/docs/current/logical-replication-restrictions.html>
 
+## Migrating from MySQL
+* [MySQL to PostgreSQL converter](https://aarrange.com/mysql-to-postgresql): rewrites schema and queries in the browser and lists every change next to its line
+
 ## Identity Columns
 * Identity columns are a modern recommendation for primary keys over Sequences (with Serial or BigSerial)
 
