@@ -87,8 +87,8 @@ ALTER TABLE bigtable RESET (autovacuum_vacuum_threshold);
 - Set `log_autovacuum_min_duration` to `0` to log all Autovacuum. A logged AV run includes a lot of information.
 - [pganalyze: Visualizing & Tuning Postgres Autovacuum](https://pganalyze.com/blog/visualizing-and-tuning-postgres-autovacuum)
 - `autovacuum_max_workers`
-- `autovacuum_max_freeze_age`
-- `maintenance_work_memory`
+- `autovacuum_freeze_max_age`
+- `maintenance_work_mem`
 
 ## Specialized Index Types
 The most common type is B-Tree. Specialized index types and strategies include:
@@ -370,7 +370,7 @@ Replacement for pg_repack, automated, without needing to run a CLI tool.
 Adds explain plans to the PostgreSQL log.
 
 ## Percona pg_stat_monitor
-[pg_stat_monitor: A cool extension for better monitoring using PMM - Percona Live Online 2020](https://www.percona.com/resources/videos/pgstatmonitor-cool-extension-better-monitoring-using-pmm-percona-live-online-2020)
+[pg_stat_monitor: A cool extension for better monitoring using PMM - Percona Live Online 2020](https://web.archive.org/web/20210814040246/https://www.percona.com/resources/videos/pgstatmonitor-cool-extension-better-monitoring-using-pmm-percona-live-online-2020)
 
 ## pganalyze Index Advisor
 [A better way to index your PostgreSQL database: pganalyze Index Advisor](https://pganalyze.com/blog/introducing-pganalyze-index-advisor)
@@ -543,7 +543,7 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 | `autovacuum_vacuum_cost_limit` | | 200 | 2000 | [Docs](https://www.postgresql.org/docs/10/runtime-config-autovacuum.html) |
 | `effective_cache_size` | 8kb ||||
 | `work_mem` | MB | 4 | 250||
-| `maintenance_work_memory` |  ||||
+| `maintenance_work_mem` |  ||||
 | `checkpoint_timeout` |  ||||
 | `min_wal_size` | MB | 80 | 4000 | [High write log blog](https://blog.crunchydata.com/blog/tuning-your-postgres-database-for-high-write-loads) |
 | `max_wal_size` | MB | 4000 | 16000 ||
@@ -557,16 +557,19 @@ The unit is 8kb chunks, and requires some math to change the value for. Here is 
 * <https://restic.net/>
 
 ## Sequences
-* `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://brianchildress.co/reset-auto-increment-in-postgres/>
+* `TRUNCATE` and reset: `TRUNCATE <table name> RESTART IDENTITY` <https://web.archive.org/web/20241014192513/https://brianchildress.co/reset-auto-increment-in-postgres/>
 * `ALTER SEQUENCE <seq-name> RESTART WITH 1;` (e.g. `users_id_seq`)
 * Serial and BigSerial are special types that use Sequences
 * Logical Replication restrictions: "Sequence data is not replicated" (as of PG 16) <https://www.postgresql.org/docs/current/logical-replication-restrictions.html>
+
+## Migrating from MySQL
+* [MySQL to PostgreSQL converter](https://aarrange.com/mysql-to-postgresql): rewrites schema and queries in the browser and lists every change next to its line
 
 ## Identity Columns
 * Identity columns are a modern recommendation for primary keys over Sequences (with Serial or BigSerial)
 
 ## Scaling Web Applications
-- [My GOTO Postgres Configuration for Web Services](https://tightlycoupled.io/my-goto-postgres-configuration-for-web-services/)
+- [My GOTO Postgres Configuration for Web Services](https://web.archive.org/web/20240225062818/https://tightlycoupled.io/my-goto-postgres-configuration-for-web-services/)
 
 ## Full Text Search (FTS)
 - [Postgres full-text search is Good Enough!](http://rachbelaid.com/postgres-full-text-search-is-good-enough/)
